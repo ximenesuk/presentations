@@ -154,6 +154,12 @@
 
           <section>
 
+          <!-- Presenter's notes:
+          =======================
+          Something along the lines of "to implement this" or "while implementing this
+          we realized that we were going to need to introduce a new construct..."
+          -->
+
             <h1>What is a Fileset?</h1>
 
             <ul>
@@ -169,11 +175,54 @@
 
           <section>
 
-            <h1>A Fileset</h1>
+            <h1>A Simple Fileset</h1>
+
+            <img src="diagrams/fileset-simple.png" width="75%"/>
+
+          </section>
+
+          <section>
+
+            <h1>A More Realistic Fileset</h1>
 
             <img src="diagrams/fileset.png" width="75%"/>
 
           </section>
+
+          <section>
+
+            <h1>Fileset Indivisibility</h1>
+
+            <ul>
+              <li>Bio-Formats is used in rendering</li>
+              <ul>
+                <li>readers are cached, for speed</li>
+              </ul>
+              <li>files must be kept together for Bio-Formats</li>
+              <li>must also associate the files' images</li>
+              <ul>
+                <li>they need not be in the same dataset</li>
+              </ul>
+            </ul>
+
+          </section>
+
+          <section>
+
+            <h1>Effects of Indivisibility</h1>
+
+            <ul>
+              <li>cannot break fileset by changing or deleting a part</li>
+              <li>repository changes should be via server API</li>
+              <li>server prohibits certain acts on partial filesets</li>
+              <ul>
+                <li>only operations affecting file accessibility</li>
+                <li>namely: change group, delete</li>
+              </ul>
+            </ul>
+
+          </section>
+
 
         </section>
 
@@ -244,44 +293,6 @@
               <li>delete: partial fails</li>
               <li>delete: complete succeeds</li>
               <li>split fileset images across datasets</li>
-            </ul>
-
-          </section>
-
-        </section>
-
-        <section>
-
-          <section>
-
-            <h1>Fileset Indivisibility</h1>
-
-            <ul>
-              <li>Bio-Formats is used in rendering</li>
-              <ul>
-                <li>readers are cached, for speed</li>
-              </ul>
-              <li>files must be kept together for Bio-Formats</li>
-              <li>must also associate the files' images</li>
-              <ul>
-                <li>they need not be in the same dataset</li>
-              </ul>
-            </ul>
-
-          </section>
-
-          <section>
-
-            <h1>Effects of Indivisibility</h1>
-
-            <ul>
-              <li>cannot break fileset by changing or deleting a part</li>
-              <li>repository changes should be via server API</li>
-              <li>server prohibits certain acts on partial filesets</li>
-              <ul>
-                <li>only operations affecting file accessibility</li>
-                <li>namely: change group, delete</li>
-              </ul>
             </ul>
 
           </section>
