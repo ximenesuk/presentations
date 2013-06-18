@@ -233,13 +233,17 @@
             <h1>Why Use FS?</h1>
 
             <ul>
+              <li>does not create large Pixels files</li>
+              <ul>
+                <li>no duplication of image data</li>
+              </ul>
               <li>preserve original data structure</li>
               <ul>
                 <li>file names and contents</li>
                 <li>directories, if needed for Bio-Formats</li>
                 <li>stored data accessible by other software</li>
+                <li>or in the case of catastropic DB loss</li>
               </ul>
-              <li>share experimental data, reproduce analyses</li>
             </ul>
 
           </section>
@@ -249,13 +253,10 @@
             <h1>More FS Advantages</h1>
 
             <ul>
-              <li>does not create large Pixels files</li>
-              <ul>
-                <li>no duplication of image data</li>
-              </ul>
               <li>OMERO.server becomes master data repository</li>
-              <li>Bio-Formats improvements benefit older data</li>
               <li>each fileset has an import log</li>
+              <li>Bio-Formats improvements benefit older data</li>
+              <li>share experimental data, reproduce analyses</li>
             </ul>
 
           </section>
