@@ -53,7 +53,7 @@
         <section>
 
           <h1>FS Workshop</h1>
-	  <h2>Paris 2013</h2>
+          <h2>Paris 2013</h2>
 
           <p>How OMERO 5 uses FS to preserve your original image files on OMERO.server.</p>
 
@@ -61,133 +61,149 @@
 
         <section>
 
-          <h1>Importing Before FS</h1>
+          <section>
 
-          <ul>
-            <li>client software processes image files into planes</li>
+            <h1>Importing Before FS</h1>
+
             <ul>
-              <li>DropBox acts as an unattended client</li>
+              <li>client software processes image files into planes</li>
+              <ul>
+                <li>DropBox acts as an unattended client</li>
+              </ul>
+              <li>server stores and uses large Pixels files</li>
+              <li>additionally, original files could be archived</li>
             </ul>
-            <li>server stores and uses large Pixels files</li>
-            <li>additionally, original files could be archived</li>
-          </ul>
 
-        </section>
+          </section>
 
-	<section>
+          <section>
 
-	  <h1>Client to Server</h1>
-	  <h2>OMERO 4</h2>
+            <h1>Client to Server</h1>
+            <h2>OMERO 4</h2>
 
-	  <img src="diagrams/from-client-v4.png" width="75%"/>
+            <img src="diagrams/from-client-v4.png" width="75%"/>
 
-	</section>
+          </section>
 
-	<section>
+          <section>
 
-	  <h1>Server to Client</h1>
-	  <h2>OMERO 4</h2>
+            <h1>Server to Client</h1>
+            <h2>OMERO 4</h2>
 
-	  <img src="diagrams/to-client-v4.png" width="75%"/>
+            <img src="diagrams/to-client-v4.png" width="75%"/>
 
-	</section>
-
-        <section>
-
-          <h1>What is FS?</h1>
-
-          <ul>
-            <li>stores only the original files</li>
-            <li>clients need only wait for file upload</li>
-            <li>upload verified by checksum at both ends</li>
-            <li>related files and images are bound into <em>filesets</em></li>
-	    <li>Project/Dataset, Screen/Plate hierarchy remains</li>
-          </ul>
+          </section>
 
         </section>
 
         <section>
 
-          <h1>What is a Fileset?</h1>
+          <section>
 
-          <ul>
-            <li>a set of related files</li>
+            <h1>What is FS?</h1>
+
             <ul>
-              <li>Bio-Formats must read them together</li>
+              <li>stores only the original files</li>
+              <li>clients need only wait for file upload</li>
+              <li>upload verified by checksum at both ends</li>
+              <li>related files and images are bound into <em>filesets</em></li>
+              <li>Project/Dataset, Screen/Plate hierarchy remains</li>
             </ul>
-            <li>a set of images, arising from those files</li>
-            <li>may be just one file and one image</li>
-          </ul>
 
-        </section>
+          </section>
 
-	<section>
+          <section>
 
-	  <h1>A Fileset</h1>
+            <h1>Client to Server</h1>
+            <h2>OMERO 5</h2>
 
-	  <img src="diagrams/fileset.png" width="75%"/>
+            <img src="diagrams/from-client-v5.png" width="75%"/>
 
-	</section>
+          </section>
 
-	<section>
+          <section>
 
-	  <h1>Client to Server</h1>
-	  <h2>OMERO 5</h2>
+            <h1>Server to Client</h1>
+            <h2>OMERO 5</h2>
 
-	  <img src="diagrams/from-client-v5.png" width="75%"/>
+            <img src="diagrams/to-client-v5.png" width="75%"/>
 
-	</section>
+          </section>
 
-	<section>
+          <section>
 
-	  <h1>Server to Client</h1>
-	  <h2>OMERO 5</h2>
+            <h1>Rendering Pipeline</h1>
 
-	  <img src="diagrams/to-client-v5.png" width="75%"/>
-
-	</section>
-
-        <section>
-
-          <h1>Rendering Pipeline</h1>
-
-          <ul>
-	    <li>clients obtain rendered images from server</li>
-	    <li>server now needs Bio-Formats for rendering</li>
-	    <li><em>performance numbers coming real soon</em></li>
-          </ul>
-
-        </section>
-
-        <section>
-
-          <h1>Why Use FS?</h1>
-
-          <ul>
-            <li>preserve original data structure</li>
             <ul>
-              <li>file names and contents</li>
-              <li>directories, if needed for Bio-Formats</li>
-              <li>stored data accessible by other software</li>
+              <li>clients obtain rendered images from server</li>
+              <li>server now needs Bio-Formats for rendering</li>
+              <li><em>performance numbers coming real soon</em></li>
             </ul>
-            <li>share experimental data, reproduce analyses</li>
-          </ul>
+
+          </section>
 
         </section>
 
         <section>
 
-          <h1>More FS Advantages</h1>
+          <section>
 
-          <ul>
-            <li>does not create large Pixels files</li>
+            <h1>What is a Fileset?</h1>
+
             <ul>
-              <li>no duplication of image data</li>
+              <li>a set of related files</li>
+              <ul>
+                <li>Bio-Formats must read them together</li>
+              </ul>
+              <li>a set of images, arising from those files</li>
+              <li>may be just one file and one image</li>
             </ul>
-            <li>OMERO.server becomes master data repository</li>
-            <li>Bio-Formats improvements benefit older data</li>
-            <li>each fileset has an import log</li>
-          </ul>
+
+          </section>
+
+          <section>
+
+            <h1>A Fileset</h1>
+
+            <img src="diagrams/fileset.png" width="75%"/>
+
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+
+            <h1>Why Use FS?</h1>
+
+            <ul>
+              <li>preserve original data structure</li>
+              <ul>
+                <li>file names and contents</li>
+                <li>directories, if needed for Bio-Formats</li>
+                <li>stored data accessible by other software</li>
+              </ul>
+              <li>share experimental data, reproduce analyses</li>
+            </ul>
+
+          </section>
+
+          <section>
+
+            <h1>More FS Advantages</h1>
+
+            <ul>
+              <li>does not create large Pixels files</li>
+              <ul>
+                <li>no duplication of image data</li>
+              </ul>
+              <li>OMERO.server becomes master data repository</li>
+              <li>Bio-Formats improvements benefit older data</li>
+              <li>each fileset has an import log</li>
+            </ul>
+
+          </section>
 
         </section>
 
@@ -230,35 +246,39 @@
 
         <section>
 
-          <h1>Fileset Indivisibility</h1>
+          <section>
 
-          <ul>
-            <li>Bio-Formats is used in rendering</li>
+            <h1>Fileset Indivisibility</h1>
+
             <ul>
-              <li>readers are cached, for speed</li>
+              <li>Bio-Formats is used in rendering</li>
+              <ul>
+                <li>readers are cached, for speed</li>
+              </ul>
+              <li>files must be kept together for Bio-Formats</li>
+              <li>must also associate the files' images</li>
+              <ul>
+                <li>they need not be in the same dataset</li>
+              </ul>
             </ul>
-            <li>files must be kept together for Bio-Formats</li>
-            <li>must also associate the files' images</li>
+
+          </section>
+
+          <section>
+
+            <h1>Effects of Indivisibility</h1>
+
             <ul>
-              <li>they need not be in the same dataset</li>
+              <li>cannot break fileset by changing or deleting a part</li>
+              <li>repository changes should be via server API</li>
+              <li>server prohibits certain acts on partial filesets</li>
+              <ul>
+                <li>only operations affecting file accessibility</li>
+                <li>namely: change group, delete</li>
+              </ul>
             </ul>
-          </ul>
 
-        </section>
-
-        <section>
-
-          <h1>Effects of Indivisibility</h1>
-
-          <ul>
-            <li>cannot break fileset by changing or deleting a part</li>
-            <li>repository changes should be via server API</li>
-            <li>server prohibits certain acts on partial filesets</li>
-            <ul>
-              <li>only operations affecting file accessibility</li>
-              <li>namely: change group, delete</li>
-            </ul>
-          </ul>
+          </section>
 
         </section>
 
@@ -267,46 +287,10 @@
           <h1>Migrating to FS</h1>
 
           <ul>
-	    <li>new OMERO users should try out OMERO 5</li>
+            <li>new OMERO users should try out OMERO 5</li>
             <li>OMERO 5 is being tested with pre-FS data</li>
-	    <li>same-server upgrades to FS: later this year</li>
-	    <li>inter-server migration: no near-term plans</li>
-          </ul>
-
-        </section>
-
-        <section>
-
-          <h1>Planned Work</h1>
-
-          <ul>
-            <li>ensure that every file has a checksum noted</li>
-            <li>periodically re-verify checksums</li>
-            <ul>
-              <li>user notification of mismatches</li>
-            </ul>
-            <li>reconsider image deletion</li>
-            <ul>
-              <li>server-side re-import recovers image?</li>
-            </ul>
-          </ul>
-
-        </section>
-
-        <section>
-
-          <h1>Next-Generation FS</h1>
-
-          <ul>
-            <li>import without Bio-Formats on clients</li>
-            <ul>
-              <li>all file format scanning done on server</li>
-            </ul>
-            <li>server renders images from user-managed directories</li>
-            <ul>
-              <li>could be from remote network mount</li>
-              <li>import is fast and transparent</li>
-            </ul>
+            <li>same-server upgrades to FS: later this year</li>
+            <li>inter-server migration: no near-term plans</li>
           </ul>
 
         </section>
@@ -315,15 +299,55 @@
 
           <section>
 
-            <h1>Any Feedback?</h1>
+            <h1>Planned Work</h1>
 
             <ul>
-              <li>We welcome questions and comments on FS.</li>
-              <li>What further work on FS would be  most useful?</li>
-              <li>Would you like to try out FS at your site?</li>
+              <li>ensure that every file has a checksum noted</li>
+              <li>periodically re-verify checksums</li>
+              <ul>
+                <li>user notification of mismatches</li>
+              </ul>
+              <li>reconsider image deletion</li>
+              <ul>
+                <li>server-side re-import recovers image?</li>
+              </ul>
             </ul>
 
           </section>
+
+          <section>
+
+            <h1>Next-Generation FS</h1>
+
+            <ul>
+              <li>import without Bio-Formats on clients</li>
+              <ul>
+                <li>all file format scanning done on server</li>
+              </ul>
+              <li>server renders images from user-managed directories</li>
+              <ul>
+                <li>could be from remote network mount</li>
+                <li>import is fast and transparent</li>
+              </ul>
+            </ul>
+
+          </section>
+
+        </section>
+
+        <section>
+
+          <h1>Any Feedback?</h1>
+
+          <ul>
+            <li>We welcome questions and comments on FS.</li>
+            <li>What further work on FS would be  most useful?</li>
+            <li>Would you like to try out FS at your site?</li>
+          </ul>
+
+        </section>
+
+        <section>
 
           <section>
 
@@ -331,8 +355,8 @@
             <h2>etc/omero.properties</h2>
             <h3>Managed Repository Directory</h3>
 
-<pre>omero.data.dir=/OMERO/
-omero.managed.dir=${omero.data.dir}/ManagedRepository</pre>
+            <pre>omero.data.dir=/OMERO/
+              omero.managed.dir=${omero.data.dir}/ManagedRepository</pre>
 
           </section>
 
@@ -365,6 +389,10 @@ omero.managed.dir=${omero.data.dir}/ManagedRepository</pre>
             <pre>omero.checksum.default=SHA1-160</pre>
 
           </section>
+
+        </section>
+
+        <section>
 
           <section>
 
