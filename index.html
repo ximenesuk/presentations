@@ -113,7 +113,10 @@
             <ul>
               <li>stores only the original files</li>
               <li>clients need only wait for file upload</li>
-              <li>files verified checked for corruption at both ends</li>
+              <li>no file data corruption on transfer into FS</li>
+              <ul>
+                <li>client and server compare files to verify clean copy</li>
+              </ul>
               <li>Project/Dataset, Screen/Plate hierarchy remains</li>
             </ul>
 
