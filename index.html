@@ -239,19 +239,17 @@
 
           <section>
 
-            <h1>Why Use FS?</h1>
+            <h1>No Data Duplication</h1>
 
             <ul>
-              <li>does not create large Pixels files</li>
+              <li>OMERO 5 does not create large Pixels files</li>
               <ul>
-                <li>no duplication of image data</li>
+                <li>no duplication of image data on server</li>
               </ul>
               <li>preserve original data structure</li>
               <ul>
-                <li>file names and contents</li>
-                <li>directories, if needed for Bio-Formats</li>
-                <li>stored data accessible by other software</li>
-                <li>or in the case of catastropic DB loss</li>
+                <li>uploaded image files readable by other software</li>
+                <li>need not duplicate image data outside FS</li>
               </ul>
             </ul>
 
@@ -263,9 +261,12 @@
 
             <ul>
               <li>OMERO.server becomes master data repository</li>
-              <li>each fileset has an import log</li>
+              <ul>
+                <li>easily share data, reproduce analyses</li>
+                <li>protect against data loss on client systems</li>
+              </ul>
+              <li>each upload has an import log recorded</li>
               <li>Bio-Formats improvements benefit older data</li>
-              <li>share experimental data, reproduce analyses</li>
             </ul>
 
           </section>
@@ -330,7 +331,7 @@
             <ul>
               <li>detect any file corruption even after upload</li>
               <ul>
-		<li>ensure that every file has a checksum noted</li>
+                <li>ensure that every file has a checksum noted</li>
                 <li>re-validate checksums and report mismatches</li>
               </ul>
               <li>reconsider image deletion</li>
