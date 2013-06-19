@@ -93,11 +93,13 @@
 
           <section>
 
-            <h1>Rationale: Rendering Pipeline</h1>
+            <h1>Rendering Pipeline</h1>
+            <h2>OMERO 4</h2>
 
             <ul>
               <li>clients obtain rendered images from server</li>
               <li>Pixels structure is optimized for reading</li>
+              <li>rendering is thus a fast, direct process</li>
             </ul>
 
           </section>
@@ -142,10 +144,14 @@
 
           <section>
 
-            <h1>And the Rendering Pipeline now?</h1>
+            <h1>Rendering Pipeline</h1>
+            <h2>OMERO 5</h2>
 
             <ul>
+              <li>managed repository holds uploaded image files</li>
+              <li>Bio-Formats extracts planes from image files</li>
               <li>server now needs Bio-Formats for rendering</li>
+              <li>Bio-Formats performance much improved</li>
               <li><em>performance numbers coming real soon</em></li>
             </ul>
 
