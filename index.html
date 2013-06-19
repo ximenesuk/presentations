@@ -208,32 +208,6 @@
           </section>
 
           <section>
-            <h4>Files locally on the client</h4>
-            <pre>
-/home/data/sample$ tree  zeiss-lsm-martin/
-zeiss-lsm-martin/
-├── 01-01.lsm
-├── 01-02.lsm
-└── 051215-j-tf.mdb
-
-            </pre>
-            <hr/>
-            <h4>Files on the server</h4>
-            <pre>
-/OMERO/ManagedRepository/josh_0$ tree .
-.
-├── 2013-06
-│   ├── 17
-│   │   ├── 09-02-55.180
-│   │   │   ├── 01-01.lsm
-│   │   │   ├── 01-02.lsm
-│   │   │   └── 051215-j-tf.mdb
-│   │   ├── 09-02-55.180.log
-            </pre>
-          </section>
-
-
-          <section>
 
             <h1>More FS Advantages</h1>
 
@@ -462,6 +436,31 @@ omero.managed.dir=${omero.data.dir}/ManagedRepository</pre>
 
             <pre>omero.checksum.default=SHA1-160</pre>
 
+          </section>
+
+          <section>
+            <h4>Files locally on the client</h4>
+            <pre>
+/home/data/sample$ tree  zeiss-lsm-martin/
+zeiss-lsm-martin/
+├── 01-01.lsm
+├── 01-02.lsm
+└── 051215-j-tf.mdb
+
+            </pre>
+            <hr/>
+            <h4>Files on the server</h4>
+            <pre>
+/OMERO/ManagedRepository/josh_0$ tree .
+.
+├── 2013-06
+│   ├── 17
+│   │   ├── 09-02-55.180
+│   │   │   ├── 01-01.lsm
+│   │   │   ├── 01-02.lsm
+│   │   │   └── 051215-j-tf.mdb
+│   │   ├── 09-02-55.180.log
+            </pre>
           </section>
 
         </section>
