@@ -12,7 +12,7 @@
 |       v        |           |      |         |
 | +--------------+           +--------------+ |
 | | cDDF         | original  | cFDD         | |
-| | candidate    +---------->| managed      | |
-| | files        |           | repository   | |
+| |    candidate +---------->| managed      | |
+| |        files |           | repository   | |
 | |              |           |              | |
 \-+--------------+           +--------------+-/
