@@ -178,32 +178,161 @@
 
         <section>
             <section>
-                <h1>The Numbers (in secs.)</h1>
+                <h1>Some Numbers</h1>
             </section>
 
             <section>
+            <!--
+            /SVS/77928.svs
+==============
+OME5
+real    0m35.953s
+user    0m6.164s
+sys 0m0.716s
+
+OME4 archived:
+real    0m20.350s
+user    0m7.528s
+sys 0m0.636s
+
+
+OME4
+real    0m53.023s
+user    0m7.712s
+sys 0m0.548s
+
+PYR
+2013-06-20 13:50:00,383
+2013-06-20 15:21:40,470 INFO  [                ome.io.nio.PixelsService] (2-thread-5) SUCCESS -- Pyramid created for pixels id:7
+
+render test:
+-----------
+
+OME5: Planes Loaded: 50 / 50 | Duration: 12.6 secs | Per Plane: 0.252 secs. 
+OME4: Planes Loaded: 50 / 50 | Duration: 11.4 secs | Per Plane: 0.228 secs. 
+OME4(archived):
+
+            -->
                 <h2>SVS (~500MB)</h2>
                 <center>
                     <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
                     <tr>
                         <th></th>
                         <th>pre-fs</th>
+                        <th>pre-fs (archived)</th>
                         <th>fs</th>
                     </tr>
                     <tr>
                         <td>import</td>
                         <td>53 s.</td>
+                        <td>20 s.</td>
                         <td>36 s.</td>
                     </tr>
                     <tr>
                         <td>pyramids</td>
-                        <td>5400 s.</td>
+                        <td>90 min.</td>
+                        <td>???</td>
                         <td>n/a</td>
                     </tr>
                     <tr>
                         <td>avg. plane view</td>
                         <td>0.25 s.</td>
                         <td>0.23 s.</td>
+                    </tr>
+                </table>
+                </center>
+            </section>
+
+            <section>
+            <!--
+            P-TRE_10_R3D_D3D.dv
+            ==================
+            OME5
+            real    0m18.039s
+            user    0m3.400s
+            sys 0m0.288s
+
+            OME4 (no archive): ID:51
+            real    0m26.692s
+            user    0m5.596s
+            sys 0m0.228s
+
+            OME4 (archived): ID:52
+            real    0m16.071s
+            user    0m6.840s
+            sys 0m0.368s
+
+
+            OME5:  Planes Loaded: 255 / 255 | Duration: 50.0 secs | Per Plane: 0.196 secs. 
+            OME4:51Planes Loaded: 255 / 255 | Duration: 48.5 secs | Per Plane: 0.190 secs. 
+            OME4:52Planes Loaded: 255 / 255 | Duration: 45.2 secs | Per Plane: 0.177 secs. 
+
+            -->
+                <h2>DV (~125MB)</h2>
+                <center>
+                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
+                    <tr>
+                        <th></th>
+                        <th>pre-fs</th>
+                        <th>pre-fs (archived)</th>
+                        <th>fs</th>
+                    </tr>
+                    <tr>
+                        <td>import</td>
+                        <td>27 s.</td>
+                        <td>16 s.</td>
+                        <td>18 s.</td>
+                    </tr>
+                    <tr>
+                        <td>avg. plane view</td>
+                        <td>0.19 s.</td>
+                        <td>0.18 s.</td>
+                        <td>0.20 s.</td>
+                    </tr>
+                </table>
+                </center>
+            </section>
+
+            <section>
+            <!--
+            INMAC384-DAPI-CM-eGFP_59223_1.xdce
+            ==================
+            OME5:
+            real    34m8.998s
+            user    1m22.936s
+            sys 0m11.740s
+
+
+            OME4 (no archive): Plate:2
+            real    23m3.182s
+            user    3m7.160s
+            sys 0m21.020s
+
+
+            OME5: Planes Loaded: 238 / 384 | Duration: 169 secs | Per Plane: 0.711 secs.
+            OME4: Planes Loaded: 350 / 384 | Duration: 175 secs | Per Plane: 0.501 secs. 
+
+            -->
+                <h2>InCell (~9GB/~1000 TIFFs)</h2>
+                <center>
+                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
+                    <tr>
+                        <th></th>
+                        <th>pre-fs</th>
+                        <th>pre-fs (archived)</th>
+                        <th>fs</th>
+                    </tr>
+                    <tr>
+                        <td>import</td>
+                        <td>23 min.</td>
+                        <td>n/a</td>
+                        <td>34 min.</td>
+                    </tr>
+                    <tr>
+                        <td>avg. plane view</td>
+                        <td>0.50 s.</td>
+                        <td>n/a</td>
+                        <td>0.71 s.</td>
                     </tr>
                 </table>
                 </center>
