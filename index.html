@@ -86,7 +86,7 @@
               <li>additionally, original files may be stored</li>
               <ul>
                 <li><em style="color: #800; font-weight: bolder">data duplication</em></li>
-                <li>in triplicate for big images without subresolutions</li>
+                <li>in triplicate for big images</li>
               </ul>
             </ul>
 
@@ -329,7 +329,7 @@
                     <tr>
                         <td>import</td>
                         <td>27 s.</td>
-                        <td>44 s</td>
+                        <td>44 s.</td>
                         <td>107 s. (?)</td>
                     </tr>
                     <tr>
@@ -406,8 +406,8 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
                     <tr>
                         <td>pyramids</td>
                         <td>90 min.</td>
-                        <td>90 min</td>
-                        <td>none</td>
+                        <td>90 min.</td>
+                        <td>n/a</td>
                     </tr>
                     <tr>
                         <td>avg. plane view</td>
@@ -529,10 +529,11 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
             <ul>
               <li>no archive checkbox</li>
               <li>file import is fast</li>
-              <li>import log</li>
-              <li>checksums dialog</li>
+              <li>import log, aids debugging slow/failed</li>
+              <li>checksums dialog for file integrity</li>
               <li>file paths popup</li>
               <li>download files, content intact</li>
+              <li>SVS viewable, uses subresolutions</li>
             </ul>
 
           </section>
@@ -568,7 +569,7 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
               <li>OMERO.server becomes master data repository</li>
               <ul>
                 <li>easily share data, reproduce analyses</li>
-                <li>protect against data loss on client systems</li>
+                <li>protect against data loss on local systems</li>
               </ul>
               <li>each upload has an import log recorded</li>
               <li>Bio-Formats improvements benefit existing data</li>
@@ -628,24 +629,10 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
             <ul>
               <li>files must be kept together for Bio-Formats</li>
               <li>must also associate the files' images</li>
-              <ul>
-                <li>they need not be in the same dataset</li>
-              </ul>
-            </ul>
-
-          </section>
-
-          <section>
-
-            <h1>Effects of Indivisibility</h1>
-
-            <ul>
-              <li>cannot break fileset</li>
-              <li>repository changes should be via server API</li>
               <li>server prohibits certain acts on partial filesets</li>
               <ul>
-                <li>only operations affecting file accessibility</li>
-                <li>namely: change group, delete</li>
+                <li>move between groups</li>
+                <li>delete</li>
               </ul>
             </ul>
 
@@ -672,9 +659,9 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
             <ul>
               <li>change group: partial fails</li>
               <li>change group: complete succeeds</li>
+              <li>split fileset images across datasets</li>
               <li>delete: partial fails</li>
               <li>delete: complete succeeds</li>
-              <li>split fileset images across datasets</li>
             </ul>
 
           </section>
@@ -696,7 +683,7 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
                 <li>upgrades from OMERO 4 currently being tested</li>
                 <ul>
                   <li>process for upgrade to be released after summer</li>
-                  <li>legacy data will be supported</li>
+                  <li>pre-FS data will be supported</li>
                 </ul>
             </ul>
 
@@ -720,15 +707,11 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
             <h1>Building on FS</h1>
 
             <ul>
-              <li>detect any file corruption even after upload</li>
-              <ul>
-                <li>ensure that every file has a checksum noted</li>
-                <li>re-validate checksums and report mismatches</li>
-              </ul>
               <li>reconsider fileset handling (deletion, etc.)</li>
               <ul>
                 <li>server-side recovery from partial deletes?</li>
               </ul>
+              <li>detect and report post-upload file corruption</li>
             </ul>
 
           </section>
@@ -751,11 +734,14 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
               <li>import without Bio-Formats on clients</li>
               <ul>
                 <li>all file format scanning done on server</li>
+                <li>file upload from web client</li>
                 <li>ability to upload unknown file formats</li>
               </ul>
             </ul>
 
           </section>
+
+          <!--
 
           <section>
 
@@ -770,6 +756,8 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
             </ul>
 
           </section>
+
+          -->
 
         </section>
 
