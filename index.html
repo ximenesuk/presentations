@@ -235,83 +235,6 @@
 
             <section>
             <!--
-            /SVS/77928.svs
-==============
-OME5
-real    0m35.953s
-user    0m6.164s
-sys 0m0.716s
-
-OME4 archived:
-real    0m20.350s
-user    0m7.528s
-sys 0m0.636s
-
-
-OME4
-real    0m53.023s
-user    0m7.712s
-sys 0m0.548s
-
-PYR
-2013-06-20 13:50:00,383
-2013-06-20 15:21:40,470 INFO  [                ome.io.nio.PixelsService] (2-thread-5) SUCCESS -- Pyramid created for pixels id:7
-
-render test:
------------
-
-OME5: Planes Loaded: 50 / 50 | Duration: 12.6 secs | Per Plane: 0.252 secs. 
-OME4: Planes Loaded: 50 / 50 | Duration: 11.4 secs | Per Plane: 0.228 secs. 
-OME4(archived):
-
-jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
-4888149841 1012_pyramid
-426209789 1014_pyramid
-6883287 1017_pyramid
-236525 1018_pyramid
-5 321 479 442 total
-
-
-            -->
-                <h2>SVS<br/>(~500MB)</h2>
-                <center>
-                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
-                    <tr>
-                        <th></th>
-                        <th>pre-fs</th>
-                        <th>pre-fs (archived)</th>
-                        <th>fs</th>
-                    </tr>
-                    <tr>
-                        <td>import</td>
-                        <td>23 s.</td>
-                        <td>23 s.</td>
-                        <td>36 s.</td>
-                    </tr>
-                    <tr>
-                        <td>pyramids</td>
-                        <td>90 min.</td>
-                        <td>90 min</td>
-                        <td>none</td>
-                    </tr>
-                    <tr>
-                        <td>avg. plane view</td>
-                        <td>0.25 s.</td>
-                        <td>0.25 s.</td>
-                        <td>0.23 s.</td>
-                    </tr>
-                    <tr>
-                        <td>size on disk</td>
-                        <td>5.5 GB</td>
-                        <td>5.5 GB</td>
-                        <td>500 MB</td>
-                    </tr>
-                </table>
-                </center>
-            </section>
-
-            <section>
-            <!--
             P-TRE_10_R3D_D3D.dv
             ==================
             OME5
@@ -420,6 +343,83 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
                         <td>73 MB</td>
                         <td>200 MB</td>
                         <td>131 MB</td>
+                    </tr>
+                </table>
+                </center>
+            </section>
+
+            <section>
+            <!--
+            /SVS/77928.svs
+==============
+OME5
+real    0m35.953s
+user    0m6.164s
+sys 0m0.716s
+
+OME4 archived:
+real    0m20.350s
+user    0m7.528s
+sys 0m0.636s
+
+
+OME4
+real    0m53.023s
+user    0m7.712s
+sys 0m0.548s
+
+PYR
+2013-06-20 13:50:00,383
+2013-06-20 15:21:40,470 INFO  [                ome.io.nio.PixelsService] (2-thread-5) SUCCESS -- Pyramid created for pixels id:7
+
+render test:
+-----------
+
+OME5: Planes Loaded: 50 / 50 | Duration: 12.6 secs | Per Plane: 0.252 secs. 
+OME4: Planes Loaded: 50 / 50 | Duration: 11.4 secs | Per Plane: 0.228 secs. 
+OME4(archived):
+
+jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
+4888149841 1012_pyramid
+426209789 1014_pyramid
+6883287 1017_pyramid
+236525 1018_pyramid
+5 321 479 442 total
+
+
+            -->
+                <h2>SVS<br/>(~500MB)</h2>
+                <center>
+                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
+                    <tr>
+                        <th></th>
+                        <th>pre-fs</th>
+                        <th>pre-fs (archived)</th>
+                        <th>fs</th>
+                    </tr>
+                    <tr>
+                        <td>import</td>
+                        <td>23 s.</td>
+                        <td>23 s.</td>
+                        <td>36 s.</td>
+                    </tr>
+                    <tr>
+                        <td>pyramids</td>
+                        <td>90 min.</td>
+                        <td>90 min</td>
+                        <td>none</td>
+                    </tr>
+                    <tr>
+                        <td>avg. plane view</td>
+                        <td>0.25 s.</td>
+                        <td>0.25 s.</td>
+                        <td>0.23 s.</td>
+                    </tr>
+                    <tr>
+                        <td>size on disk</td>
+                        <td>5.5 GB</td>
+                        <td>5.5 GB</td>
+                        <td>500 MB</td>
                     </tr>
                 </table>
                 </center>
