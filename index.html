@@ -85,8 +85,8 @@
               <li>server stores Pixels files</li>
               <li>additionally, original files may be stored</li>
               <ul>
-                <!-- todo: consider em css, including bold -->
-                <li><em style="color: #800">data duplication</em></li>
+                <li><em style="color: #800; font-weight: bolder">data duplication</em></li>
+                <li>in triplicate for big images without subresolutions</li>
               </ul>
             </ul>
 
@@ -114,7 +114,6 @@
               </ul>
               <li>additionally, original files could be archived</li>
               <li><em>data is duplicated</em></li>
-              <li><em>big images?</em></li>
             </ul>
 
           </section>
@@ -140,7 +139,6 @@
                 <li>rendering is thus a fast, direct process</li>
               </ul>
               <li>original files only available if archived</li>
-              <li><em>big images?</em></li>
             </ul>
 
           </section>
@@ -157,8 +155,8 @@
               <li>server <em>does not</em> store Pixels files</li>
               <li><em>only</em> original files are stored</li>
               <ul>
-                <!-- todo: consider em css, including bold -->
-                <li><em style="color: #080">no data duplication</em></li>
+                <li><em style="color: #080; font-weight: bolder">no data duplication</em></li>
+                <li>except for big images without subresolutions</li>
               </ul>
             </ul>
 
@@ -185,13 +183,11 @@
                 <li>client and server compare files to check integrity</li>
               </ul>
               <li><em>no data duplication</em></li>
-              <li><em>big images?</em></li>
             </ul>
 
           </section>
           
-          <!--
-              todo: a small transition from this diagram to the next, on the same slide
+          <!-- todo: a small transition from this diagram to the next, on the same slide -->
           <section>
 
             <h1>OMERO 5</h1>
@@ -200,7 +196,8 @@
             <img src="diagrams/to-client-v5.png" width="75%"/>
 
           </section>
-          -->
+
+          <!--
 
           <section>
 
@@ -210,6 +207,8 @@
             <img src="diagrams/to-client-v5-rp.png" width="75%"/>
 
           </section>
+
+          -->
 
           <section>
 
@@ -223,7 +222,6 @@
                 <li>Bio-Formats performance much improved</li>
               </ul>
               <li>original files always available for download</li>
-              <li><em>big images?</em></li>
             </ul>
 
           </section>
@@ -518,8 +516,8 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
               <li>OMERO 5 does not create Pixels files</li>
               <ul>
                 <li>no duplication of image data on server</li>
+                <li>except for big images without subresolutions</li>
               </ul>
-              <li><em>big images</em> (subresolutions)</li>
               <li>preserve original data structure</li>
               <ul>
                 <li>uploaded image files readable by other software</li>
@@ -540,7 +538,7 @@ jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
                 <li>protect against data loss on client systems</li>
               </ul>
               <li>each upload has an import log recorded</li>
-              <li>Bio-Formats improvements benefit older data</li>
+              <li>Bio-Formats improvements benefit existing data</li>
             </ul>
 
           </section>
