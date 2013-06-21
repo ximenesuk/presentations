@@ -55,7 +55,7 @@
           <h1>FS Workshop</h1>
           <h2>Paris 2013</h2>
 
-          <p>How OMERO 5 uses FS to preserve your original image files on OMERO.server.</p>
+          <p>How OMERO 5 uses FS to preserve your original image files on OMERO.server and avoid data duplication.</p>
 
         </section>
 
@@ -63,14 +63,14 @@
 
             <h1>Outline</h1>
             <ul>
-                <li>Import Before FS</li>
-                <li>What is FS?</li>
+                <li>Before FS</li>
+                <li>Introducing FS</li>
                 <li>DEMO #1: Importing and Downloading</li>
-                <li>Advantages</li>
-                <li>What is a Fileset?</li>
+                <li>Advantages of FS</li>
+                <li>Introducing Filesets</li>
                 <li>DEMO #2: Moving and Deleting</li>
                 <li>Migrating to FS</li>
-                <li>Planned Work</li>
+                <li>Building on FS</li>
             </ul>
 
         </section>
@@ -79,21 +79,23 @@
 
           <section>
 
-            <h1>Importing Before FS</h1>
+            <h1>OMERO 4</h1>
 
             <ul>
-              <li>client software extracts planes from image files</li>
-              <li>server stores and uses large Pixels files</li>
-              <li>additionally, original files could be archived</li>
-              <ul><li><em>i.e. data duplication</em></li></ul>
+              <li>server stores Pixels files</li>
+              <li>additionally, original files may be stored</li>
+              <ul>
+                <!-- todo: consider em css, including bold -->
+                <li><em style="color: #800">data duplication</em></li>
+              </ul>
             </ul>
 
           </section>
 
           <section>
 
-            <h1>Client to Server</h1>
-            <h2>OMERO 4</h2>
+            <h1>OMERO 4</h1>
+            <h2>Getting Data In</h2>
 
             <img src="diagrams/from-client-v4.png" width="75%"/>
 
@@ -101,23 +103,45 @@
 
           <section>
 
-            <h1>Rendering Pipeline</h1>
-            <h2>OMERO 4</h2>
+            <h1>OMERO 4</h1>
+            <h2>Getting Data In</h2>
 
             <ul>
-              <li>clients obtain rendered images from server</li>
-              <li>Pixels structure is optimized for reading</li>
-              <li>rendering is thus a fast, direct process</li>
+              <li>client software extracts planes from image files</li>
+              <li>server stores and uses Pixels files</li>
+              <ul>
+                <li>Pixels files are uncompressed, so may be large</li>
+              </ul>
+              <li>additionally, original files could be archived</li>
+              <li><em>data is duplicated</em></li>
+              <li><em>big images?</em></li>
             </ul>
 
           </section>
 
           <section>
 
-            <h1>Server to Client</h1>
-            <h2>OMERO 4</h2>
+            <h1>OMERO 4</h1>
+            <h2>Getting Data Out</h2>
 
             <img src="diagrams/to-client-v4.png" width="75%"/>
+
+          </section>
+
+          <section>
+
+            <h1>OMERO 4</h1>
+            <h2>Getting Data Out</h2>
+
+            <ul>
+              <li>clients obtain rendered images from server</li>
+              <ul>
+                <li>Pixels structure is optimized for reading</li>
+                <li>rendering is thus a fast, direct process</li>
+              </ul>
+              <li>original files only available if archived</li>
+              <li><em>big images?</em></li>
+            </ul>
 
           </section>
 
@@ -127,25 +151,23 @@
 
           <section>
 
-            <h1>What is FS?</h1>
+            <h1>OMERO 5</h1>
 
             <ul>
-              <li>stores only the original files</li>
-              <ul><li><em>i.e. No data duplication</em></li></ul>
-              <li>clients need only wait for file upload</li>
-              <li>no file data corruption on transfer into FS</li>
+              <li>server <em>does not</em> store Pixels files</li>
+              <li><em>only</em> original files are stored</li>
               <ul>
-                <li>client and server compare files to verify clean copy</li>
+                <!-- todo: consider em css, including bold -->
+                <li><em style="color: #080">no data duplication</em></li>
               </ul>
-              <li>Project/Dataset, Screen/Plate hierarchy remains</li>
             </ul>
 
           </section>
 
           <section>
 
-            <h1>Client to Server</h1>
-            <h2>OMERO 5</h2>
+            <h1>OMERO 5</h1>
+            <h2>Getting Data In</h2>
 
             <img src="diagrams/from-client-v5.png" width="75%"/>
 
@@ -153,24 +175,56 @@
 
           <section>
 
-            <h1>Rendering Pipeline</h1>
-            <h2>OMERO 5</h2>
+            <h1>OMERO 5</h1>
+            <h2>Getting Data In</h2>
 
             <ul>
-              <li>managed repository holds uploaded image files</li>
-              <li>Bio-Formats extracts planes from image files</li>
-              <li>server now needs Bio-Formats for rendering</li>
-              <li>Bio-Formats performance much improved</li>
+              <li>clients upload only the original files</li>
+              <ul>
+                <li>can disconnect after upload</li>
+                <li>client and server compare files to check integrity</li>
+              </ul>
+              <li><em>no data duplication</em></li>
+              <li><em>big images?</em></li>
             </ul>
+
+          </section>
+          
+          <!--
+              todo: a small transition from this diagram to the next, on the same slide
+          <section>
+
+            <h1>OMERO 5</h1>
+            <h2>Getting Data Out</h2>
+
+            <img src="diagrams/to-client-v5.png" width="75%"/>
+
+          </section>
+          -->
+
+          <section>
+
+            <h1>OMERO 5</h1>
+            <h2>Getting Data Out</h2>
+
+            <img src="diagrams/to-client-v5-rp.png" width="75%"/>
 
           </section>
 
           <section>
 
-            <h1>Server to Client</h1>
-            <h2>OMERO 5</h2>
+            <h1>OMERO 5</h1>
+            <h2>Getting Data Out</h2>
 
-            <img src="diagrams/to-client-v5.png" width="75%"/>
+            <ul>
+              <li>server now uses Bio-Formats in rendering</li>
+              <ul>
+                <li>Bio-Formats extracts planes from original files</li>
+                <li>Bio-Formats performance much improved</li>
+              </ul>
+              <li>original files always available for download</li>
+              <li><em>big images?</em></li>
+            </ul>
 
           </section>
 
@@ -232,7 +286,7 @@ OME4(archived):
                         <td>pyramids</td>
                         <td>90 min.</td>
                         <td>90 min</td>
-                        <td>n/a</td>
+                        <td>none</td>
                     </tr>
                     <tr>
                         <td>avg. plane view</td>
@@ -394,7 +448,7 @@ OME4(archived):
           <section>
 
             <h1>FS in Action</h1>
-	    <h2>Importing and Downloading</h2>
+            <h2>Importing and Downloading</h2>
 
             <p>We now demonstrate import and download in OMERO 5.</p>
 
@@ -403,9 +457,10 @@ OME4(archived):
           <section>
 
             <h1>FS in Action</h1>
-	    <h2>Importing and Downloading</h2>
+            <h2>Importing and Downloading</h2>
 
             <ul>
+              <li>no archive checkbox</li>
               <li>file import is fast</li>
               <li>import log</li>
               <li>checksums dialog</li>
@@ -424,10 +479,11 @@ OME4(archived):
             <h1>No Data Duplication</h1>
 
             <ul>
-              <li>OMERO 5 does not create large Pixels files</li>
+              <li>OMERO 5 does not create Pixels files</li>
               <ul>
                 <li>no duplication of image data on server</li>
               </ul>
+              <li><em>big images</em> (subresolutions)</li>
               <li>preserve original data structure</li>
               <ul>
                 <li>uploaded image files readable by other software</li>
@@ -465,7 +521,7 @@ OME4(archived):
           we realized that we were going to need to introduce a new construct..."
           -->
 
-            <h1>What is a Fileset?</h1>
+            <h1>Introducing Filesets</h1>
 
             <ul>
               <li>a set of related files</li>
@@ -474,23 +530,29 @@ OME4(archived):
               </ul>
               <li>a set of images, arising from those files</li>
               <li>may be just one file and one image</li>
+              <li>Project/Dataset, Screen/Plate hierarchy remains</li>
             </ul>
 
           </section>
 
           <section>
-            <h1>One file produces one image</h1>
+            <h2>One File &rarr; One Image</h2>
             <img src="diagrams/filesets-figure-1x1.png" width="100%"/>
           </section>
           <section>
-            <h1>One file produces several images</h1>
+            <h2>One File &rarr; Many Images</h2>
             <img src="diagrams/filesets-figure-1xN.png" width="100%"/>
           </section>
           <section>
-            <h1>Several files produce several images</h1>
+            <h2>Many Files &rarr; Many Images</h2>
             <img src="diagrams/filesets-figure-NxN.png" width="100%"/>
           </section>
-
+          <section>
+            <h2>Many Files &rarr; One Image</h2>
+            <ul>
+              <li>e.g. lei, metamorph?</li>
+            </ul>
+          </section>
 
           <section>
 
@@ -511,7 +573,7 @@ OME4(archived):
             <h1>Effects of Indivisibility</h1>
 
             <ul>
-              <li>cannot break fileset by partially deleting or moving between groups</li>
+              <li>cannot break fileset</li>
               <li>repository changes should be via server API</li>
               <li>server prohibits certain acts on partial filesets</li>
               <ul>
@@ -529,7 +591,7 @@ OME4(archived):
           <section>
 
             <h1>FS in Action</h1>
-	    <h2>Moving and Deleting</h2>
+            <h2>Moving and Deleting</h2>
 
             <p>We now demonstrate move and delete in OMERO 5.</p>
 
@@ -538,7 +600,7 @@ OME4(archived):
           <section>
 
             <h1>FS in Action</h1>
-	    <h2>Moving and Deleting</h2>
+            <h2>Moving and Deleting</h2>
 
             <ul>
               <li>change group: partial fails</li>
@@ -555,6 +617,25 @@ OME4(archived):
         <section>
 
             <section>
+
+            <h1>Migrating to FS</h1>
+
+            <ul>
+                <li>new OMERO users should try out OMERO 5</li>
+                <ul>
+                  <li>upgrades will be provided between each beta</li>
+                  <li>and to 5.0.0 and beyond</li>
+                </ul>
+                <li>upgrades from OMERO 4 currently being tested</li>
+                <ul>
+                  <li>process for upgrade to be released after summer</li>
+                  <li>legacy data will be supported</li>
+                </ul>
+            </ul>
+
+            </section>
+
+            <section>
                 <h1>Migrating to FS</h1>
                 <img src="diagrams/milestones.png" width="100%"/>
             </section>
@@ -563,32 +644,13 @@ OME4(archived):
                 <img src="diagrams/milestones2.png" width="100%"/>
             </section>
 
-            <section>
-
-            <h1>Migrating to FS</h1>
-
-            <ul>
-                <li>new OMERO users should try out OMERO 5</li>
-                <ul>
-                <li>upgrades will be provided between each beta</li>
-                <li>and to the final 5.0.0 version, of course</li>
-                </ul>
-                <li>upgrades from OMERO 4 currently being tested</li>
-                <ul>
-                <li>process for upgrade to be released after summer</li>
-                </ul>
-                <li>no near-term plans to allow merging servers!</li>
-            </ul>
-
-            </section>
-
         </section>
 
         <section>
 
           <section>
 
-            <h1>Planned Work</h1>
+            <h1>Building on FS</h1>
 
             <ul>
               <li>detect any file corruption even after upload</li>
@@ -598,7 +660,31 @@ OME4(archived):
               </ul>
               <li>reconsider fileset handling (deletion, etc.)</li>
               <ul>
-                <li>server-side re-import recovers image?</li>
+                <li>server-side recovery from partial deletes?</li>
+              </ul>
+            </ul>
+
+          </section>
+
+          <section>
+
+            <h1>Next-Generation FS</h1>
+            <h2>Getting Data In</h2>
+
+            <img src="diagrams/from-client-v6.png" width="75%"/>
+
+          </section>
+
+          <section>
+
+            <h1>Next-Generation FS</h1>
+            <h2>Getting Data In</h2>
+
+            <ul>
+              <li>import without Bio-Formats on clients</li>
+              <ul>
+                <li>all file format scanning done on server</li>
+                <li>ability to upload unknown file formats</li>
               </ul>
             </ul>
 
@@ -609,15 +695,10 @@ OME4(archived):
             <h1>Next-Generation FS</h1>
 
             <ul>
-              <li>import without Bio-Formats on clients</li>
-              <ul>
-                <li>all file format scanning done on server</li>
-                <li>ability to upload unknown file formats</li>
-              </ul>
-              <li>server renders images from user-managed directories</li>
+              <li>server accesses user-managed directories</li>
               <ul>
                 <li>could be from remote network mount</li>
-                <li>user need not use importer to upload files</li>
+                <li>user need not upload files</li>
               </ul>
             </ul>
 
@@ -667,20 +748,17 @@ zeiss-lsm-martin/
 
             <h1>Configuring FS</h1>
             <h2>etc/omero.properties</h2>
-            <h3>Managed Repository Directory</h3>
 
-            <pre>omero.data.dir=/OMERO/
+            <ul>
+              <li>Managed Repository Directory</li>
+
+              <pre>omero.data.dir=/OMERO/
 omero.managed.dir=${omero.data.dir}/ManagedRepository</pre>
 
-          </section>
+              <li>Template Paths</li>
 
-          <section>
-
-            <h1>Configuring FS</h1>
-            <h2>etc/omero.properties</h2>
-            <h3>Template Paths</h3>
-
-            <pre>omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%</pre>
+              <pre>omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%</pre>
+            </ul>
 
           </section>
 
@@ -701,6 +779,8 @@ omero.managed.dir=${omero.data.dir}/ManagedRepository</pre>
             <h3>Default Checksum Algorithm</h3>
 
             <pre>omero.checksum.default=SHA1-160</pre>
+
+            also Adler-32, CRC-32, MD5-128,<br/>Murmur3-32, Murmur3-128
 
           </section>
 
