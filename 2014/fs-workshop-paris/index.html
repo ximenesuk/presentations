@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>OMERO.fs Workshop - Paris 2013</title>
+
+    <meta name="description" content="Introducing FS in OMERO 5">
+    <meta name="author" content="the Open Microscopy Environment core team">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- OME presentation overrides part of the default theme -->
+    <link rel="stylesheet" href="css/theme/override.css">
+
+    <!-- from Will Moore -->
+    <style>
+      .ome_theme {
+        background-image: url("images/ome-icon-opacity.png");
+        background-color: #f2f6f9;
+        background-repeat: no-repeat;
+        background-position: right -270px top -120px;
+      }
+    </style>
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body class="ome_theme">
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <section>
+
+          <h1>FS Workshop</h1>
+          <h2>Paris 2013</h2>
+
+          <p>How OMERO 5 uses FS to preserve your original image files on OMERO.server and avoid data duplication.</p>
+
+        </section>
+
+        <section>
+
+            <h1>Outline</h1>
+            <ul>
+                <li>Before FS</li>
+                <li>Introducing FS</li>
+                <li>DEMO #1: Importing and Downloading</li>
+                <li>Advantages of FS</li>
+                <li>Introducing Filesets</li>
+                <li>DEMO #2: Moving and Deleting</li>
+                <li>Migrating to FS</li>
+                <li>Building on FS</li>
+            </ul>
+
+        </section>
+
+        <section>
+
+          <section>
+
+            <h1>OMERO 4</h1>
+
+            <ul>
+              <li>server stores Pixels files</li>
+              <li>additionally, original files may be stored</li>
+              <ul>
+                <li><em style="color: #800; font-weight: bolder">data duplication</em></li>
+                <li>in triplicate for big images</li>
+              </ul>
+            </ul>
+
+          </section>
+
+          <section>
+
+            <h1>OMERO 4</h1>
+            <h2>Getting Data In</h2>
+
+            <img src="diagrams/from-client-v4.png" width="75%"/>
+
+          </section>
+
+          <section>
+
+            <h1>OMERO 4</h1>
+            <h2>Getting Data In</h2>
+
+            <ul>
+              <li>client software extracts planes from image files</li>
+              <li>server stores and uses Pixels files</li>
+              <ul>
+                <li>Pixels files are uncompressed, so may be large</li>
+              </ul>
+              <li>additionally, original files could be archived</li>
+              <li><em>data is duplicated</em></li>
+            </ul>
+
+          </section>
+
+          <section>
+
+            <h1>OMERO 4</h1>
+            <h2>Getting Data Out</h2>
+
+            <img src="diagrams/to-client-v4.png" width="75%"/>
+
+          </section>
+
+          <section>
+
+            <h1>OMERO 4</h1>
+            <h2>Getting Data Out</h2>
+
+            <ul>
+              <li>clients obtain rendered images from server</li>
+              <ul>
+                <li>Pixels structure is optimized for reading</li>
+                <li>rendering is thus a fast, direct process</li>
+              </ul>
+              <li>original files only available if archived</li>
+            </ul>
+
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+
+            <h1>OMERO 5</h1>
+
+            <ul>
+              <li>server <em>does not</em> store Pixels files</li>
+              <li><em>only</em> original files are stored</li>
+              <ul>
+                <li><em style="color: #080; font-weight: bolder">no data duplication</em></li>
+                <li>except for big images without subresolutions</li>
+              </ul>
+            </ul>
+
+          </section>
+
+          <section>
+
+            <h1>OMERO 5</h1>
+            <h2>Getting Data In</h2>
+
+            <img src="diagrams/from-client-v5.png" width="75%"/>
+
+          </section>
+
+          <section>
+
+            <h1>OMERO 5</h1>
+            <h2>Getting Data In</h2>
+
+            <ul>
+              <li>clients upload only the original files</li>
+              <ul>
+                <li>can disconnect after upload</li>
+                <li>client and server compare files to check integrity</li>
+              </ul>
+              <li><em>no data duplication</em></li>
+            </ul>
+
+          </section>
+          
+          <!-- todo: a small transition from this diagram to the next, on the same slide -->
+          <section>
+
+            <h1>OMERO 5</h1>
+            <h2>Getting Data Out</h2>
+
+            <img src="diagrams/to-client-v5.png" width="75%"/>
+
+          </section>
+
+          <!--
+
+          <section>
+
+            <h1>OMERO 5</h1>
+            <h2>Getting Data Out</h2>
+
+            <img src="diagrams/to-client-v5-rp.png" width="75%"/>
+
+          </section>
+
+          -->
+
+          <section>
+
+            <h1>OMERO 5</h1>
+            <h2>Getting Data Out</h2>
+
+            <ul>
+              <li>server now uses Bio-Formats in rendering</li>
+              <ul>
+                <li>Bio-Formats extracts planes from original files</li>
+                <li>Bio-Formats performance much improved</li>
+              </ul>
+              <li>original files always available for download</li>
+            </ul>
+
+          </section>
+
+        </section>
+
+        <section>
+            <section>
+                <h1>Some Numbers</h1>
+            </section>
+
+            <section>
+            <!--
+            P-TRE_10_R3D_D3D.dv
+            ==================
+            OME5
+            real    0m18.039s
+            user    0m3.400s
+            sys 0m0.288s
+
+            OME4 (no archive): ID:51
+            real    0m26.692s
+            user    0m5.596s
+            sys 0m0.228s
+
+            OME4 (archived): ID:52
+            real    0m16.071s
+            user    0m6.840s
+            sys 0m0.368s
+
+
+            OME5:  Planes Loaded: 255 / 255 | Duration: 50.0 secs | Per Plane: 0.196 secs. 
+            OME4:51Planes Loaded: 255 / 255 | Duration: 48.5 secs | Per Plane: 0.190 secs. 
+            OME4:52Planes Loaded: 255 / 255 | Duration: 45.2 secs | Per Plane: 0.177 secs. 
+
+            -->
+                <h2>DV<br/>(~125MB)</h2>
+                <center>
+                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
+                    <tr>
+                        <th></th>
+                        <th>pre-fs</th>
+                        <th>pre-fs (archived)</th>
+                        <th>fs</th>
+                    </tr>
+                    <tr>
+                        <td>import</td>
+                        <td>22 s.</td>
+                        <td>26 s.</td>
+                        <td>18 s.</td>
+                    </tr>
+                    <tr>
+                        <td>avg. plane view</td>
+                        <td>0.19 s.</td>
+                        <td>0.18 s.</td>
+                        <td>0.20 s.</td>
+                    </tr>
+                    <tr>
+                        <td>size on disk</td>
+                        <td>128 MB</td>
+                        <td>256 MB</td>
+                        <td>128 MB</td>
+                    </tr>
+                </table>
+                </center>
+            </section>
+
+            <section>
+            <!--
+            lei/050118.txt
+            ==================
+            OME5:
+            real    1m47.221s
+            user    0m5.868s
+            sys 0m0.536s
+
+            OME4 (archive):
+            real    0m44.620s
+            user    0m11.192s
+            sys 0m0.652s
+
+            OME4:
+            real    0m27.293s
+            user    0m9.848s
+            sys 0m0.492s
+
+
+            OME5:Planes Loaded: 3 / 3 | Duration: 0.716 secs | Per Plane: 0.239 secs. 
+            OME4:Planes Loaded: 3 / 3 | Duration: 0.672 secs | Per Plane: 0.224 secs. 
+
+             1048576 1081
+             73 400 320 total
+             jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c `cat /tmp/lei.log `
+
+            -->
+                <h2>LEI<br/>(~130MB&nbsp;/&nbsp;140&nbsp;TIFFs)</h2>
+                <center>
+                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
+                    <tr>
+                        <th></th>
+                        <th>pre-fs</th>
+                        <th>pre-fs (archived)</th>
+                        <th>fs</th>
+                    </tr>
+                    <tr>
+                        <td>import</td>
+                        <td>27 s.</td>
+                        <td>44 s.</td>
+                        <td>107 s. (?)</td>
+                    </tr>
+                    <tr>
+                        <td>avg. plane view</td>
+                        <td>0.67 s.</td>
+                        <td>0.67 s.</td>
+                        <td>0.72 s.</td>
+                    </tr>
+                    <tr>
+                        <td>size on disk</td>
+                        <td>73 MB</td>
+                        <td>200 MB</td>
+                        <td>131 MB</td>
+                    </tr>
+                </table>
+                </center>
+            </section>
+
+            <section>
+            <!--
+            /SVS/77928.svs
+==============
+OME5
+real    0m35.953s
+user    0m6.164s
+sys 0m0.716s
+
+OME4 archived:
+real    0m20.350s
+user    0m7.528s
+sys 0m0.636s
+
+
+OME4
+real    0m53.023s
+user    0m7.712s
+sys 0m0.548s
+
+PYR
+2013-06-20 13:50:00,383
+2013-06-20 15:21:40,470 INFO  [                ome.io.nio.PixelsService] (2-thread-5) SUCCESS -- Pyramid created for pixels id:7
+
+render test:
+-----------
+
+OME5: Planes Loaded: 50 / 50 | Duration: 12.6 secs | Per Plane: 0.252 secs. 
+OME4: Planes Loaded: 50 / 50 | Duration: 11.4 secs | Per Plane: 0.228 secs. 
+OME4(archived):
+
+jamoore@blue:/home/data/448/Pixels/Dir-001$ wc -c 101[24578]_pyramid
+4888149841 1012_pyramid
+426209789 1014_pyramid
+6883287 1017_pyramid
+236525 1018_pyramid
+5 321 479 442 total
+
+
+            -->
+                <h2>SVS<br/>(~500MB)</h2>
+                <center>
+                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
+                    <tr>
+                        <th></th>
+                        <th>pre-fs</th>
+                        <th>pre-fs (archived)</th>
+                        <th>fs</th>
+                    </tr>
+                    <tr>
+                        <td>import</td>
+                        <td>23 s.</td>
+                        <td>23 s.</td>
+                        <td>36 s.</td>
+                    </tr>
+                    <tr>
+                        <td>pyramids</td>
+                        <td>90 min.</td>
+                        <td>90 min.</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>avg. plane view</td>
+                        <td>0.25 s.</td>
+                        <td>0.25 s.</td>
+                        <td>0.23 s.</td>
+                    </tr>
+                    <tr>
+                        <td>size on disk</td>
+                        <td>5.5 GB</td>
+                        <td>5.5 GB</td>
+                        <td>500 MB</td>
+                    </tr>
+                </table>
+                </center>
+            </section>
+
+            <section>
+            <!--
+            INMAC384-DAPI-CM-eGFP_59223_1.xdce
+            ==================
+            OME5:
+            real    34m8.998s
+            user    1m22.936s
+            sys 0m11.740s
+
+
+            OME4 (no archive): Plate:2
+            real    23m3.182s
+            user    3m7.160s
+            sys 0m21.020s
+
+
+            OME5: Planes Loaded: 238 / 384 | Duration: 169 secs | Per Plane: 0.711 secs.
+            OME4: Planes Loaded: 350 / 384 | Duration: 175 secs | Per Plane: 0.501 secs. 
+
+            -->
+                <h2>InCell<br/>(~9GB/~1000 TIFFs)</h2>
+                <center>
+                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
+                    <tr>
+                        <th></th>
+                        <th>pre-fs</th>
+                        <th>pre-fs (archived)</th>
+                        <th>fs</th>
+                    </tr>
+                    <tr>
+                        <td>import</td>
+                        <td>23 min.</td>
+                        <td>n/a</td>
+                        <td>34 min.</td>
+                    </tr>
+                    <tr>
+                        <td>avg. plane view</td>
+                        <td>0.50 s.</td>
+                        <td>n/a</td>
+                        <td>0.71 s.</td>
+                    </tr>
+                    <tr>
+                        <td>size on disk</td>
+                        <td>9 GB</td>
+                        <td>n/a</td>
+                        <td>9 GB</td>
+                    </tr>
+                </table>
+                </center>
+            </section>
+
+            <section>
+                <h2>tl;dr</h2>
+                <center>
+                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
+                    <tr>
+                        <th></th>
+                        <th>pre-fs</th>
+                        <th>pre-fs (archived)</th>
+                        <th>fs</th>
+                    </tr>
+                    <tr>
+                        <td>import</td>
+                        <td>fastest</td>
+                        <td>always slower</td>
+                        <td>working on it</td>
+                    </tr>
+                    <tr>
+                        <td>avg. plane view</td>
+                        <td>fast</td>
+                        <td>fast</td>
+                        <td>still a bit slower</td>
+                    </tr>
+                    <tr>
+                        <td>size on disk</td>
+                        <td>usually smallest</td>
+                        <td>always bigger</td>
+                        <td>original size</td>
+                    </tr>
+                </table>
+                </center>
+            </section>
+
+        </section>
+
+        <section>
+
+          <section>
+
+            <h1>FS in Action</h1>
+            <h2>Importing and Downloading</h2>
+
+            <p>We now demonstrate import and download in OMERO 5.</p>
+
+          </section>
+
+          <section>
+
+            <h1>FS in Action</h1>
+            <h2>Importing and Downloading</h2>
+
+            <ul>
+              <li>no archive checkbox</li>
+              <li>file import is fast</li>
+              <li>import log, aids debugging slow/failed</li>
+              <li>checksums dialog for file integrity</li>
+              <li>file paths popup</li>
+              <li>download files, content intact</li>
+              <li>SVS viewable, uses subresolutions</li>
+            </ul>
+
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+
+            <h1>No Data Duplication</h1>
+
+            <ul>
+              <li>OMERO 5 does not create Pixels files</li>
+              <ul>
+                <li>no duplication of image data on server</li>
+                <li>except for big images without subresolutions</li>
+              </ul>
+              <li>preserve original data structure</li>
+              <ul>
+                <li>uploaded image files readable by other software</li>
+                <li>need not duplicate image data outside FS</li>
+              </ul>
+            </ul>
+
+          </section>
+
+          <section>
+
+            <h1>More FS Advantages</h1>
+
+            <ul>
+              <li>OMERO.server becomes master data repository</li>
+              <ul>
+                <li>easily share data, reproduce analyses</li>
+                <li>protect against data loss on local systems</li>
+              </ul>
+              <li>each upload has an import log recorded</li>
+              <li>Bio-Formats improvements benefit existing data</li>
+            </ul>
+
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+
+          <!-- Presenter's notes:
+          =======================
+          Something along the lines of "to implement this" or "while implementing this
+          we realized that we were going to need to introduce a new construct..."
+          -->
+
+            <h1>Introducing Filesets</h1>
+
+            <ul>
+              <li>a set of related files</li>
+              <ul>
+                <li>Bio-Formats must read them together</li>
+              </ul>
+              <li>a set of images, arising from those files</li>
+              <li>may be just one file and one image</li>
+              <li>Project/Dataset, Screen/Plate hierarchy remains</li>
+            </ul>
+
+          </section>
+
+          <section>
+            <h2>One File &rarr; One Image</h2>
+            <img src="diagrams/filesets-figure-1x1.png" width="100%"/>
+          </section>
+          <section>
+            <h2>One File &rarr; Many Images</h2>
+            <img src="diagrams/filesets-figure-1xN.png" width="100%"/>
+          </section>
+          <section>
+            <h2>Many Files &rarr; Many Images</h2>
+            <img src="diagrams/filesets-figure-NxN.png" width="100%"/>
+          </section>
+          <section>
+            <h2>Many Files &rarr; One Image</h2>
+            <ul>
+              <li>e.g. lei, metamorph?</li>
+            </ul>
+          </section>
+
+          <section>
+
+            <h1>Fileset Indivisibility</h1>
+
+            <ul>
+              <li>files must be kept together for Bio-Formats</li>
+              <li>must also associate the files' images</li>
+              <li>server prohibits certain acts on partial filesets</li>
+              <ul>
+                <li>move between groups</li>
+                <li>delete</li>
+              </ul>
+            </ul>
+
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+
+            <h1>FS in Action</h1>
+            <h2>Moving and Deleting</h2>
+
+            <p>We now demonstrate move and delete in OMERO 5.</p>
+
+          </section>
+
+          <section>
+
+            <h1>FS in Action</h1>
+            <h2>Moving and Deleting</h2>
+
+            <ul>
+              <li>change group: partial fails</li>
+              <li>change group: complete succeeds</li>
+              <li>split fileset images across datasets</li>
+              <li>delete: partial fails</li>
+              <li>delete: complete succeeds</li>
+            </ul>
+
+          </section>
+
+        </section>
+
+        <section>
+
+            <section>
+
+            <h1>Migrating to FS</h1>
+
+            <ul>
+                <li>new OMERO users should try out OMERO 5</li>
+                <ul>
+                  <li>upgrades will be provided between each beta</li>
+                  <li>and to 5.0.0 and beyond</li>
+                </ul>
+                <li>upgrades from OMERO 4 currently being tested</li>
+                <ul>
+                  <li>process for upgrade to be released after summer</li>
+                  <li>pre-FS data will be supported</li>
+                </ul>
+            </ul>
+
+            </section>
+
+            <section>
+                <h1>Migrating to FS</h1>
+                <img src="diagrams/milestones.png" width="100%"/>
+            </section>
+            <section>
+                <h1>Migrating to FS</h1>
+                <img src="diagrams/milestones2.png" width="100%"/>
+            </section>
+
+        </section>
+
+        <section>
+
+          <section>
+
+            <h1>Building on FS</h1>
+
+            <ul>
+              <li>reconsider fileset handling (deletion, etc.)</li>
+              <ul>
+                <li>server-side recovery from partial deletes?</li>
+              </ul>
+              <li>detect and report post-upload file corruption</li>
+            </ul>
+
+          </section>
+
+          <section>
+
+            <h1>Next-Generation FS</h1>
+            <h2>Getting Data In</h2>
+
+            <img src="diagrams/from-client-v6.png" width="75%"/>
+
+          </section>
+
+          <section>
+
+            <h1>Next-Generation FS</h1>
+            <h2>Getting Data In</h2>
+
+            <ul>
+              <li>import without Bio-Formats on clients</li>
+              <ul>
+                <li>all file format scanning done on server</li>
+                <li>file upload from web client</li>
+                <li>ability to upload unknown file formats</li>
+              </ul>
+            </ul>
+
+          </section>
+
+          <!--
+
+          <section>
+
+            <h1>Next-Generation FS</h1>
+
+            <ul>
+              <li>server accesses user-managed directories</li>
+              <ul>
+                <li>could be from remote network mount</li>
+                <li>user need not upload files</li>
+              </ul>
+            </ul>
+
+          </section>
+
+          -->
+
+        </section>
+
+        <section>
+
+          <h1>Any Feedback?</h1>
+
+          <ul>
+            <li>We welcome questions and comments on FS.</li>
+            <li>What further work on FS would be  most useful?</li>
+            <li>Would you like to try out FS at your site?</li>
+          </ul>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h2>The Managed Repository</h2>
+            <pre>
+/home/data/sample$ tree  zeiss-lsm-martin/  # Files local to client
+zeiss-lsm-martin/
+├── 01-01.lsm
+├── 01-02.lsm
+└── 051215-j-tf.mdb
+
+            </pre>
+            <hr/>
+            <pre>
+/OMERO/ManagedRepository/josh_0$ tree .    # Files on the server
+.
+├── 2013-06
+│   ├── 17
+│   │   ├── 09-02-55.180
+│   │   │   ├── 01-01.lsm
+│   │   │   ├── 01-02.lsm
+│   │   │   └── 051215-j-tf.mdb
+│   │   ├── 09-02-55.180.log
+            </pre>
+          </section>
+
+          <section>
+
+            <h1>Configuring FS</h1>
+            <h2>etc/omero.properties</h2>
+
+            <ul>
+              <li>Managed Repository Directory</li>
+
+              <pre>omero.data.dir=/OMERO/
+omero.managed.dir=${omero.data.dir}/ManagedRepository</pre>
+
+              <li>Template Paths</li>
+
+              <pre>omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%</pre>
+            </ul>
+
+          </section>
+
+          <section>
+
+            <h1>Configuring FS</h1>
+            <h2>etc/omero.properties</h2>
+            <h3>Permitted File Naming</h3>
+
+            <pre>omero.fs.repo.path_rules=Windows required, UNIX required</pre>
+
+          </section>
+
+          <section>
+
+            <h1>Configuring FS</h1>
+            <h2>etc/omero.properties</h2>
+            <h3>Default Checksum Algorithm</h3>
+
+            <pre>omero.checksum.default=SHA1-160</pre>
+
+            also Adler-32, CRC-32, MD5-128,<br/>Murmur3-32, Murmur3-128
+
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+
+            <h1>FS in SQL</h1>
+            <h2>Find an Image's Fileset</h2>
+
+            <pre>SELECT fileset FROM image WHERE id = ?</pre>
+
+          </section>
+
+          <section>
+
+            <h1>FS in SQL</h1>
+            <h2>Find Images in Fileset</h2>
+
+            <pre>SELECT name FROM image WHERE fileset = ?</pre>
+
+          </section>
+
+          <section>
+
+            <h1>FS in SQL</h1>
+            <h2>Find Paths of Files in Fileset</h2>
+
+            <pre>SELECT of.path || of.name 
+FROM originalfile of, filesetentry fse 
+WHERE of.id = fse.originalfile 
+AND fse.fileset = ?</pre>
+
+          </section>
+
+          <section>
+
+            <h1>FS in SQL</h1>
+            <h2>Find Checksums of Files in Fileset</h2>
+
+            <pre>SELECT of.name, ca.value, of.hash 
+FROM originalfile of, filesetentry fse, checksumalgorithm ca 
+WHERE of.hasher = ca.id 
+AND of.id = fse.originalfile 
+AND fse.fileset = ?</pre>
+
+          </section>
+
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: 'sky', // Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
