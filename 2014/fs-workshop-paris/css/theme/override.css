@@ -28,3 +28,8 @@
   box-shadow: none;
   border: none;
 }
+
+.reveal q {
+  quotes: inherit;
+  font-style: normal;
+}
