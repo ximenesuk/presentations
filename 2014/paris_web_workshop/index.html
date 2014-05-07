@@ -151,17 +151,75 @@
 
                 <section>
                     <h2>OMERO.web as webservice</h2>
+                    <ul>
+                        <li>API is on documentation
+                            <a href="http://www.openmicroscopy.org/site/support/omero5/developers/Web/WebGateway.html">
+                                WebGateway page
+                            </a>
+                        </li>
+                        <li>Need to be logged-in (or public access, E.g. JCB)</li>
+                    </ul>
                 </section>
 
 
                 <section>
-                    <h2>Using JSON & rendering jpeg API</h2>
+                    <h2>Simple JSON methods</h2>
                     <ul>
-                        <li>Need to be logged-in (or public access, E.g. JCB)</li>
-                        <li>API is on WebGateway page</li>
-                        <li>Simple Project, Dataset methods etc</li>
-                        <li>Image json has lots of info (used by full viewer)</li>
-                        <li>Full rendering options in render_image -> jpeg</li>
+                        <li>Simple Project, Dataset methods. E.g:
+                            <ul>
+                                <li>List projects:
+                                    <a href="https://nightshade.openmicroscopy.org/webgateway/proj/list/">
+                                        /webgateway/proj/list/
+                                    </a>
+                                </li>
+                                <li>Datasets in Project:
+                                    <a href="https://nightshade.openmicroscopy.org/webgateway/proj/23899/children/">
+                                        webgateway/proj/&lt;projectId&gt;/children/
+                                    </a>
+                                </li>
+                                <li>Images in Dataset:
+                                    <a href="https://nightshade.openmicroscopy.org/webgateway/dataset/63496/children/">
+                                        webgateway/dataset/&lt;datasetId&gt;/children/
+                                    </a>
+                                </li>
+                            </ul>
+                        <li>Image json has lots of info (used by full viewer)
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/imgData/3925541/">
+                                webgateway/imgData/&lt;imageId&gt;/
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Rendering jpeg</h2>
+                    <ul>
+                        <div>
+                            <img style="float:left" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/" width='100' height='100'/>
+                            Full rendering options in render_image -> jpeg
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/">
+                                webgateway/render_image/&lt;imageId&gt;/&lt;z&gt;/&lt;t&gt;/
+                            </a>
+                        </div>
+
+                        <div style="clear:both"></div>
+                        <div>
+                            <img style="float:left" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=1,2" width='100' height='100'/>
+                            Use query string to specify channels
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=1,2">
+                                ?c=1,2
+                            </a>
+                        </div>
+
+                        <div style="clear:both"></div>
+                        <div>
+                            <img style="float:left" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=3|605:1851$FF0000" width='100' height='100'/>
+                            Channel settings: index|start:stop$color
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=3|605:1851$FF0000">
+                                ?c=3|605:1851$FF0000
+                            </a>
+                        </div>
                     </ul>
                 </section>
 
@@ -169,8 +227,13 @@
                 <section>
                     <h2>OMERO.figure</h2>
                     <ul>
-                        <li>OMERO.figure demo is static, using JCB webservice</li>
+                        <li>
+                            <a href="http://will-moore.github.io/figure/demo/#file/1">
+                            OMERO.figure demo
+                            </a> is static, using JCB webservice
+                        </li>
                         <li>“Add Images” and paste in full viewer URL.</li>
+                        <img src="http://downloads.openmicroscopy.org/presentations/2014/Figure-Tues-Team-Meeting/images/demo-screen-shot.png" style="width: 800px"/>
                     </ul>
                 </section>
 
