@@ -239,30 +239,88 @@
 
 
                 <section>
-                    <h2>OMERO.web extensions</h2>
-                </section>
-
-
-                <section>
-                    <h2>Standalone app</h2>
+                    <h2>Extending OMERO.web</h2>
                     <ul>
-                        <li>Intro: Django ‘app’ can be installed onto existing OMERO.web</li>
-                        <li>external sites: Stowers, JCB, etc.</li>
-                        <li>prototypes: webmobile, OMERO.gallery</li>
-                        <li>OMERO.figure</li>
-                        <li>Refer to docs</li>
+                        <li>Create a new OMERO.web app</li>
+                        <li>Optional: show app within webclient as 'plugin'</li>
                     </ul>
                 </section>
 
 
                 <section>
-                    <h2>plugins</h2>
+                    <h2>Create an OMERO.web app</h2>
+                    <ul>
+                        <li>See <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/CreateApp.html">
+                            Creating an app</a> documentation
+                        </li>
+                        <li>OMERO.web uses the Django framework to support apps</li>
+                        <li>Apps can be installed onto existing OMERO.web deployments</li>
+                        <li>Apps can use or extend existing page templates or code</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Standalone app examples</h2>
+                    <ul>
+                        <li>External sites
+                            <ul>
+                                <li><a href="http://odr.stowers.org/websimr/">Stowers ODR</a> |
+                                    <a href="http://jcb-dataviewer.rupress.org/">JCB data-viewer</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Prototypes
+                            <ul>
+                                <li><a href="https://github.com/will-moore/gallery/">OMERO.gallery</a> |
+                                    <a href="https://github.com/will-moore/webmobile/">webmobile</a></li>
+                                </ul>
+                        </li>
+                        <li><a href="http://will-moore.github.io/figure/">OMERO.figure</a></li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Webclient plugins</h2>
                     <ul>
                         <li>hooks to bring app content into webclient (center & right)</li>
-                        <li>can also extend existing webclient pages</li>
-                        <li>[Douglas] webtagging</li>
-                        <li>[Simon] OMERO.searcher</li>
-                        <li>writing script? (Move to an analysis workshop?)</li>
+                        <li>webtest examples included in OMERO.web</li>
+                    </ul>
+                    <pre><code style="width:1000px; font-size:80%" class="bash">
+# omeroweb/settings.py
+
+"omero.web.ui.right_plugins": ["RIGHT_PLUGINS",
+  '[["Acquisition", "webclient/data/includes/right_plugin.acquisition.js.html", "metadata_tab"],'\
+  #'["ROIs", "webtest/webclient_plugins/right_plugin.rois.js.html", "image_roi_tab"],'\
+  '["Preview", "webclient/data/includes/right_plugin.preview.js.html", "preview_tab"]]', json.loads],
+                    </code></pre>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2013/June-Users-Meeting/analysis-workshop/images/RightPanelROIs.png" width="400px"/>
+                </section>
+
+
+                <section>
+                    <h2>OMERO.webtagging</h2>
+                            <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/webfigure.png"
+                                width="800px"/>
+                    <ul>
+                        <li>Uses 'central panel' plugin to show current dataset</li>
+                        <li>See: <a href="http://www.openmicroscopy.org/site/support/partner/omero.webtagging">User Guide</a> | 
+                            <a href="https://github.com/dpwrussell/webtagging">Code on Github</a>
+                        <li>Douglas Russell (Oxford)</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>OMERO.searcher</h2>
+                            <img src="http://www.openmicroscopy.org/site/products/partner/omero.searcher/images/searcher-2/image"
+                                width="800px"/>
+                    <ul>
+                        <li>Uses 'right panel' plugin to search with selected images</li>
+                        <li>See: <a href="http://www.openmicroscopy.org/site/products/partner/omero.searcher">More Info</a> | 
+                            <a href="https://github.com/openmicroscopy/omero_searcher">Code on Github</a>
+                        <li>Simon Lee (Dundee)</li>
                     </ul>
                 </section>
             </div>
@@ -290,7 +348,7 @@
                     // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
                     // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
                     // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-                    { src: 'reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
                     // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
                     // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
                     // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
