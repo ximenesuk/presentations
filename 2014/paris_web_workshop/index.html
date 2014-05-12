@@ -158,7 +158,15 @@
                             </a>
                         </li>
                         <li>Need to be logged-in (or public access, E.g. JCB)</li>
+                        <li>jsonp supported for cross-domain queries, E.g. jQuery:</li>
                     </ul>
+                    <pre><code contenteditable style="font-size:90%" class="javascript">
+$.ajax({
+    url: "https://nightshade.openmicroscopy.org/webgateway/proj/list/",
+    jsonp: 'callback',
+    success: function(data) { // },
+}
+                    </code></pre>
                 </section>
 
 
@@ -183,7 +191,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        <li>Image json has lots of info (used by full viewer)
+                        <li>Image json has lots of info (used by <a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3925542/">full viewer</a>)
                             <a href="https://nightshade.openmicroscopy.org/webgateway/imgData/3925541/">
                                 webgateway/imgData/&lt;imageId&gt;/
                             </a>
