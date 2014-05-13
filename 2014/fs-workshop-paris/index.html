@@ -35,7 +35,10 @@
 
     <!-- If the query includes 'print-pdf', use the PDF print sheet -->
     <script>
-      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+      document.write(
+        '<link rel="stylesheet" href="css/print/'
+        + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' )
+        + '.css" type="text/css" media="print">' );
     </script>
 
     <!--[if lt IE 9]>
@@ -51,33 +54,50 @@
       <div class="slides">
 
         <section>
-
           <h1>OMERO Import: FS </h1>
           <h2>Paris 2014</h2>
-
-          <p>OMERO 5 introduces improvements to image import that preserve
-          your original data and reduce data duplication.</p><p>We begin by
-          outlining the change that came with version&nbsp;5.0.0: OMERO.fs.</p>
-
+          <aside class="notes">
+            Some notes (hit 's' on your keyboard).
+          </aside>
         </section>
 
         <section>
-
             <h1>Outline</h1>
             <ul>
-                <li>OMERO 4 import</li>
-                <li>OMERO.fs import</li>
-                <li>Filesets</li>
-                <li>Managed Repository</li>
-                <li>Migrating to FS</li>
+                <li>Introduction to FS</li>
+                <li>Advanced import</li>
+                <li>Advanced out</li>
+                <li>Advanced admin</li>
             </ul>
-
         </section>
 
         <section>
+            <h1>Introduction to FS</h1>
+            <ul>
+                <li>Changes in OMERO5</li>
+                <li>Upgrades</li>
+                <li>Less data duplication</li>
+                <li>Filesets</li>
+                <li>ManagedRepository</li>
+                <li>Synthetic data</li>
+            </ul>
+        </section>
 
-          <h1>OMERO 4 Import</h1>
-    
+        <section>
+          <h1>Changes in OMERO5</h1>
+          <p>
+            OMERO 5 introduces improvements to image import that preserve
+            your original data and reduce data duplication.
+          </p>
+          <p>
+            We begin by outlining the change that came with
+            version&nbsp;5.0.0: OMERO.fs.
+          </p>
+        </section>
+
+        <section>
+          <h1>Changes in OMERO5</h1>
+          <h2>OMERO 4 Import</h2>
           <ul>
             <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
             <ul>
@@ -89,13 +109,11 @@
             </ul>
             <li>pyramids stored for all large images</li>
           </ul>
-
         </section>
 
         <section>
-
-          <h1>OMERO 5 Import: FS</h1>
-
+          <h1>Changes in OMERO5</h1>
+          <h2>OMERO 5 Import: FS</h2>
           <ul>
             <li>client uploads <em>only</em> original data</li>
             <ul>
@@ -107,45 +125,24 @@
               <li><em>only</em> those without subresolutions in file</li>
             </ul>
           </ul>
-
         </section>
 
         <section>
+          <h1>Changes in OMERO5</h1>
+          <h2>OMERO 5 Import: FS</h2>
+          <img src="diagrams/upload.png" width="75%"/>
+        </section>
 
-          <h1>Introducing Filesets</h1>
 
-          <ul>
-            <li>a set of related files</li>
-            <ul>
-              <li>Bio-Formats must read them together</li>
-            </ul>
-            <li>a set of images, arising from those files</li>
-            <li>may be just one file and one image</li>
-            <li>Project/Dataset, Screen/Plate hierarchy remains</li>
-          </ul>
-
+        <section>
+          <h1>Changes in OMERO5</h1>
+          <h2>OMERO 5 Data out: FS</h2>
+          <img src="diagrams/data-out.png" width="75%"/>
         </section>
 
         <section>
-
-          <h1>Managed Repository</h1>
-
-          <ul>
-            <li>server stores and reads original data</li>
-            <li>OMERO acts as repository of original data</li>
-            <li>without Pixels files, less data duplication</li>
-            <li>original data visible in server filesystem</li>
-            <ul>
-              <li>each Fileset in its own subdirectory</li>
-            </ul>
-          </ul>
-
-        </section>
-
-        <section>
-  
-          <h1>Migrating to FS</h1>
-
+          <h1>Upgrades</h1>
+          <h2>Migrating to FS</h2>
           <ul>
             <li>new OMERO users should use OMERO 5</li>
             <li>upgrade scripts provided from OMERO 4</li>
@@ -155,20 +152,140 @@
               <li>for instance: projections, kymographs</li>
             </ul>
           </ul>
-
         </section>
 
         <section>
+          <h1>Less data duplication</h1>
+        </section>
 
+        <section>
+          <h1>Filesets</h1>
+          <h1>Introducing Filesets</h1>
+          <ul>
+            <li>a set of related files</li>
+            <ul>
+              <li>Bio-Formats must read them together</li>
+            </ul>
+            <li>a set of images, arising from those files</li>
+            <li>may be just one file and one image</li>
+            <li>Project/Dataset, Screen/Plate hierarchy remains</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Managed Repository</h1>
+          <ul>
+            <li>server stores and reads original data</li>
+            <li>OMERO acts as repository of original data</li>
+            <li>without Pixels files, less data duplication</li>
+            <li>original data visible in server filesystem</li>
+            <ul>
+              <li>each Fileset in its own subdirectory</li>
+            </ul>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Synthetic data</h1>
+          <p>*** Not sure what this is and whether it should be later?</p>
+        </section>
+
+        <section>
+            <h1>Advanced import</h1>
+            <ul>
+                <li>In-place import</li>
+                <ul>
+                  <li>Even less data duplication</li>
+                </ul>
+                <li>DropBox</li>
+                <li>Polling</li>
+                <li>Cron Job</li>
+            </ul>
+        </section>
+
+        <section>
+          <h1>In-place import</h1>
+          <img src="diagrams/inplace.png" width="75%"/>
+        </section>
+
+        <section>
+          <h1>Even less data duplication</h1>
+        </section>
+
+        <section>
+          <h1>DropBox</h1>
+        </section>
+
+        <section>
+          <h1>Polling</h1>
+        </section>
+
+        <section>
+          <h1>Cron Job</h1>
+        </section>
+
+        <section>
+            <h1>Advanced out</h1>
+            <ul>
+                <li>More on ManagedRepository</li>
+                <li>Samba &amp; ldap mapping</li>
+            </ul>
+        </section>
+
+        <section>
+          <h1>More on ManagedRepository</h1>
+          <img src="diagrams/managedrepo.png" width="75%"/>
+        </section>
+
+        <section>
+          <h1>Samba &amp; ldap mapping</h1>
+          <img src="diagrams/samba.png" width="75%"/>
+        </section>
+
+        <section>
+            <h1>Advanced admin</h1>
+            <ul>
+                <li>Adding disks</li>
+                <li>pre-FS -> FS migration</li>
+            </ul>
+        </section>
+
+        <section>
+          <h1>Adding disks</h1>
+          <img src="diagrams/mounts.png" width="75%"/>
+        </section>
+
+        <section>
+          <h1>pre-FS -> FS migration</h1>
+        </section>
+
+        <section>
+            <h1>Discussion</h1>
+            <ul>
+                <li>Questions?</li>
+                <li>Other import scenarios</li>
+                <li>Feedback</li>
+            </ul>
+        </section>
+
+        <section>
+          <h1>Other import scenarios</h1>
+        </section>
+
+        <section>
+          <h1>Other import scenarios</h1>
+          <h2>Unsmart import</h2>
+          <img src="diagrams/import-no-bf.png" width="75%"/>
+        </section>
+
+        <section>
           <h1>Any Feedback?</h1>
-
           <ul>
             <li>We welcome questions and comments on FS.</li>
             <li>What further work on FS would be most useful?</li>
             <li>Plenty more of this import workshop still to come.</li>
             <li>For more detail of FS see last year's workshop.</li>
           </ul>
-
         </section>
 
       </div>
