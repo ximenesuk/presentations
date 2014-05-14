@@ -54,95 +54,161 @@
       <div class="slides">
 
         <section>
-          <h1>OMERO Import: FS </h1>
-          <h2>Paris 2014</h2>
+          <h2>Import in OMERO 5</h2>
+          <h3>Paris 2014</h3>
+          <p>Mark Carroll, Colin Blackburn &amp; Josh Moore</p>
           <aside class="notes">
             Some notes (hit 's' on your keyboard).
           </aside>
         </section>
 
         <section>
-            <h1>Outline</h1>
+            <h2>Outline</h2>
             <ul>
-                <li>Introduction to FS</li>
+                <li>Introduction to OMERO 5</li>
                 <li>Advanced import</li>
-                <li>Advanced out</li>
-                <li>Advanced admin</li>
+                <li>Advanced data output</li>
+                <li>Advanced administration</li>
+                <li>Discussion</li>
             </ul>
         </section>
 
+        <!-- Introduction - Mark -->
         <section>
-            <h1>Introduction to FS</h1>
+            <h2>Introduction to OMERO 5</h2>
             <ul>
-                <li>Changes in OMERO5</li>
-                <li>Upgrades</li>
-                <li>Less data duplication</li>
+                <li>Changes in OMERO 5</li>
                 <li>Filesets</li>
                 <li>ManagedRepository</li>
-                <li>Synthetic data</li>
+                <li>Upgrades</li>
             </ul>
         </section>
 
         <section>
-          <h1>Changes in OMERO5</h1>
-          <p>
-            OMERO 5 introduces improvements to image import that preserve
-            your original data and reduce data duplication.
-          </p>
-          <p>
-            We begin by outlining the change that came with
-            version&nbsp;5.0.0: OMERO.fs.
-          </p>
-        </section>
+          <section>
+            <h2>Changes in OMERO 5</h2>
+            <p>
+              OMERO 5 introduces improvements to image import that preserve
+              your original data and reduce data duplication.
+            </p>
+            <p>
+              We begin by outlining the change that came with
+              version&nbsp;5.0.0: OMERO.fs.
+            </p>
+          </section>
 
-        <section>
-          <h1>Changes in OMERO5</h1>
-          <h2>OMERO 4 Import</h2>
-          <ul>
-            <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
+          <section>
+            <h3>OMERO 4 Import</h3>
             <ul>
-              <li>stored as <q>Pixels</q>, an internal uncompressed format</li>
+              <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
+              <ul>
+                <li>stored as <q>Pixels</q>, an internal uncompressed format</li>
+              </ul>
+              <li><em>additionally</em>, original <q>archived</q> files can be stored</li>
+              <ul>
+                <li>though not for HCS plates</li>
+              </ul>
+              <li>pyramids stored for all large images</li>
             </ul>
-            <li><em>additionally</em>, original <q>archived</q> files can be stored</li>
+          </section>
+
+          <section>
+            <h3>OMERO 5 Import</h3>
             <ul>
-              <li>though not for HCS plates</li>
+              <li>client uploads <em>only</em> original data</li>
+              <ul>
+                <li>including HCS plates, everything is <q>archived</q></li>
+              </ul>
+              <li>server <em>does not</em> store Pixels files</li>
+              <li>pyramids stored for few large images</li>
+              <ul>
+                <li><em>only</em> those without subresolutions in file</li>
+              </ul>
             </ul>
-            <li>pyramids stored for all large images</li>
-          </ul>
-        </section>
+          </section>
 
-        <section>
-          <h1>Changes in OMERO5</h1>
-          <h2>OMERO 5 Import: FS</h2>
-          <ul>
-            <li>client uploads <em>only</em> original data</li>
+          <section>
+            <h3>OMERO 5 Import</h3>
+            <img src="diagrams/upload.png" width="75%"/>
+          </section>
+
+          <section>
+            <h3>OMERO 5 Data out</h3>
             <ul>
-              <li>including HCS plates, everything is <q>archived</q></li>
+              <li>pixels provided directly from original files</li>
+              <ul>
+                <li>server-side Bio-Formats</li>
+              </ul>
+              <li>original files always available for download</li>
+              <ul>
+                <li>including HCS plates</li>
+              </ul>
             </ul>
-            <li>server <em>does not</em> store Pixels files</li>
-            <li>pyramids stored for few large images</li>
+          </section>
+
+          <section>
+            <h3>OMERO 5 Data out</h3>
+            <img src="diagrams/data-out.png" width="75%"/>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Filesets</h2>
+            <h2>Introducing Filesets</h2>
             <ul>
-              <li><em>only</em> those without subresolutions in file</li>
+              <li>a set of related files</li>
+              <ul>
+                <li>Bio-Formats must read them together</li>
+              </ul>
+              <li>a set of images, arising from those files</li>
+              <li>may be just one file and one image</li>
+              <li>Project/Dataset, Screen/Plate hierarchy remains</li>
             </ul>
-          </ul>
+          </section>
+
+          <section>
+            <h2>Filesets</h2>
+            <h2>One to one</h2>
+            <p>IMAGE PLACEHOLDER</p>
+          </section>
+
+          <section>
+            <h2>Filesets</h2>
+            <h2>One to many</h2>
+            <p>IMAGE PLACEHOLDER</p>
+          </section>
+
+          <section>
+            <h2>Filesets</h2>
+            <h2>Many to many</h2>
+            <p>IMAGE PLACEHOLDER</p>
+          </section>
         </section>
 
         <section>
-          <h1>Changes in OMERO5</h1>
-          <h2>OMERO 5 Import: FS</h2>
-          <img src="diagrams/upload.png" width="75%"/>
+          <section>
+            <h2>ManagedRepository</h2>
+            <ul>
+              <li>server stores and reads original data</li>
+              <li>OMERO acts as repository of original data</li>
+              <li>without Pixels files, less data duplication</li>
+              <li>original data visible in server filesystem</li>
+              <ul>
+                <li>each Fileset in its own subdirectory</li>
+              </ul>
+            </ul>
+          </section>
+
+          <section>
+            <h2>ManagedRepository</h2>
+            <img src="diagrams/managedrepo-intro.png" width="90%"/>
+          </section>
         </section>
 
-
         <section>
-          <h1>Changes in OMERO5</h1>
-          <h2>OMERO 5 Data out: FS</h2>
-          <img src="diagrams/data-out.png" width="75%"/>
-        </section>
-
-        <section>
-          <h1>Upgrades</h1>
-          <h2>Migrating to FS</h2>
+          <h2>Upgrades</h2>
+          <h3>Migrating to FS</h3>
           <ul>
             <li>new OMERO users should use OMERO 5</li>
             <li>upgrade scripts provided from OMERO 4</li>
@@ -154,49 +220,11 @@
           </ul>
         </section>
 
+        <!-- Advanced import - Colin -->
         <section>
-          <h1>Less data duplication</h1>
-        </section>
-
-        <section>
-          <h1>Filesets</h1>
-          <h1>Introducing Filesets</h1>
-          <ul>
-            <li>a set of related files</li>
-            <ul>
-              <li>Bio-Formats must read them together</li>
-            </ul>
-            <li>a set of images, arising from those files</li>
-            <li>may be just one file and one image</li>
-            <li>Project/Dataset, Screen/Plate hierarchy remains</li>
-          </ul>
-        </section>
-
-        <section>
-          <h1>Managed Repository</h1>
-          <ul>
-            <li>server stores and reads original data</li>
-            <li>OMERO acts as repository of original data</li>
-            <li>without Pixels files, less data duplication</li>
-            <li>original data visible in server filesystem</li>
-            <ul>
-              <li>each Fileset in its own subdirectory</li>
-            </ul>
-          </ul>
-        </section>
-
-        <section>
-          <h1>Synthetic data</h1>
-          <p>*** Not sure what this is and whether it should be later?</p>
-        </section>
-
-        <section>
-            <h1>Advanced import</h1>
+            <h2>Advanced import</h2>
             <ul>
                 <li>In-place import</li>
-                <ul>
-                  <li>Even less data duplication</li>
-                </ul>
                 <li>DropBox</li>
                 <li>Polling</li>
                 <li>Cron Job</li>
@@ -204,28 +232,42 @@
         </section>
 
         <section>
-          <h1>In-place import</h1>
-          <img src="diagrams/inplace.png" width="75%"/>
+          <section>
+            <h3>In-place import</h3>
+            <ul>
+              <li>client transfers original data to ManagedRepository</li>
+              <ul>
+                <li>uploads - deafult as already outlined</li>
+                <li>creates soft links</li>
+                <li>creates hard links</li>
+                <li>creates hard links followed by delete of source files</li>
+                <li>employs user-defined transfer mode</li>
+              </ul>
+              <li>server-side import as previously outlined</li>
+              <li>Potential for even less data duplication</li>
+          </section>
+
+          <section>
+            <h2>In-place import</h2>
+            <img src="diagrams/inplace.png" width="75%"/>
+          </section>
         </section>
 
         <section>
-          <h1>Even less data duplication</h1>
+          <h2>DropBox</h2>
         </section>
 
         <section>
-          <h1>DropBox</h1>
+          <h2>Polling</h2>
         </section>
 
         <section>
-          <h1>Polling</h1>
+          <h2>Cron Job</h2>
         </section>
 
+        <!-- Advanced output & admin - Josh -->
         <section>
-          <h1>Cron Job</h1>
-        </section>
-
-        <section>
-            <h1>Advanced out</h1>
+            <h2>Advanced out</h2>
             <ul>
                 <li>More on ManagedRepository</li>
                 <li>Samba &amp; ldap mapping</li>
@@ -233,17 +275,31 @@
         </section>
 
         <section>
-          <h1>More on ManagedRepository</h1>
-          <img src="diagrams/managedrepo.png" width="75%"/>
+          <section>
+            <h2>More on ManagedRepository</h2>
+            <p>BULLET POINT PLACEHOLDER</p>
+          </section>
+          <section data-transition="none">
+            <h2>Templates</h2>
+            <img src="diagrams/managedrepo-template.png" width="90%"/>
+          </section>
+          <section data-transition="none">
+            <h2>Templates</h2>
+            <img src="diagrams/managedrepo-shared.png" width="90%"/>
+          </section>
+          <section data-transition="none">
+            <h2>Templates</h2>
+            <img src="diagrams/managedrepo-user.png" width="90%"/>
+          </section>
         </section>
 
         <section>
-          <h1>Samba &amp; ldap mapping</h1>
-          <img src="diagrams/samba.png" width="75%"/>
+          <h2>Samba &amp; ldap mapping</h2>
+          <img src="diagrams/samba.png" width="90%"/>
         </section>
 
         <section>
-            <h1>Advanced admin</h1>
+            <h2>Advanced admin</h2>
             <ul>
                 <li>Adding disks</li>
                 <li>pre-FS -> FS migration</li>
@@ -251,16 +307,17 @@
         </section>
 
         <section>
-          <h1>Adding disks</h1>
-          <img src="diagrams/mounts.png" width="75%"/>
+          <h2>Adding disks</h2>
+          <img src="diagrams/mounts.png" width="90%"/>
         </section>
 
         <section>
-          <h1>pre-FS -> FS migration</h1>
+          <h2>pre-FS -> FS migration</h2>
         </section>
 
+        <!-- Discussion - all -->
         <section>
-            <h1>Discussion</h1>
+            <h2>Discussion</h2>
             <ul>
                 <li>Questions?</li>
                 <li>Other import scenarios</li>
@@ -269,17 +326,25 @@
         </section>
 
         <section>
-          <h1>Other import scenarios</h1>
+          <section>
+            <h2>Other import scenarios</h2>
+            <p>BULLET POINT PLACEHOLDER</p>
+          </section>
+
+          <section>
+            <h3>Unsmart import</h3>
+            <img src="diagrams/import-no-bf.png" width="75%"/>
+          </section>
+
+          <section>
+            <h3>Yada yada import</h3>
+            <p>IMAGE PLACEHOLDER</p>
+            <p>...</p>
+          </section>
         </section>
 
         <section>
-          <h1>Other import scenarios</h1>
-          <h2>Unsmart import</h2>
-          <img src="diagrams/import-no-bf.png" width="75%"/>
-        </section>
-
-        <section>
-          <h1>Any Feedback?</h1>
+          <h2>Any Feedback?</h2>
           <ul>
             <li>We welcome questions and comments on FS.</li>
             <li>What further work on FS would be most useful?</li>
