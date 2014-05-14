@@ -53,9 +53,10 @@
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
 
+        <!-- Talk introduction - All ?? -->
         <section>
-          <h2>Import in OMERO 5</h2>
-          <h3>Paris 2014</h3>
+          <h1>Import in OMERO 5</h1>
+          <h2>Paris 2014</h2>
           <p>Mark Carroll, Colin Blackburn &amp; Josh Moore</p>
           <aside class="notes">
             Some notes (hit 's' on your keyboard).
@@ -73,13 +74,13 @@
             </ul>
         </section>
 
-        <!-- Introduction - Mark -->
+        <!-- Introduction - Colin/Mark ?? -->
         <section>
             <h2>Introduction to OMERO 5</h2>
             <ul>
                 <li>Changes in OMERO 5</li>
-                <li>Filesets</li>
                 <li>ManagedRepository</li>
+                <li>Filesets</li>
                 <li>Upgrades</li>
             </ul>
         </section>
@@ -98,7 +99,7 @@
           </section>
 
           <section>
-            <h3>OMERO 4 Import</h3>
+            <h2>OMERO 4 Import</h2>
             <ul>
               <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
               <ul>
@@ -113,7 +114,7 @@
           </section>
 
           <section>
-            <h3>OMERO 5 Import</h3>
+            <h2>OMERO 5 Import</h2>
             <ul>
               <li>client uploads <em>only</em> original data</li>
               <ul>
@@ -133,7 +134,7 @@
           </section>
 
           <section>
-            <h3>OMERO 5 Data out</h3>
+            <h2>OMERO 5 Data out</h2>
             <ul>
               <li>pixels provided directly from original files</li>
               <ul>
@@ -154,40 +155,6 @@
 
         <section>
           <section>
-            <h2>Filesets</h2>
-            <h2>Introducing Filesets</h2>
-            <ul>
-              <li>a set of related files</li>
-              <ul>
-                <li>Bio-Formats must read them together</li>
-              </ul>
-              <li>a set of images, arising from those files</li>
-              <li>may be just one file and one image</li>
-              <li>Project/Dataset, Screen/Plate hierarchy remains</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Filesets</h2>
-            <h2>One to one</h2>
-            <p>IMAGE PLACEHOLDER</p>
-          </section>
-
-          <section>
-            <h2>Filesets</h2>
-            <h2>One to many</h2>
-            <p>IMAGE PLACEHOLDER</p>
-          </section>
-
-          <section>
-            <h2>Filesets</h2>
-            <h2>Many to many</h2>
-            <p>IMAGE PLACEHOLDER</p>
-          </section>
-        </section>
-
-        <section>
-          <section>
             <h2>ManagedRepository</h2>
             <ul>
               <li>server stores and reads original data</li>
@@ -201,14 +168,43 @@
           </section>
 
           <section>
-            <h2>ManagedRepository</h2>
+            <h3>ManagedRepository</h3>
             <img src="diagrams/managedrepo-intro.png" width="90%"/>
           </section>
         </section>
 
         <section>
-          <h2>Upgrades</h2>
-          <h3>Migrating to FS</h3>
+          <section>
+            <h2>Filesets</h2>
+            <ul>
+              <li>a set of related files</li>
+              <ul>
+                <li>Bio-Formats must read them together</li>
+              </ul>
+              <li>a set of images, arising from those files</li>
+              <li>may be just one file and one image</li>
+              <li>Project/Dataset, Screen/Plate hierarchy remains</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>One to one</h3>
+            <img src="diagrams/fileset_1x1.png" width="90%"/>
+          </section>
+
+          <section>
+            <h3>One to many</h3>
+            <img src="diagrams/fileset_1xn.png" width="90%"/>
+          </section>
+
+          <section>
+            <h3>Many to many</h3>
+            <img src="diagrams/fileset_nxn.png" width="90%"/>
+          </section>
+        </section>
+
+        <section>
+          <h2>Migrating to FS</h2>
           <ul>
             <li>new OMERO users should use OMERO 5</li>
             <li>upgrade scripts provided from OMERO 4</li>
@@ -220,20 +216,19 @@
           </ul>
         </section>
 
-        <!-- Advanced import - Colin -->
+        <!-- Advanced import - Colin ?? -->
         <section>
             <h2>Advanced import</h2>
             <ul>
                 <li>In-place import</li>
-                <li>DropBox</li>
-                <li>Polling</li>
-                <li>Cron Job</li>
+                <li>DropBox import</li>
+                <li>Polling &amp; cron job import</li>
             </ul>
         </section>
 
         <section>
           <section>
-            <h3>In-place import</h3>
+            <h2>In-place import</h2>
             <ul>
               <li>client transfers original data to ManagedRepository</li>
               <ul>
@@ -248,24 +243,31 @@
           </section>
 
           <section>
-            <h2>In-place import</h2>
+            <h3>In-place import</h3>
             <img src="diagrams/inplace.png" width="75%"/>
           </section>
         </section>
 
         <section>
-          <h2>DropBox</h2>
+          <section>
+            <h2>DropBox import</h2>
+            <p>BULLET POINT PLACEHOLDER</p>
+            <p>FURTHER SLIDES REQUIRED?</p>
+          </section>
+
+          <section>
+            <h3>DropBox</h3>
+            <p>IMAGE PLACEHOLDER</p>
+          </section>
         </section>
 
         <section>
-          <h2>Polling</h2>
+          <h2>Polling &amp; cron job import</h2>
+          <p>BULLET POINT PLACEHOLDER</p>
+          <p>FURTHER SLIDES REQUIRED?</p>
         </section>
 
-        <section>
-          <h2>Cron Job</h2>
-        </section>
-
-        <!-- Advanced output & admin - Josh -->
+        <!-- Advanced output & admin - Josh/Colin ?? -->
         <section>
             <h2>Advanced out</h2>
             <ul>
@@ -280,22 +282,29 @@
             <p>BULLET POINT PLACEHOLDER</p>
           </section>
           <section data-transition="none">
-            <h2>Templates</h2>
+            <h3>Templates</h3>
             <img src="diagrams/managedrepo-template.png" width="90%"/>
           </section>
           <section data-transition="none">
-            <h2>Templates</h2>
+            <h3>Templates</h3>
             <img src="diagrams/managedrepo-shared.png" width="90%"/>
           </section>
           <section data-transition="none">
-            <h2>Templates</h2>
+            <h3>Templates</h3>
             <img src="diagrams/managedrepo-user.png" width="90%"/>
           </section>
         </section>
 
         <section>
-          <h2>Samba &amp; ldap mapping</h2>
-          <img src="diagrams/samba.png" width="90%"/>
+          <section>
+            <h2>Samba &amp; ldap mapping</h2>
+            <p>BULLET POINT PLACEHOLDER</p>
+            <p>FURTHER SLIDES REQUIRED?</p>
+          </section>
+          <section>
+            <h3>Samba</h3>
+            <img src="diagrams/samba.png" width="90%"/>
+          </section>
         </section>
 
         <section>
@@ -307,28 +316,41 @@
         </section>
 
         <section>
-          <h2>Adding disks</h2>
-          <img src="diagrams/mounts.png" width="90%"/>
-        </section>
+          <section>
+            <h2>Adding disks</h2>
+            <p>BULLET POINT PLACEHOLDER</p>
+            <p>FURTHER SLIDES REQUIRED?</p>
+          </section>
 
-        <section>
-          <h2>pre-FS -> FS migration</h2>
-        </section>
-
-        <!-- Discussion - all -->
-        <section>
-            <h2>Discussion</h2>
-            <ul>
-                <li>Questions?</li>
-                <li>Other import scenarios</li>
-                <li>Feedback</li>
-            </ul>
+          <section>
+            <h3>Adding disks</h3>
+            <img src="diagrams/mounts.png" width="90%"/>
+          </section>
         </section>
 
         <section>
           <section>
-            <h2>Other import scenarios</h2>
+            <h2>pre-FS -> FS migration</h2>
             <p>BULLET POINT PLACEHOLDER</p>
+            <p>FURTHER SLIDES REQUIRED?</p>
+          </section>
+        </section>
+
+        <!-- Discussion - All -->
+        <section>
+          <h3>Discussion</h3>
+          <ul>
+            <li>Questions?</li>
+            <li>Other import scenarios</li>
+            <li>Feedback</li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h3>Other import scenarios</h3>
+            <p>BULLET POINT PLACEHOLDER</p>
+            <p>FURTHER SLIDES REQUIRED?</p>
           </section>
 
           <section>
@@ -348,7 +370,7 @@
           <ul>
             <li>We welcome questions and comments on FS.</li>
             <li>What further work on FS would be most useful?</li>
-            <li>Plenty more of this import workshop still to come.</li>
+            <!-- <li>Plenty more of this import workshop still to come.</li> -->
             <li>For more detail of FS see last year's workshop.</li>
           </ul>
         </section>
