@@ -94,18 +94,18 @@
                     <h3>OME Paris 2014</h3>
                     <p>
                         <small>
-                            Aleksandra Tarkowska | Will Moore
+                            Aleksandra Tarkowska | Will Moore | Simon Li | Douglas Russell
                         </small>
                     </p>
                 </section>
 
                 <!-- talk outline -->
                 <section>
-                    <h2>OMERO.web:</h2>
+                    <h2>Using OMERO.web...</h2>
                     <ul>
-                        <li>managed data repositories</li>
-                        <li>as webservice</li>
-                        <li>extensions</li>
+                        <li>for managed data repositories</li>
+                        <li>as a webservice</li>
+                        <li>to extend with your own apps</li>
                     </ul>
                 </section>
 
@@ -142,23 +142,20 @@
                     <h2>Public Repositories</h2>
                     
                     <ul>
-                        <li>JCB</li>
-                        <li>Stowers</li>
+                        <li><a href="http://odr.stowers.org/websimr/">Stowers ODR</a></li>
+                        <li><a href="http://jcb-dataviewer.rupress.org/">JCB data-viewer</a></li>
+                        <li><a href="http://ssbd.qbic.riken.jp/">SSBD</a> displays <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1">data in webclient</a></li>
+                        <li><a href="http://www.ebi.ac.uk/pdbe/entry/EMD-5951/slice">EM-Databank</a></li>
                     </ul>
                 </section>
 
 
                 <section>
                     <h2>How to set up "Public User"</h2>
-                    <p>https://www.openmicroscopy.org/site/support/omero5/developers/Web/PublicData.html</p>
+                    <p><a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/PublicData.html">
+                        Public Data Documentation</a>
+                    </p>
                     
-                </section>
-
-
-                <section>
-                    <h2>Embedding live image</h2>
-                    
-                    <iframe width="800" height="600" src="http://jsfiddle.net/aleksandratarkowska/S5C7G/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
                 </section>
 
 
@@ -214,11 +211,11 @@ $.ajax({
 
 
                 <section>
-                    <h2>Rendering jpeg</h2>
+                    <h2>Image Rendering</h2>
                     <ul>
                         <div>
                             <img style="float:left" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/" width='100' height='100'/>
-                            Full rendering options in render_image -> jpeg
+                            Full rendering options in render_image
                             <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/">
                                 webgateway/render_image/&lt;imageId&gt;/&lt;z&gt;/&lt;t&gt;/
                             </a>
@@ -246,6 +243,13 @@ $.ajax({
 
 
                 <section>
+                    <h2>Embedding live image</h2>
+                    
+                    <iframe width="800" height="600" src="http://jsfiddle.net/aleksandratarkowska/S5C7G/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+                </section>
+
+
+                <section>
                     <h2>OMERO.figure</h2>
                     <ul>
                         <li>
@@ -253,8 +257,7 @@ $.ajax({
                             OMERO.figure demo
                             </a> is static, using JCB webservice
                         </li>
-                        <li>“Add Images” and paste in full viewer URL.</li>
-                        <img src="http://downloads.openmicroscopy.org/presentations/2014/Figure-Tues-Team-Meeting/images/demo-screen-shot.png" style="width: 800px"/>
+                        <iframe width="1500" height="800" src="http://will-moore.github.io/figure/demo/#file/1" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
                     </ul>
                 </section>
 
@@ -341,7 +344,7 @@ $.ajax({
                         <li>Uses 'right panel' plugin to search with selected images</li>
                         <li>See: <a href="http://www.openmicroscopy.org/site/products/partner/omero.searcher">More Info</a> | 
                             <a href="https://github.com/openmicroscopy/omero_searcher">Code on Github</a>
-                        <li>Simon Lee (Dundee)</li>
+                        <li>Simon Li (Dundee)</li>
                     </ul>
                 </section>
             </div>
