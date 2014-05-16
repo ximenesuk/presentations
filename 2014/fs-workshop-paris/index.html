@@ -331,7 +331,7 @@
         <section>
             <h2>Advanced out</h2>
             <ul>
-                <li>More on ManagedRepository</li>
+                <li>Knowing your ManagedRepository</li>
                 <li>Samba &amp; ldap mapping</li>
             </ul>
             <aside class="notes">
@@ -340,8 +340,22 @@
 
         <section>
           <section>
-            <h2>More on ManagedRepository</h2>
-            <p>BULLET POINT PLACEHOLDER</p>
+            <h2>Knowing your ManagedRepository</h2>
+            <table>
+                <tr>
+                    <td>
+                        <pre>
+$ bin/omero fs repos
+ # | Id   | UUID                                 | Type    | Path                             
+---+------+--------------------------------------+---------+----------------------------------
+ 0 | 1    | c8db8f5c-b6ba-472f-b0d5-3dac4f31be66 | Public  | /home/data/ome2                  
+ 1 | 2    | ScriptRepo                           | Script  | /opt/ome2/dist/lib/scripts       
+ 2 | 3    | c4df3508-cffe-4bf2-a1c8-b3c1395f737f | Managed | /home/data/ome2/ManagedRepository
+(3 rows)
+                        </pre>
+                    </td>
+                </tr>
+            </table>
             <aside class="notes">
               Files go into locations based on the template.
               (Explanation slide on template if this hasn't
@@ -363,10 +377,45 @@
             </aside>
           </section>
 
+          <section>
+            <h2>Template configuration</h2>
+            <table>
+                <tr>
+                    <td>
+                        <pre>
+# Template for FS managed repository paths.
+# Allowable elements are:
+# %user%       bob
+# %userId%     4
+# %group%      bobLab
+# %groupId%    3
+# %year%       2011
+# %month%      01
+# %monthname%  january
+# %day%        01
+# %time%       15-13-54.014
+# /            path separator
+#
+# %user%_%userId%/ must come first, and the path must be unique per fileset
+# to prevent upload conflicts, which is why %time% includes milliseconds.
+#
+# The template path is created below &lt;omero.managed.dir&gt;,
+# e.g. /OMERO/ManagedRepository/&lt;omero.fs.repo.path&gt;/
+omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
+                        </pre>
+                    </td>
+                </tr>
+            </table>
+            <aside class="notes">
+            General thinking: show them what's configurable
+            </aside>
+          </section>
+
           <section data-transition="none">
             <h3>Templates</h3>
-            <img src="diagrams/managedrepo-template.png" width="90%"/>
+            <img alt="Template diagram" src="diagrams/managedrepo-template.png" width="90%"/>
             <aside class="notes">
+            "In a somewhat more attractive form..."
             </aside>
           </section>
 
@@ -397,8 +446,11 @@
         <section>
           <section>
             <h2>Samba &amp; ldap mapping</h2>
-            <p>BULLET POINT PLACEHOLDER</p>
-            <p>FURTHER SLIDES REQUIRED?</p>
+            <ul>
+                <li>/OMERO/ManagedRepository can be mapped via Samba</li>
+                <li>Safest for read-only access</li>
+                <li>Best if per-user mapping can be applied</li>
+            </ul>
             <aside class="notes">
               For example, depending on the template, each
               user can be access to his/her directory via
@@ -431,7 +483,6 @@
           <section>
             <h2>Adding disks</h2>
             <p>BULLET POINT PLACEHOLDER</p>
-            <p>FURTHER SLIDES REQUIRED?</p>
             <aside class="notes">
               Josh: Although I'd really like to allow spinning up multiple
               managed repos and choosing them based on number of stars or
@@ -444,7 +495,7 @@
 
           <section>
             <h3>Adding disks</h3>
-            <img src="diagrams/mounts.png" width="90%"/>
+            <img alt="mounts" src="diagrams/mounts.png" width="90%"/>
             <aside class="notes">
             </aside>
           </section>
@@ -452,16 +503,20 @@
 
         <section>
           <section>
-            <h2>pre-FS -> FS migration</h2>
-            <p>BULLET POINT PLACEHOLDER</p>
-            <p>FURTHER SLIDES REQUIRED?</p>
+            <h2>pre-FS -&gt; FS migration</h2>
+            <ul>
+                <li>OMERO4 and before allowed <b>archiving</b> original files</li>
+                <li><code>bin/omero fs images --archived</code></li>
+                <li>Preparing user script to help conversion</li>
+                <li>Limitations</li>
+            </ul>
             <aside class="notes">
-              Josh: I've nearly got something working on my branch of the same
-              ticket number. Debating whether or not to go ahead and move it
-              server-side before Paris since the one thing I can't do in my
-              pytest is delete the Pixels on disk. (No API method for that)
-              In general it works though.
-              Add bp from PR2503 '12176 attach fsfiles'
+                Josh: I've nearly got something working on my branch of the same
+                ticket number. Debating whether or not to go ahead and move it
+                server-side before Paris since the one thing I can't do in my
+                pytest is delete the Pixels on disk. (No API method for that)
+                In general it works though.
+                Add bp from PR2503 '12176 attach fsfiles'
             </aside>
           </section>
         </section>
