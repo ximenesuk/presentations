@@ -59,7 +59,6 @@
           <h2>Paris 2014</h2>
           <p>Mark Carroll, Colin Blackburn &amp; Josh Moore</p>
           <aside class="notes">
-            Some notes (hit 's' on your keyboard).
           </aside>
         </section>
 
@@ -72,6 +71,8 @@
                 <li>Advanced administration</li>
                 <li>Discussion</li>
             </ul>
+            <aside class="notes">
+            </aside>
         </section>
 
         <!-- Introduction - Colin/Mark ?? -->
@@ -83,6 +84,8 @@
                 <li>Filesets</li>
                 <li>Upgrades</li>
             </ul>
+            <aside class="notes">
+            </aside>
         </section>
 
         <section>
@@ -96,6 +99,8 @@
               We begin by outlining the change that came with
               version&nbsp;5.0.0: OMERO.fs.
             </p>
+            <aside class="notes">
+            </aside>
           </section>
 
           <section>
@@ -111,6 +116,8 @@
               </ul>
               <li>pyramids stored for all large images</li>
             </ul>
+            <aside class="notes">
+            </aside>
           </section>
 
           <section>
@@ -126,11 +133,15 @@
                 <li><em>only</em> those without subresolutions in file</li>
               </ul>
             </ul>
+            <aside class="notes">
+            </aside>
           </section>
 
           <section>
             <h3>OMERO 5 Import</h3>
             <img src="diagrams/upload.png" width="75%"/>
+            <aside class="notes">
+            </aside>
           </section>
 
           <section>
@@ -145,11 +156,15 @@
                 <li>including HCS plates</li>
               </ul>
             </ul>
+            <aside class="notes">
+            </aside>
           </section>
 
           <section>
             <h3>OMERO 5 Data out</h3>
             <img src="diagrams/data-out.png" width="75%"/>
+            <aside class="notes">
+            </aside>
           </section>
         </section>
 
@@ -162,15 +177,21 @@
               <li>without Pixels files, less data duplication</li>
               <li>original data visible in server filesystem</li>
               <ul>
+                <li>where filesets live</li>
                 <li>each Fileset in its own subdirectory</li>
               </ul>
             </ul>
+            <aside class="notes">
+              More advanced use later.
+            </aside>
           </section>
 
           <section>
             <h3>ManagedRepository</h3>
             <img src="diagrams/managedrepo-intro.png" width="90%"/>
           </section>
+            <aside class="notes">
+            </aside>
         </section>
 
         <section>
@@ -185,21 +206,33 @@
               <li>may be just one file and one image</li>
               <li>Project/Dataset, Screen/Plate hierarchy remains</li>
             </ul>
+            <aside class="notes">
+              The diagrams below are option but might be useful.
+            </aside>
           </section>
 
           <section>
             <h3>One to one</h3>
             <img src="diagrams/fileset_1x1.png" width="90%"/>
+            <aside class="notes">
+              This diagram is to be tidied if okay in principle.
+            </aside>
           </section>
 
           <section>
             <h3>One to many</h3>
             <img src="diagrams/fileset_1xn.png" width="90%"/>
+            <aside class="notes">
+              This diagram is to be tidied if okay in principle.
+            </aside>
           </section>
 
           <section>
             <h3>Many to many</h3>
             <img src="diagrams/fileset_nxn.png" width="90%"/>
+            <aside class="notes">
+              This diagram is to be tidied if okay in principle.
+            </aside>
           </section>
         </section>
 
@@ -214,6 +247,10 @@
               <li>for instance: projections, kymographs</li>
             </ul>
           </ul>
+            <aside class="notes">
+              We need to make it clear here that this is just the upgrade
+              rather than the data transformation Josh covers later.
+            </aside>
         </section>
 
         <!-- Advanced import - Colin ?? -->
@@ -224,6 +261,8 @@
                 <li>DropBox import</li>
                 <li>Polling &amp; cron job import</li>
             </ul>
+            <aside class="notes">
+            </aside>
         </section>
 
         <section>
@@ -240,31 +279,52 @@
               </ul>
               <li>server-side import as previously outlined</li>
               <li>Potential for even less data duplication</li>
+            <aside class="notes">
+            </aside>
           </section>
 
           <section>
             <h3>In-place import</h3>
             <img src="diagrams/inplace.png" width="75%"/>
+            <aside class="notes">
+              This diagram needs triplicating to show the different methods.
+            </aside>
           </section>
         </section>
 
         <section>
           <section>
             <h2>DropBox import</h2>
-            <p>BULLET POINT PLACEHOLDER</p>
-            <p>FURTHER SLIDES REQUIRED?</p>
+            <ul>
+              <li>DropBox can be configured to use in-place import</li>
+              <li>This can remove server-side duplication</li>
+              <li>Future work</li>
+              <ul>
+                <li>More configuration</li>
+                <li>Container details captured in paths</li>
+              </ul>
+            </ul>
+            <aside class="notes">
+            </aside>
           </section>
 
           <section>
             <h3>DropBox</h3>
             <p>IMAGE PLACEHOLDER</p>
+            <aside class="notes">
+              I'm not sure if there is a useful image here?
+            </aside>
           </section>
         </section>
 
         <section>
           <h2>Polling &amp; cron job import</h2>
-          <p>BULLET POINT PLACEHOLDER</p>
-          <p>FURTHER SLIDES REQUIRED?</p>
+            <ul>
+              <li>Extending DropBox to run in polling mode</li>
+              <li>This can also be configure for a cron job</li>
+            </ul>
+          <aside class="notes">
+          </aside>
         </section>
 
         <!-- Advanced output & admin - Josh/Colin ?? -->
@@ -274,25 +334,64 @@
                 <li>More on ManagedRepository</li>
                 <li>Samba &amp; ldap mapping</li>
             </ul>
+            <aside class="notes">
+            </aside>
         </section>
 
         <section>
           <section>
             <h2>More on ManagedRepository</h2>
             <p>BULLET POINT PLACEHOLDER</p>
+            <aside class="notes">
+              Files go into locations based on the template.
+              (Explanation slide on template if this hasn't
+              happened sooner)
+
+              For example, depending on the template, each
+              user can be access to his/her directory via
+              SAMBA. (Requires mapping at the OS level,
+              yadda yadda yadda).
+
+              Similarly, the templates can be used to help
+              migrating from one disk to another.
+
+              In general, though, the layout requires some
+              planning, and possibly some initial clean up
+              of the DB.
+
+              demoing any of `bin/omero fs` useful ??
+            </aside>
           </section>
+
           <section data-transition="none">
             <h3>Templates</h3>
             <img src="diagrams/managedrepo-template.png" width="90%"/>
+            <aside class="notes">
+            </aside>
           </section>
+
           <section data-transition="none">
             <h3>Templates</h3>
             <img src="diagrams/managedrepo-shared.png" width="90%"/>
+            <aside class="notes">
+            </aside>
           </section>
+
           <section data-transition="none">
             <h3>Templates</h3>
             <img src="diagrams/managedrepo-user.png" width="90%"/>
+            <aside class="notes">
+            </aside>
           </section>
+
+          <section>
+            <h2>More flexible templates</h2>
+            <p>BULLET POINT PLACEHOLDER</p>
+          </section>
+          <aside class="notes">
+            Information culled from Mark's template work.
+            "Name it what you want!"
+          </aside>
         </section>
 
         <section>
@@ -300,19 +399,32 @@
             <h2>Samba &amp; ldap mapping</h2>
             <p>BULLET POINT PLACEHOLDER</p>
             <p>FURTHER SLIDES REQUIRED?</p>
+            <aside class="notes">
+              For example, depending on the template, each
+              user can be access to his/her directory via
+              SAMBA. (Requires mapping at the OS level,
+              yadda yadda yadda).
+            </aside>
           </section>
+
           <section>
             <h3>Samba</h3>
             <img src="diagrams/samba.png" width="90%"/>
+            <aside class="notes">
+              Is there a reasonable diagram?
+              One in graffle looked partially complete.
+            </aside>
           </section>
         </section>
 
         <section>
-            <h2>Advanced admin</h2>
-            <ul>
-                <li>Adding disks</li>
-                <li>pre-FS -> FS migration</li>
-            </ul>
+          <h2>Advanced admin</h2>
+          <ul>
+            <li>Adding disks</li>
+            <li>pre-FS -> FS migration</li>
+          </ul>
+          <aside class="notes">
+          </aside>
         </section>
 
         <section>
@@ -320,11 +432,21 @@
             <h2>Adding disks</h2>
             <p>BULLET POINT PLACEHOLDER</p>
             <p>FURTHER SLIDES REQUIRED?</p>
+            <aside class="notes">
+              Josh: Although I'd really like to allow spinning up multiple
+              managed repos and choosing them based on number of stars or
+              whatever, for the moment, I _bet_ it's going to be simpler to have
+              a single managed repo and just change the template path when the
+              time comes to move to another disk. Only caveat is that all the
+              new mounts will have to be under /OMERO/ManagedRepo.
+            </aside>
           </section>
 
           <section>
             <h3>Adding disks</h3>
             <img src="diagrams/mounts.png" width="90%"/>
+            <aside class="notes">
+            </aside>
           </section>
         </section>
 
@@ -333,6 +455,14 @@
             <h2>pre-FS -> FS migration</h2>
             <p>BULLET POINT PLACEHOLDER</p>
             <p>FURTHER SLIDES REQUIRED?</p>
+            <aside class="notes">
+              Josh: I've nearly got something working on my branch of the same
+              ticket number. Debating whether or not to go ahead and move it
+              server-side before Paris since the one thing I can't do in my
+              pytest is delete the Pixels on disk. (No API method for that)
+              In general it works though.
+              Add bp from PR2503 '12176 attach fsfiles'
+            </aside>
           </section>
         </section>
 
@@ -344,6 +474,8 @@
             <li>Other import scenarios</li>
             <li>Feedback</li>
           </ul>
+          <aside class="notes">
+          </aside>
         </section>
 
         <section>
@@ -351,17 +483,25 @@
             <h3>Other import scenarios</h3>
             <p>BULLET POINT PLACEHOLDER</p>
             <p>FURTHER SLIDES REQUIRED?</p>
+            <aside class="notes">
+            </aside>
           </section>
 
           <section>
             <h3>Unsmart import</h3>
             <img src="diagrams/import-no-bf.png" width="75%"/>
+            <aside class="notes">
+            </aside>
           </section>
 
           <section>
             <h3>Yada yada import</h3>
-            <p>IMAGE PLACEHOLDER</p>
+            <p>IMAGE/TEXT PLACEHOLDER</p>
             <p>...</p>
+            <aside class="notes">
+              This could include some of the suggested scenarios
+              Either as outlines or diagrams
+            </aside>
           </section>
         </section>
 
@@ -373,6 +513,8 @@
             <!-- <li>Plenty more of this import workshop still to come.</li> -->
             <li>For more detail of FS see last year's workshop.</li>
           </ul>
+          <aside class="notes">
+          </aside>
         </section>
 
       </div>
