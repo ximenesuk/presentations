@@ -329,10 +329,12 @@
 
         <!-- Advanced output & admin - Josh/Colin ?? -->
         <section>
-            <h2>Advanced out</h2>
+            <h2>Advanced repository usage</h2>
             <ul>
                 <li>Knowing your ManagedRepository</li>
                 <li>Samba &amp; ldap mapping</li>
+                <li>Quotas</li>
+                <li>Adding disks</li>
             </ul>
             <aside class="notes">
             </aside>
@@ -433,14 +435,6 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
             </aside>
           </section>
 
-          <section>
-            <h2>More flexible templates</h2>
-            <p>BULLET POINT PLACEHOLDER</p>
-          </section>
-          <aside class="notes">
-            Information culled from Mark's template work.
-            "Name it what you want!"
-          </aside>
         </section>
 
         <section>
@@ -470,13 +464,13 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
         </section>
 
         <section>
-          <h2>Advanced admin</h2>
-          <ul>
-            <li>Adding disks</li>
-            <li>pre-FS -> FS migration</li>
-          </ul>
-          <aside class="notes">
-          </aside>
+          <section>
+            <h2>Quotas</h2>
+            <p>By adding "%groupId%" at the top of the template,
+            getting diskspace usage per group should be easier.</p>
+            <aside class="notes">
+            </aside>
+          </section>
         </section>
 
         <section>
@@ -499,6 +493,15 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
             <aside class="notes">
             </aside>
           </section>
+        </section>
+
+        <section>
+          <h2>Other advanced tasks</h2>
+          <ul>
+            <li>pre-FS -> FS migration</li>
+          </ul>
+          <aside class="notes">
+          </aside>
         </section>
 
         <section>
