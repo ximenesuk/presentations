@@ -334,27 +334,36 @@
           </aside>
         </section>
 
-        <!-- Advanced output & admin - Josh/Colin ?? -->
+        <!-- ===============================================
+        Advanced output & admin - Josh/Colin
+        ================================================ -->
+
         <section>
-            <h2>Advanced repository usage</h2>
+          <section>
+            <h2>Advanced repository layouts</h2>
             <ul>
-                <li>Knowing your ManagedRepository</li>
+                <li>Templates</li>
                 <li>Samba &amp; ldap mapping</li>
                 <li>Quotas</li>
                 <li>Adding disks</li>
             </ul>
             <aside class="notes">
             </aside>
-        </section>
+          </section>
 
-        <section>
           <section>
-            <h2>Knowing your ManagedRepository</h2>
+            <h2>Finding your ManagedRepository</h2>
             <table>
                 <tr>
                     <td>
-                        <pre>
+                        <code>
 $ bin/omero fs repos
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <pre>
  # | Id   | UUID                                 | Type    | Path                             
 ---+------+--------------------------------------+---------+----------------------------------
  0 | 1    | c8db8f5c-b6ba-472f-b0d5-3dac4f31be66 | Public  | /home/data/ome2                  
@@ -386,6 +395,9 @@ $ bin/omero fs repos
             </aside>
           </section>
 
+        </section>
+
+        <section>
           <section>
             <h2>Template configuration</h2>
             <table>
@@ -445,6 +457,7 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
         </section>
 
         <section>
+
           <section>
             <h2>Samba &amp; ldap mapping</h2>
             <ul>
@@ -471,6 +484,13 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
         </section>
 
         <section>
+
+          <section>
+            <h2>Quotas</h2>
+            <img alt="Template starting with groupId"
+                src="diagrams/template-group.png" width="100%"/>
+          </section>
+
           <section>
             <h2>Quotas</h2>
             <p>By adding "%groupId%" at the top of the template,
@@ -478,12 +498,21 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
             <aside class="notes">
             </aside>
           </section>
+
         </section>
 
         <section>
+
           <section>
             <h2>Adding disks</h2>
-            <p>BULLET POINT PLACEHOLDER</p>
+            <img alt="Template starting with drive"
+                src="diagrams/template-drive.png" width="100%"/>
+          </section>
+
+          <section>
+            <h2>Adding disks</h2>
+            <p>Adding other disks, should be as simple as adding a
+            mount-point under /OMERO/ManagedRepository</p>
             <aside class="notes">
               Josh: Although I'd really like to allow spinning up multiple
               managed repos and choosing them based on number of stars or
@@ -503,15 +532,17 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
         </section>
 
         <section>
-          <h2>Other advanced tasks</h2>
-          <ul>
-            <li>pre-FS -> FS migration</li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
 
-        <section>
+          <section>
+            <h2>Other advanced tasks</h2>
+            <ul>
+                <li>pre-FS -> FS migration</li>
+                <li>Java-less import</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+
           <section>
             <h2>pre-FS -&gt; FS migration</h2>
             <ul>
@@ -529,6 +560,13 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
                 Add bp from PR2503 '12176 attach fsfiles'
             </aside>
           </section>
+
+          <section>
+            <h3>Java-less import</h3>
+            <img src="diagrams/import-no-bf.png" width="75%"/>
+            <aside class="notes">
+            </aside>
+          </section>
         </section>
 
         <!-- Discussion - All -->
@@ -541,33 +579,6 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
           </ul>
           <aside class="notes">
           </aside>
-        </section>
-
-        <section>
-          <section>
-            <h3>Other import scenarios</h3>
-            <p>BULLET POINT PLACEHOLDER</p>
-            <p>FURTHER SLIDES REQUIRED?</p>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section>
-            <h3>Unsmart import</h3>
-            <img src="diagrams/import-no-bf.png" width="75%"/>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section>
-            <h3>Yada yada import</h3>
-            <p>IMAGE/TEXT PLACEHOLDER</p>
-            <p>...</p>
-            <aside class="notes">
-              This could include some of the suggested scenarios
-              Either as outlines or diagrams
-            </aside>
-          </section>
         </section>
 
         <section>
