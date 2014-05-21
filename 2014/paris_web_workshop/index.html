@@ -198,23 +198,24 @@ $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
 
 
                 <section>
-                    <h2>WebGateway API</h2>
+                    <h2>OMERO.web services</h2>
                     <ul>
                         <li>See
                             <a href="http://www.openmicroscopy.org/site/support/omero5/developers/Web/WebGateway.html"  target="_blank">
                                 WebGateway documentation
                             </a>
                         </li>
-                        <li>Need to be logged-in (or public access, E.g. JCB)</li>
-                        <li>jsonp supported for cross-domain queries, E.g. jQuery:</li>
+                        <li>Need to be logged-in (or 'public user' access)</li>
+                        <li>Full viewer:
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3925542/"  target="_blank">/webgateway/img_detail/3925542</a>
+                            <br>Suitable for embedding in iframe
+                        </li>
+                        <li>Link to data in webclient:
+                            <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1" target="_blank">
+                                /webclient/?show=dataset-1
+                            </a>
+                            <br>Supports project, dataset, image, screen, plate, well
                     </ul>
-                    <pre><code contenteditable style="font-size:90%" class="javascript">
-$.ajax({
-    url: "https://nightshade.openmicroscopy.org/webgateway/proj/list/",
-    jsonp: 'callback',
-    success: function(data) { // },
-})
-                    </code></pre>
                 </section>
 
 
@@ -239,12 +240,18 @@ $.ajax({
                                     </a>
                                 </li>
                             </ul>
-                        <li>Image json has lots of info (used by <a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3925542/"  target="_blank">full viewer</a>)
+                        <li>Image json has lots of info (used by full viewer)
                             <a href="https://nightshade.openmicroscopy.org/webgateway/imgData/3925541/"  target="_blank">
                                 webgateway/imgData/&lt;imageId&gt;/
                             </a>
                         </li>
+                        <li>jsonp supported for cross-domain queries, E.g. jQuery:</li>
                     </ul>
+                    <pre><code contenteditable style="font-size:90%" class="javascript">$.ajax({
+    url: "https://nightshade.openmicroscopy.org/webgateway/proj/list/",
+    jsonp: 'callback',
+    success: function(data) { // },
+})</code></pre>
                 </section>
 
 
@@ -279,15 +286,6 @@ $.ajax({
                     </ul>
                 </section>
 
-
-                <section>
-                    <h2>Straight access to live image</h2>
-                    
-                    <ul>
-                        <li>Link to the image <a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3933597/" target="_blank">Open</a></li>
-                        <li>Load image into iframe</li>
-                    </ul>
-                </section>
 
                 <section>
                     <h2>Embedding live image</h2>
