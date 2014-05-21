@@ -55,8 +55,8 @@
 
         <!-- Talk introduction - All ?? -->
         <section>
-          <h1>Import in OMERO 5</h1>
-          <h2>Paris 2014</h2>
+          <h2>Managing Import in OMERO5</h2>
+          <h3>Paris 2014</h3>
           <p>Mark Carroll, Colin Blackburn &amp; Josh Moore</p>
           <aside class="notes">
           </aside>
@@ -104,6 +104,20 @@
           </section>
 
           <section>
+            <h3>OMERO 5 Import</h3>
+            <img src="diagrams/upload.png" width="100%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section>
+            <h3>OMERO 5 Data out</h3>
+            <img src="diagrams/data-out.png" width="100%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section>
             <h2>OMERO 4 Import</h2>
             <ul>
               <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
@@ -138,13 +152,6 @@
           </section>
 
           <section>
-            <h3>OMERO 5 Import</h3>
-            <img src="diagrams/upload.png" width="100%"/>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section>
             <h2>OMERO 5 Data out</h2>
             <ul>
               <li>pixels provided directly from original files</li>
@@ -159,16 +166,16 @@
             <aside class="notes">
             </aside>
           </section>
-
-          <section>
-            <h3>OMERO 5 Data out</h3>
-            <img src="diagrams/data-out.png" width="100%"/>
-            <aside class="notes">
-            </aside>
-          </section>
         </section>
 
         <section>
+          <section>
+            <h3>ManagedRepository</h3>
+            <img src="diagrams/managedrepo-intro.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
           <section>
             <h2>ManagedRepository</h2>
             <ul>
@@ -185,18 +192,35 @@
               More advanced use later.
             </aside>
           </section>
-
-          <section>
-            <h3>ManagedRepository</h3>
-            <img src="diagrams/managedrepo-intro.png" width="90%"/>
-          </section>
-            <aside class="notes">
-            </aside>
         </section>
 
         <section>
           <section>
-            <h2>Filesets</h2>
+            <h3>Filesets: One to one</h3>
+            <img src="diagrams/fileset_1x1.png" width="90%"/>
+            <aside class="notes">
+              This diagram is to be tidied if okay in principle.
+            </aside>
+          </section>
+
+          <section>
+            <h3>Filesets: One to many</h3>
+            <img src="diagrams/fileset_1xn.png" width="90%"/>
+            <aside class="notes">
+              This diagram is to be tidied if okay in principle.
+            </aside>
+          </section>
+
+          <section>
+            <h3>Filesets: Many to many</h3>
+            <img src="diagrams/fileset_nxn.png" width="90%"/>
+            <aside class="notes">
+              This diagram is to be tidied if okay in principle.
+            </aside>
+          </section>
+
+          <section>
+            <h3>Filesets: Summary</h3>
             <ul>
               <li>a set of related files</li>
               <ul>
@@ -208,30 +232,6 @@
             </ul>
             <aside class="notes">
               The diagrams below are option but might be useful.
-            </aside>
-          </section>
-
-          <section>
-            <h3>One to one</h3>
-            <img src="diagrams/fileset_1x1.png" width="90%"/>
-            <aside class="notes">
-              This diagram is to be tidied if okay in principle.
-            </aside>
-          </section>
-
-          <section>
-            <h3>One to many</h3>
-            <img src="diagrams/fileset_1xn.png" width="90%"/>
-            <aside class="notes">
-              This diagram is to be tidied if okay in principle.
-            </aside>
-          </section>
-
-          <section>
-            <h3>Many to many</h3>
-            <img src="diagrams/fileset_nxn.png" width="90%"/>
-            <aside class="notes">
-              This diagram is to be tidied if okay in principle.
             </aside>
           </section>
         </section>
