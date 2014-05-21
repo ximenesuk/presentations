@@ -141,6 +141,15 @@ $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
                             </a>
                         </li>
                     </ul>
+                    
+                    <pre><code contenteditable style="font-size:90%" class="bash">
+$ bin/omero config set omero.web.public.enabled True
+$ bin/omero config set omero.web.public.server_id 1
+$ bin/omero config set omero.web.public.user '<username>'
+$ bin/omero config set omero.web.public.password '*****'
+$ bin/omero config set omero.web.public.url_filter
+ '^/(?!webadmin|webclient/action/\w+|webclient/annotate_(file|tags|comment))'
+                    </code></pre>
                 </section>
 
 
@@ -165,14 +174,14 @@ $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
                             LDAP Documentation</a></li>
                     </ul>
                         
-                                                <pre><code contenteditable style="font-size:90%" class="bash">
+                    <pre><code contenteditable style="font-size:90%" class="bash">
 $ bin/omero config set omero.ldap.sync_on_login true
 $ bin/omero config set omero.ldap.group_filter
   "(&(objectClass=groupOfUniqueNames)(cn=omeroGroup))"
 $ bin/omero config set  omero.ldap.group_mapping "name=cn"
 $ bin/omero config set  omero.ldap.new_user_group ":query:(uniqueMember=@{dn})"
 $ bin/omero config set  omero.ldap.user_filter "(objectClass=inetorgperson)"
-                                                </code></pre>
+                    </code></pre>
                 </section>
 
 
