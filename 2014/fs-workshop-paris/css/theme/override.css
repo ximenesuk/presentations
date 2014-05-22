@@ -23,6 +23,10 @@
   margin-left: 0;
 }
 
+.reveal code {
+	font-size: 30px;
+}
+
 .reveal li {
   margin-top: 0.25em;
   margin-bottom: 0.25em;

@@ -258,33 +258,68 @@
 
         <section>
           <section>
-            <h3>In-place import: ln_s</h3>
-            <img src="diagrams/inplace-ln_s.png" width="100%"/>
+            <h3>In-place import: symlink</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln_s
+            </code>
+            <img src="diagrams/inplace-ln_s.png" width="90%"/>
             <aside class="notes">
             </aside>
           </section>
 
           <section>
-            <h3>In-place import: ln</h3>
-            <img src="diagrams/inplace-ln.png" width="100%"/>
+            <h3>In-place import: hard link</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln
+            </code>
+            <img src="diagrams/inplace-ln.png" width="90%"/>
             <aside class="notes">
               This diagram needs duplicating to show the different methods.
             </aside>
           </section>
 
           <section data-transition="none">
-            <h3>In-place import: ln_rm</h3>
-            <img src="diagrams/inplace-ln.png" width="100%"/>
+            <h3>In-place import: move</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln_rm
+            </code>
+            <img src="diagrams/inplace-ln.png" width="90%"/>
             <aside class="notes">
               This diagram needs duplicating to show the different methods.
             </aside>
           </section>
 
           <section data-transition="none">
-            <h3>In-place import: ln_rm</h3>
-            <img src="diagrams/inplace-ln_rm.png" width="100%"/>
+            <h3>In-place import: move</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln_rm
+            </code>
+            <img src="diagrams/inplace-ln_rm.png" width="90%"/>
             <aside class="notes">
               This diagram needs duplicating to show the different methods.
+            </aside>
+          </section>
+
+          <section>
+            <h3>In-place import: Options</h3>
+            <ul>
+              <li><code>$ bin/omero import -- --adavnced-help</code></li>
+              <li>transfer options</li>
+              <ul>
+                <li><code>--transfer=upload</code></li>
+                <li><code>--transfer=ln_s</code></li>
+                <li><code>--transfer=ln</code></li>
+                <li><code>--transfer=ln_rm</code></li>
+                <li><code>--transfer=some.class.Name</code></li>
+              </ul>
+              <li>other options</li>
+              <ul>
+                <li><code>--minutes_wait=ARG</code></li>
+                <li><code>--close_completed</code></li>
+                <li><code>--wait_completed</code></li>
+                <li><code>--checksum_algorithm=ARG</code></li>
+              </ul>
+            <aside class="notes">
             </aside>
           </section>
 
