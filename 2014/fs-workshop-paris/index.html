@@ -55,8 +55,8 @@
 
         <!-- Talk introduction - All ?? -->
         <section>
-          <h2>Managing Import in OMERO5</h2>
-          <h3>Paris 2014</h3>
+          <h1>Managing Imports with OMERO 5</h1>
+          <h2>Paris 2014</h2>
           <p>Mark Carroll, Colin Blackburn &amp; Josh Moore</p>
           <aside class="notes">
           </aside>
@@ -79,7 +79,7 @@
         <section>
             <h2>Introduction to OMERO 5</h2>
             <ul>
-                <li>Changes in OMERO 5</li>
+                <li>OMERO 5 Import</li>
                 <li>ManagedRepository</li>
                 <li>Filesets</li>
                 <li>Upgrades</li>
@@ -90,23 +90,14 @@
 
         <section>
           <section>
-            <h2>Changes in OMERO 5</h2>
-            <p>
-              OMERO 5 introduces improvements to image import that preserve
-              your original data and reduce data duplication.
-            </p>
-            <p>
-              We begin by outlining the change that came with
-              version&nbsp;5.0.0: OMERO.fs.
-            </p>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section>
             <h3>OMERO 5 Import</h3>
             <img src="diagrams/upload.png" width="100%"/>
             <aside class="notes">
+              OMERO 5 introduces improvements to image import that preserve
+              your original data and reduce data duplication.
+
+              We begin by outlining the change that came with
+              version&nbsp;5.0.0: OMERO.fs.
             </aside>
           </section>
 
@@ -118,24 +109,7 @@
           </section>
 
           <section>
-            <h2>OMERO 4 Import</h2>
-            <ul>
-              <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
-              <ul>
-                <li>stored as <q>Pixels</q>, an internal uncompressed format</li>
-              </ul>
-              <li><em>additionally</em>, original <q>archived</q> files can be stored</li>
-              <ul>
-                <li>though not for HCS plates</li>
-              </ul>
-              <li>pyramids stored for all large images</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section>
-            <h2>OMERO 5 Import</h2>
+            <h3>OMERO 5 Import: Summary</h3>
             <ul>
               <li>client uploads <em>only</em> original data</li>
               <ul>
@@ -152,7 +126,7 @@
           </section>
 
           <section>
-            <h2>OMERO 5 Data out</h2>
+            <h3>OMERO 5 Data out: Summary</h3>
             <ul>
               <li>pixels provided directly from original files</li>
               <ul>
@@ -162,6 +136,23 @@
               <ul>
                 <li>including HCS plates</li>
               </ul>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section>
+            <h3>OMERO 4 Import: Summary</h3>
+            <ul>
+              <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
+              <ul>
+                <li>stored as <q>Pixels</q>, an internal uncompressed format</li>
+              </ul>
+              <li><em>additionally</em>, original <q>archived</q> files can be stored</li>
+              <ul>
+                <li>though not for HCS plates</li>
+              </ul>
+              <li>pyramids stored for all large images</li>
             </ul>
             <aside class="notes">
             </aside>
@@ -177,7 +168,7 @@
           </section>
 
           <section>
-            <h2>ManagedRepository</h2>
+            <h3>ManagedRepository: Summary</h3>
             <ul>
               <li>server stores and reads original data</li>
               <li>OMERO acts as repository of original data</li>
@@ -237,7 +228,7 @@
         </section>
 
         <section>
-          <h2>Migrating to FS</h2>
+          <h3>Migrating to FS</h3>
           <ul>
             <li>new OMERO users should use OMERO 5</li>
             <li>upgrade scripts provided from OMERO 4</li>
@@ -266,23 +257,6 @@
         </section>
 
         <section>
-          <section>
-            <h2>In-place import</h2>
-            <ul>
-              <li>client transfers original data to ManagedRepository</li>
-              <ul>
-                <li>uploads - deafult as already outlined</li>
-                <li>creates soft links</li>
-                <li>creates hard links</li>
-                <li>creates hard links followed by delete of source files</li>
-                <li>employs user-defined transfer mode</li>
-              </ul>
-              <li>server-side import as previously outlined</li>
-              <li>Potential for even less data duplication</li>
-            <aside class="notes">
-            </aside>
-          </section>
-
           <section>
             <h3>In-place import: ln_s</h3>
             <img src="diagrams/inplace-ln_s.png" width="100%"/>
@@ -313,6 +287,23 @@
               This diagram needs duplicating to show the different methods.
             </aside>
           </section>
+
+          <section>
+            <h3>In-place import: Summary</h3>
+            <ul>
+              <li>client transfers original data to ManagedRepository</li>
+              <ul>
+                <li>uploads - deafult as already outlined</li>
+                <li>creates soft links</li>
+                <li>creates hard links</li>
+                <li>creates hard links followed by delete of source files</li>
+                <li>employs user-defined transfer mode</li>
+              </ul>
+              <li>server-side import as previously outlined</li>
+              <li>Potential for even less data duplication</li>
+            <aside class="notes">
+            </aside>
+          </section>
         </section>
 
         <section>
@@ -331,7 +322,7 @@
           </section>
 
           <section>
-            <h2>DropBox import</h2>
+            <h3>DropBox import: Summary</h3>
             <ul>
               <li>DropBox can be configured to use in-place import</li>
               <li>This can remove server-side duplication</li>
@@ -347,7 +338,7 @@
         </section>
 
         <section>
-          <h2>Polling &amp; cron job import</h2>
+          <h3>Polling &amp; cron job import</h3>
             <ul>
               <li>Extending DropBox to run in polling mode</li>
               <li>This can also be configure for a cron job</li>
@@ -374,22 +365,22 @@
           </section>
 
           <section>
-            <h2>Finding your ManagedRepository</h2>
+            <h3>Finding your ManagedRepository</h3>
             <table>
                 <tr>
                     <td>
                         <code>
-$ bin/omero fs repos
+                          $ bin/omero fs repos
                         </code>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <pre>
- # | Id   | UUID                                 | Type    | Path                             
+ # | Id   | UUID                                 | Type    | Path
 ---+------+--------------------------------------+---------+----------------------------------
- 0 | 1    | c8db8f5c-b6ba-472f-b0d5-3dac4f31be66 | Public  | /home/data/ome2                  
- 1 | 2    | ScriptRepo                           | Script  | /opt/ome2/dist/lib/scripts       
+ 0 | 1    | c8db8f5c-b6ba-472f-b0d5-3dac4f31be66 | Public  | /home/data/ome2
+ 1 | 2    | ScriptRepo                           | Script  | /opt/ome2/dist/lib/scripts
  2 | 3    | c4df3508-cffe-4bf2-a1c8-b3c1395f737f | Managed | /home/data/ome2/ManagedRepository
 (3 rows)
                         </pre>
@@ -421,7 +412,7 @@ $ bin/omero fs repos
 
         <section>
           <section>
-            <h2>Template configuration</h2>
+            <h3>Template configuration</h3>
             <table>
                 <tr>
                     <td>
@@ -479,14 +470,9 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
         </section>
 
         <section>
-
           <section>
-            <h2>Samba &amp; ldap mapping</h2>
-            <ul>
-                <li>/OMERO/ManagedRepository can be mapped via Samba</li>
-                <li>Safest for read-only access</li>
-                <li>Best if per-user mapping can be applied</li>
-            </ul>
+            <h3>Samba</h3>
+            <img src="diagrams/samba.png" width="100%"/>
             <aside class="notes">
               For example, depending on the template, each
               user can be access to his/her directory via
@@ -496,11 +482,13 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
           </section>
 
           <section>
-            <h3>Samba</h3>
-            <img src="diagrams/samba.png" width="100%"/>
+            <h3>Samba &amp; ldap mapping</h3>
+            <ul>
+                <li>/OMERO/ManagedRepository can be mapped via Samba</li>
+                <li>Safest for read-only access</li>
+                <li>Best if per-user mapping can be applied</li>
+            </ul>
             <aside class="notes">
-              Is there a reasonable diagram?
-              One in graffle looked partially complete.
             </aside>
           </section>
         </section>
@@ -508,13 +496,13 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
         <section>
 
           <section>
-            <h2>Quotas</h2>
+            <h3>Quotas</h3>
             <img alt="Template starting with groupId"
                 src="diagrams/template-group.png" width="100%"/>
           </section>
 
           <section>
-            <h2>Quotas</h2>
+            <h3>Quotas: Summary</h3>
             <p>By adding "%groupId%" at the top of the template,
             getting diskspace usage per group should be easier.</p>
             <aside class="notes">
@@ -526,13 +514,13 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
         <section>
 
           <section>
-            <h2>Adding disks</h2>
+            <h3>Adding disks</h3>
             <img alt="Template starting with drive"
                 src="diagrams/template-drive.png" width="100%"/>
           </section>
 
           <section>
-            <h2>Adding disks</h2>
+            <h3>Adding disks: Summary</h3>
             <p>Adding other disks, should be as simple as adding a
             mount-point under /OMERO/ManagedRepository</p>
             <aside class="notes">
@@ -549,7 +537,7 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
         <section>
 
           <section>
-            <h2>Other advanced tasks</h2>
+            <h3>Other advanced tasks</h3>
             <ul>
                 <li>pre-FS -> FS migration</li>
                 <li>Java-less import</li>
@@ -559,7 +547,7 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
           </section>
 
           <section>
-            <h2>pre-FS -&gt; FS migration</h2>
+            <h3>pre-FS -&gt; FS migration</h3>
             <ul>
                 <li>OMERO4 and before allowed <b>archiving</b> original files</li>
                 <li><code>bin/omero fs images --archived</code></li>
@@ -601,7 +589,6 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
           <ul>
             <li>We welcome questions and comments on FS.</li>
             <li>What further work on FS would be most useful?</li>
-            <!-- <li>Plenty more of this import workshop still to come.</li> -->
             <li>For more detail of FS see last year's workshop.</li>
           </ul>
           <aside class="notes">
