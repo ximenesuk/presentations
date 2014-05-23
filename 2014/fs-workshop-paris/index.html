@@ -507,13 +507,304 @@
         ================================================ -->
 
         <section>
-          <section>
+          <section data-transition="none">
             <h2>Advanced repository layouts</h2>
             <ul>
-                <li>Templates</li>
-                <li>Samba &amp; ldap mapping</li>
-                <li>Quotas</li>
-                <li>Adding disks</li>
+                <li>Template basics</li>
+                <li>Template uses
+                    <ul>
+                        <li>Quotas</li>
+                        <li>Samba &amp; ldap mapping</li>
+                        <li>Adding disks</li>
+                    </ul>
+                </li>
+            </ul>
+            <aside class="notes">
+                The next section is going to focus on
+                some possible ways to layout your data
+                on disk. This all comes down to tuning
+                your repository "template".
+
+                <b>NB:</b> If you've already started
+                importing into OMERO, changing your template
+                will work; but there will be steps necessary
+                to migrate the data from the old template to
+                the new.
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section data-transition="none">
+            <h3>Default template</h3>
+            <img alt="Template diagram" src="diagrams/managedrepo-template.png" width="80%"/>
+            <aside class="notes">
+              Files go into locations based on the template.
+              (Explanation slide on template if this hasn't
+              happened sooner)
+
+              For example, depending on the template, each
+              user can be access to his/her directory via
+              SAMBA. (Requires mapping at the OS level,
+              yadda yadda yadda).
+
+              Similarly, the templates can be used to help
+              migrating from one disk to another.
+
+              In general, though, the layout requires some
+              planning, and possibly some initial clean up
+              of the DB.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Shared system portion</h3>
+            <img alt="Shared template portion"
+                src="diagrams/managedrepo-shared.png" width="80%"/>
+            <aside class="notes">
+                A portion of the path -- everything in front of the
+                double slash -- will belong to the system itself.
+                This might be useful to prevent directories from being
+                deleted. Anything that should be considered "shared"
+                should be put before the double slash. We'll see an
+                example of that in just a second.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>User portion</h3>
+            <img alt="User template portion"
+                src="diagrams/managedrepo-user.png" width="80%"/>
+            <aside class="notes">
+                Everything after the double slash will belong to owner
+                of the data.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Template configuration</h3>
+            <table>
+                <tr>
+                    <td>
+                        <pre style="font-size:50%">
+# Template for FS managed repository paths.
+# Allowable elements are:
+# %user%       bob
+# %userId%     4
+# %group%      bobLab
+# %groupId%    3
+# %year%       2011
+# %month%      01
+# %monthname%  january
+# %day%        01
+# %time%       15-13-54.014
+# /            path separator
+#
+# The path must be unique per fileset to prevent upload conflicts,
+# which is why %time% includes milliseconds.
+#
+# A // may be used as a path separator: the directories preceding
+# it are created with root ownership, the remainder are the user's.
+# At least one user-owned directory must be included in the path.
+#
+# The template path is created below &lt;omero.managed.dir&gt;,
+# e.g. /OMERO/ManagedRepository/&lt;omero.fs.repo.path&gt;/
+omero.fs.repo.path=%user%_%userId%//%year%-%month%/%day%/%time%
+                        </pre>
+                    </td>
+                </tr>
+            </table>
+            <aside class="notes">
+                And for the dirty details, this is a snippet of the
+                etc/omero.properties file explaining the template.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Template configuration</h3>
+            <table>
+                <tr>
+                    <td>
+                        <pre style="font-size:50%">
+# Template for FS managed repository paths.
+# Allowable elements are:
+# %user%       bob
+# %userId%     4
+# %group%      bobLab
+# %groupId%    3
+# %year%       2011
+# %month%      01
+# %monthname%  january
+# %day%        01
+# %time%       15-13-54.014
+# /            path separator
+#
+# The path must be unique per fileset to prevent upload conflicts,
+# which is why %time% includes milliseconds.
+#
+# A // may be used as a path separator: the directories preceding
+# it are created with root ownership, the remainder are the user's.
+# At least one user-owned directory must be included in the path.
+#
+# The template path is created below &lt;omero.managed.dir&gt;,
+# e.g. /OMERO/ManagedRepository/&lt;omero.fs.repo.path&gt;/
+<b style="font-size: 115%">omero.fs.repo.path</b>=%user%_%userId%//%year%-%month%/%day%/%time%
+                        </pre>
+                    </td>
+                </tr>
+            </table>
+            <aside class="notes">
+                Emphasis: "omero.fs.repo.path"
+                This is the key of the property that needs to be set
+                in order to configure OMERO to use a different template.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Template configuration</h3>
+            <table>
+                <tr>
+                    <td>
+                        <pre style="font-size:50%">
+# Template for FS managed repository paths.
+# Allowable elements are:
+# %user%       bob
+# %userId%     4
+# %group%      bobLab
+# %groupId%    3
+# %year%       2011
+# %month%      01
+# %monthname%  january
+# %day%        01
+# %time%       15-13-54.014
+# /            path separator
+#
+# The path must be unique per fileset to prevent upload conflicts,
+# which is why %time% includes milliseconds.
+#
+# A // may be used as a path separator: the directories preceding
+# it are created with root ownership, the remainder are the user's.
+# At least one user-owned directory must be included in the path.
+#
+# The template path is created below &lt;omero.managed.dir&gt;,
+# e.g. /OMERO/ManagedRepository/&lt;omero.fs.repo.path&gt;/
+omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%day%/%time%</b>
+                        </pre>
+                    </td>
+                </tr>
+            </table>
+            <aside class="notes">
+                Emphasis: default template
+                This is the default value set in etc/omero.properties.
+                Don't modify that file.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+
+          <section>
+            <h3>Quotas</h3>
+            <img alt="Template starting with groupId"
+                src="diagrams/template-group.png" width="75%"/>
+            <aside class="notes">
+              <p>
+              Here we've added %groupId% at the top of the template.
+              This adds another directory level to the repository.
+              Scripts and other management tools can make use of this
+              extra level, e.g. for reporting.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Quotas: Summary</h3>
+              <p>
+                By adding "%groupId%" at the top of the template,
+                getting diskspace usage per group should be easier.
+                See <a href="https://www.openmicroscopy.org/community/viewtopic.php?f=4&t=7485">
+                    this forum thread</a> for a discussion on the topic.
+              </p>
+            <aside class="notes">
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h3>Samba</h3>
+            <img alt="Samba usage diagram"
+                src="diagrams/samba.png" width="100%"/>
+            <aside class="notes">
+              <p>
+                For example, depending on the template, each
+                user can be access to his/her directory via
+                SAMBA. (Requires mapping at the OS level,
+                yadda yadda yadda).
+              </p>
+              <p>
+                Here we've taken the same layout as for the quotas,
+                put mounted each directory as samba share. Read/write
+                permissions can be set based on the group's needs.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+              <h3>Samba: Summary</h3>
+            <ul>
+                <li>/OMERO/ManagedRepository can be mapped via Samba</li>
+                <li>Safest for read-only access</li>
+                <li>Best if per-user mapping can be applied</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+
+          <section>
+            <h3>Adding disks</h3>
+            <img alt="Template starting with drive"
+                src="diagrams/template-drive.png" width="75%"/>
+            <aside class="notes">
+              <p>
+                As with Samba, any directory can also be a system-level
+                mount point, meaning you can plug in new disks or similar.
+              </p>
+              <p>
+                Josh: Although I'd really like to allow spinning up multiple
+                managed repos and choosing them based on number of stars or
+                whatever, for the moment, I _bet_ it's going to be simpler to have
+                a single managed repo and just change the template path when the
+                time comes to move to another disk. Only caveat is that all the
+                new mounts will have to be under /OMERO/ManagedRepo.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Adding disks: Summary</h3>
+            <p>Adding other disks, should be as simple as adding a
+            mount-point under /OMERO/ManagedRepository</p>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+
+          <section>
+            <h3>Other advanced tasks</h3>
+            <ul>
+                <li>Find your managed repository</li>
+                <li>pre-FS -> FS migration</li>
+                <li>Java-less import</li>
             </ul>
             <aside class="notes">
             </aside>
@@ -543,192 +834,11 @@
                 </tr>
             </table>
             <aside class="notes">
-              Files go into locations based on the template.
-              (Explanation slide on template if this hasn't
-              happened sooner)
-
-              For example, depending on the template, each
-              user can be access to his/her directory via
-              SAMBA. (Requires mapping at the OS level,
-              yadda yadda yadda).
-
-              Similarly, the templates can be used to help
-              migrating from one disk to another.
-
-              In general, though, the layout requires some
-              planning, and possibly some initial clean up
-              of the DB.
 
               demoing any of `bin/omero fs` useful ??
             </aside>
           </section>
-
         </section>
-
-        <section>
-          <section>
-            <h3>Template configuration</h3>
-            <table>
-                <tr>
-                    <td>
-                        <pre>
-# Template for FS managed repository paths.
-# Allowable elements are:
-# %user%       bob
-# %userId%     4
-# %group%      bobLab
-# %groupId%    3
-# %year%       2011
-# %month%      01
-# %monthname%  january
-# %day%        01
-# %time%       15-13-54.014
-# /            path separator
-#
-# %user%_%userId%/ must come first, and the path must be unique per fileset
-# to prevent upload conflicts, which is why %time% includes milliseconds.
-#
-# The template path is created below &lt;omero.managed.dir&gt;,
-# e.g. /OMERO/ManagedRepository/&lt;omero.fs.repo.path&gt;/
-omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
-                        </pre>
-                    </td>
-                </tr>
-            </table>
-            <aside class="notes">
-            General thinking: show them what's configurable
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>Templates</h3>
-            <img alt="Template diagram" src="diagrams/managedrepo-template.png" width="80%"/>
-            <aside class="notes">
-            "In a somewhat more attractive form..."
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>Templates</h3>
-            <img src="diagrams/managedrepo-shared.png" width="80%"/>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>Templates</h3>
-            <img src="diagrams/managedrepo-user.png" width="80%"/>
-            <aside class="notes">
-            </aside>
-          </section>
-
-        </section>
-
-        <section>
-          <section>
-            <h3>Samba</h3>
-            <img src="diagrams/samba.png" width="100%"/>
-            <aside class="notes">
-              <p>
-                For example, depending on the template, each
-                user can be access to his/her directory via
-                SAMBA. (Requires mapping at the OS level,
-                yadda yadda yadda).
-              </p>
-              <ul>
-                  <li>/OMERO/ManagedRepository can be mapped via Samba</li>
-                  <li>Safest for read-only access</li>
-                  <li>Best if per-user mapping can be applied</li>
-              </ul>
-            </aside>
-          </section>
-
-          <section>
-            <h3>Samba &amp; ldap mapping</h3>
-            <ul>
-                <li>/OMERO/ManagedRepository can be mapped via Samba</li>
-                <li>Safest for read-only access</li>
-                <li>Best if per-user mapping can be applied</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-        </section>
-
-        <section>
-
-          <section>
-            <h3>Quotas</h3>
-            <img alt="Template starting with groupId"
-                src="diagrams/template-group.png" width="75%"/>
-            <aside class="notes">
-              <p>
-                By adding "%groupId%" at the top of the template,
-                getting diskspace usage per group should be easier.
-              </p>
-            </aside>
-          </section>
-
-          <section>
-            <h3>Quotas: Summary</h3>
-              <p>
-                By adding "%groupId%" at the top of the template,
-                getting diskspace usage per group should be easier.
-              </p>
-            <aside class="notes">
-            </aside>
-          </section>
-
-        </section>
-
-        <section>
-
-          <section>
-            <h3>Adding disks</h3>
-            <img alt="Template starting with drive"
-                src="diagrams/template-drive.png" width="75%"/>
-            <aside class="notes">
-              <p>
-                Adding other disks, should be as simple as adding a
-                mount-point under /OMERO/ManagedRepository
-              </p>
-              <p>
-                Josh: Although I'd really like to allow spinning up multiple
-                managed repos and choosing them based on number of stars or
-                whatever, for the moment, I _bet_ it's going to be simpler to have
-                a single managed repo and just change the template path when the
-                time comes to move to another disk. Only caveat is that all the
-                new mounts will have to be under /OMERO/ManagedRepo.
-              </p>
-            </aside>
-          </section>
-
-          <section>
-            <h3>Adding disks: Summary</h3>
-            <p>Adding other disks, should be as simple as adding a
-            mount-point under /OMERO/ManagedRepository</p>
-            <aside class="notes">
-              Josh: Although I'd really like to allow spinning up multiple
-              managed repos and choosing them based on number of stars or
-              whatever, for the moment, I _bet_ it's going to be simpler to have
-              a single managed repo and just change the template path when the
-              time comes to move to another disk. Only caveat is that all the
-              new mounts will have to be under /OMERO/ManagedRepo.
-            </aside>
-          </section>
-        </section>
-
-        <section>
-
-          <section>
-            <h3>Other advanced tasks</h3>
-            <ul>
-                <li>pre-FS -> FS migration</li>
-                <li>Java-less import</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
 
           <section>
             <h3>pre-FS -&gt; FS migration</h3>
@@ -754,7 +864,6 @@ omero.fs.repo.path=%user%_%userId%/%year%-%month%/%day%/%time%
             <aside class="notes">
             </aside>
           </section>
-        </section>
 
         <!-- Discussion - All -->
         <section>
