@@ -738,7 +738,26 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
           <section>
             <h3>Samba</h3>
             <img alt="Samba usage diagram"
-                src="diagrams/samba.png" width="100%"/>
+                src="diagrams/samba_group.png" width="75%"/>
+            <aside class="notes">
+              <p>
+                For example, depending on the template, each
+                user can be access to his/her directory via
+                SAMBA. (Requires mapping at the OS level,
+                yadda yadda yadda).
+              </p>
+              <p>
+                Here we've taken the same layout as for the quotas,
+                put mounted each directory as samba share. Read/write
+                permissions can be set based on the group's needs.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Samba</h3>
+            <img alt="Samba usage diagram"
+                src="diagrams/samba_user.png" width="75%"/>
             <aside class="notes">
               <p>
                 For example, depending on the template, each
