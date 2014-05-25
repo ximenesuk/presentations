@@ -117,9 +117,10 @@
                 <section>
                     <h2 class="larger">Configure web settings</h2>
                     <p>See web install docs for
-                        <a href="https://www.openmicroscopy.org/site/support/omero5/sysadmins/unix/install-web.html#customizing-your-omero-web-installation">Unix</a> |
-                        <a href="https://www.openmicroscopy.org/site/support/omero5/sysadmins/windows/install-web.html#customizing-your-omero-web-installation">Windows</a>
+                        <a href="https://www.openmicroscopy.org/site/support/omero5/sysadmins/unix/install-web.html#customizing-your-omero-web-installation" target="_blank">Unix</a> |
+                        <a href="https://www.openmicroscopy.org/site/support/omero5/sysadmins/windows/install-web.html#customizing-your-omero-web-installation" target="_blank">Windows</a>
                     </p>
+                    <p>or <code contenteditable style="font-size:90%" class="bash">bin/omero web -h</code></p>
                 </section>
 
 
@@ -147,30 +148,32 @@ $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
                         </li>
                     </ul>
                     
-                    <pre><code contenteditable style="font-size:90%" class="bash">
-$ bin/omero config set omero.web.public.enabled True
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.enabled True
 $ bin/omero config set omero.web.public.server_id 1
-$ bin/omero config set omero.web.public.user '<username>'
+$ bin/omero config set omero.web.public.user '&#60;username&#62;'
 $ bin/omero config set omero.web.public.password '*****'
-$ bin/omero config set omero.web.public.url_filter
- '^/(?!webadmin|webclient/action/\w+|webclient/annotate_(file|tags|comment))'
-                    </code></pre>
+</code></pre>
+<pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.url_filter
+     '^/(?!webadmin|webclient/action/\w+|webclient/annotate_(file|tags|comment))'
+ 
+$ bin/omero config set omero.web.public.url_filter '/webgateway'
+</code></pre>
                 </section>
 
 
                 <section>
                     <h2>Public Repository Examples</h2>
                     <ul>
-                        <li><a href="http://odr.stowers.org/websimr/" target="_blank">Stowers ODR</a> (standalone app)</li>
+                        <li><a href="http://odr.stowers.org/websimr/" target="_blank">Stowers Institute ODR</a> (standalone app)</li>
                         <li><a href="http://jcb-dataviewer.rupress.org/" target="_blank">JCB data-viewer</a> (standalone app)</li>
-                        <li><a href="http://ssbd.qbic.riken.jp/" target="_blank">SSBD</a> (links to <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1" target="_blank">data in webclient</a>)</li>
+                        <li><a href="http://ssbd.qbic.riken.jp/" target="_blank">Systems Science of Biological Dynamics (SSBD)</a> (links to <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1" target="_blank">data in webclient</a>)</li>
                         <li><a href="http://www.ebi.ac.uk/pdbe/entry/EMD-5951/slice" target="_blank">EM-Databank</a> (iframe)</li>
                     </ul>
                 </section>
 
 
                 <section>
-                    <h2>LDAP</h2>
+                    <h2>LDAP / Active Directory</h2>
                     <ul>
                         <li>OMERO supports login authentication via LDAP</li>
                         <li>Synchronizing LDAP on user login</li>
@@ -197,11 +200,7 @@ $ bin/omero config set  omero.ldap.user_filter "(objectClass=inetorgperson)"
                 </section>
                 
                 <section>
-                    <img style="float:left"  src="images/VM2.png" width="700"/> <br/>
-                    
-                    hardware, for slide digitisation and software viewers that allow
-                    users to zoom and change magnification to examine digitised slides
-                    
+                    <img src="images/VM2.png" width="700"/>
                 </section>
                 
                 
@@ -230,8 +229,9 @@ $ bin/omero config set  omero.ldap.user_filter "(objectClass=inetorgperson)"
                     <h2>OMERO.web services</h2>
                     <ul>
                         <li>Need to be logged-in (or 'public user' access)</li>
-                        <li>Full viewer:
-                            <a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3925542/"  target="_blank">/webgateway/img_detail/3925542</a>
+                        <li>Thumbnail: <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/" target="_blank">/webgateway/render_image/&#60;imageid&#62;/&#60;z&#62;/&#60;t&#62;/</a>
+                        <li>Image Viewer:
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3925542/"  target="_blank">/webgateway/img_detail/&#60;imageid&#62;</a>
                             <br>Suitable for embedding in iframe
                         </li>
                         <li>Link to data in webclient:
@@ -244,7 +244,7 @@ $ bin/omero config set  omero.ldap.user_filter "(objectClass=inetorgperson)"
 
 
                 <section>
-                    <h2>WebGateway: JSON methods</h2>
+                    <h2>Image Viewer: JSON methods</h2>
                     <ul>
                         <li>Simple Project, Dataset methods. E.g:
                             <ul>
@@ -280,7 +280,7 @@ $ bin/omero config set  omero.ldap.user_filter "(objectClass=inetorgperson)"
 
 
                 <section>
-                    <h2>WebGateway: Image Rendering</h2>
+                    <h2>Image Viewer: Image Rendering</h2>
                     <ul style="width: 1000px">
                         <div>
                             <img style="float:left; margin-right:60px" src="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3925542/" width='75' height='75'/>
