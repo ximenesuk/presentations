@@ -310,7 +310,11 @@
             <ul>
                 <li>In-place import</li>
                 <li>DropBox import</li>
-                <li>Polling &amp; cron job import</li>
+                <li>Future DropBox extensions</li>
+                <ul>
+                  <li>More flexible configuration</li>
+                  <li>Polling &amp; cron job import</li>
+                <ul>
             </ul>
             <aside class="notes">
             </aside>
@@ -449,47 +453,21 @@
 
         <section>
           <section>
-            <h3>DropBox</h3>
+            <h3>DropBox: in-place import</h3>
             <img src="diagrams/dropbox_now.png" width="80%"/>
             <aside class="notes">
               <ul>
-                <li>DropBox can be configured to use in-place import</li>
+                <li>DropBox can now be configured to use in-place import</li>
                 <li>This can remove server-side duplication</li>
-                <li>Future work</li>
-                <ul>
-                  <li>More configuration</li>
-                  <li>Container details captured in paths</li>
-                </ul>
               </ul>
             </aside>
           </section>
 
           <section>
-            <h3>DropBox</h3>
-            <img src="diagrams/dropbox_future.png" width="80%"/>
-            <aside class="notes">
-              <ul>
-                <li>DropBox can be configured to use in-place import</li>
-                <li>This can remove server-side duplication</li>
-                <li>Future work</li>
-                <ul>
-                  <li>More configuration</li>
-                  <li>Container details captured in paths</li>
-                </ul>
-              </ul>
-            </aside>
-          </section>
-
-          <section>
-            <h3>DropBox import: Summary</h3>
+            <h3>DropBox in-place: Summary</h3>
             <ul>
               <li>DropBox can be configured to use in-place import</li>
               <li>This can remove server-side duplication</li>
-              <li>Future work</li>
-              <ul>
-                <li>More configuration</li>
-                <li>Container details captured in paths</li>
-              </ul>
             </ul>
             <aside class="notes">
             </aside>
@@ -497,13 +475,43 @@
         </section>
 
         <section>
-          <h3>Polling &amp; cron job import</h3>
+          <section>
+            <h3>DropBox: container creation</h3>
+            <img src="diagrams/dropbox_future.png" width="80%"/>
+            <aside class="notes">
+              <ul>
+                <li>Container details captured in paths</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Extending DropBox file monitor</h3>
+              <ul>
+                <li>Point at any visible directory</li>
+                <ul>
+                  <li>One-off auto-importer</li>
+                  <li>Run in polling mode</li>
+                  <li>Configurable as a cron job</li>
+                </ul>
+              </ul>
+            <aside class="notes">
+              Still need a nice diagram for this.
+            </aside>
+          </section>
+
+          <section>
+            <h3>DropBox future: Summary</h3>
             <ul>
-              <li>Extending DropBox to run in polling mode</li>
-              <li>This can also be configured for a cron job</li>
+              <li>More flexible configuration</li>
+              <li>Container details captured in paths</li>
+              <li>Point at any visible directory</li>
+              <li>Run in polling mode</li>
+              <li>Can be configured for a cron job</li>
             </ul>
-          <aside class="notes">
-          </aside>
+            <aside class="notes">
+            </aside>
+          </section>
         </section>
 
         <!-- ===============================================
