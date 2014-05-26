@@ -336,7 +336,9 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                 <section>
                     <h2>Create an OMERO.web app</h2>
                     <ul>
-                        <li>OMERO.web uses the Django framework to support apps</li>
+                        <li>OMERO.web uses the 
+                            <a href="https://www.djangoproject.com/" target="new">Django framework</a>
+                            to support apps</li>
                         <li>Apps can be installed onto existing OMERO.web deployments</li>
                         <li>Apps can use or extend existing page templates or code<br>
                             E.g. webclient uses webgateway image viewer
@@ -379,6 +381,7 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                             </ul>
                         </li>
                     </ul>
+                    <pre><code>$ bin/omero config append omero.web.apps '"figure"'</code></pre>
                 </section>
 
 
@@ -386,9 +389,20 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                     <h2>Webclient plugins</h2>
                     <ul>
                         <li>Hooks to bring app content into webclient (center & right)</li>
-                        <li>webtest examples included in OMERO.web</li>
-                        <li>See <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/WebclientPlugin.html">webclient plugin docs</a>
+                        <li>See
+                            <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/WebclientPlugin.html">
+                                webclient plugin docs</a>
                         </li>
+                    </ul>
+
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/webclient_plugins.png" width="900px"/>
+                </section>
+
+
+                <section>
+                    <h2>Webclient plugins</h2>
+                    <ul>
+                        <li>webtest examples included in OMERO.web:</li>
                     </ul>
                     <pre><code style="width:1000px; font-size:80%" class="bash"># omeroweb/settings.py
 
