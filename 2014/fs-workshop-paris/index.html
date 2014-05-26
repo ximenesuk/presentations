@@ -532,18 +532,24 @@
                 </li>
             </ul>
             <aside class="notes">
-                The next section is going to focus on
-                some possible ways to layout your data
-                on disk. This all comes down to tuning
+                <p>
+                This last section goes back briefly to the
+                ManagedRepository focusing on some possible ways
+                to configure the data layout on disk.
+                </p>
+                <p>
+                This all comes down to tuning
                 your repository "template", which is probably
                 the most useful configuration, but it does
-                require making some choices
-
+                require making some choices.
+                </p>
+                <p>
                 <b>NB:</b> If you've already started
                 importing into OMERO, changing your template
                 will work; but there will be steps necessary
                 to migrate the data from the old template to
                 the new.
+                </p>
             </aside>
           </section>
 
@@ -555,21 +561,16 @@
             <h3>Default template</h3>
             <img alt="Template diagram" src="diagrams/managedrepo-template.png" width="80%"/>
             <aside class="notes">
-              Files go into locations based on the template.
-              (Explanation slide on template if this hasn't
-              happened sooner)
-
-              For example, depending on the template, each
-              user can be access to his/her directory via
-              SAMBA. (Requires mapping at the OS level,
-              yadda yadda yadda).
-
-              Similarly, the templates can be used to help
-              migrating from one disk to another.
-
-              In general, though, the layout requires some
-              planning, and possibly some initial clean up
-              of the DB.
+                <p>
+                As we've seen on several of the previous slides,
+                files go into locations based on the default template
+                with username/userid at the top followed by timestamped directories.
+                </p>
+                <p>
+                Previously, the username/userid directory <b>had to be</b> at the top.
+                With 5.0.2, this restriction has been loosened, which permits the
+                examples will be looking at here.
+                </p>
             </aside>
           </section>
 
