@@ -535,7 +535,9 @@
                 The next section is going to focus on
                 some possible ways to layout your data
                 on disk. This all comes down to tuning
-                your repository "template".
+                your repository "template", which is probably
+                the most useful configuration, but it does
+                require making some choices
 
                 <b>NB:</b> If you've already started
                 importing into OMERO, changing your template
@@ -597,6 +599,7 @@
 
           <section data-transition="none">
             <h3>Template configuration</h3>
+            <h4>in etc/omero.properties</h4>
             <table>
                 <tr>
                     <td>
@@ -685,6 +688,8 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
                 src="diagrams/template-group.png" width="75%"/>
             <aside class="notes">
               <p>
+              An example suggested by Dave Mason from Liverpool.
+
               Here we've added %groupId% at the top of the template.
               This adds another directory level to the repository.
               Scripts and other management tools can make use of this
@@ -722,7 +727,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
               </p>
               <p>
                 Here we've taken the same layout as for the quotas,
-                put mounted each directory as samba share. Read/write
+                but mounted each directory as samba share. Read/write
                 permissions can be set based on the group's needs.
               </p>
             </aside>
@@ -771,6 +776,10 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
                 mount point, meaning you can plug in new disks or similar.
               </p>
               <p>
+              <p>
+                driveX here is a hard-coded value, not a template replacement.
+                It can be whatever value you want it to be.
+              </p>
                 Josh: Although I'd really like to allow spinning up multiple
                 managed repos and choosing them based on number of stars or
                 whatever, for the moment, I _bet_ it's going to be simpler to have
