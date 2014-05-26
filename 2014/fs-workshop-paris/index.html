@@ -87,7 +87,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-transition="none">
             <h3>OMERO 5 Import</h3>
             <img src="diagrams/upload.png" width="100%"/>
             <aside class="notes">
@@ -110,7 +110,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>OMERO 5 Data out</h3>
             <img src="diagrams/data-out.png" width="100%"/>
             <aside class="notes">
@@ -127,7 +127,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>OMERO 5 Import: Summary</h3>
             <ul>
               <li>client uploads <em>only</em> original data</li>
@@ -144,7 +144,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>OMERO 5 Data out: Summary</h3>
             <ul>
               <li>pixels provided directly from original files</li>
@@ -160,7 +160,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>OMERO 4 Import: Summary</h3>
             <ul>
               <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
@@ -179,7 +179,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-transition="none">
             <h3>ManagedRepository</h3>
             <img src="diagrams/managedrepo-intro.png" width="90%"/>
             <aside class="notes">
@@ -204,7 +204,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>ManagedRepository: Summary</h3>
             <ul>
               <li>server stores and reads original data</li>
@@ -221,7 +221,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>Migrating to FS</h3>
             <ul>
               <li>new OMERO users should use OMERO 5</li>
@@ -240,7 +240,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-transition="none">
             <h3>Filesets: One to one</h3>
             <img src="diagrams/fileset_1x1.png" width="100%"/>
             <aside class="notes">
@@ -256,7 +256,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>Filesets: One to many</h3>
             <img src="diagrams/fileset_1xn.png" width="100%"/>
             <aside class="notes">
@@ -272,7 +272,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>Filesets: Many to many</h3>
             <img src="diagrams/fileset_nxn.png" width="100%"/>
             <aside class="notes">
@@ -288,7 +288,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>Filesets: Summary</h3>
             <ul>
               <li>a set of related files</li>
@@ -321,7 +321,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-transition="none">
             <h3>In-place import: symlink</h3>
             <code>
               $ bin/omero import path/to/image -- --transfer=ln_s
@@ -343,7 +343,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>In-place import: hard link</h3>
             <code>
               $ bin/omero import path/to/image -- --transfer=ln
@@ -409,7 +409,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>In-place import: Options</h3>
             <ul>
               <li><code>$ bin/omero import -- --advanced-help</code></li>
@@ -432,7 +432,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>In-place import: Summary</h3>
             <ul>
               <li>client transfers original data to ManagedRepository</li>
@@ -452,7 +452,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-transition="none">
             <h3>DropBox: in-place import</h3>
             <img src="diagrams/dropbox_now.png" width="80%"/>
             <aside class="notes">
@@ -463,7 +463,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>DropBox in-place: Summary</h3>
             <ul>
               <li>DropBox can be configured to use in-place import</li>
@@ -475,7 +475,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-transition="none">
             <h3>DropBox: container creation</h3>
             <img src="diagrams/dropbox_future.png" width="80%"/>
             <aside class="notes">
@@ -485,7 +485,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>Extending DropBox file monitor</h3>
               <ul>
                 <li>Point at any visible directory</li>
@@ -500,7 +500,7 @@
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>DropBox future: Summary</h3>
             <ul>
               <li>More flexible configuration</li>
@@ -717,7 +717,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
 
         <section>
 
-          <section>
+          <section data-transition="none">
             <h3>Quotas</h3>
             <img alt="Template starting with groupId"
                 src="diagrams/template-group.png" width="75%"/>
@@ -731,7 +731,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>Quotas: Summary</h3>
               <p>
                 By adding "%groupId%" at the top of the template,
@@ -747,7 +747,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
 
         <section>
 
-          <section>
+          <section data-transition="none">
             <h3>Samba: per group</h3>
             <img alt="Samba usage diagram"
                 src="diagrams/samba_group.png" width="90%"/>
@@ -766,7 +766,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>Samba: per user</h3>
             <img alt="Samba usage diagram"
                 src="diagrams/samba_user.png" width="90%"/>
@@ -785,7 +785,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
               <h3>Samba: Summary</h3>
             <ul>
                 <li>/OMERO/ManagedRepository can be mapped via Samba</li>
@@ -799,7 +799,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
 
         <section>
 
-          <section>
+          <section data-transition="none">
             <h3>Adding disks</h3>
             <img alt="Template starting with drive"
                 src="diagrams/template-drive.png" width="75%"/>
@@ -819,7 +819,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>Adding disks: Summary</h3>
             <p>Adding other disks, should be as simple as adding a
             mount-point under /OMERO/ManagedRepository</p>
@@ -830,7 +830,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
 
         <section>
 
-          <section>
+          <section data-transition="none">
             <h3>Other advanced tasks</h3>
             <ul>
                 <li>Find your managed repository</li>
@@ -841,7 +841,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
             </aside>
           </section>
 
-          <section>
+          <section data-transition="none">
             <h3>Finding your ManagedRepository</h3>
             <table>
                 <tr>
