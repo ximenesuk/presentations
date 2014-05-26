@@ -171,32 +171,30 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                     </ul>
                 </section>
 
-
                 <section>
-                    <h2>LDAP / Active Directory</h2>
-                    <ul>
-                        <li>OMERO supports login authentication via LDAP</li>
-                        <li>Synchronizing LDAP on user login</li>
-                        <li>Group and User lookup filters support</li>
-                        <li>See <a href="https://www.openmicroscopy.org/site/support/omero5/sysadmins/server-ldap.html" target="_blank">
-                            LDAP Documentation</a></li>
-                    </ul>
-                        
-                    <pre><code contenteditable style="font-size:90%" class="bash">
-$ bin/omero config set omero.ldap.sync_on_login true
-$ bin/omero config set omero.ldap.group_filter
-  "(&(objectClass=groupOfUniqueNames)(cn=omeroGroup))"
-$ bin/omero config set  omero.ldap.group_mapping "name=cn"
-$ bin/omero config set  omero.ldap.new_user_group ":query:(uniqueMember=@{dn})"
-$ bin/omero config set  omero.ldap.user_filter "(objectClass=inetorgperson)"
-                    </code></pre>
-                </section>
-
-
-                <section>
-                    <h2><b>Virtual Microscope</b><br/>next step in learning</h2>
+                    <h2>Virtual Microscope<br/>next step in learning</h2>
                     <img  src="images/VM1.png" width="700"/>
-                    
+                </section>
+                
+                <section>
+                    <h2>OMERO.web UI configuration</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
+$ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'
+
+$ bin/omero config set omero.web.login_redirect 
+        '{"redirect": ["webindex"], "viewname": "webindex_custom"}'
+$ bin/omero config set omero.web.login_redirect 
+                '{"redirect": ["webindex"], "viewname": "load_template", 
+                "args":["userdata"], "query_string": "experimenter=-1"}'
+
+$ bin/omero config set omero.web.ui.top_links 
+                '[["Webtest", "webtest_index"]]'
+$ bin/omero config set omero.web.ui.top_links 
+                '[["GRE", "http://lifesci.dundee.ac.uk/gre"]]'
+
+$ bin/omero config set omero.web.ui.menu.dropdown 
+                '{"LEADERS": "Course:", "ALL": "All courses"}'
+</code></pre>
                 </section>
                 
                 <section>
