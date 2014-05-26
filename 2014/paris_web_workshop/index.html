@@ -133,48 +133,39 @@ $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
                         width="500px"/><br>
                     <small>New in OMERO 5.0.2</small>
                 </section>
-
-                <section>
-                    <h2>Virtual Microscope<br/>next step in learning</h2>
-                    <img  src="images/VM1.png" width="700"/>
-                </section>
                 
                 <section>
-                    <h2>OMERO.web UI configuration</h2>
+                    <h2>Index page</h2>
                     <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
 $ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'
-
-$ bin/omero config set omero.web.login_redirect 
-        '{"redirect": ["webindex"], "viewname": "webindex_custom"}'
-$ bin/omero config set omero.web.login_redirect 
-                '{"redirect": ["webindex"], "viewname": "load_template", 
-                "args":["userdata"], "query_string": "experimenter=-1"}'
-
-$ bin/omero config set omero.web.ui.top_links 
-                '[["Webtest", "webtest_index"]]'
-$ bin/omero config set omero.web.ui.top_links 
-                '[["GRE", "http://lifesci.dundee.ac.uk/gre"]]'
-
-$ bin/omero config set omero.web.ui.menu.dropdown 
-                '{"LEADERS": "Owners", "COLLEAGUES": "Members", "ALL": "All members"}'
 </code></pre>
                 </section>
                 
                 <section>
-                    <img src="images/VM2.png" width="700"/>
-                </section>
-                
-                
-                <section>
-                    <h2>Benefits:</h2>
-                    <ul>
-                        <li>efficient and effective ways to teach subject specialties</li>
-                        <li>open access to explore and examine the sections at different levels of magnification</li>
-                        <li>helping develop classification and identification skills without the need for high-cost microscopes and thin section preparation facilities</li>
-                        <li>open source project</li>
-                    </ul>
+                    <h2>Login redirection</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_redirect 
+        '{"redirect": ["webindex"], "viewname": "webindex_custom"}'
+$ bin/omero config set omero.web.login_redirect 
+                '{"redirect": ["webindex"], "viewname": "load_template", 
+                "args":["userdata"], "query_string": "experimenter=-1"}'
+</code></pre>
                 </section>
 
+                <section>
+                    <h2>Top links menu</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.ui.top_links 
+                '[["Webtest", "webtest_index"]]'
+$ bin/omero config set omero.web.ui.top_links 
+                '[["GRE", "http://lifesci.dundee.ac.uk/gre"]]'
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Group and Users in dropdown menu</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.ui.menu.dropdown 
+                '{"LEADERS": "Owners", "COLLEAGUES": "Members", "ALL": "All members"}'
+</code></pre>
+                </section>
 
                 <section>
                     <h2>Public User</h2>
@@ -423,6 +414,24 @@ $ bin/omero config append omero.web.ui.right_plugins
                     <img src="http://downloads.openmicroscopy.org/presentations/2013/June-Users-Meeting/analysis-workshop/images/RightPanelROIs.png" width="400px"/>
                 </section>
 
+                <section>
+                    <h2>Virtual Microscope<br/>next step in learning</h2>
+                    <img  src="images/VM1.png" width="700"/>
+                </section>
+                
+                <section>
+                    <img src="images/VM2.png" width="700"/>
+                </section>
+                
+                <section>
+                    <h2>Benefits:</h2>
+                    <ul>
+                        <li>efficient and effective ways to teach subject specialties</li>
+                        <li>open access to explore and examine the sections at different levels of magnification</li>
+                        <li>helping develop classification and identification skills without the need for high-cost microscopes and thin section preparation facilities</li>
+                        <li>open source project</li>
+                    </ul>
+                </section>
 
                 <section>
                     <h2>OMERO.searcher</h2>
