@@ -219,6 +219,23 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                             WebGateway documentation
                         </a>
                     </p>
+                    <ul>
+                    <li>Link to data in webclient:
+                        <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1" target="_blank">
+                            /webclient/?show=dataset-1
+                        </a>
+                        <br>Supports project, dataset, image, screen, plate, well
+                    </li>
+                    
+                    <li>
+                        <img style="float:left; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/" width='120' height='120'/>
+                        Full image viewer
+                        <a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3925542/"  target="_blank">
+                            webgateway/img_detail/&lt;imageId&gt;/
+                        </a>
+                        <br>Suitable for embedding in iframe
+                    </li>
+                    </ul>
                 </section>
 
 
@@ -256,12 +273,7 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
     success: function(data) { // },
 })</code></pre>
 
-                    <li>Link to data in webclient:
-                        <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1" target="_blank">
-                            /webclient/?show=dataset-1
-                        </a>
-                        <br>Supports project, dataset, image, screen, plate, well
-                    </li>
+
                 </section>
 
                 <section>
@@ -282,7 +294,6 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                             <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/"  target="_blank">
                                 webgateway/render_image/&lt;imageId&gt;/&lt;z&gt;/&lt;t&gt;/
                             </a>
-                            <br>Suitable for embedding in iframe
                         </div>
 
                         <div style="clear:both"></div>
