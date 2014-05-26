@@ -81,6 +81,7 @@
             <li>OMERO 5 Import</li>
             <li>ManagedRepository</li>
             <li>Filesets</li>
+            <li>Discussion</li>
           </ul>
           <aside class="notes">
           </aside>
@@ -304,17 +305,30 @@
           </section>
         </section>
 
+        <section>
+          <h2>Discussion</h2>
+          <ul>
+            <li>For more detail of FS see
+            <a href="http://ome.github.io/presentations/2013/fs-workshop-paris">last year's workshop</a>.</li>
+            </ul></li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
         <!-- Advanced import - Colin ?? -->
         <section>
             <h2>Advanced import</h2>
             <ul>
                 <li>In-place import</li>
                 <li>DropBox import</li>
-                <li>Future DropBox extensions</li>
+                <li>Future import</li>
                 <ul>
-                  <li>More flexible configuration</li>
-                  <li>Polling &amp; cron job import</li>
-                <ul>
+                  <li>Container creation</li>
+                  <li>Cron job import</li>
+                  <li>Polling DropBox</li>
+                </ul>
+                <li>Discussion</li>
             </ul>
             <aside class="notes">
             </aside>
@@ -476,11 +490,13 @@
 
         <section>
           <section data-transition="none">
-            <h3>DropBox: container creation</h3>
+            <h3>Import: users, groups and containers</h3>
             <img src="diagrams/dropbox_future.png" width="80%"/>
             <aside class="notes">
               <ul>
-                <li>Container details captured in paths</li>
+                <li>User and group captured in paths</li>
+                <li>Containers captured in paths</li>
+                <li>Create or re-use containerss</li>
               </ul>
             </aside>
           </section>
@@ -490,9 +506,8 @@
               <ul>
                 <li>Point at any visible directory</li>
                 <ul>
-                  <li>One-off auto-importer</li>
                   <li>Run in polling mode</li>
-                  <li>Configurable as a cron job</li>
+                  <li>Use file notification if available</li>
                 </ul>
               </ul>
             <aside class="notes">
@@ -501,17 +516,27 @@
           </section>
 
           <section data-transition="none">
-            <h3>DropBox future: Summary</h3>
+            <h3>Import future: Summary</h3>
             <ul>
-              <li>More flexible configuration</li>
-              <li>Container details captured in paths</li>
-              <li>Point at any visible directory</li>
-              <li>Run in polling mode</li>
+              <li>User, group &amp; containers captured in paths</li>
               <li>Can be configured for a cron job</li>
+              <li>DropBox run in polling mode</li>
             </ul>
             <aside class="notes">
             </aside>
           </section>
+        </section>
+
+        <section>
+          <h2>Discussion</h2>
+          <ul>
+            <li>We welcome questions and comments on FS:<ul>
+                <li>Other import scenarios?</li>
+                <li>What further work on FS would be most useful?</li>
+            </ul></li>
+          </ul>
+          <aside class="notes">
+          </aside>
         </section>
 
         <!-- ===============================================
@@ -530,6 +555,7 @@
                         <li>Adding disks</li>
                     </ul>
                 </li>
+                <li>Discussion</li>
             </ul>
             <aside class="notes">
                 <p>
