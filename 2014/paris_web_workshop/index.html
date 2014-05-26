@@ -134,43 +134,6 @@ $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
                     <small>New in OMERO 5.0.2</small>
                 </section>
 
-
-                <section>
-                    <h2>Public User</h2>
-                    <ul>
-                        <li>Public visitors are logged-in as a specified 'public user'</li>
-                        <li>Visitors are able to access data available to public user</li>
-                        <li>Functionality exposed can be controlled by url filters</li>
-                        <li>See
-                            <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/PublicData.html"  target="_blank">
-                                Public Data Documentation
-                            </a>
-                        </li>
-                    </ul>
-                    
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.enabled True
-$ bin/omero config set omero.web.public.server_id 1
-$ bin/omero config set omero.web.public.user '&#60;username&#62;'
-$ bin/omero config set omero.web.public.password '*****'
-</code></pre>
-<pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.url_filter
-     '^/(?!webadmin|webclient/action/\w+|webclient/annotate_(file|tags|comment))'
- 
-$ bin/omero config set omero.web.public.url_filter '/webgateway'
-</code></pre>
-                </section>
-
-
-                <section>
-                    <h2>Public Repository Examples</h2>
-                    <ul>
-                        <li><a href="http://odr.stowers.org/websimr/" target="_blank">Stowers Institute ODR</a> (standalone app)</li>
-                        <li><a href="http://jcb-dataviewer.rupress.org/" target="_blank">JCB data-viewer</a> (standalone app)</li>
-                        <li><a href="http://ssbd.qbic.riken.jp/" target="_blank">Systems Science of Biological Dynamics (SSBD)</a> (links to <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1" target="_blank">data in webclient</a>)</li>
-                        <li><a href="http://www.ebi.ac.uk/pdbe/entry/EMD-5951/slice" target="_blank">EM-Databank</a> (iframe)</li>
-                    </ul>
-                </section>
-
                 <section>
                     <h2>Virtual Microscope<br/>next step in learning</h2>
                     <img  src="images/VM1.png" width="700"/>
@@ -212,6 +175,42 @@ $ bin/omero config set omero.web.ui.menu.dropdown
                     </ul>
                 </section>
 
+
+                <section>
+                    <h2>Public User</h2>
+                    <ul>
+                        <li>Public visitors are logged-in as a specified 'public user'</li>
+                        <li>Visitors are able to access data available to public user</li>
+                        <li>Functionality exposed can be controlled by url filters</li>
+                        <li>See
+                            <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/PublicData.html"  target="_blank">
+                                Public Data Documentation
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.enabled True
+$ bin/omero config set omero.web.public.server_id 1
+$ bin/omero config set omero.web.public.user '&#60;username&#62;'
+$ bin/omero config set omero.web.public.password '*****'
+</code></pre>
+<pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.url_filter
+     '^/(?!webadmin|webclient/action/\w+|webclient/annotate_(file|tags|comment))'
+ 
+$ bin/omero config set omero.web.public.url_filter '/webgateway'
+</code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Public Repository Examples</h2>
+                    <ul>
+                        <li><a href="http://odr.stowers.org/websimr/" target="_blank">Stowers Institute ODR</a> (standalone app)</li>
+                        <li><a href="http://jcb-dataviewer.rupress.org/" target="_blank">JCB data-viewer</a> (standalone app)</li>
+                        <li><a href="http://ssbd.qbic.riken.jp/" target="_blank">Systems Science of Biological Dynamics (SSBD)</a> (links to <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1" target="_blank">data in webclient</a>)</li>
+                        <li><a href="http://www.ebi.ac.uk/pdbe/entry/EMD-5951/slice" target="_blank">EM-Databank</a> (iframe)</li>
+                    </ul>
+                </section>
 
                 <section>
                     <h2 class="larger">OMERO.web as webservice</h2>
