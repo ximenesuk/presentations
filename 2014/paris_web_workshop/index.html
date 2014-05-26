@@ -415,12 +415,11 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                     <ul>
                         <li>webtest examples included in OMERO.web:</li>
                     </ul>
-                    <pre><code style="width:1000px; font-size:80%" class="bash"># omeroweb/settings.py
+                    <pre><code style="width:900px; font-size:80%">
+$ bin/omero config append omero.web.ui.right_plugins
+        '["ROIs", "webtest/webclient_plugins/right_plugin.rois.js.html", "image_roi_tab"]'
 
-"omero.web.ui.right_plugins": ["RIGHT_PLUGINS",
-  '[["Acquisition", "webclient/data/includes/right_plugin.acquisition.js.html", "metadata_tab"],'\
-  #'["ROIs", "webtest/webclient_plugins/right_plugin.rois.js.html", "image_roi_tab"],'\
-  '["Preview", "webclient/data/includes/right_plugin.preview.js.html", "preview_tab"]]', json.loads],</code></pre>
+</code></pre>
                     <img src="http://downloads.openmicroscopy.org/presentations/2013/June-Users-Meeting/analysis-workshop/images/RightPanelROIs.png" width="400px"/>
                 </section>
 
