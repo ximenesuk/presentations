@@ -382,7 +382,7 @@
 
         <section>
           <section data-transition="none">
-            <h3>In-place import: symlink</h3>
+            <h3>In-place import: soft link</h3>
             <code>
               $ bin/omero import path/to/image -- --transfer=ln_s
             </code>
@@ -473,27 +473,41 @@
             <h3>In-place import: Options</h3>
             <ul>
               <li><code>$ bin/omero import -- --advanced-help</code></li>
-              <li>transfer options</li>
+              <li>transfer and checksum options</li>
               <ul>
-                <li><code>--transfer=upload</code></li>
-                <li><code>--transfer=ln_s</code></li>
-                <li><code>--transfer=ln</code></li>
-                <li><code>--transfer=ln_rm</code></li>
-                <li><code>--transfer=some.class.Name</code></li>
+                <li><code>--transfer=ARG</code></li>
+                <ul>
+                  <li>
+                    <code>
+                      upload, ln, ln_s, ln_rm, some.class.Name
+                    </code>
+                  </li>
+                  <li>default: <code>upload</code></li>
+                  <li>User-provided Java class: <code>some.class.Name</code></li>
+                </ul>
+                <li><code>--checksum_algorithm=ARG</code></li>
+                <ul>
+                  <li>
+                    <code>
+                      Adler-32, CRC-32, MD5-128, Murmur3-32,<br />Murmur3-128, SHA1-160
+                    </code>
+                  </li>
+                  <li>default: <code>SHA1-160</code></li>
+                </ul>
               </ul>
-              <li>other options</li>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>In-place import: Options</h3>
+            <ul>
+              <li><code>$ bin/omero import -- --advanced-help</code></li>
+              <li>background import options</li>
               <ul>
                 <li><code>--minutes_wait=ARG</code></li>
                 <li><code>--close_completed</code></li>
                 <li><code>--wait_completed</code></li>
-                <li><code>--checksum_algorithm=ARG</code></li>
-                <ul>
-                  <li>
-                    <code style="font-size:60%">
-                      Adler-32, CRC-32, MD5-128, Murmur3-32, Murmur3-128, SHA1-160
-                    </code>
-                  </li>
-                </ul>
               </ul>
             <aside class="notes">
             </aside>
