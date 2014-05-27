@@ -1,0 +1,503 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>OMERO.web: Paris 2014</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+        <!-- OME presentation overrides of the default theme -->
+        <style>
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+              text-transform: none;
+            }
+            .reveal h2 {
+                font-size: 60px;
+            }
+            .ome_theme {
+                background-image: url("images/ome-icon-opacity.png");
+                background-color: #f2f6f9;
+                background-repeat: no-repeat;
+                background-position: right -270px top -120px;
+            }
+            .reveal {
+                text-transform: none;   !important
+            }
+
+            .reveal section img {
+                border-width:0;
+                border-color: white;
+            }
+
+            .img_panel {
+                width: 150px;
+            }
+
+            .nobullet li {
+                list-style: none;
+            }
+
+            table.centre {
+                width: 100%;
+            }
+
+            .reveal .centre td {
+                text-align: center;
+            }
+
+            .rot90 {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+
+            .reveal .title {
+                position:absolute;
+                bottom:100%;
+                margin:5px;
+                color:red;
+            }
+
+            .larger {
+                font-size: 80px !important;
+            }
+
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body class="ome_theme">
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <!-- title page -->
+                <section>
+                    <h1>Customizing OMERO.web</h1>
+                    <h3>OME Paris 2014</h3>
+                    <p>
+                        <small>
+                            Aleksandra Tarkowska | Will Moore | Simon Li | Douglas Russell
+                        </small>
+                    </p>
+                </section>
+
+                <!-- talk outline -->
+                <section>
+                    <h2>Customizing OMERO.web</h2>
+                    <ul>
+                        <li>Configure web settings</li>
+                        <li>Use as a webservice</li>
+                        <li>Extend with your own apps</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2 class="larger">Configure web settings</h2>
+                    <p>See web install docs for
+                        <a href="https://www.openmicroscopy.org/site/support/omero5/sysadmins/unix/install-web.html#customizing-your-omero-web-installation" target="_blank">Unix</a> |
+                        <a href="https://www.openmicroscopy.org/site/support/omero5/sysadmins/windows/install-web.html#customizing-your-omero-web-installation" target="_blank">Windows</a>
+                    </p>
+                    <p>or <code contenteditable style="font-size:90%" class="bash">bin/omero web -h</code></p>
+                </section>
+
+
+                <section>
+                    <h2>Login screen</h2>
+                        <pre><code contenteditable style="font-size:90%" class="bash">
+$ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
+                        </code></pre>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/custom_login.png"
+                        width="500px"/><br>
+                    <small>New in OMERO 5.0.2</small>
+                </section>
+                
+                <section>
+                    <h2>Index page</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
+$ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'
+</code></pre>
+                </section>
+                
+                <section>
+                    <h2>Login redirection</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_redirect 
+        '{"redirect": ["webindex"], "viewname": "webindex_custom"}'
+$ bin/omero config set omero.web.login_redirect 
+                '{"redirect": ["webindex"], "viewname": "load_template", 
+                "args":["userdata"], "query_string": "experimenter=-1"}'
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Top links menu</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.ui.top_links 
+                '[["Webtest", "webtest_index"]]'
+$ bin/omero config set omero.web.ui.top_links 
+                '[["GRE", "http://lifesci.dundee.ac.uk/gre"]]'
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Group and Users in dropdown menu</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.ui.menu.dropdown 
+                '{"LEADERS": "Owners", "COLLEAGUES": "Members", "ALL": "All members"}'
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Public User</h2>
+                    <ul>
+                        <li>Public visitors are logged-in as a specified 'public user'</li>
+                        <li>Visitors are able to access data available to public user</li>
+                        <li>Functionality exposed can be controlled by url filters</li>
+                        <li>See
+                            <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/PublicData.html"  target="_blank">
+                                Public Data Documentation
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.enabled True
+$ bin/omero config set omero.web.public.server_id 1
+$ bin/omero config set omero.web.public.user '&#60;username&#62;'
+$ bin/omero config set omero.web.public.password '*****'
+</code></pre>
+<pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.url_filter
+     '^/(?!webadmin|webclient/action/\w+|webclient/annotate_(file|tags|comment))'
+ 
+$ bin/omero config set omero.web.public.url_filter '/webgateway'
+</code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Public Repository Examples</h2>
+                    <ul>
+                        <li><a href="http://odr.stowers.org/websimr/" target="_blank">Stowers Institute ODR</a> (standalone app)</li>
+                        <li><a href="http://jcb-dataviewer.rupress.org/" target="_blank">JCB data-viewer</a> (standalone app)</li>
+                        <li><a href="http://ssbd.qbic.riken.jp/" target="_blank">Systems Science of Biological Dynamics (SSBD)</a> (links to <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1" target="_blank">data in webclient</a>)</li>
+                        <li><a href="http://www.ebi.ac.uk/pdbe/entry/EMD-5951/slice" target="_blank">EM-Databank</a> (iframe)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="larger">OMERO.web as webservice</h2>
+                    <p>See
+                        <a href="http://www.openmicroscopy.org/site/support/omero5/developers/Web/WebGateway.html"  target="_blank">
+                            WebGateway documentation
+                        </a>
+                    </p>
+                    <ul>
+                    <li>Link to data in webclient:
+                        <a href="http://ssbd.qbic.riken.jp/omero/webclient/?show=dataset-1" target="_blank">
+                            /webclient/?show=dataset-1
+                        </a>
+                        <br>Supports project, dataset, image, screen, plate, well
+                    </li>
+                    
+                    <li>
+                        <img style="float:left; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/" width='120' height='120'/>
+                        Full image viewer
+                        <a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3925542/"  target="_blank">
+                            webgateway/img_detail/&lt;imageId&gt;/
+                        </a>
+                        <br>Suitable for embedding in iframe
+                    </li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>JSON methods</h2>
+                    <ul>
+                        <li>Simple Project, Dataset methods. E.g:
+                            <ul>
+                                <li>List projects:
+                                    <a href="https://nightshade.openmicroscopy.org/webgateway/proj/list/"  target="_blank">
+                                        /webgateway/proj/list/
+                                    </a>
+                                </li>
+                                <li>Datasets in Project:
+                                    <a href="https://nightshade.openmicroscopy.org/webgateway/proj/23899/children/"  target="_blank">
+                                        webgateway/proj/&lt;projectId&gt;/children/
+                                    </a>
+                                </li>
+                                <li>Images in Dataset:
+                                    <a href="https://nightshade.openmicroscopy.org/webgateway/dataset/63496/children/"  target="_blank">
+                                        webgateway/dataset/&lt;datasetId&gt;/children/
+                                    </a>
+                                </li>
+                            </ul>
+                        <li>Image json has lots of info (used by full viewer)
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/imgData/3925541/"  target="_blank">
+                                webgateway/imgData/&lt;imageId&gt;/
+                            </a>
+                        </li>
+                        <li>jsonp supported for cross-domain queries, E.g. jQuery:</li>
+                    </ul>
+                    <pre><code contenteditable style="font-size:90%" class="javascript">$.ajax({
+    url: "https://nightshade.openmicroscopy.org/webgateway/proj/list/",
+    jsonp: 'callback',
+    success: function(data) { // },
+})</code></pre>
+
+
+                </section>
+
+                <section>
+                    <h2>Rendering image</h2>
+                    <div style="width: 1000px">
+                        
+                        <div>
+                            <img style="float:left; margin-right:60px" src="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3925542/" width='75' height='75'/>
+                            Thumbnails <a href="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3925542/35/0/"  target="_blank">
+                                webgateway/render_thumbnail/&lt;imageId&gt;/&lt;z&gt;/&lt;t&gt;/
+                            </a>
+                        </div>
+
+                        <div style="clear:both"></div>
+                        <div>
+                            <img style="float:left; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/" width='120' height='120'/>
+                            Full rendering options in render_image
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/"  target="_blank">
+                                webgateway/render_image/&lt;imageId&gt;/&lt;z&gt;/&lt;t&gt;/
+                            </a>
+                        </div>
+
+                        <div style="clear:both"></div>
+                        <div>
+                            <img style="float:left; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=1,2" width='120' height='120'/>
+                            Use query string to specify channels
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=1,2"  target="_blank">
+                                ?c=1,2
+                            </a>
+                        </div>
+
+                        <div style="clear:both"></div>
+                        <div>
+                            <img style="float:left; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=3|605:1851$FF0000" width='120' height='120'/>
+                            Channel settings: index|start:stop$color
+                            <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=3|605:1851$FF0000"  target="_blank">
+                                ?c=3|605:1851$FF0000
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Embedding live image</h2>
+                    
+                    <iframe width="800" height="400" src="http://jsfiddle.net/aleksandratarkowska/f45wQ/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+                
+                    <p><a href="http://jsfiddle.net/aleksandratarkowska/S5C7G/" target="_blank">advanced example</a></p>
+                </section>
+
+
+                <section>
+                    <h2>OMERO.figure</h2>
+                    <ul>
+                        <li>
+                            <a target="new" href="http://will-moore.github.io/figure/demo/#file/1">
+                            OMERO.figure demo
+                            </a> is static, using JCB webservice
+                        </li>
+                        <iframe width="1000" height="600" src="http://will-moore.github.io/figure/demo/#file/1" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2 class="larger">Extending OMERO.web</h2>
+                    <p>See <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web.html">
+                        OMERO.web developer docs</a>
+                    </p>
+                </section>
+
+
+                <section>
+                    <h2>Create an OMERO.web app</h2>
+                    <ul>
+                        <li>OMERO.web uses the 
+                            <a href="https://www.djangoproject.com/" target="new">Django framework</a>
+                            to support apps</li>
+                        <li>Apps can be installed onto existing OMERO.web deployments</li>
+                        <li>Apps can use or extend existing page templates or code<br>
+                            E.g. webclient uses webgateway image viewer
+                        </li>
+                        <li>See <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/CreateApp.html">
+                            Creating an app</a> documentation
+                        </li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>App examples</h2>
+                    <ul>
+                        <li>Ship with OMERO.web:
+                            <ul>
+                                <li>
+                                    webgateway | webclient | webtest
+                                </li>
+                            </ul>
+                        </li>
+                        <li>External sites:
+                            <ul>
+                                <li><a href="http://odr.stowers.org/websimr/">Stowers ODR</a> |
+                                    <a href="http://jcb-dataviewer.rupress.org/">JCB data-viewer</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>OME projects:
+                            <ul>
+                                <li><a href="http://will-moore.github.io/figure/">OMERO.figure</a> |
+                                    <a href="https://www.openmicroscopy.org/site/products/partner/omero.searcher">OMERO.searcher</a> |
+                                    <a href="https://www.openmicroscopy.org/site/support/partner/omero.webtagging">webtagging</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Prototypes:
+                            <ul>
+                                <li><a href="https://github.com/will-moore/gallery/">OMERO.gallery</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <pre><code>$ bin/omero config append omero.web.apps '"figure"'</code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Webclient plugins</h2>
+                    <ul>
+                        <li>Hooks to bring app content into webclient (center & right)</li>
+                        <li>See
+                            <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/WebclientPlugin.html">
+                                webclient plugin docs</a>
+                        </li>
+                    </ul>
+
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/webclient_plugins.png" width="900px"/>
+                </section>
+
+
+                <section>
+                    <h2>Webclient plugins</h2>
+                    <ul>
+                        <li>webtest examples included in OMERO.web:</li>
+                    </ul>
+                    <pre><code style="width:900px; font-size:80%">
+$ bin/omero config append omero.web.ui.right_plugins
+        '["ROIs", "webtest/webclient_plugins/right_plugin.rois.js.html", "image_roi_tab"]'
+
+</code></pre>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2013/June-Users-Meeting/analysis-workshop/images/RightPanelROIs.png" width="400px"/>
+                </section>
+
+                <section>
+                    <h2>Virtual Microscope<br/>next step in learning</h2>
+                    <img  src="images/VM1.png" width="700"/>
+                </section>
+                
+                <section>
+                    <img src="images/VM2.png" width="700"/>
+                </section>
+                
+                <section>
+                    <h2>Benefits:</h2>
+                    <ul>
+                        <li>efficient and effective ways to teach subject specialties</li>
+                        <li>open access to explore and examine the sections at different levels of magnification</li>
+                        <li>helping develop classification and identification skills without the need for high-cost microscopes and thin section preparation facilities</li>
+                        <li>open source project</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>OMERO.searcher</h2>
+                            <img src="http://www.openmicroscopy.org/site/products/partner/omero.searcher/images/searcher-2/image"
+                                width="800px"/>
+                    <ul>
+                        <li>Uses 'right panel' plugin to search with selected images</li>
+                        <li>See: <a href="http://www.openmicroscopy.org/site/products/partner/omero.searcher">More Info</a> | 
+                            <a href="https://github.com/openmicroscopy/omero_searcher">Code on Github</a>
+                        <li>Simon Li (Dundee)</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>OMERO.webtagging</h2>
+                            <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/webfigure.png"
+                                width="800px"/>
+                    <ul>
+                        <li>Uses 'central panel' plugin to show current dataset</li>
+                        <li>See: <a href="http://www.openmicroscopy.org/site/support/partner/omero.webtagging">User Guide</a> | 
+                            <a href="https://github.com/dpwrussell/webtagging">Code on Github</a>
+                        <li>Douglas Russell (Oxford)</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Any Questions?</h2>
+                </section>
+            </div>
+
+        </div>
+
+        <script src="reveal-js/lib/js/head.min.js"></script>
+        <script src="reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
