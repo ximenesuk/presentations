@@ -427,7 +427,7 @@
                     </code>
                   </li>
                   <li>default: <code>upload</code></li>
-                  <li>User-provided Java class: <code>some.class.Name</code></li>
+                  <li>User-provided Java class: <code style="font-size:100%">some.class.Name</code></li>
                 </ul>
                 <li><code>--checksum_algorithm=ARG</code></li>
                 <ul>
@@ -436,7 +436,7 @@
                       Adler-32, CRC-32, MD5-128, Murmur3-32,<br />Murmur3-128, SHA1-160
                     </code>
                   </li>
-                  <li>default: <code>SHA1-160</code></li>
+                  <li>default (configurable): <code style="font-size:100%">SHA1-160</code></li>
                 </ul>
               </ul>
             <aside class="notes">
@@ -450,6 +450,12 @@
               <li>background import options</li>
               <ul>
                 <li><code>--minutes_wait=ARG</code></li>
+                <ul>
+                  <li>Minutes to wait after upload before disconnecting</li>
+                  <li>&lt;0 : don't disconnect (default)</li>
+                  <li>0 : disconnect immediately</li>
+                  <li>&gt;0</li>
+                </ul>
                 <li><code>--close_completed</code></li>
                 <li><code>--wait_completed</code></li>
               </ul>
