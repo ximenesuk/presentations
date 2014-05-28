@@ -70,6 +70,10 @@
                 font-size: 80px !important;
             }
 
+            .no_shadow {
+                box-shadow:0 0 0 #fff !important;
+            }
+
         </style>
 
         <!-- For syntax highlighting -->
@@ -139,7 +143,7 @@ $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
                     <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
 $ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'
 </code></pre>
-                    <img src="images/index_page.png" width='539' height='387'/>
+                    <img src="images/index_page.png" width='539' height='387' class="no_shadow"/>
                 </section>
                 
                 <section>
@@ -150,7 +154,7 @@ $ bin/omero config set omero.web.login_redirect
                 '{"redirect": ["webindex"], "viewname": "load_template", 
                 "args":["userdata"], "query_string": "experimenter=-1"}'
 </code></pre>
-                <img src="images/login_redirect.png" width='539' height='387'/>
+                <img src="images/login_redirect.png" width='539' height='387' class="no_shadow"/>
                 </section>
 
                 <section>
@@ -418,7 +422,7 @@ $ bin/omero config append omero.web.ui.right_plugins
         '["ROIs", "webtest/webclient_plugins/right_plugin.rois.js.html", "image_roi_tab"]'
 
 </code></pre>
-                    <img src="http://downloads.openmicroscopy.org/presentations/2013/June-Users-Meeting/analysis-workshop/images/RightPanelROIs.png" width="400px"/>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/webtest_roi_plugin.png" style="width:800px" class="no_shadow"/>
                 </section>
 
 
@@ -438,7 +442,7 @@ $ bin/omero config append omero.web.ui.right_plugins
                 <section>
                     <h2>OMERO.webtagging</h2>
                             <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/webfigure.png"
-                                width="800px"/>
+                                width="800px" class="no_shadow"/>
                     <ul>
                         <li>Uses 'central panel' plugin to show current dataset</li>
                         <li>See: <a href="http://www.openmicroscopy.org/site/support/partner/omero.webtagging">User Guide</a> | 
@@ -464,11 +468,11 @@ $ bin/omero config append omero.web.ui.right_plugins
 
                 <section>
                     <h2>Virtual Microscope<br/>next step in learning</h2>
-                    <img  src="images/VM1.png" width="700"/>
+                    <img  src="images/VM1.png" width="700" class="no_shadow"/>
                 </section>
                 
                 <section>
-                    <img src="images/VM2.png" width="700"/>
+                    <img src="images/VM2.png" width="700" class="no_shadow"/>
                 </section>
                 
                 <section>
