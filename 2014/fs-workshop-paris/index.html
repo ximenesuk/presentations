@@ -172,6 +172,7 @@
                 your original data and reduce data duplication. We begin by
                 outlining the change that came with version 5.
               </p>
+            <h3>OMERO 5 Import</h3>
               <ul>
                 <li>client uploads <em>only</em> original data</li>
                 <ul>
@@ -183,6 +184,18 @@
                   <li><em>only</em> those without subresolutions in file</li>
                 </ul>
               </ul>
+              <h3>OMERO 4 Import</h3>
+              <ul>
+                <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
+                <ul>
+                  <li>stored as <q>Pixels</q>, an internal uncompressed format</li>
+                </ul>
+                <li><em>additionally</em>, original <q>archived</q> files can be stored</li>
+                <ul>
+                  <li>though not for HCS plates</li>
+                </ul>
+                <li>pyramids stored for all large images</li>
+              </ul>
             </aside>
           </section>
 
@@ -190,6 +203,7 @@
             <h3>OMERO 5 Data out</h3>
             <img src="diagrams/data-out.png" width="90%"/>
             <aside class="notes">
+              <h3>OMERO 5 Data out: Summary</h3>
               <ul>
                 <li>pixels provided directly from original files</li>
                 <ul>
@@ -200,56 +214,6 @@
                   <li>including HCS plates</li>
                 </ul>
               </ul>
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>OMERO 5 Import: Summary</h3>
-            <ul>
-              <li>client uploads <em>only</em> original data</li>
-              <ul>
-                <li>including HCS plates, everything is <q>archived</q></li>
-              </ul>
-              <li>server <em>does not</em> store Pixels files</li>
-              <li>pyramids stored for few large images</li>
-              <ul>
-                <li><em>only</em> those without subresolutions in file</li>
-              </ul>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>OMERO 5 Data out: Summary</h3>
-            <ul>
-              <li>pixels provided directly from original files</li>
-              <ul>
-                <li>server-side Bio-Formats</li>
-              </ul>
-              <li>original files always available for download</li>
-              <ul>
-                <li>including HCS plates</li>
-              </ul>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>OMERO 4 Import: Summary</h3>
-            <ul>
-              <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
-              <ul>
-                <li>stored as <q>Pixels</q>, an internal uncompressed format</li>
-              </ul>
-              <li><em>additionally</em>, original <q>archived</q> files can be stored</li>
-              <ul>
-                <li>though not for HCS plates</li>
-              </ul>
-              <li>pyramids stored for all large images</li>
-            </ul>
-            <aside class="notes">
             </aside>
           </section>
         </section>
@@ -277,40 +241,20 @@
                 </ul>
                 <li>More advanced use later.</li>
               </ul>
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>ManagedRepository: Summary</h3>
-            <ul>
-              <li>server stores and reads original data</li>
-              <li>OMERO acts as repository of original data</li>
-              <li>without Pixels files, less data duplication</li>
-              <li>original data visible in server filesystem</li>
+              <h3>Migrating to FS</h3>
               <ul>
-                <li>where filesets live</li>
-                <li>each Fileset in its own subdirectory</li>
+                <li>new OMERO users should use OMERO 5</li>
+                <li>upgrade scripts provided from OMERO 4</li>
+                <li><q>pre-FS</q> images still Pixels, not in Fileset</li>
+                <li><q>synthetic</q> images also not in Fileset</li>
+                <ul>
+                  <li>for instance: projections, kymographs</li>
+                </ul>
               </ul>
-            </ul>
-            <aside class="notes">
-              More advanced use later.
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>Migrating to FS</h3>
-            <ul>
-              <li>new OMERO users should use OMERO 5</li>
-              <li>upgrade scripts provided from OMERO 4</li>
-              <li><q>pre-FS</q> images still Pixels, not in Fileset</li>
-              <li><q>synthetic</q> images also not in Fileset</li>
-              <ul>
-                <li>for instance: projections, kymographs</li>
-              </ul>
-            </ul>
-            <aside class="notes">
-              We need to make it clear here that this is just the upgrade
-              rather than the data transformation Josh covers later.
+              <p>
+                We need to make it clear here that this is just the upgrade
+                rather than the data transformation Josh covers later.
+              </p>
             </aside>
           </section>
         </section>
@@ -363,21 +307,6 @@
               </ul>
             </aside>
           </section>
-
-          <section data-transition="none">
-            <h3>Filesets: Summary</h3>
-            <ul>
-              <li>a set of related files</li>
-              <ul>
-                <li>Bio-Formats must read them together</li>
-              </ul>
-              <li>a set of images, arising from those files</li>
-              <li>may be just one file and one image</li>
-              <li>Project/Dataset, Screen/Plate hierarchy remains</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
         </section>
 
         <section>
@@ -423,9 +352,6 @@
                 <ul>
                   <li>uploads - default as already outlined</li>
                   <li>creates soft links</li>
-                  <li>creates hard links</li>
-                  <li>creates hard links followed by delete of source files</li>
-                  <li>employs user-defined transfer mode</li>
                 </ul>
                 <li>server-side import as previously outlined</li>
                 <li>Potential for even less data duplication</li>
@@ -443,11 +369,7 @@
               <ul>
                 <li>client transfers original data to ManagedRepository</li>
                 <ul>
-                  <li>uploads - default as already outlined</li>
                   <li>creates soft links</li>
-                  <li>creates hard links</li>
-                  <li>creates hard links followed by delete of source files</li>
-                  <li>employs user-defined transfer mode</li>
                 </ul>
                 <li>server-side import as previously outlined</li>
                 <li>Potential for even less data duplication</li>
@@ -465,11 +387,7 @@
               <ul>
                 <li>client transfers original data to ManagedRepository</li>
                 <ul>
-                  <li>uploads - default as already outlined</li>
-                  <li>creates soft links</li>
-                  <li>creates hard links</li>
                   <li>creates hard links followed by delete of source files</li>
-                  <li>employs user-defined transfer mode</li>
                 </ul>
                 <li>server-side import as previously outlined</li>
                 <li>Potential for even less data duplication</li>
@@ -487,11 +405,7 @@
               <ul>
                 <li>client transfers original data to ManagedRepository</li>
                 <ul>
-                  <li>uploads - default as already outlined</li>
-                  <li>creates soft links</li>
-                  <li>creates hard links</li>
                   <li>creates hard links followed by delete of source files</li>
-                  <li>employs user-defined transfer mode</li>
                 </ul>
                 <li>server-side import as previously outlined</li>
                 <li>Potential for even less data duplication</li>
@@ -542,24 +456,6 @@
             <aside class="notes">
             </aside>
           </section>
-
-          <section data-transition="none">
-            <h3>In-place import: Summary</h3>
-            <ul>
-              <li>client transfers original data to ManagedRepository</li>
-              <ul>
-                <li>uploads - default as already outlined</li>
-                <li>creates soft links</li>
-                <li>creates hard links</li>
-                <li>creates hard links followed by delete of source files</li>
-                <li>employs user-defined transfer mode</li>
-              </ul>
-              <li>server-side import as previously outlined</li>
-              <li>Potential for even less data duplication</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
         </section>
 
         <section>
@@ -571,16 +467,6 @@
                 <li>DropBox can now be configured to use in-place import</li>
                 <li>This can remove server-side duplication</li>
               </ul>
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>DropBox in-place: Summary</h3>
-            <ul>
-              <li>DropBox can be configured to use in-place import</li>
-              <li>This can remove server-side duplication</li>
-            </ul>
-            <aside class="notes">
             </aside>
           </section>
         </section>
@@ -607,18 +493,6 @@
                   <li>Use file notification if available</li>
                 </ul>
               </ul>
-            <aside class="notes">
-              Still need a nice diagram for this.
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>Import future: Summary</h3>
-            <ul>
-              <li>User, group &amp; containers captured in paths</li>
-              <li>Can be configured for a cron job</li>
-              <li>DropBox run in polling mode</li>
-            </ul>
             <aside class="notes">
             </aside>
           </section>
@@ -1006,7 +880,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
 
         </section>
 
-                <!- ================================================================ -->
+                <!-- ================================================================ -->
             </div>
             <!-- Finish presentation -->
 
