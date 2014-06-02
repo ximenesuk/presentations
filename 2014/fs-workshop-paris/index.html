@@ -127,7 +127,6 @@
                 <!-- ================================================================ -->
 
 
-        <!-- Note: whitespace no longer matches -->
         <!-- Talk introduction - All ?? -->
         <section>
           <h1>Managing Imports with OMERO 5</h1>
@@ -608,7 +607,6 @@
                 <tr>
                     <td>
                         <pre style="font-size:50%">
-# Template for FS managed repository paths.
 # Allowable elements are:
 # %user%       bob
 # %userId%     4
@@ -620,17 +618,6 @@
 # %day%        01
 # %time%       15-13-54.014
 # /            path separator
-#
-# The path must be unique per fileset to prevent upload conflicts,
-# which is why %time% includes milliseconds.
-#
-# A // may be used as a path separator: the directories preceding
-# it are created with root ownership, the remainder are the user's.
-# At least one user-owned directory must be included in the path.
-#
-# The template path is created below &lt;omero.managed.dir&gt;,
-# e.g. /OMERO/ManagedRepository/&lt;omero.fs.repo.path&gt;/
-omero.fs.repo.path=%user%_%userId%//%year%-%month%/%day%/%time%
                         </pre>
                     </td>
                 </tr>
@@ -643,6 +630,7 @@ omero.fs.repo.path=%user%_%userId%//%year%-%month%/%day%/%time%
 
           <section data-transition="none">
             <h3>Template configuration</h3>
+            <h4>in etc/omero.properties</h4>
             <table>
                 <tr>
                     <td>
@@ -664,6 +652,7 @@ omero.fs.repo.path=%user%_%userId%//%year%-%month%/%day%/%time%
 
           <section data-transition="none">
             <h3>Template configuration</h3>
+            <h4>in etc/omero.properties</h4>
             <table>
                 <tr>
                     <td>
@@ -690,6 +679,7 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
             <h3>Quotas</h3>
             <img alt="Template starting with groupId"
                 src="diagrams/template-group.png" width="75%"/>
+            <a href="https://www.openmicroscopy.org/community/viewtopic.php?f=4&t=7485">Related forum thread</a>
             <aside class="notes">
               <p>
               An example suggested by Dave Mason from Liverpool.
@@ -702,18 +692,6 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
             </aside>
           </section>
 
-          <section data-transition="none">
-            <h3>Quotas: Summary</h3>
-              <p>
-                By adding "%groupId%" at the top of the template,
-                getting diskspace usage per group should be easier.
-                See <a href="https://www.openmicroscopy.org/community/viewtopic.php?f=4&t=7485">
-                    this forum thread</a> for a discussion on the topic.
-              </p>
-            <aside class="notes">
-            </aside>
-          </section>
-
         </section>
 
         <section>
@@ -723,11 +701,15 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
             <img alt="Samba usage diagram"
                 src="diagrams/samba_group.png" width="90%"/>
             <aside class="notes">
+              <ul>
+                <li>/OMERO/ManagedRepository can be mapped via Samba</li>
+                <li>Safest for read-only access</li>
+                <li>Best if per-user mapping can be applied</li>
+              </ul>
               <p>
                 For example, depending on the template, each
                 user can be access to his/her directory via
-                SAMBA. (Requires mapping at the OS level,
-                yadda yadda yadda).
+                SAMBA. (Requires mapping at the OS level...)
               </p>
               <p>
                 Here we've taken the same layout as for the quotas,
@@ -743,26 +725,13 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
                 src="diagrams/samba_user.png" width="90%"/>
             <aside class="notes">
               <p>
-                For example, depending on the template, each
-                user can be access to his/her directory via
-                SAMBA. (Requires mapping at the OS level,
-                yadda yadda yadda).
-              </p>
-              <p>
-                Here we've taken the same layout as for the quotas,
-                put mounted each directory as samba share. Read/write
-                permissions can be set based on the group's needs.
+                Alternatively, each user directory can be mapped.
               </p>
             </aside>
           </section>
 
           <section data-transition="none">
               <h3>Samba: Summary</h3>
-            <ul>
-                <li>/OMERO/ManagedRepository can be mapped via Samba</li>
-                <li>Safest for read-only access</li>
-                <li>Best if per-user mapping can be applied</li>
-            </ul>
             <aside class="notes">
             </aside>
           </section>
@@ -780,10 +749,10 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
                 mount point, meaning you can plug in new disks or similar.
               </p>
               <p>
-              <p>
                 driveX here is a hard-coded value, not a template replacement.
                 It can be whatever value you want it to be.
               </p>
+              <p>
                 Josh: Although I'd really like to allow spinning up multiple
                 managed repos and choosing them based on number of stars or
                 whatever, for the moment, I _bet_ it's going to be simpler to have
@@ -794,13 +763,17 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
             </aside>
           </section>
 
-          <section data-transition="none">
-            <h3>Adding disks: Summary</h3>
-            <p>Adding other disks should be as simple as adding a
-            mount&#8209;point under /OMERO/ManagedRepository</p>
-            <aside class="notes">
-            </aside>
-          </section>
+        </section>
+
+        <section>
+          <h2>Repository Caveats</h2>
+          <ul>
+            <li>Moving data between groups doesn't update the repository</li>
+            <li>Archiving support is minimal; no UI or detection.</li>
+            <li>Paths are stored in the DB. Don't move files!</li>
+          </ul>
+          <aside class="notes">
+          </aside>
         </section>
 
         <!-- Discussion - All -->
@@ -818,7 +791,12 @@ omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%d
         </section>
 
         <section>
+          <section data-transition="none">
+            <h2>Extra Material</h2>
+          </section>
+        </section>
 
+        <section>
           <section data-transition="none">
             <h2>Other advanced tasks</h2>
             <ul>
