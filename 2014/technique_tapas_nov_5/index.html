@@ -24,7 +24,7 @@
                 font-size: 60px;
             }
             .ome_theme {
-                background-image: url("images/ome-icon-opacity.png");
+                background-image: url("images/ome-icon-opacity-05.png");
                 background-color: #f2f6f9;
                 background-repeat: no-repeat;
                 background-position: right -270px top -120px;
@@ -36,6 +36,7 @@
             .reveal section img {
                 border-width:0;
                 border-color: white;
+                box-shadow: 0 0 0px rgba(0,0,0,0);
             }
 
             .img_panel {
@@ -90,16 +91,17 @@
 
                 <section>
                     <h1>OMERO.figure</h1>
-                    <h3>Technique Tapas<br>5th November 2014</h3>
-                    <p>
-                        <small>
-                            Will Moore
-                        </small>
+
+                    <h3><small>Technique Tapas<br>5th November 2014</small></h3>
+                    
+                    <p>Will Moore<br>
+                        
+                        <img src="images/ome-logo-200.png"/>
                     </p>
                 </section>
 
                 <section>
-                    <h1>OMERO.figure</h1>
+                    <h2>OMERO.figure</h2>
 
                     <ul>
                         <li>OME & OMERO</li>
@@ -111,27 +113,27 @@
                 </section>
 
 
-                <section>
-                    <h1>OME</h1>
-                    <h2>Open Microscopy Environment</h2>
+                <section data-background="rgba(23,74,132,1)" data-background-transition="slide">
+                    <h1 style="color: white">OME</h1>
+                    <h2 style="color: white">Open Microscopy Environment</h2>
                 </section>
 
 
                 <section>
                     <h2>A typical workflow</h2>
 
-                    <img style="height:500px; border-width:5px" src="images/typical-workflow.png"/>
+                    <img style="height:500px" src="images/typical-workflow.png"/>
                 </section>
 
 
                 <section>
                     <h2>Interoperability</h2>
 
-                    <img style="height:500px; border-width:5px" src="images/ome-informatics.png"/>
+                    <img style="height:500px" src="images/ome-informatics.png"/>
                 </section>
 
 
-                <section data-background="#007777" data-background-transition="slide">
+                <section data-background="rgba(0,133,111,1)" data-background-transition="slide">
                     <h1>OMERO</h1>
 
                 </section>
@@ -140,7 +142,7 @@
                 <section>
                     <h2>OMERO is a server with clients</h2>
 
-                    <img style="height:500px; border-width:5px" src="images/omero.png"/>
+                    <img style="height:500px" src="images/omero.png"/>
                 </section>
 
 
@@ -155,7 +157,7 @@
                 </section>
 
 
-                <section>
+                <section data-background="#008dc3" data-background-transition="slide">
                     <h1>Figures</h1>
                 </section>
 
@@ -173,25 +175,25 @@
                 </section>
 
 
-                <section data-background-transition="slide" data-background="#007777">
+                <section>
                     <h2>Problems</h2>
 
                         <ul>
-                            <li class="fragment fade-in">SLOW</li>
-                            <li class="fragment fade-in">Can't change images after imported</li>
-                            <li class="fragment fade-in">Manual layout</li>
-                            <li class="fragment fade-in">Loss of Metadata (pixel size, channel names etc)</li>
-                            <li class="fragment fade-in">No links between Figure and original images</li>
+                            <li>SLOW</li>
+                            <li>Can't change images after imported</li>
+                            <li>Manual layout</li>
+                            <li>Loss of Metadata (pixel size, channel names etc)</li>
+                            <li>No links between Figure and original images</li>
                         </ul>
                 </section>
 
 
-                <section>
+                <section data-background="rgba(231,21,62,1)" data-background-transition="slide">
                     <h1>Demo...</h1>
                 </section>
 
 
-                <section>
+                <section data-background="images/demo-screen-shot.png">
                     <h2>Add images</h2>
 
                     <img style="height:550px" src="images/demo-screen-shot.png"/> <br>
@@ -208,7 +210,7 @@
 
 
                 <section>
-                    <h2>Sync Channels, Levels, Zoom, Rotation, Time points, Z-index, Cropping</h2>
+                    <h2>Sync Rendering, Time points, Z-index</h2>
 
                     <img style="height:550px" src="images/demo-screen-shot.png"/> <br>
                     <small>See <a href="http://www.youtube.com/watch?v=anJPPx7uoUM">Older Demo</a> on youtube</small>
@@ -216,7 +218,15 @@
 
 
                 <section>
-                    <h2>Add Labels</h2>
+                    <h2>Sync Zoom, Rotation, Cropping</h2>
+
+                    <img style="height:550px" src="images/demo-screen-shot.png"/> <br>
+                    <small>See <a href="http://www.youtube.com/watch?v=anJPPx7uoUM">Older Demo</a> on youtube</small>
+                </section>
+
+
+                <section>
+                    <h2>Add Scalebars & Labels</h2>
 
                     <img style="height:550px" src="images/demo-screen-shot.png"/> <br>
                     <small>See <a href="http://www.youtube.com/watch?v=anJPPx7uoUM">Older Demo</a> on youtube</small>
@@ -249,13 +259,17 @@
             // Full list of configuration options available here:
             // https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
+                // parallaxBackgroundImage: "images/ome-icon-opacity-big.png",
+                // parallaxBackgroundSize: "2048px 1073px",
+                // transition: 'linear',
                 controls: true,
                 progress: true,
                 history: true,
                 center: true,
+                transitionSpeed: 'slow',
 
                 theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
-                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
 
                 // Optional libraries used to extend on reveal.js
                 dependencies: [
