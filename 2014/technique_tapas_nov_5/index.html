@@ -1,0 +1,276 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>OMERO.figure - 5th Nov 2014</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+        <!-- OME presentation overrides of the default theme -->
+        <style>
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+              text-transform: none;
+            }
+            .reveal h2 {
+                font-size: 60px;
+            }
+            .ome_theme {
+                background-image: url("images/ome-icon-opacity.png");
+                background-color: #f2f6f9;
+                background-repeat: no-repeat;
+                background-position: right -270px top -120px;
+            }
+            .reveal {
+                text-transform: none;   !important
+            }
+
+            .reveal section img {
+                border-width:0;
+                border-color: white;
+            }
+
+            .img_panel {
+                width: 150px;
+            }
+
+            .nobullet li {
+                list-style: none;
+            }
+
+            table.centre {
+                width: 100%;
+            }
+
+            .reveal .centre td {
+                text-align: center;
+            }
+
+            .rot90 {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+
+            .reveal .title {
+                position:absolute;
+                bottom:100%;
+                margin:5px;
+                color:red;
+            }
+
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body class="ome_theme">
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section>
+                    <h1>OMERO.figure</h1>
+                    <h3>Technique Tapas<br>5th November 2014</h3>
+                    <p>
+                        <small>
+                            Will Moore
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h1>OMERO.figure</h1>
+
+                    <ul>
+                        <li>OME & OMERO</li>
+                        <li>Figures</li>
+                        <li>Demo</li>
+                        <li>Bonus Features!</li>
+                    </ul>
+
+                </section>
+
+
+                <section>
+                    <h1>OME</h1>
+                    <h2>Open Microscopy Environment</h2>
+                </section>
+
+
+                <section>
+                    <h2>A typical workflow</h2>
+
+                    <img style="height:500px; border-width:5px" src="images/typical-workflow.png"/>
+                </section>
+
+
+                <section>
+                    <h2>Interoperability</h2>
+
+                    <img style="height:500px; border-width:5px" src="images/ome-informatics.png"/>
+                </section>
+
+
+                <section data-background="#007777" data-background-transition="slide">
+                    <h1>OMERO</h1>
+
+                </section>
+
+
+                <section>
+                    <h2>OMERO is a server with clients</h2>
+
+                    <img style="height:500px; border-width:5px" src="images/omero.png"/>
+                </section>
+
+
+                <section>
+                    <h2>OMERO.insight & OMERO.web</h2>
+
+                    <table style="width: 1000px"><tr><td>
+                        <img style="border-width:5px" src="images/insight.png"/>
+                    </td><td>
+                        <img style="border-width:5px" src="images/webclient.png"/>
+                    </td></tr></table>
+                </section>
+
+
+                <section>
+                    <h1>Figures</h1>
+                </section>
+
+
+                <section>
+                    <h2>What's in a Figure?</h2>
+
+                        <img style="height:500px; border-width:5px" src="http://jcb.rupress.org/content/179/2/187/F3.large.jpg"/>
+                   
+                        <img style="height:500px; border-width:5px" src="http://jcb.rupress.org/content/179/2/187/F5.large.jpg"/>
+                    
+                    <br>
+                    <small><a target="new" href="http://jcb.rupress.org/content/179/2/187">Porter 2007</a></small>
+
+                </section>
+
+
+                <section data-background-transition="slide" data-background="#007777">
+                    <h2>Problems</h2>
+
+                        <ul>
+                            <li class="fragment fade-in">SLOW</li>
+                            <li class="fragment fade-in">Can't change images after imported</li>
+                            <li class="fragment fade-in">Manual layout</li>
+                            <li class="fragment fade-in">Loss of Metadata (pixel size, channel names etc)</li>
+                            <li class="fragment fade-in">No links between Figure and original images</li>
+                        </ul>
+                </section>
+
+
+                <section>
+                    <h1>Demo...</h1>
+                </section>
+
+
+                <section>
+                    <h2>Add images</h2>
+
+                    <img style="height:550px" src="images/demo-screen-shot.png"/> <br>
+                    <small>See <a href="http://www.youtube.com/watch?v=anJPPx7uoUM">Older Demo</a> on youtube</small>
+                </section>
+
+
+                <section>
+                    <h2>Layout</h2>
+
+                    <img style="height:550px" src="images/demo-screen-shot.png"/> <br>
+                    <small>See <a href="http://www.youtube.com/watch?v=anJPPx7uoUM">Older Demo</a> on youtube</small>
+                </section>
+
+
+                <section>
+                    <h2>Sync Channels, Levels, Zoom, Rotation, Time points, Z-index, Cropping</h2>
+
+                    <img style="height:550px" src="images/demo-screen-shot.png"/> <br>
+                    <small>See <a href="http://www.youtube.com/watch?v=anJPPx7uoUM">Older Demo</a> on youtube</small>
+                </section>
+
+
+                <section>
+                    <h2>Add Labels</h2>
+
+                    <img style="height:550px" src="images/demo-screen-shot.png"/> <br>
+                    <small>See <a href="http://www.youtube.com/watch?v=anJPPx7uoUM">Older Demo</a> on youtube</small>
+                </section>
+
+
+                <section>
+                    <h2>Key Features</h2>
+
+                    <ul>
+                        <li>Each ‘panel’ is an independent viewer</li>
+                        <li>Select multiple panels to co-edit</li>
+                        <li>Full undo/redo</li>
+                        <li>Save as orig file (json)</li>
+                        <li>URL per file - bookmark, share, 'publish' etc</li>
+                        <li>Script to create PDF from json</li>
+                        <li>"Template" for figures</li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="reveal-js/lib/js/head.min.js"></script>
+        <script src="reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
