@@ -20,9 +20,6 @@
             .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
               text-transform: none;
             }
-            .reveal h2 {
-                font-size: 60px;
-            }
             .ome_theme {
                 background-image: url("images/ome-icon-opacity-05.png");
                 background-color: #f2f6f9;
@@ -67,6 +64,11 @@
                 color:red;
             }
 
+            .larger li {
+                font-size: 120%
+                padding: 5px;
+            }
+
         </style>
 
         <!-- For syntax highlighting -->
@@ -92,18 +94,19 @@
                 <section>
                     <h1>OMERO.figure</h1>
 
-                    <h3><small>Technique Tapas<br>5th November 2014</small></h3>
+                    <h3>Technique Tapas</h3>
+                    <h4>5th November 2014</h4>
                     
-                    <p>Will Moore<br>
+                    <h3>Will Moore<br>
                         
                         <img src="images/ome-logo-200.png"/>
-                    </p>
+                    </h3>
                 </section>
 
                 <section>
                     <h2>OMERO.figure</h2>
-                    <h2>Presentation Outline</h2>
-                    <ul>
+                    <h3>Presentation Outline</h3>
+                    <ul class="larger">
                         <li>OME</li>
                         <li>OMERO</li>
                         <li>Figures</li>
@@ -113,9 +116,9 @@
                 </section>
 
 
-                <section data-background="rgba(23,74,132,1)" data-background-transition="slide">
-                    <h1 style="color: white">OME</h1>
-                    <h2 style="color: white">Open Microscopy Environment</h2>
+                <section>
+                    <h1>OME</h1>
+                    <h3>Open Microscopy Environment</h3>
                 </section>
 
 
@@ -133,7 +136,7 @@
 
 
                 <section>
-                    <h2>A typical workflow</h2>
+                    <h2>A typical microscopy workflow</h2>
 
                     <img style="height:500px" src="images/typical-workflow.png"/>
                 </section>
@@ -142,12 +145,17 @@
                 <section>
                     <h2>Interoperability</h2>
 
-                    <img style="height:500px" src="images/ome-informatics.png"/>
-                </section>
-
-
-                <section data-background="rgba(0,133,111,1)" data-background-transition="slide">
-                    <h1>OMERO</h1>
+                    <div style="position: relative;">
+                        <img style="width:100%" src="images/ome-informatics.png"/>
+                        <!-- <span class="fragment roll-in"> -->
+                        <div class="fragment current-visible" style="background-color:rgba(255, 255, 255, 0.95); position: absolute; top: 37%; left: 10%">
+                            <img src="images/bio-formats-logo-800.png"/>
+                        </div>
+                        <!-- </span> -->
+                        <div class="fragment current-visible" style="background-color:rgba(255, 255, 255, 0.95); position: absolute; top: 37%; left: 10%">
+                            <img src="images/omero-logo-87.png"/>
+                        </div>
+                    </div>
 
                 </section>
 
@@ -155,7 +163,7 @@
                 <section>
                     <h2>OMERO is a server with clients</h2>
 
-                    <img style="height:500px" src="images/omero.png"/>
+                    <img style="height:500px" src="images/omero-platform-simple.png"/>
                 </section>
 
 
@@ -174,9 +182,6 @@
                         <img src="images/insightViewer.png"/>
                 </section>
 
-                <section data-background="images/insightApplyAll.png">
-                </section>
-
                 <section data-background="images/webclient3.png" data-background-transition="slide">
                 </section>
 
@@ -187,15 +192,19 @@
                         <li><a href="https://nightshade.openmicroscopy.org/webclient">
                             nightshade.openmicroscopy.org
                         </a></li>
-                        <li>Available to all in CLS (lifesci login)</li>
-                        <li>'Groups' in OMERO correspond to CLS Lab groups</li>
+                        <li>Available to all in CLS (Dundee Uni login)</li>
                         <li>~300 users, ~50 groups, lots of Data!</li>
-                        <li>We're happy to help (Drop-in sessions: Thursdays 10-12)</li>
+                        <li>We're happy to help:
+                            <ul>
+                                <li>Drop-in sessions: Thursdays 10.00 - 12.00</li>
+                                <li>"Getting Started" Workshops: 10th & 24th November</li>
+                            </ul>
+                        </li>
                     </ul>
                 </section>
 
 
-                <section data-background="#008dc3" data-background-transition="slide">
+                <section>
                     <h1>Figures</h1>
                 </section>
 
@@ -211,18 +220,20 @@
                     <h2>Problems</h2>
 
                     <div style="height: 500px;">
-                        <ul style="width:800px; background-color:rgba(255, 255, 255, 0.95); padding:40px">
+                        <ul style="width:800px; background-color:rgba(255, 255, 255, 0.95); padding:20px">
                             <li>SLOW</li>
-                            <li>Can't change images after imported</li>
-                            <li>Manual layout</li>
-                            <li>Loss of Metadata (pixel size, channel names etc)</li>
+                            <li>Loss of Metadata:
+                                    <div style="margin-left: 40px"> - pixel sizes</div>
+                                    <div style="margin-left: 40px"> - channel names</div>
+                                    <div style="margin-left: 40px"> - rendering settings</div>
+                            </li>
                             <li>No links between Figure and original images</li>
                         </ul>
                     </div>
                 </section>
 
 
-                <section data-background="rgba(231,21,62,1)" data-background-transition="slide">
+                <section>
                     <h1>OMERO.figure</h1>
                 </section>
 
@@ -230,9 +241,10 @@
                 <section>
                     <h2>OMERO.figure</h2>
                     <ul>
-                        <li>Built on top of the OMERO.web client</li>
+                        <li>Web-based application</li>
                         <li>Beta release in March 2014</li>
                         <li>Approx 15 users in CLS, created over 300 figures</li>
+                        <li>Positive feedback from several external sites</li>
                         <li>OMERO.figure 1.0.0 released October 2014</li>
                     </ul>
                 </section>
@@ -273,7 +285,7 @@
                 </section>
 
 
-                <section data-background="images/PatroninBackground.png">
+                <section data-background="images/PorterBackground.png">
                     <h2>Finally...</h2>
                     <ul>
                         <li>Save to OMERO</li>
@@ -307,12 +319,13 @@
                             <ul><a href="https://twitter.com/will_j_moore">@will_j_moore</a></ul>
                         </li>
                         <li>Thursday morning drop-in session, 10:00 at microscopy facility</li>
+                        <li>"Getting Started" Workshops: 10th & 24th November</li>
                     </ul>
                 </section>
 
 
                 <section>
-                    <h2>Thankyou</h2>
+                    <h2>Thank you</h2>
                     <ul>
                         <li>Jason Swedlow</li>
                         <li>OME team</li>
@@ -325,6 +338,10 @@
                         </li>
                         <li>Iain Porter for Data</li>
                     </ul>
+                    <div>
+                        <img src="images/wellcome.jpg" height="150px">
+                        <img src="images/bbsrc.png" height="150px">
+                    </div>
                 </section>
 
             </div>
