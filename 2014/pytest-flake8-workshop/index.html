@@ -1,0 +1,513 @@
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Import Workshop - Paris 2014</title>
+
+    <meta name="description" content="Python testing in OMERO 5" />
+    <meta name="author" content="" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+    <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+    <!-- OME presentation overrides of the default theme -->
+    <style>
+      .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+        text-transform: none;
+      }
+      .reveal h2 {
+        font-size: 60px;
+      }
+      .ome_theme {
+        background-image: url("diagrams/ome-icon-opacity.png");
+        background-color: #f2f6f9;
+        background-repeat: no-repeat;
+        background-position: right -270px top -120px;
+      }
+      .reveal {
+        text-transform: none;   !important
+      }
+
+      .img_panel {
+        width: 150px;
+      }
+
+      .nobullet li {
+        list-style: none;
+      }
+
+      table.centre {
+        width: 100%;
+      }
+
+      .reveal .centre td {
+        text-align: center;
+      }
+
+      .rot90 {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+
+      .reveal .title {
+        position:absolute;
+        bottom:100%;
+        margin:5px;
+        color:red;
+      }
+
+      .larger {
+        font-size: 80px !important;
+      }
+
+      .reveal h1 {
+        font-size: 96px;
+      }
+
+      .reveal p,
+      .reveal pre {
+        text-align: left;
+        margin-top: 1ex;
+        margin-bottom: 1ex;
+        line-height: 1.5;
+      }
+
+      .reveal pre {
+        width: 105%;
+        margin-left: 0;
+        padding-left: 1em;
+      }
+
+      .reveal table {
+        margin-left: 1em;
+      }
+
+      .reveal li {
+        margin-top: 0.25em;
+        margin-bottom: 0.25em;
+      }
+
+      .reveal section img {
+        background: rgba(0, 0, 0, 0);
+        box-shadow: none;
+        border: none;
+      }
+
+      .reveal q {
+        quotes: inherit;
+        font-style: normal;
+      }
+    </style>
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body class="ome_theme">
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- Templates
+        <section>
+          <h2>Empty slide</h2>
+        </section>
+
+        <section>
+          <section>
+            <h2>Empty stack</h2>
+            <h3>Slide 1</h3>
+          </section>
+          <section>
+            <h2>Empty stack</h2>
+            <h3>Slide 2</h3>
+          </section>
+        </section>
+        -->
+
+        <!-- Slides and slide stacks start here -->
+        <section>
+          <h1>pytest</h1>
+          <h4>(&amp; flake8)</h4>
+          <h3>Colin Blackburn &amp; Sébastien Besson</h3>
+        </section>
+
+        <section>
+          <h2>Outline</h2>
+          <ul>
+            <li>flake8</li>
+            <li>pytest</li>
+            <ul>
+              <li>running tests</li>
+              <li>writing tests</li>
+            </ul>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h2>flake8</h2>
+            <p>
+              Style and passive code correctness enforcement used by Travis.
+              Code in the following areas is checked by default:
+            </p>
+            <table>
+              <tr><td><code>OmeroPy/src &amp; OmeroPy/test</code></td></tr>
+              <tr><td><code>OmeroFS/src &amp; OmeroFS/test</code></td></tr>
+            </table>
+            <p>  
+              The intention is to have most Python code checked eventually.
+            </p>
+            <aside class="notes">
+              Outline of tool
+              our automated use of it
+              type of stuff it checks
+              plugins and hooks for developers
+            </aside>
+          </section>
+          <section>
+            <h2>flake8</h2>
+            <p><code>flake8</code> is a wrapper around:</p>
+              <table>
+                <tr><td><code>pyflakes</code></td><td>correctness</td></tr>
+                <tr><td><code>pep8</code></td><td>style</td></tr>
+                <tr><td><code>mccabe</code></td><td>complexity</td></tr>
+              </table>
+            <p><code>mccabe</code> is turned off by default</p>
+          </section>
+          <section>
+            <h2>flake8</h2>
+            <ul>
+              <li>plugins for most editors/IDEs</li>
+              <li>hooks for git (and other VCS)</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>pytest</h2>
+            <ul>
+              <li>Simple test discovery</li>
+              <li>Set up at module, class and test level</li>
+              <li>No significant boilerplate</li>
+              <li>Powerful features if needed</li>
+              <li>Extensible - plugins</li>
+            </ul>
+          </section>
+            <aside class="notes">
+              Broad outline
+              history
+              why better than unittest
+            </aside>
+          <section>
+            <h2>pytest</h2>
+            <ul>
+              <li>discovers tests</li>
+              <li>runs tests</li>
+              <li>reports on tests</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Running tests</h2>
+            <ul>
+              <li>top-level</li>
+              <li>component level</li>
+              <li>directly using <code>py.test</code></li>
+            </ul>
+            <aside class="notes">
+              This is all on developer pages
+              but quick overview of running tests
+              how each method adds more flexibility
+            </aside>
+          </section>
+          <section>
+            <h2>Top-level build.py</h2>
+            <p>
+              <code style="font-size:50%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
+              <code style="font-size:50%">./build.py -f components/&lt;component&gt;/build.xml integration</code><br/>
+              <code style="font-size:50%">./build.py -f components/tools/OmeroPy/build.xml test -DTEST=test/integration/test_admin.py</code><br/>
+              <code style="font-size:50%">./build.py -f components/tools/OmeroPy/build.xml integration -DMARK=long_running</code><br/>
+            </p>
+          </section>
+          <section>
+            <h2>Component-level setup.py</h2>
+            <p>
+              <code style="font-size:50%">./setup.py test -s test/unit</code><br/>
+              <code style="font-size:50%">./setup.py test -s test/integration</code><br/>
+              <code style="font-size:50%">./setup.py test -s test/integration/test_admin.py</code><br/>
+              <code style="font-size:50%">./setup.py test -s test/integration -m "not long_running"</code><br/>
+            </p>
+          </section>
+          <section>
+            <h2>Component-level setup.py</h2>
+            <p>
+              <code style="font-size:50%">./setup.py test -s test/integration -k permissions</code><br/>
+              <code style="font-size:50%">./setup.py test -s test/integration/test_admin.py -k testGetGroup</code><br/>
+              <code style="font-size:50%">./setup.py test -h</code><br/>
+            </p>
+          </section>
+          <section>
+            <h2>Using py.test</h2>
+            <p>
+              <code style="font-size:50%">py.test test/unit</code><br/>
+              <code style="font-size:50%">py.test test/integration</code><br/>
+              <code style="font-size:50%">py.test test/integration/test_admin.py</code><br/>
+              <code style="font-size:50%">py.test test/integration -m "not long_running"</code><br/>
+            </p>
+          </section>
+          <section>
+            <h2>Using py.test</h2>
+            <p>
+              <code style="font-size:50%">py.test test/integration -k permissions</code><br/>
+              <code style="font-size:50%">py.test test/integration/test_admin.py -k testGetGroup</code><br/>
+              <code style="font-size:50%">py.test test/integration -k permissions -s</code><br/>
+              <code style="font-size:50%">py.test --repeat 20 test/unit/fstest</code><br/>
+              <code style="font-size:50%">py.test -h</code><br/>
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <h2>Writing tests</h2>
+            <ul>
+              <li>Naming tests</li>
+              <li>The basics</li>
+              <li>Exceptions</li>
+              <li>Fixtures</li>
+              <li>Parameters</li>
+              <li>Markers</li>
+            </ul>
+        </section>
+
+        <!--
+          NAMING CONVENTIONS
+        -->
+        <section>
+          <section>
+            <h2>Naming conventions</h2>
+            <ul>
+              <li>modules called <code>test_*</code></li>
+              <ul>
+                <li>functions called <code>test*</code></li>
+                <li>classes called <code>Test*</code></li>
+                <ul>
+                  <li>methods called <code>test*</code></li>
+                </ul>
+              </ul>
+            </ul>
+            <aside class="notes">
+              Quick overview of naming for discovery
+              Example
+            </aside>
+          </section>
+          <section>
+            <h2>Naming conventions</h2>
+<code>OmeroPy/test/unit/clitest/test_tag.py</code>
+            <pre>
+
+class TestTag(object):
+
+    def testHelp(self):
+        self.cli = CLI()
+        self.cli.register("tag", TagControl, "TEST")
+        self.args = ["tag"]
+        self.args += ["-h"]
+        self.cli.invoke(self.args, strict=True)
+            </pre>
+          </section>
+        </section>
+
+        <!--
+          BASIC TESTS
+        -->
+        <section>
+          <section>
+            <h2>Basic tests</h2>
+            <pre>
+
+class TestAdmin(lib.ITest):
+
+    def testGetGroup(self):
+        a = self.client.getSession().getAdminService()
+        l = a.lookupGroups()
+        g = a.getGroup(l[0].getId().val)
+        assert 0 != g.sizeOfGroupExperimenterMap()
+            </pre>
+            <aside class="notes">
+              Basic example of test using an assert
+              Comparison of assert - assertEquals etc?
+            </aside>
+          </section>
+        </section>
+
+        <!--
+          USING FIXTURES
+        -->
+        <section>
+          <section>
+            <h2>Fixtures</h2>
+            <pre>
+
+class TestTag(object):
+
+    def setup_method(self, method):
+        self.cli = CLI()
+        self.cli.register("tag", TagControl, "TEST")
+        self.args = ["tag"]
+
+    def testHelp(self):
+        self.args += ["-h"]
+        self.cli.invoke(self.args, strict=True)
+            </pre>
+          </section>
+            <aside class="notes">
+              Fixtures and teardowns
+              setup_ style (example)
+              @pytest.fixture style
+                not many good simple examples of
+                this method as autouse=True should
+                probably be avoided.
+            </aside>
+        </section>
+
+        <!--
+          TESTING FOR EXCEPTIONS
+        -->
+        <section>
+          <section>
+            <h2>Exceptions</h2>
+            <pre>
+
+class TestTag(object):
+
+    def testCreateTagsetFails(self):
+        self.args += ["createset", "--tag", "A"]
+        with pytest.raises(NonZeroReturnCode):
+            self.cli.invoke(self.args, strict=True)
+
+    def testListFails(self):
+        self.args += ["list", "--tagset", "tagset"]
+        with pytest.raises(NonZeroReturnCode):
+            self.cli.invoke(self.args, strict=True)
+            </pre>
+            <aside class="notes">
+              Asserting an exception
+              example of alternative style
+            </aside>
+          </section>
+        </section>
+
+        <!--
+          PARAMETRIZING TESTS
+        -->
+        <section>
+          <section>
+            <h2>Parameters</h2>
+            <pre>
+
+subcommands = [
+    "create", "createset", "list", "listsets", "link", "load"]
+
+
+class TestTag(object):
+
+    @pytest.mark.parametrize('subcommand', subcommands)
+    def testSubcommandHelp(self, subcommand):
+        self.args += [subcommand, "-h"]
+        self.cli.invoke(self.args, strict=True)
+            </pre>
+            <aside class="notes">
+              Couple of exmples of parameters:
+                simple (using defined list)
+                tuple (all in line)
+            </aside>
+          </section>
+          <section>
+            <h2>Parameters</h2>
+            <pre>
+
+class TestTag(object):
+
+    @pytest.mark.parametrize(
+        ('object_arg', 'tag_arg'),
+        [('Image:1', 'test'), ('Image', '1'), ('Image:image', '1'),
+         ('1', '1')])
+    def testLinkFails(self, object_arg, tag_arg):
+        self.args += ["link", object_arg, tag_arg]
+        with pytest.raises(NonZeroReturnCode):
+            self.cli.invoke(self.args, strict=True)
+            </pre>
+          </section>
+        </section>
+
+        <!--
+          USING MARKERS
+        -->
+        <section>
+          <section>
+            <h2>Markers</h2>
+            <pre>
+
+            </pre>
+          </section>
+            <aside class="notes">
+              Markers
+                provided markers cf parametrize
+                  examples
+                    xfail (predefined)
+                    longrunning (user defined)
+            </aside>
+        </section>
+
+        <!-- End of slides and slide stacks -->
+      </div>
+    </div>
+
+    <script src="reveal-js/lib/js/head.min.js"></script>
+    <script src="reveal-js/js/reveal.min.js"></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          // { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+          ]
+      });
+    </script>
+  </body>
+</html>
