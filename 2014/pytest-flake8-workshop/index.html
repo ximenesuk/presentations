@@ -240,9 +240,15 @@
           <section>
             <h2>Running tests</h2>
             <ul>
-              <li>top-level</li>
-              <li>component level</li>
-              <li>directly using <code>py.test</code></li>
+              <li>Top-level build</li>
+              <code style="font-size:50%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
+              <li>Component level build</li>
+              <ul>
+                <li>Using <code>setup.py</code></li>
+                <code style="font-size:50%">cd components/tools/&lt;component&gt; && ./setup.py test -s test/unit</code><br/>
+                <li>Directly using <code>py.test</code></li>
+                <code style="font-size:50%">cd components/tools/&lt;component&gt; && py.test test/unit</code><br/>
+              </ul>
             </ul>
             <aside class="notes">
               This is all on developer pages
