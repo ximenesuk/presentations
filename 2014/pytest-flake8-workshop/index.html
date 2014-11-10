@@ -167,8 +167,9 @@
               Code in the following areas is checked by default:
             </p>
             <table>
-              <tr><td><code>OmeroPy/src &amp; OmeroPy/test</code></td></tr>
-              <tr><td><code>OmeroFS/src &amp; OmeroFS/test</code></td></tr>
+              <tr><td><code>OmeroPy/test &amp; OmeroPy/src</code></td></tr>
+              <tr><td><code>OmeroFS/test &amp; OmeroFS/src</code></td></tr>
+              <tr><td><code>OmeroWeb/test</td></tr>
             </table>
             <p>  
               The intention is to have most Python code checked eventually.
@@ -193,6 +194,7 @@
           <section>
             <h2>flake8</h2>
             <ul>
+              <li><code>pip install flake8</code></li>
               <li>plugins for most editors/IDEs</li>
               <li>hooks for git (and other VCS)</li>
             </ul>
@@ -221,6 +223,13 @@
               <li>discovers tests</li>
               <li>runs tests</li>
               <li>reports on tests</li>
+            </ul>
+          </section>
+          <section>
+            <h2>pytest</h2>
+            <ul>
+              <li><code>pip install pytest</code></li>
+              <li><code>pip install &lt;pytest plugin&gt;</code></li>
             </ul>
           </section>
         </section>
@@ -365,6 +374,30 @@ class TestAdmin(lib.ITest):
         <section>
           <section>
             <h2>Fixtures</h2>
+<code>OmeroPy/test/unit/clitest/test_tag.py</code>
+            <pre>
+
+class TestTag(object):
+
+    def testHelp(self):
+        self.cli = CLI()
+        self.cli.register("tag", TagControl, "TEST")
+        self.args = ["tag"]
+        self.args += ["-h"]
+        self.cli.invoke(self.args, strict=True)
+            </pre>
+            <aside class="notes">
+              Fixtures and teardowns
+              setup_ style (example)
+              @pytest.fixture style
+                not many good simple examples of
+                this method as autouse=True should
+                probably be avoided.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Fixtures</h2>
             <pre>
 
 class TestTag(object):
@@ -379,14 +412,88 @@ class TestTag(object):
         self.cli.invoke(self.args, strict=True)
             </pre>
           </section>
-            <aside class="notes">
-              Fixtures and teardowns
-              setup_ style (example)
-              @pytest.fixture style
-                not many good simple examples of
-                this method as autouse=True should
-                probably be avoided.
-            </aside>
+
+          <section>
+            <h2>Fixtures</h2>
+            <pre>
+
+class TestTag(CLITest):
+
+    def setup_method(self, method):
+        super(TestTag, self).setup_method(method)
+        self.cli.register("tag", TagControl, "TEST")
+        self.args += ["tag"]
+        self.setup_mock()
+
+    def teardown_method(self, method):
+        self.teardown_mock()
+        super(TestTag, self).teardown_method(method)
+            </pre>
+          </section>
+
+          <section>
+            <h2>Fixtures</h2>
+            <pre>
+@pytest.fixture(scope='module')
+def path():
+    """Returns the root OMERO.web webclient path."""
+    return '/webclient'
+
+@pytest.fixture(scope='module')
+def request_factory():
+    """Returns a fresh Django request factory."""
+    return RequestFactory()
+
+@pytest.fixture(scope='function')
+def empty_request(request, request_factory, path):
+    """
+    Returns a simple GET request object with no 'path' query string.
+    """
+    return {
+        'request': request_factory.get(path),
+        'initially_select': list(),
+        'initially_open': None
+    }
+
+class TestShow(object):
+
+    def test_empty_path(self, empty_request):
+        show = Show(conn, empty_request['request'], None)
+        self.assert_instantiation(show, empty_request, conn)
+        first_selected = show.first_selected
+        assert first_selected is None
+            </pre>
+          </section>
+
+          <section>
+            <h2>Fixtures</h2>
+            <pre>
+
+@pytest.fixture(scope='function')
+def itest(request):
+    """
+    Returns a new L{test.integration.library.ITest} instance.  With
+    attached finalizer so that pytest will clean it up.
+    """
+    o = lib.ITest()
+    o.setup_method(None)
+
+    def finalizer():
+        o.teardown_method(None)
+    request.addfinalizer(finalizer)
+    return o
+
+@pytest.fixture(scope='function', params=[1, 2])
+def tag(request, itest, update_service):
+    """Returns a new OMERO TagAnnotation with required fields set."""
+    name = rstring(itest.uuid())
+    for index in range(request.param):
+        tag = TagAnnotationI()
+        tag.textValue = name
+        tag = update_service.saveAndReturnObject(tag)
+    return tag
+            </pre>
+          </section>
         </section>
 
         <!--
@@ -396,6 +503,8 @@ class TestTag(object):
           <section>
             <h2>Exceptions</h2>
             <pre>
+
+import pytest
 
 class TestTag(object):
 
@@ -413,6 +522,24 @@ class TestTag(object):
               Asserting an exception
               example of alternative style
             </aside>
+          </section>
+          <section>
+            <h2>Exceptions</h2>
+            <pre>
+
+class TestRecursiveDelete(AbstractRepoTest):
+
+    def setup_method(self, method):
+        super(TestRecursiveDelete, self).setup_method(method)
+        self.filename = self.unique_dir + "/file.txt"
+        self.mrepo = self.getManagedRepo()
+        # ...
+
+    def testDoubleDot(self):
+        naughty = self.unique_dir + "/" + ".." + "/" + ".." + "/" + ".."
+        pytest.raises(omero.ValidationException,
+                      self.mrepo.deletePaths, [naughty], True, True)
+            </pre>
           </section>
         </section>
 
@@ -457,6 +584,34 @@ class TestTag(object):
             self.cli.invoke(self.args, strict=True)
             </pre>
           </section>
+          <section>
+            <h2>Parameters</h2>
+            <pre>
+object_types = ["Image", "Dataset", "Project", "Plate", "Screen"]
+permissions = ["rw----", "rwr---", "rwra--", "rwrw--"]
+group_prefixes = ["", "Group:", "ExperimenterGroup:"]
+
+
+class TestChgrp(CLITest):
+
+    @pytest.mark.parametrize("object_type", object_types)
+    @pytest.mark.parametrize("target_group_perms", permissions)
+    @pytest.mark.parametrize("group_prefix", group_prefixes)
+    def testChgrpMyData(self, object_type, target_group_perms, group_prefix):
+        oid = self.create_object(object_type)
+
+        # create a new group and move the object to the new group
+        group = self.add_new_group(perms=target_group_perms)
+        self.args += ['%s%s' % (group_prefix, group.id.val),
+                      '/%s:%s' % (object_type, oid)]
+        self.cli.invoke(self.args, strict=True)
+
+        # change the session context and check the object has been moved
+        self.set_context(self.client, group.id.val)
+        new_object = self.query.get(object_type, oid)
+        assert new_object.id.val == oid
+            </pre>
+          </section>
         </section>
 
         <!--
@@ -467,8 +622,24 @@ class TestTag(object):
             <h2>Markers</h2>
             <pre>
 
+class TestChgrp(CLITest):
+
+    @pytest.mark.xfail(reason="CLI  does not wrap all chgrps in 1 DoAll")
+    def testFilesetAllImages(self):
+        images = self.importMIF(2)  # 2 images sharing a fileset
+
+        # create a new group and try to move only one image to the new group
+        group = self.add_new_group()
+        self.args += ['%s' % group.id.val, '/Image:%s' % images[0].id.val,
+                      '/Image:%s' % images[1].id.val]
+        self.cli.invoke(self.args, strict=True)
+
+        # check the images have been moved
+        ctx = {'omero.group': '-1'}  # query across groups
+        for i in images:
+            img = self.query.get('Image', i.id.val, ctx)
+            assert img.details.group.id.val == group.id.val
             </pre>
-          </section>
             <aside class="notes">
               Markers
                 provided markers cf parametrize
@@ -476,6 +647,48 @@ class TestTag(object):
                     xfail (predefined)
                     longrunning (user defined)
             </aside>
+          </section>
+          <section>
+            <h2>Markers</h2>
+            <pre>
+
+class TestRPS(lib.ITest):
+
+    @pytest.mark.long_running
+    def testRomioToPyramid(self):
+        """
+        Here we create a pixels that is not big,
+        then modify its metadata so that it IS big,
+        in order to trick the service into throwing
+        us a MissingPyramidException
+        """
+        from omero.util import concurrency
+        pix = self.missing_pyramid(self.root)
+        rps = self.root.sf.createRawPixelsStore()
+        ...
+            </pre>
+          </section>
+          <section>
+            <h2>Markers</h2>
+            <pre>
+
+@pytest.mark.long_running
+class TestThumbs(lib.ITest):
+
+    def testCreateThumbnails(self):
+        tb = self.pyr_tb()
+        try:
+            tb.createThumbnails()
+        finally:
+            tb.close()
+            </pre>
+          </section>
+          <section>
+            <h2>Markers</h2>
+            <pre>
+
+            </pre>
+          </section>
         </section>
 
         <!-- End of slides and slide stacks -->
