@@ -204,7 +204,7 @@
             <h2>pyflakes</h2>
             <p><code>pyflakes</code> checks correctness, including:</p>
             <ul>
-              <li>missing, unused imports</li>
+              <li>missing &amp; unused imports</li>
               <li>unused variables</li>
               <li>duplicate parameter names</li>
             </ul>
@@ -215,13 +215,13 @@
             </p>
           </section>
           <section>
-            <h2>pyflakes</h2>
-            <p><code>pyflakes</code> checks style, including:</p>
+            <h2>pep8</h2>
+            <p><code>pep8</code> checks style, including:</p>
             <ul class="left">
-              <li>whitespace</li>
-              <li>indentation</li>
+              <li>whitespace: too much, too little, vertical, horizontal,...</li>
+              <li>indentation: too much, too little,...</li>
               <li>line length</li>
-              <li>deprecation</li>
+              <li>deprecated usage: e.g. <code>.has_key()</code> for <code>in</code> </li>
             </ul>
             <p>
               <a href="http://pep8.readthedocs.org/en/latest/intro.html#error-codes">
@@ -230,13 +230,29 @@
             </p>
           </section>
           <section>
-            <h2>flake8</h2>
+            <h2>Installing flake8</h2>
             <ul>
               <li><code>pip install flake8</code></li>
-              <li>code excluded by <code>setup.cfg</code></li>
               <li>plugins for most editors/IDEs</li>
               <li>hooks for git (and other VCS)</li>
             </ul>
+            <p>The hook for git is quite buggy and needs an empty <code>setup.cfg</code>
+            file at the root of the repository. It also turns on <code>mccabe</code>
+            which you really don't want to do!</p>
+          </section>
+          <section>
+            <h2>Using flake8</h2>
+            <ul>
+              <li><code>flake8 test/integration/test_admin.py</code></li>
+              <li>files can be excluded by <code>setup.cfg</code></li>
+              <li><code>flake8 -v test/integration</code></li>
+              <li>files can also be excluded using <code># flake8: noqa</code></li>
+              <li>lines can be excluded using <code># noqa</code></li>
+              <li><code>flake8 -h</code></li>
+            </ul>
+            <p>Excluding anything from <code>flake8</code> by whatever means is
+            a last resort, really frowned upon and is unlikely to get past code
+            review without good reason!</p>
           </section>
         </section>
 
@@ -250,32 +266,33 @@
               <li>Powerful features if needed</li>
               <li>Extensible - plugins</li>
             </ul>
-          </section>
             <aside class="notes">
               Broad outline
               history
               why better than unittest
             </aside>
-          <section>
-            <h2>pytest</h2>
-            <ul>
-              <li>discovers tests</li>
-              <li>runs tests</li>
-              <li>reports on tests</li>
-            </ul>
           </section>
           <section>
-            <h2>pytest</h2>
+            <h2>Installing pytest</h2>
             <ul>
               <li><code>pip install pytest</code></li>
               <li><code>pip install &lt;pytest plugin&gt;</code></li>
+            </ul>
+          </section>
+          <section>
+            <h2>Running pytest</h2>
+            <p>However it is run, <code>pytest</code> does three things:</p>
+            <ul>
+              <li>discovers tests</li>
+              <li>runs those tests</li>
+              <li>reports on those tests</li>
             </ul>
           </section>
         </section>
 
         <section>
           <section>
-            <h2>Running tests</h2>
+            <h2>Running Python tests</h2>
             <ul>
               <li>Top-level build</li>
               <code style="font-size:60%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
@@ -299,7 +316,7 @@
               <code style="font-size:52%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
               <code style="font-size:52%">./build.py -f components/&lt;component&gt;/build.xml integration</code><br/>
               <code style="font-size:52%">./build.py -f components/tools/OmeroPy/build.xml test -DTEST=test/integration/test_admin.py</code><br/>
-              <code style="font-size:52%">./build.py -f components/tools/OmeroPy/build.xml integration -DMARK=long_running</code><br/>
+              <code style="font-size:52%">./build.py -f components/tools/OmeroPy/build.xml integration -DMARK="not long_running"</code><br/>
             </p>
           </section>
           <section>
@@ -335,6 +352,7 @@
               <code style="font-size:70%">py.test test/integration/test_admin.py -k testGetGroup</code><br/>
               <code style="font-size:70%">py.test test/integration -k permissions -s</code><br/>
               <code style="font-size:70%">py.test --repeat 20 test/unit/fstest</code><br/>
+              <code style="font-size:70%">py.test --collect-only test/integration/ -m long_running</code><br/>
               <code style="font-size:70%">py.test -h</code><br/>
             </p>
           </section>
@@ -349,6 +367,7 @@
               <li>Fixtures</li>
               <li>Parameters</li>
               <li>Markers</li>
+              <li>Extending</li>
             </ul>
         </section>
 
@@ -358,6 +377,8 @@
         <section>
           <section>
             <h2>Naming conventions</h2>
+            <p><code>pytest</code> discovers what tests to run using naming conventions for
+            modules, functions, classes and methods. We use the default:</p>
             <ul>
               <li>modules called <code>test_*</code></li>
               <ul>
@@ -374,7 +395,7 @@
             </aside>
           </section>
           <section>
-            <h2>Naming conventions</h2>
+            <h3>Naming example</h3>
 <code>OmeroPy/test/unit/clitest/test_tag.py</code>
             <pre>
 
@@ -387,6 +408,7 @@ class TestTag(object):
         self.args += ["-h"]
         self.cli.invoke(self.args, strict=True)
             </pre>
+          <p>Here the method <code>testHelp</code> will be run.
           </section>
         </section>
 
