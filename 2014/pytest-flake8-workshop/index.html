@@ -350,7 +350,7 @@
             <p>
               <code style="font-size:70%">py.test test/integration -k permissions</code><br/>
               <code style="font-size:70%">py.test test/integration/test_admin.py -k testGetGroup</code><br/>
-              <code style="font-size:70%">py.test test/integration -k permissions -s</code><br/>
+              <code style="font-size:70%">py.test test/integration -s</code><br/>
               <code style="font-size:70%">py.test --repeat 20 test/unit/fstest</code><br/>
               <code style="font-size:70%">py.test --collect-only test/integration/ -m long_running</code><br/>
               <code style="font-size:70%">py.test -h</code><br/>
@@ -396,19 +396,18 @@
           </section>
           <section>
             <h3>Naming example</h3>
-<code>OmeroPy/test/unit/clitest/test_tag.py</code>
             <pre>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_admin.py">components/tools/OmeroPy/test/integration/test_admin.py</a>
 
-class TestTag(object):
+class TestAdmin(lib.ITest):
 
-    def testHelp(self):
-        self.cli = CLI()
-        self.cli.register("tag", TagControl, "TEST")
-        self.args = ["tag"]
-        self.args += ["-h"]
-        self.cli.invoke(self.args, strict=True)
+    def testGetGroup(self):
+        a = self.client.getSession().getAdminService()
+        l = a.lookupGroups()
+        g = a.getGroup(l[0].getId().val)
+        assert 0 != g.sizeOfGroupExperimenterMap()
             </pre>
-          <p>Here the method <code>testHelp</code> will be run.
+          <p>Here the method <code>testGetGroup</code> will be run.
           </section>
         </section>
 
@@ -417,8 +416,12 @@ class TestTag(object):
         -->
         <section>
           <section>
-            <h2>Basic tests</h2>
+            <h2>A basic test</h2>
             <pre>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_admin.py">components/tools/OmeroPy/test/integration/test_admin.py</a>
+
+import test.integration.library as lib
+
 
 class TestAdmin(lib.ITest):
 
@@ -432,6 +435,8 @@ class TestAdmin(lib.ITest):
               Basic example of test using an assert
               Comparison of assert - assertEquals etc?
             </aside>
+            <p>Native Python <code>assert</code> is used.<p>
+            <p><code>lib.ITest</code> contains general set-up and useful helpers.</p>
           </section>
         </section>
 
@@ -441,18 +446,6 @@ class TestAdmin(lib.ITest):
         <section>
           <section>
             <h2>Fixtures</h2>
-<code>OmeroPy/test/unit/clitest/test_tag.py</code>
-            <pre>
-
-class TestTag(object):
-
-    def testHelp(self):
-        self.cli = CLI()
-        self.cli.register("tag", TagControl, "TEST")
-        self.args = ["tag"]
-        self.args += ["-h"]
-        self.cli.invoke(self.args, strict=True)
-            </pre>
             <aside class="notes">
               Fixtures and teardowns
               setup_ style (example)
@@ -464,9 +457,26 @@ class TestTag(object):
           </section>
 
           <section>
-            <h2>Fixtures</h2>
+            <h2>No fixture</h2>
             <pre>
-            <p><a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a></p>
+Adapted from: <a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
+
+class TestTag(object):
+
+    def testHelp(self):
+        self.cli = CLI()
+        self.cli.register("tag", TagControl, "TEST")
+        self.args = ["tag"]
+        self.args += ["-h"]
+        self.cli.invoke(self.args, strict=True)
+            </pre>
+          </section>
+
+          <section>
+            <h2>A simple setup fixture</h2>
+            <pre>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
+
 class TestTag(object):
 
     def setup_method(self, method):
@@ -481,9 +491,10 @@ class TestTag(object):
           </section>
 
           <section>
-            <h2>Fixtures</h2>
+            <h2>Setup and teardown</h2>
             <pre>
-            <p><a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_tag.py">components/tools/OmeroPy/test/integration/clitest/test_tag.py</a></p>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_tag.py">components/tools/OmeroPy/test/integration/clitest/test_tag.py</a>
+
 class TestTag(CLITest):
 
     def setup_method(self, method):
@@ -499,7 +510,7 @@ class TestTag(CLITest):
           </section>
 
           <section>
-            <h2>Fixtures</h2>
+            <h2>Decorator fixtures</h2>
             <pre>
 @pytest.fixture(scope='module')
 def path():
@@ -533,7 +544,7 @@ class TestShow(object):
           </section>
 
           <section>
-            <h2>Fixtures</h2>
+            <h2>More decorator fixtures</h2>
             <pre>
 
 @pytest.fixture(scope='function')
@@ -561,21 +572,21 @@ def tag(request, itest, update_service):
     return tag
             </pre>
           </section>
-        </section>
-
-		<!--
-		  BUILT-IN FIXTURES
-		-->
-        <section>
-        <h2>Built-in Fixtures</h2>
+    <!--
+      BUILT-IN FIXTURES
+    -->
+          <section>
+            <h2>Built-in fixtures</h2>
 <p>See <a href="http://pytest.org/latest/builtin.html#builtin-fixtures-function-arguments">section</a> of the py.test documentation</p>
 
-		<ul>
-		  <li>capsys/capfd: stdout/stderr capture</li>
-		  <li>monkeypatch</li>
-		  <li>tmpdir: temporary paths</li>
-		</ul>
+            <ul>
+              <li>capsys/capfd: stdout/stderr capture</li>
+              <li>monkeypatch</li>
+              <li>tmpdir: temporary paths</li>
+            </ul>
+          </section>
         </section>
+
 
         <!--
           TESTING FOR EXCEPTIONS
@@ -583,8 +594,17 @@ def tag(request, itest, update_service):
         <section>
           <section>
             <h2>Exceptions</h2>
+            <aside class="notes">
+              Asserting an exception
+              example of alternative style
+            </aside>
+          </section>
+
+          <section>
+            <h2>Exceptions using with</h2>
             <pre>
-	        <p><a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a></p>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
+
 import pytest
 from omero.cli import CLI, NonZeroReturnCode
 
@@ -600,15 +620,12 @@ class TestTag(object):
         with pytest.raises(NonZeroReturnCode):
             self.cli.invoke(self.args, strict=True)
             </pre>
-            <aside class="notes">
-              Asserting an exception
-              example of alternative style
-            </aside>
           </section>
           <section>
             <h2>Exceptions</h2>
             <pre>
-	        <p><a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_repository.py">components/tools/OmeroPy/test/integration/test_repository.py</a></p>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_repository.py">components/tools/OmeroPy/test/integration/test_repository.py</a>
+
 import pytest
 
 class TestRecursiveDelete(AbstractRepoTest):
@@ -633,8 +650,12 @@ class TestRecursiveDelete(AbstractRepoTest):
         <section>
           <section>
             <h2>Parameters</h2>
+          </section>
+          <section>
+            <h2>Single parameter</h2>
             <pre>
-            <p><a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a></p>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
+
 import pytest
 subcommands = [
     "create", "createset", "list", "listsets", "link", "load"]
@@ -654,9 +675,10 @@ class TestTag(object):
             </aside>
           </section>
           <section>
-            <h2>Parameters</h2>
+            <h2>Multiple parameters</h2>
             <pre>
-            <p><a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_tag.py">components/tools/OmeroPy/test/integration/clitest/test_tag.py</a></p>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_tag.py">components/tools/OmeroPy/test/integration/clitest/test_tag.py</a>
+
 import pytest
 
 class TestTag(object):
@@ -672,9 +694,10 @@ class TestTag(object):
             </pre>
           </section>
           <section>
-            <h2>Parameters</h2>
+            <h2>Nested multiple parameters</h2>
             <pre>
-            <p><a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_chgrp.py">components/tools/OmeroPy/test/integration/clitest/test_chgrp.py</a></p>
+<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_chgrp.py">components/tools/OmeroPy/test/integration/clitest/test_chgrp.py</a>
+
 object_types = ["Image", "Dataset", "Project", "Plate", "Screen"]
 permissions = ["rw----", "rwr---", "rwra--", "rwrw--"]
 group_prefixes = ["", "Group:", "ExperimenterGroup:"]
@@ -708,7 +731,18 @@ class TestChgrp(CLITest):
         <section>
           <section>
             <h2>Markers</h2>
+            <aside class="notes">
+              Markers
+                provided markers cf parametrize
+                  examples
+                    xfail (predefined)
+                    longrunning (user defined)
+            </aside>
+          </section>
+          <section>
+            <h2>xfail marker</h2>
             <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_chgrp.py">components/tools/OmeroPy/test/integration/clitest/test_chgrp.py</a>
 
 class TestChgrp(CLITest):
 
@@ -728,17 +762,11 @@ class TestChgrp(CLITest):
             img = self.query.get('Image', i.id.val, ctx)
             assert img.details.group.id.val == group.id.val
             </pre>
-            <aside class="notes">
-              Markers
-                provided markers cf parametrize
-                  examples
-                    xfail (predefined)
-                    longrunning (user defined)
-            </aside>
           </section>
           <section>
-            <h2>Markers</h2>
+            <h2>User-defined markers</h2>
             <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_rawpixelsstore.py">components/tools/OmeroPy/test/integration/test_rawpixelsstore.py</a>
 
 class TestRPS(lib.ITest):
 
@@ -757,8 +785,9 @@ class TestRPS(lib.ITest):
             </pre>
           </section>
           <section>
-            <h2>Markers</h2>
+            <h2>Markers applied to a class</h2>
             <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_thumbs.py">components/tools/OmeroPy/test/integration/test_thumbs.py</a>
 
 @pytest.mark.long_running
 class TestThumbs(lib.ITest):
@@ -772,9 +801,21 @@ class TestThumbs(lib.ITest):
             </pre>
           </section>
           <section>
-            <h2>Markers</h2>
+            <h2>Pre-defining markers</h2>
             <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/pytest.ini">components/tools/OmeroPy/pytest.ini</a>
 
+[pytest]
+markers =
+    long_running: mark the test as long-running, i.e. typically requiring more than 10 minutes to complete
+
+
+
+$ py.test --markers
+@pytest.mark.long_running: mark the test as long-running, i.e. typically requiring more than 10 minutes to complete
+...
+@pytest.mark.skipif(condition): skip the given test function if eval(condition) results in a True value.  Evaluation happens within the module global context. Example: skipif('sys.platform == "win32"') skips the test if we are on the win32 platform. see http://pytest.org/latest/skipping.html
+...
             </pre>
           </section>
         </section>
@@ -792,6 +833,7 @@ class TestThumbs(lib.ITest):
           <section>
             <h2>Adding an option</h2>
             <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/conftest.py">components/tools/OmeroPy/test/conftest.py</a>
 
 def pytest_addoption(parser):
     parser.addoption(
@@ -814,7 +856,22 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize('tmp_ct', range(count))
             </pre>
           </section>
+          <section>
+            <h2>Plugins</h2>
+            <pre>
+
+$ py.test --version
+This is pytest version 2.6.3, imported from /usr/local/lib/python2.7/site-packages/pytest.pyc
+setuptools registered plugins:
+  pytest-pythonpath-0.3 at /usr/local/lib/python2.7/site-packages/pytest_pythonpath.pyc
+  pytest-rerunfailures-0.05 at /usr/local/lib/python2.7/site-packages/rerunfailures/plugin.pyc
+  pytest-xdist-1.10 at /usr/local/lib/python2.7/site-packages/xdist/plugin.pyc
+            </pre>
+            <p>Lots more available at <a href="http://pytest.org/latest/plugins_index/index.html">List of Third-Party Plugins</a></p>
+            <p>Useful guide at <a href="http://pytest-plugs.herokuapp.com/">pytest Plugins Compatibility</a></p>
+          </section>
         </section>
+
         <!-- End of slides and slide stacks -->
       </div>
     </div>
