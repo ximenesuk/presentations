@@ -4,7 +4,7 @@
 
   <head>
     <meta charset="utf-8">
-    <title>Import Workshop - Paris 2014</title>
+    <title>Python testing in OMERO 5</title>
 
     <meta name="description" content="Python testing in OMERO 5" />
     <meta name="author" content="" />
@@ -165,8 +165,8 @@
           <section>
             <h2>flake8</h2>
             <p>
-              Style and passive code correctness enforcement used by Travis.
-              Code in the following areas is checked by default:
+              Style and (passive) code correctness enforcement used by Travis.
+              Code in the following areas is currently checked by default:
             </p>
             <table>
               <tr><td><code>OmeroPy/test &amp; OmeroPy/src</code></td></tr>
@@ -194,9 +194,39 @@
             <p><code>mccabe</code> is turned off by default</p>
           </section>
           <section>
+            <h2>pyflakes</h2>
+            <p><code>pyflakes</code> checks correctness, including:</p>
+            <ul>
+              <li>missing, unused imports</li>
+              <li>unused variables</li>
+              <li>duplicate parameter names</li>
+            </ul>
+            <p>
+              <a href="http://flake8.readthedocs.org/en/latest/warnings.html">
+                pyflakes error codes
+              </a>
+            </p>
+          </section>
+          <section>
+            <h2>pyflakes</h2>
+            <p><code>pyflakes</code> checks style, including:</p>
+            <ul class="left">
+              <li>whitespace</li>
+              <li>indentation</li>
+              <li>line length</li>
+              <li>deprecation</li>
+            </ul>
+            <p>
+              <a href="http://pep8.readthedocs.org/en/latest/intro.html#error-codes">
+                pep8 error codes
+              </a>
+            </p>
+          </section>
+          <section>
             <h2>flake8</h2>
             <ul>
               <li><code>pip install flake8</code></li>
+              <li>code excluded by <code>setup.cfg</code></li>
               <li>plugins for most editors/IDEs</li>
               <li>hooks for git (and other VCS)</li>
             </ul>
@@ -241,13 +271,13 @@
             <h2>Running tests</h2>
             <ul>
               <li>Top-level build</li>
-              <code style="font-size:50%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
+              <code style="font-size:60%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
               <li>Component level build</li>
               <ul>
                 <li>Using <code>setup.py</code></li>
-                <code style="font-size:50%">cd components/tools/&lt;component&gt; && ./setup.py test -s test/unit</code><br/>
+                <code style="font-size:60%">cd components/tools/&lt;component&gt; && ./setup.py test -s test/unit</code><br/>
                 <li>Directly using <code>py.test</code></li>
-                <code style="font-size:50%">cd components/tools/&lt;component&gt; && py.test test/unit</code><br/>
+                <code style="font-size:60%">cd components/tools/&lt;component&gt; && py.test test/unit</code><br/>
               </ul>
             </ul>
             <aside class="notes">
@@ -259,46 +289,46 @@
           <section>
             <h2>Top-level build.py</h2>
             <p>
-              <code style="font-size:50%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
-              <code style="font-size:50%">./build.py -f components/&lt;component&gt;/build.xml integration</code><br/>
-              <code style="font-size:50%">./build.py -f components/tools/OmeroPy/build.xml test -DTEST=test/integration/test_admin.py</code><br/>
-              <code style="font-size:50%">./build.py -f components/tools/OmeroPy/build.xml integration -DMARK=long_running</code><br/>
+              <code style="font-size:52%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
+              <code style="font-size:52%">./build.py -f components/&lt;component&gt;/build.xml integration</code><br/>
+              <code style="font-size:52%">./build.py -f components/tools/OmeroPy/build.xml test -DTEST=test/integration/test_admin.py</code><br/>
+              <code style="font-size:52%">./build.py -f components/tools/OmeroPy/build.xml integration -DMARK=long_running</code><br/>
             </p>
           </section>
           <section>
             <h2>Component-level setup.py</h2>
             <p>
-              <code style="font-size:50%">./setup.py test -s test/unit</code><br/>
-              <code style="font-size:50%">./setup.py test -s test/integration</code><br/>
-              <code style="font-size:50%">./setup.py test -s test/integration/test_admin.py</code><br/>
-              <code style="font-size:50%">./setup.py test -s test/integration -m "not long_running"</code><br/>
+              <code style="font-size:70%">./setup.py test -s test/unit</code><br/>
+              <code style="font-size:70%">./setup.py test -s test/integration</code><br/>
+              <code style="font-size:70%">./setup.py test -s test/integration/test_admin.py</code><br/>
+              <code style="font-size:70%">./setup.py test -s test/integration -m "not long_running"</code><br/>
             </p>
           </section>
           <section>
             <h2>Component-level setup.py</h2>
             <p>
-              <code style="font-size:50%">./setup.py test -s test/integration -k permissions</code><br/>
-              <code style="font-size:50%">./setup.py test -s test/integration/test_admin.py -k testGetGroup</code><br/>
-              <code style="font-size:50%">./setup.py test -h</code><br/>
+              <code style="font-size:70%">./setup.py test -s test/integration -k permissions</code><br/>
+              <code style="font-size:70%">./setup.py test -s test/integration/test_admin.py -k testGetGroup</code><br/>
+              <code style="font-size:70%">./setup.py test -h</code><br/>
             </p>
           </section>
           <section>
             <h2>Using py.test</h2>
             <p>
-              <code style="font-size:50%">py.test test/unit</code><br/>
-              <code style="font-size:50%">py.test test/integration</code><br/>
-              <code style="font-size:50%">py.test test/integration/test_admin.py</code><br/>
-              <code style="font-size:50%">py.test test/integration -m "not long_running"</code><br/>
+              <code style="font-size:70%">py.test test/unit</code><br/>
+              <code style="font-size:70%">py.test test/integration</code><br/>
+              <code style="font-size:70%">py.test test/integration/test_admin.py</code><br/>
+              <code style="font-size:70%">py.test test/integration -m "not long_running"</code><br/>
             </p>
           </section>
           <section>
             <h2>Using py.test</h2>
             <p>
-              <code style="font-size:50%">py.test test/integration -k permissions</code><br/>
-              <code style="font-size:50%">py.test test/integration/test_admin.py -k testGetGroup</code><br/>
-              <code style="font-size:50%">py.test test/integration -k permissions -s</code><br/>
-              <code style="font-size:50%">py.test --repeat 20 test/unit/fstest</code><br/>
-              <code style="font-size:50%">py.test -h</code><br/>
+              <code style="font-size:70%">py.test test/integration -k permissions</code><br/>
+              <code style="font-size:70%">py.test test/integration/test_admin.py -k testGetGroup</code><br/>
+              <code style="font-size:70%">py.test test/integration -k permissions -s</code><br/>
+              <code style="font-size:70%">py.test --repeat 20 test/unit/fstest</code><br/>
+              <code style="font-size:70%">py.test -h</code><br/>
             </p>
           </section>
         </section>
@@ -699,6 +729,42 @@ class TestThumbs(lib.ITest):
           </section>
         </section>
 
+        <!--
+          EXTENDING PYTEST
+        -->
+        <section>
+          <section>
+            <h2>Extending pytest</h2>
+            <aside class="notes">
+              Various extension points?
+            </aside>
+          </section>
+          <section>
+            <h2>Adding an option</h2>
+            <pre>
+
+def pytest_addoption(parser):
+    parser.addoption(
+        '--repeat', action='store',
+        help='Number of times to repeat each test')
+
+
+def pytest_generate_tests(metafunc):
+    if metafunc.config.option.repeat is not None:
+        count = int(metafunc.config.option.repeat)
+
+        # We're going to duplicate these tests by parametrizing them,
+        # which requires that each test has a fixture to accept the parameter.
+        # We can add a new fixture like so:
+        metafunc.fixturenames.append('tmp_ct')
+
+        # Now we parametrize. This is what happens when we do e.g.,
+        # @pytest.mark.parametrize('tmp_ct', range(count))
+        # def test_foo(): pass
+        metafunc.parametrize('tmp_ct', range(count))
+            </pre>
+          </section>
+        </section>
         <!-- End of slides and slide stacks -->
       </div>
     </div>
