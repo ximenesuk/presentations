@@ -764,6 +764,35 @@ class TestChgrp(CLITest):
             </pre>
           </section>
           <section>
+            <h2>xfail marker results</h2>
+            <pre>
+$ py.test test/integration/test_permissions.py
+========================= test session starts ================================
+platform darwin -- Python 2.7.8 -- py-1.4.25 -- pytest-2.6.3
+plugins: pythonpath, rerunfailures, xdist
+collected 102 items
+
+test/integration/test_permissions.py ....x.....x.xx.........xxxXxxXxx.......
+
+=========== 61 passed, 17 xfailed, 24 xpassed in 85.58 seconds ===============
+
+
+$ py.test --runxfail test/integration/test_permissions.py
+========================= test session starts ================================
+platform darwin -- Python 2.7.8 -- py-1.4.25 -- pytest-2.6.3
+plugins: pythonpath, rerunfailures, xdist
+collected 102 items
+
+test/integration/test_permissions.py ....F.....F.FF..
+
+...
+
+$ py.test test/integration/test_permissions.py -m xfail --runxfail
+
+...
+            </pre>
+          </section>
+          <section>
             <h2>User-defined markers</h2>
             <pre>
 <a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_rawpixelsstore.py">components/tools/OmeroPy/test/integration/test_rawpixelsstore.py</a>
