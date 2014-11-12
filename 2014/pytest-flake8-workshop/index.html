@@ -648,6 +648,7 @@ class TestRecursiveDelete(AbstractRepoTest):
         pytest.raises(omero.ValidationException,
                       self.mrepo.deletePaths, [naughty], True, True)
             </pre>
+          <p>This approach is compatible with Python 2.4 and so should probably be deprecated.</p>
           </section>
         </section>
 
