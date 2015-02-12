@@ -190,6 +190,7 @@ $ bash ../components/tests/ui/robot_setup.sh
                         <li><a href="https://ci.openmicroscopy.org/view/Failing/job/OMERO-5.1-merge-robotframework">
                             Usually 1 or 2 failing tests</a>
                         </li>
+                        <img src="images/RobotTestMatrix.png">
                     </ul>
                 </section>
 
@@ -207,6 +208,46 @@ $ bash ../components/tests/ui/robot_setup.sh
                             Chrgrp Not Owner</a>
                         </li>
                         <li>But still lots of functionality not covered!</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Writing tests</h2>
+
+                    <ul>
+                        <li>Use existing tests as examples</li>
+                        <li>Robot Docs:
+                            <a href="http://robotframework.org/robotframework/latest/libraries/BuiltIn.html">
+                                Built-in
+                            </a> |
+                            <a href="http://rtomac.github.io/robotframework-selenium2library/doc/Selenium2Library.html">
+                                Selenium 2
+                            </a>
+                        </li>
+                        <li>Use Browser Dev tools to identify elements</li>
+                        <li>xpath or css selectors: Use Google / Stack Overflow etc.</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>DB setup</h2>
+
+                    <ul>
+                        <li>Robot User and Root.
+                            <pre><code># ui/resources/config.txt
+...                                
+${ROOT USERNAME}        root
+${ROOT PASSWORD}        omero
+
+${USERNAME}             robot_user
+${PASSWORD}             ome
+...
+</code></pre>
+                        </li>
+                        <li>Robot user has: Project/Dataset/2 Images</li>
+                        <li>Most tests create their own data. E.g. Test Annotate annotates new Project</li>
                     </ul>
                 </section>
 
@@ -234,7 +275,7 @@ $ bash ../components/tests/ui/robot_setup.sh
                 center: true,
 
                 theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
-                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
 
                 // Optional libraries used to extend on reveal.js
                 dependencies: [
