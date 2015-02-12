@@ -93,7 +93,7 @@
 
                 <!-- title page -->
                 <section>
-                    <h2>Robot &amp; Integration Testing</h2>
+                    <h1>Robot &amp; Integration Testing</h1>
                     <h4>(some updates)</h4>
                     <h3>Will Moore &amp; Colin Blackburn</h3>
                     <h4>17th February 2015</h4>            
@@ -102,10 +102,13 @@
                 <!-- talk outline -->
                 <section>
                     <h2>Outline</h2>
-                    <h3>Robot framework</h3>
+                    <h3>Robot framework: User's Guide</h3>
 
                     <ul style="padding-bottom:30px">
-                        <li>...</li>
+                        <li>Getting started (finding & running tests)</li>
+                        <li>Current state of tests</li>
+                        <li>Current state of CI robot jobs</li>
+                        <li>How to write tests</li>
                     </ul>
 
                     <h3>Python integration tests</h3>
@@ -116,13 +119,141 @@
 
                 <!-- Robot framework -->
                 <section>
-                    <h2>Robot framework</h2>
+                    <h1>Robot framework: User's Guide</h1>
+                </section>
 
+                <section>
+                    <h2>Getting Started with Robot </h2>
+
+                    <ul>
+                        <li>Robot tests are under <code>components/tests/ui/</code></li>
+                        <li>See
+                            <a href="https://github.com/openmicroscopy/openmicroscopy/blob/develop/components/tests/ui/README.md">
+                                README.md
+                            </a> for info on how to set-up and run tests.
+                        </li>
+                        <li>Web tests are in <code>testcases/web/</code>.</li>
+                        <li>Web keywords are in <code>resources/web/</code>.</li>
+                        <li>Web custom Python keywords are in <code>library/python</code>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Running tests</h2>
+
+                    <ul>
+                        <li>Set up users, groups and imports 2 images in P/D.
+                            <pre style="width:800px"><code>$ cd dist/
+$ bash ../components/tests/ui/robot_setup.sh
+                            </code></pre>
+                        </li>
+                        <li>Run tests. E.g. to run a single file of tests:
+                            <pre style="width:900px"><code>$ ./build.py -f components/tests/ui/build.xml web-firefox -DTEST=tree_test.txt</code></pre>
+                        </li>
+                        <li>HTML report generated. Useful for tracking single failures locally.</li>
+                        <li>
+                            No way to run only a single test within a file, except by commenting out all others.
+                        </li>
+                        <li>See <a href="https://github.com/openmicroscopy/openmicroscopy/blob/develop/components/tests/ui/README.md">
+                                README.md
+                            </a> for full details
+                        </li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Robot Tests: History...</h2>
+
+                    <ul>
+                        <li>Original Selenium tests now removed</li>
+                        <li>Robot Framework, Summer 2013
+                            <ul>
+                                <li>UI tests for Web & Insight</li>
+                                <li>Small number of example webclient & webadmin tests</li>
+                                <li>No job to set-up DB, users etc</li>
+                                <li>Tests not run by any CI job</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>CSRF Testing, Autumn 2014</h2>
+
+                    <ul>
+                        <li>Coverage of all POST urls (forms submits and ajax calls)</li>
+                        <li>Only a single test for each url</li>
+                        <li>Each test checks submit for 'success' (not 403)</li>
+                        <li>CI job to set-up users and run tests on Firefox & Chrome</li>
+                        <li><a href="https://ci.openmicroscopy.org/view/Failing/job/OMERO-5.1-merge-robotframework">
+                            Usually 1 or 2 failing tests</a>
+                        </li>
+                        <img src="images/RobotTestMatrix.png">
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Now, adding / updating tests for various PRs:</h2>
+
+                    <ul>
+                        <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3333">
+                            Map Annotation Web</a>
+                        </li>
+                        <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3433">
+                            Delete KEEP Children</a></li>
+                        <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3420">
+                            Chrgrp Not Owner</a>
+                        </li>
+                        <li>But still lots of functionality not covered!</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Writing tests</h2>
+
+                    <ul>
+                        <li>Use existing tests as examples</li>
+                        <li>Robot Docs:
+                            <a href="http://robotframework.org/robotframework/latest/libraries/BuiltIn.html">
+                                Built-in
+                            </a> |
+                            <a href="http://rtomac.github.io/robotframework-selenium2library/doc/Selenium2Library.html">
+                                Selenium 2
+                            </a>
+                        </li>
+                        <li>Use Browser Dev tools to identify elements</li>
+                        <li>xpath or css selectors: Use Google / Stack Overflow etc.</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>DB setup</h2>
+
+                    <ul>
+                        <li>Robot User and Root.
+                            <pre><code># ui/resources/config.txt
+...                                
+${ROOT USERNAME}        root
+${ROOT PASSWORD}        omero
+
+${USERNAME}             robot_user
+${PASSWORD}             ome
+...
+</code></pre>
+                        </li>
+                        <li>Robot user has: Project/Dataset/2 Images</li>
+                        <li>Most tests create their own data. E.g. Test Annotate annotates new Project</li>
+                    </ul>
                 </section>
 
                 <!-- Python integration tests -->
                 <section>
-                    <h2>Python integration tests</h2>
+                    <h1>Python integration tests</h1>
 
                 </section>
 
@@ -144,7 +275,7 @@
                 center: true,
 
                 theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
-                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
 
                 // Optional libraries used to extend on reveal.js
                 dependencies: [
