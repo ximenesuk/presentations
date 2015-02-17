@@ -104,10 +104,102 @@
                 <!-- talk overview-->
                 <section>
                     <h2>Overview</h2>
-                    <h3>Robot framework: User's Guide</h3>
-
                     <h3>Python integration tests: some updates</h3>
 
+                    <h3>Robot framework: User's Guide</h3>
+
+                </section>
+
+
+                <!-- Python integration tests -->
+                <section>
+                    <h1>Python integration tests:<br/>some updates</h1>
+                </section>
+
+                <section>
+                    <h2>Python integration tests</h2>
+                    <ul>
+                        <li>build.py</li>
+                        <li>setup.py</li>
+                        <li>library.py</li>
+                        <li>weblibrary.py</li>
+                        <li>setup &amp; teardown</li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2>build.py</h2>
+                    <ul>
+                        <li>Long running and broken tests excluded by default:</li>
+<pre><code>./build.py -f components/tools/OmeroPy/build.xml integration
+./build.py -f components/tools/OmeroPy/build.xml integration -DMARK="not (long_running or broken)"
+</code></pre>
+                        <li>To include all tests use an empty marker:</li>
+
+<pre><code>./build.py -f components/tools/OmeroPy/build.xml integration -DMARK=
+</code></pre>
+
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>setup.py</h2>
+                    <ul>
+                        <li>Test target now specified with <code>-t</code> (was <code>-s</code>)</li>
+                        <li>Option <code>-s</code> now available to show any output to console</li>
+<pre style="width:800px"><code>cd components/tools/OmeroPy
+./setup.py test -t test/integration/test_admin.py -s
+</code></pre>
+                        <li>Sets <code>PYTHONPATH</code> for all components...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>library.py</h2>
+                    <ul>
+                        <li>Now a package under <code>components/tests/python</code></li>
+                        <li><code>setup.py</code> sets <code>PYTHONPATH</code> for all components</li>
+                        <li>Now simply <code>import library as lib</code></li>
+                        <li>Set-up and tear-down refactored as class methods...</li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2>setup &amp; teardown</h2>
+                    <ul>
+                        <li>Class methods <code>setup_class(cls)</code> ...</li>
+                        <li>... and  <code>teardown_class(cls)</code></li>
+                        <li>Create and destroy root and user clients in <code>ITest</code></li>
+                        <li>Overridden by some classes but still at class-level</li>
+                        <li>More efficient, cleaner, simpler</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>weblibrary.py</h2>
+                    <ul>
+                        <li>Defines <code>IWebTest</code> class derived from <code>ITest</code></li>
+                        <li>Initializes Django test clients</li>
+                        <li>Helpers refactored to this class</li>
+                        <li>Redundant fixtures removed</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>More information</h2>
+                    <ul>
+                        <li>Docs: <a href="http://www.openmicroscopy.org/site/support/omero5.1/developers/testing.html">Running and writing tests</a></li>
+                        <li>PRs:</li>
+                        <ul>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3241">User default marker for Python tests #3241</a></li>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3296">Integration library #3296</a></li>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3318">Itest improvements #3318</a></li>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3319">Modify setup.py usage in Python testing #3319</a></li>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3405">OMERO.web integration tests #3405</a></li>
+                        </ul>
+                    </ul>
                 </section>
 
                 <!-- Robot framework -->
@@ -253,97 +345,6 @@ ${PASSWORD}             ome
                         <li>Robot user has: Project/Dataset/2 Images</li>
                         <li>Most tests create their own data. E.g. Test Annotate annotates new Project</li>
                     </ul>
-                </section>
-
-                <!-- Python integration tests -->
-                <section>
-                    <h1>Python integration tests:<br/>some updates</h1>
-                </section>
-
-                <section>
-                    <h2>Python integration tests</h2>
-                    <ul>
-                        <li>build.py</li>
-                        <li>setup.py</li>
-                        <li>library.py</li>
-                        <li>weblibrary.py</li>
-                        <li>setup &amp; teardown</li>
-                    </ul>
-
-                </section>
-
-                <section>
-                    <h2>build.py</h2>
-                    <ul>
-                        <li>Long running and broken tests excluded by default:</li>
-<pre><code>./build.py -f components/tools/OmeroPy/build.xml integration
-./build.py -f components/tools/OmeroPy/build.xml integration -DMARK="not (long_running or broken)"
-</code></pre>
-                        <li>To include all tests use an empty marker:</li>
-
-<pre><code>./build.py -f components/tools/OmeroPy/build.xml integration -DMARK=
-</code></pre>
-
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>setup.py</h2>
-                    <ul>
-                        <li>Test target now specified with <code>-t</code> (was <code>-s</code>)</li>
-                        <li>Option <code>-s</code> now available to show any output to console</li>
-<pre><code>cd components/tools/OmeroPy
-./setup.py test -t test/integration/test_admin.py -s
-</code></pre>
-                        <li>Sets <code>PYTHONPATH</code> for all components...</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>library.py</h2>
-                    <ul>
-                        <li>Now a package under <code>components/tests/python</code></li>
-                        <li><code>setup.py</code> sets <code>PYTHONPATH</code> for all components</li>
-                        <li>Now simply <code>import library as lib</code></li>
-                        <li>Set-up and tear-down refactored as class methods...</li>
-                    </ul>
-
-                </section>
-
-                <section>
-                    <h2>setup &amp; teardown</h2>
-                    <ul>
-                        <li>Class methods <code>setup_class(cls)</code> ...</li>
-                        <li>... and  <code>teardown_class(cls)</code></li>
-                        <li>Create and destroy root and user clients in <code>ITest</code></li>
-                        <li>Overridden by some classes but still at class-level</li>
-                        <li>More efficient, cleaner, simpler</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>weblibrary.py</h2>
-                    <ul>
-                        <li>Defines <code>IWebTest</code> class derived from <code>ITest</code></li>
-                        <li>Initializes Django test clients</li>
-                        <li>Helpers refactored to this class</li>
-                        <li>Redundant fixtures removed</li>
-                    </ul>
-                </section>
-
-                <section>
-                <h2>More information</h2>
-                <ul>
-                    <li>Docs: <a href="http://www.openmicroscopy.org/site/support/omero5.1/developers/testing.html">Running and writing tests</a></li>
-                    <li>PRs:</li>
-                    <ul>
-                        <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3241">User default marker for Python tests #3241</li>
-                        <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3296">Integration library #3296</li>
-                        <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3318">Itest improvements #3318</li>
-                        <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3319">Modify setup.py usage in Python testing #3319</li>
-                        <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3405">OMERO.web integration tests #3405</li>
-                    </ul>
-                </ul>
                 </section>
 
             </div>
