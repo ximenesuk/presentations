@@ -1,0 +1,1003 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Import Workshop - Paris 2014</title>
+
+        <meta name="description" content="Import in OMERO 5">
+        <meta name="author" content="the Open Microscopy Environment core team">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+        <!-- OME presentation overrides of the default theme -->
+        <style>
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+              text-transform: none;
+            }
+            .reveal h2 {
+                font-size: 60px;
+            }
+            .ome_theme {
+                background-image: url("diagrams/ome-icon-opacity.png");
+                background-color: #f2f6f9;
+                background-repeat: no-repeat;
+                background-position: right -270px top -120px;
+            }
+            .reveal {
+                text-transform: none;   !important
+            }
+
+            .reveal section img {
+                border-width:0;
+                border-color: white;
+            }
+
+            .img_panel {
+                width: 150px;
+            }
+
+            .nobullet li {
+                list-style: none;
+            }
+
+            table.centre {
+                width: 100%;
+            }
+
+            .reveal .centre td {
+                text-align: center;
+            }
+
+            .rot90 {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+
+            .reveal .title {
+                position:absolute;
+                bottom:100%;
+                margin:5px;
+                color:red;
+            }
+
+            .larger {
+                font-size: 80px !important;
+            }
+
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body class="ome_theme">
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <!-- ================================================================ -->
+
+
+        <!-- Note: whitespace no longer matches -->
+        <!-- Talk introduction - All ?? -->
+        <section>
+          <h1>Managing Imports with OMERO 5</h1>
+          <h2>Paris 2014</h2>
+          <p>Mark Carroll, Colin Blackburn &amp; Josh Moore</p>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+            <h2>Outline</h2>
+            <ul>
+                <li>Introduction to OMERO 5</li>
+                <li>Advanced import</li>
+                <li>Advanced repository layouts</li>
+                <li>Discussion</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <!-- Introduction - Colin/Mark ?? -->
+        <section>
+          <h2>Introduction to OMERO 5</h2>
+          <ul>
+            <li>OMERO 5 Import</li>
+            <li>ManagedRepository</li>
+            <li>Filesets</li>
+            <li>Discussion</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section data-transition="none">
+            <h3>OMERO 5 Import</h3>
+            <img src="diagrams/upload.png" width="100%"/>
+            <aside class="notes">
+              <p>
+                OMERO 5 introduces improvements to image import that preserve
+                your original data and reduce data duplication. We begin by
+                outlining the change that came with version 5.
+              </p>
+              <ul>
+                <li>client uploads <em>only</em> original data</li>
+                <ul>
+                  <li>including HCS plates, everything is <q>archived</q></li>
+                </ul>
+                <li>server <em>does not</em> store Pixels files</li>
+                <li>pyramids stored for few large images</li>
+                <ul>
+                  <li><em>only</em> those without subresolutions in file</li>
+                </ul>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>OMERO 5 Data out</h3>
+            <img src="diagrams/data-out.png" width="100%"/>
+            <aside class="notes">
+              <ul>
+                <li>pixels provided directly from original files</li>
+                <ul>
+                  <li>server-side Bio-Formats</li>
+                </ul>
+                <li>original files always available for download</li>
+                <ul>
+                  <li>including HCS plates</li>
+                </ul>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>OMERO 5 Import: Summary</h3>
+            <ul>
+              <li>client uploads <em>only</em> original data</li>
+              <ul>
+                <li>including HCS plates, everything is <q>archived</q></li>
+              </ul>
+              <li>server <em>does not</em> store Pixels files</li>
+              <li>pyramids stored for few large images</li>
+              <ul>
+                <li><em>only</em> those without subresolutions in file</li>
+              </ul>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>OMERO 5 Data out: Summary</h3>
+            <ul>
+              <li>pixels provided directly from original files</li>
+              <ul>
+                <li>server-side Bio-Formats</li>
+              </ul>
+              <li>original files always available for download</li>
+              <ul>
+                <li>including HCS plates</li>
+              </ul>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>OMERO 4 Import: Summary</h3>
+            <ul>
+              <li>client sends image planes over the network</li> <!-- for contrast with in-place -->
+              <ul>
+                <li>stored as <q>Pixels</q>, an internal uncompressed format</li>
+              </ul>
+              <li><em>additionally</em>, original <q>archived</q> files can be stored</li>
+              <ul>
+                <li>though not for HCS plates</li>
+              </ul>
+              <li>pyramids stored for all large images</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section data-transition="none">
+            <h3>ManagedRepository</h3>
+            <img src="diagrams/managedrepo-intro.png" width="90%"/>
+            <aside class="notes">
+              <ul>
+                <li>server stores and reads original data</li>
+                <li>OMERO acts as repository of original data</li>
+                <li>without Pixels files, less data duplication</li>
+                <li>original data visible in server filesystem</li>
+                <ul>
+                  <li>where filesets live</li>
+                  <li>each Fileset in its own subdirectory</li>
+                </ul>
+                <li>new OMERO users should use OMERO 5</li>
+                <li>upgrade scripts provided from OMERO 4</li>
+                <li><q>pre-FS</q> images still Pixels, not in Fileset</li>
+                <li><q>synthetic</q> images also not in Fileset</li>
+                <ul>
+                  <li>for instance: projections, kymographs</li>
+                </ul>
+                <li>More advanced use later.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>ManagedRepository: Summary</h3>
+            <ul>
+              <li>server stores and reads original data</li>
+              <li>OMERO acts as repository of original data</li>
+              <li>without Pixels files, less data duplication</li>
+              <li>original data visible in server filesystem</li>
+              <ul>
+                <li>where filesets live</li>
+                <li>each Fileset in its own subdirectory</li>
+              </ul>
+            </ul>
+            <aside class="notes">
+              More advanced use later.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Migrating to FS</h3>
+            <ul>
+              <li>new OMERO users should use OMERO 5</li>
+              <li>upgrade scripts provided from OMERO 4</li>
+              <li><q>pre-FS</q> images still Pixels, not in Fileset</li>
+              <li><q>synthetic</q> images also not in Fileset</li>
+              <ul>
+                <li>for instance: projections, kymographs</li>
+              </ul>
+            </ul>
+            <aside class="notes">
+              We need to make it clear here that this is just the upgrade
+              rather than the data transformation Josh covers later.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section data-transition="none">
+            <h3>Filesets: One to one</h3>
+            <img src="diagrams/fileset_1x1.png" width="100%"/>
+            <aside class="notes">
+              <ul>
+                <li>a set of related files</li>
+                <ul>
+                  <li>Bio-Formats must read them together</li>
+                </ul>
+                <li>a set of images, arising from those files</li>
+                <li>may be just one file and one image</li>
+                <li>Project/Dataset, Screen/Plate hierarchy remains</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Filesets: One to many</h3>
+            <img src="diagrams/fileset_1xn.png" width="100%"/>
+            <aside class="notes">
+              <ul>
+                <li>a set of related files</li>
+                <ul>
+                  <li>Bio-Formats must read them together</li>
+                </ul>
+                <li>a set of images, arising from those files</li>
+                <li>may be just one file and one image</li>
+                <li>Project/Dataset, Screen/Plate hierarchy remains</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Filesets: Many to many</h3>
+            <img src="diagrams/fileset_nxn.png" width="100%"/>
+            <aside class="notes">
+              <ul>
+                <li>a set of related files</li>
+                <ul>
+                  <li>Bio-Formats must read them together</li>
+                </ul>
+                <li>a set of images, arising from those files</li>
+                <li>may be just one file and one image</li>
+                <li>Project/Dataset, Screen/Plate hierarchy remains</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Filesets: Summary</h3>
+            <ul>
+              <li>a set of related files</li>
+              <ul>
+                <li>Bio-Formats must read them together</li>
+              </ul>
+              <li>a set of images, arising from those files</li>
+              <li>may be just one file and one image</li>
+              <li>Project/Dataset, Screen/Plate hierarchy remains</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h2>Discussion</h2>
+          <ul>
+            <li>Any questions so far?</li>
+            <li>For more details of FS see
+            <a href="http://ome.github.io/presentations/2013/fs-workshop-paris">last year's workshop</a>.</li>
+            </ul></li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <!-- Advanced import - Colin ?? -->
+        <section>
+            <h2>Advanced import</h2>
+            <ul>
+                <li>In-place import</li>
+                <li>DropBox import</li>
+                <li>Future import</li>
+                <ul>
+                  <li>Container creation</li>
+                  <li>Cron job import</li>
+                  <li>Polling DropBox</li>
+                </ul>
+                <li>Discussion</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+          <section data-transition="none">
+            <h3>In-place import: symlink</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln_s
+            </code>
+            <img src="diagrams/inplace-ln_s.png" width="90%"/>
+            <aside class="notes">
+              <ul>
+                <li>client transfers original data to ManagedRepository</li>
+                <ul>
+                  <li>uploads - default as already outlined</li>
+                  <li>creates soft links</li>
+                  <li>creates hard links</li>
+                  <li>creates hard links followed by delete of source files</li>
+                  <li>employs user-defined transfer mode</li>
+                </ul>
+                <li>server-side import as previously outlined</li>
+                <li>Potential for even less data duplication</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>In-place import: hard link</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln
+            </code>
+            <img src="diagrams/inplace-ln.png" width="90%"/>
+            <aside class="notes">
+              <ul>
+                <li>client transfers original data to ManagedRepository</li>
+                <ul>
+                  <li>uploads - default as already outlined</li>
+                  <li>creates soft links</li>
+                  <li>creates hard links</li>
+                  <li>creates hard links followed by delete of source files</li>
+                  <li>employs user-defined transfer mode</li>
+                </ul>
+                <li>server-side import as previously outlined</li>
+                <li>Potential for even less data duplication</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>In-place import: move</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln_rm
+            </code>
+            <img src="diagrams/inplace-ln.png" width="90%"/>
+            <aside class="notes">
+              <ul>
+                <li>client transfers original data to ManagedRepository</li>
+                <ul>
+                  <li>uploads - default as already outlined</li>
+                  <li>creates soft links</li>
+                  <li>creates hard links</li>
+                  <li>creates hard links followed by delete of source files</li>
+                  <li>employs user-defined transfer mode</li>
+                </ul>
+                <li>server-side import as previously outlined</li>
+                <li>Potential for even less data duplication</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>In-place import: move</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln_rm
+            </code>
+            <img src="diagrams/inplace-ln_rm.png" width="90%"/>
+            <aside class="notes">
+              <ul>
+                <li>client transfers original data to ManagedRepository</li>
+                <ul>
+                  <li>uploads - default as already outlined</li>
+                  <li>creates soft links</li>
+                  <li>creates hard links</li>
+                  <li>creates hard links followed by delete of source files</li>
+                  <li>employs user-defined transfer mode</li>
+                </ul>
+                <li>server-side import as previously outlined</li>
+                <li>Potential for even less data duplication</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>In-place import: Options</h3>
+            <ul>
+              <li><code>$ bin/omero import -- --advanced-help</code></li>
+              <li>transfer options</li>
+              <ul>
+                <li><code>--transfer=upload</code></li>
+                <li><code>--transfer=ln_s</code></li>
+                <li><code>--transfer=ln</code></li>
+                <li><code>--transfer=ln_rm</code></li>
+                <li><code>--transfer=some.class.Name</code></li>
+              </ul>
+              <li>other options</li>
+              <ul>
+                <li><code>--minutes_wait=ARG</code></li>
+                <li><code>--close_completed</code></li>
+                <li><code>--wait_completed</code></li>
+                <li><code>--checksum_algorithm=ARG</code></li>
+                <ul>
+                  <li>
+                    <code style="font-size:60%">
+                      Adler-32, CRC-32, MD5-128, Murmur3-32, Murmur3-128, SHA1-160
+                    </code>
+                  </li>
+                </ul>
+              </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>In-place import: Summary</h3>
+            <ul>
+              <li>client transfers original data to ManagedRepository</li>
+              <ul>
+                <li>uploads - default as already outlined</li>
+                <li>creates soft links</li>
+                <li>creates hard links</li>
+                <li>creates hard links followed by delete of source files</li>
+                <li>employs user-defined transfer mode</li>
+              </ul>
+              <li>server-side import as previously outlined</li>
+              <li>Potential for even less data duplication</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section data-transition="none">
+            <h3>DropBox: in-place import</h3>
+            <img src="diagrams/dropbox_now.png" width="80%"/>
+            <aside class="notes">
+              <ul>
+                <li>DropBox can now be configured to use in-place import</li>
+                <li>This can remove server-side duplication</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>DropBox in-place: Summary</h3>
+            <ul>
+              <li>DropBox can be configured to use in-place import</li>
+              <li>This can remove server-side duplication</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section data-transition="none">
+            <h3>Import: users, groups and containers</h3>
+            <img src="diagrams/dropbox_future.png" width="80%"/>
+            <aside class="notes">
+              <ul>
+                <li>User and group captured in paths</li>
+                <li>Containers captured in paths</li>
+                <li>Create or re-use containerss</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Extending DropBox file monitor</h3>
+              <ul>
+                <li>Point at any visible directory</li>
+                <ul>
+                  <li>Run in polling mode</li>
+                  <li>Use file notification if available</li>
+                </ul>
+              </ul>
+            <aside class="notes">
+              Still need a nice diagram for this.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Import future: Summary</h3>
+            <ul>
+              <li>User, group &amp; containers captured in paths</li>
+              <li>Can be configured for a cron job</li>
+              <li>DropBox run in polling mode</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h2>Discussion</h2>
+          <ul>
+            <li>We welcome questions and comments advanced import<ul>
+                <li>Any further import options?</li>
+                <li>What DropBox improvements would be useful?</li>
+            </ul></li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <!-- ===============================================
+        Advanced output & admin - Josh/Colin
+        ================================================ -->
+
+        <section>
+          <section data-transition="none">
+            <h2>Advanced repository layouts</h2>
+            <ul>
+                <li>Template basics</li>
+                <li>Template uses
+                    <ul>
+                        <li>Quotas</li>
+                        <li>Samba &amp; LDAP mapping</li>
+                        <li>Adding disks</li>
+                    </ul>
+                </li>
+                <li>Discussion</li>
+            </ul>
+            <aside class="notes">
+                <p>
+                This last section goes back briefly to the
+                ManagedRepository focusing on some possible ways
+                to configure the data layout on disk.
+                </p>
+                <p>
+                This all comes down to tuning
+                your repository "template", which is probably
+                the most useful configuration, but it does
+                require making some choices.
+                </p>
+                <p>
+                <b>NB:</b> If you've already started
+                importing into OMERO, changing your template
+                will work; but there will be steps necessary
+                to migrate the data from the old template to
+                the new.
+                </p>
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section data-transition="none">
+            <h3>Default template</h3>
+            <img alt="Template diagram" src="diagrams/managedrepo-template.png" width="80%"/>
+            <aside class="notes">
+                <p>
+                As we've seen on several of the previous slides,
+                files go into locations based on the default template
+                with username/userid at the top followed by timestamped directories.
+                </p>
+                <p>
+                Previously, the username/userid directory <b>had to be</b> at the top.
+                With 5.0.2, this restriction has been loosened, which permits the
+                examples will be looking at here.
+                </p>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Shared system portion</h3>
+            <img alt="Shared template portion"
+                src="diagrams/managedrepo-shared.png" width="80%"/>
+            <aside class="notes">
+                A portion of the path -- everything in front of the
+                double slash -- will belong to the system itself.
+                This might be useful to prevent directories from being
+                deleted. Anything that should be considered "shared"
+                should be put before the double slash. We'll see an
+                example of that in just a second.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>User portion</h3>
+            <img alt="User template portion"
+                src="diagrams/managedrepo-user.png" width="80%"/>
+            <aside class="notes">
+                Everything after the double slash will belong to owner
+                of the data.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Template configuration</h3>
+            <h4>in etc/omero.properties</h4>
+            <table>
+                <tr>
+                    <td>
+                        <pre style="font-size:50%">
+# Template for FS managed repository paths.
+# Allowable elements are:
+# %user%       bob
+# %userId%     4
+# %group%      bobLab
+# %groupId%    3
+# %year%       2011
+# %month%      01
+# %monthname%  january
+# %day%        01
+# %time%       15-13-54.014
+# /            path separator
+#
+# The path must be unique per fileset to prevent upload conflicts,
+# which is why %time% includes milliseconds.
+#
+# A // may be used as a path separator: the directories preceding
+# it are created with root ownership, the remainder are the user's.
+# At least one user-owned directory must be included in the path.
+#
+# The template path is created below &lt;omero.managed.dir&gt;,
+# e.g. /OMERO/ManagedRepository/&lt;omero.fs.repo.path&gt;/
+omero.fs.repo.path=%user%_%userId%//%year%-%month%/%day%/%time%
+                        </pre>
+                    </td>
+                </tr>
+            </table>
+            <aside class="notes">
+                And for the dirty details, this is a snippet of the
+                etc/omero.properties file explaining the template.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Template configuration</h3>
+            <table>
+                <tr>
+                    <td>
+                        <pre style="font-size:60%">
+...
+# The template path is created below &lt;omero.managed.dir&gt;,
+# e.g. /OMERO/ManagedRepository/&lt;omero.fs.repo.path&gt;/
+<b style="font-size: 115%">omero.fs.repo.path</b>=%user%_%userId%//%year%-%month%/%day%/%time%
+                        </pre>
+                    </td>
+                </tr>
+            </table>
+            <aside class="notes">
+                Emphasis: "omero.fs.repo.path"
+                This is the key of the property that needs to be set
+                in order to configure OMERO to use a different template.
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Template configuration</h3>
+            <table>
+                <tr>
+                    <td>
+                        <pre style="font-size:60%">
+...
+# The template path is created below &lt;omero.managed.dir&gt;,
+# e.g. /OMERO/ManagedRepository/&lt;omero.fs.repo.path&gt;/
+omero.fs.repo.path=<b style="font-size: 115%">%user%_%userId%//%year%-%month%/%day%/%time%</b>
+                        </pre>
+                    </td>
+                </tr>
+            </table>
+            <aside class="notes">
+                Emphasis: default template
+                This is the default value set in etc/omero.properties.
+                Don't modify that file.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+
+          <section data-transition="none">
+            <h3>Quotas</h3>
+            <img alt="Template starting with groupId"
+                src="diagrams/template-group.png" width="75%"/>
+            <aside class="notes">
+              <p>
+              An example suggested by Dave Mason from Liverpool.
+
+              Here we've added %groupId% at the top of the template.
+              This adds another directory level to the repository.
+              Scripts and other management tools can make use of this
+              extra level, e.g. for reporting.
+              </p>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Quotas: Summary</h3>
+              <p>
+                By adding "%groupId%" at the top of the template,
+                getting diskspace usage per group should be easier.
+                See <a href="https://www.openmicroscopy.org/community/viewtopic.php?f=4&t=7485">
+                    this forum thread</a> for a discussion on the topic.
+              </p>
+            <aside class="notes">
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section data-transition="none">
+            <h3>Samba: per group</h3>
+            <img alt="Samba usage diagram"
+                src="diagrams/samba_group.png" width="90%"/>
+            <aside class="notes">
+              <p>
+                For example, depending on the template, each
+                user can be access to his/her directory via
+                SAMBA. (Requires mapping at the OS level,
+                yadda yadda yadda).
+              </p>
+              <p>
+                Here we've taken the same layout as for the quotas,
+                but mounted each directory as samba share. Read/write
+                permissions can be set based on the group's needs.
+              </p>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Samba: per user</h3>
+            <img alt="Samba usage diagram"
+                src="diagrams/samba_user.png" width="90%"/>
+            <aside class="notes">
+              <p>
+                For example, depending on the template, each
+                user can be access to his/her directory via
+                SAMBA. (Requires mapping at the OS level,
+                yadda yadda yadda).
+              </p>
+              <p>
+                Here we've taken the same layout as for the quotas,
+                put mounted each directory as samba share. Read/write
+                permissions can be set based on the group's needs.
+              </p>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+              <h3>Samba: Summary</h3>
+            <ul>
+                <li>/OMERO/ManagedRepository can be mapped via Samba</li>
+                <li>Safest for read-only access</li>
+                <li>Best if per-user mapping can be applied</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+
+          <section data-transition="none">
+            <h3>Adding disks</h3>
+            <img alt="Template starting with drive"
+                src="diagrams/template-drive.png" width="75%"/>
+            <aside class="notes">
+              <p>
+                As with Samba, any directory can also be a system-level
+                mount point, meaning you can plug in new disks or similar.
+              </p>
+              <p>
+              <p>
+                driveX here is a hard-coded value, not a template replacement.
+                It can be whatever value you want it to be.
+              </p>
+                Josh: Although I'd really like to allow spinning up multiple
+                managed repos and choosing them based on number of stars or
+                whatever, for the moment, I _bet_ it's going to be simpler to have
+                a single managed repo and just change the template path when the
+                time comes to move to another disk. Only caveat is that all the
+                new mounts will have to be under /OMERO/ManagedRepo.
+              </p>
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Adding disks: Summary</h3>
+            <p>Adding other disks, should be as simple as adding a
+            mount-point under /OMERO/ManagedRepository</p>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!-- Discussion - All -->
+        <section>
+          <h2>Discussion</h2>
+          <ul>
+            <li>We welcome questions and comments on FS:<ul>
+                <li>Other import scenarios?</li>
+                <li>What further work on FS would be most useful?</li>
+            </ul></li>
+            <li>Thanks!</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+
+          <section data-transition="none">
+            <h2>Other advanced tasks</h2>
+            <ul>
+                <li>Find your managed repository</li>
+                <li>pre-FS -> FS migration</li>
+                <li>Java-less import</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Finding your ManagedRepository</h3>
+            <table>
+                <tr>
+                    <td>
+                        <code>
+                          $ bin/omero fs repos
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <pre>
+ # | Id   | UUID                                 | Type    | Path
+---+------+--------------------------------------+---------+----------------------------------
+ 0 | 1    | c8db8f5c-b6ba-472f-b0d5-3dac4f31be66 | Public  | /home/data/ome2
+ 1 | 2    | ScriptRepo                           | Script  | /opt/ome2/dist/lib/scripts
+ 2 | 3    | c4df3508-cffe-4bf2-a1c8-b3c1395f737f | Managed | /home/data/ome2/ManagedRepository
+(3 rows)
+                        </pre>
+                    </td>
+                </tr>
+            </table>
+            <aside class="notes">
+
+              demoing any of `bin/omero fs` useful ??
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>pre-FS -&gt; FS migration</h3>
+            <ul>
+                <li>OMERO4 and before allowed <b>archiving</b> original files</li>
+                <li><code>bin/omero fs images --archived</code></li>
+                <li>Preparing user script to help conversion</li>
+                <li>Limitations</li>
+            </ul>
+            <aside class="notes">
+                Josh: I've nearly got something working on my branch of the same
+                ticket number. Debating whether or not to go ahead and move it
+                server-side before Paris since the one thing I can't do in my
+                pytest is delete the Pixels on disk. (No API method for that)
+                In general it works though.
+                Add bp from PR2503 '12176 attach fsfiles'
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Java-less import</h3>
+            <img src="diagrams/import-no-bf.png" width="100%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+        </section>
+
+                <!- ================================================================ -->
+            </div>
+            <!-- Finish presentation -->
+
+        </div>
+
+        <script src="reveal-js/lib/js/head.min.js"></script>
+        <script src="reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
