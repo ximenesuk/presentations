@@ -1,0 +1,575 @@
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Import Workshop - Paris 2015</title>
+
+    <meta name="description" content="Improving Import in OMERO 5">
+    <meta name="author" content="the Open Microscopy Environment core team">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+    <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+    <!-- OME presentation overrides of the default theme -->
+    <style>
+      .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+        text-transform: none;
+      }
+      .reveal h2 {
+          font-size: 60px;
+      }
+      .reveal h3 {
+          font-size: 50px;
+      }
+      .ome_theme {
+          background-image: url("diagrams/ome-icon-opacity.png");
+          background-color: #f2f6f9;
+          background-repeat: no-repeat;
+          background-position: right -270px top -120px;
+      }
+      .reveal {
+          text-transform: none;   !important
+      }
+
+      .img_panel {
+          width: 150px;
+      }
+
+      .nobullet li {
+          list-style: none;
+      }
+
+      table.centre {
+          width: 100%;
+      }
+
+      .reveal .centre td {
+          text-align: center;
+      }
+
+      .rot90 {
+          -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+      }
+
+      .reveal .title {
+          position:absolute;
+          bottom:100%;
+          margin:5px;
+          color:red;
+      }
+
+      .larger {
+          font-size: 80px !important;
+      }
+
+      .reveal h1 {
+        font-size: 96px;
+      }
+
+      .reveal p,
+      .reveal pre {
+        margin-top: 2em;
+        margin-bottom: 2em;
+        line-height: 1.5;
+      }
+
+      .reveal pre {
+        width: 105%;
+        margin-left: 0;
+      }
+
+      .reveal code {
+        font-size: 28px;
+      }
+
+      .reveal li {
+        margin-top: 0.25em;
+        margin-bottom: 0.25em;
+      }
+
+      .reveal section img {
+        background: rgba(0, 0, 0, 0);
+        box-shadow: none;
+        border: none;
+      }
+
+      .reveal q {
+        quotes: inherit;
+        font-style: normal;
+      }
+    </style>
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body class="ome_theme">
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <!-- Title and overall introduction -->
+        <section>
+          <h1>Improving Imports with OMERO 5.x</h1>
+          <h2>Paris 2015</h2>
+          <p>Colin Blackburn, Mark Carroll &amp; Josh Moore</p>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Outline</h2>
+          <ul>
+            <li>Import in OMERO 5</li>
+            <li>More ways to import</li>
+            <li>Improving import efficiency</li>
+            <li>A few more improvements</li>
+            <li>Discussion</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <!-- Introduction -->
+        <section>
+          <h2>Import in OMERO 5</h2>
+          <h3>A quick reminder...</h3>
+          <ul>
+            <li>ManagedRepository</li>
+            <li>Filesets</li>
+            <li>Basic OMERO 5 Import</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h3>ManagedRepository</h3>
+          <img src="diagrams/managedrepo-intro.png" width="100%"/>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h3>Filesets</h3>
+          <img src="diagrams/filesets.png" width="100%"/>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h3>OMERO 5 Import</h3>
+            <img src="diagrams/upload.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section>
+            <h3>OMERO 5 Data out</h3>
+            <img src="diagrams/download.png" width="90%"/>
+            <aside class="notes">
+          </section>
+        </section>
+
+
+        <section>
+          <h2>More ways to import</h2>
+          <ul>
+            <li>Upload and copy</li>
+            <li>In-place</li>
+            <li>Import for</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h3>Import: upload</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=upload
+            </code>
+            <img src="diagrams/upload.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Import: upload and remove</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=upload_rm
+            </code>
+            <img src="diagrams/upload.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Import: upload and remove</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=upload_rm
+            </code>
+            <img src="diagrams/upload_rm.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Import: copy</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=cp
+            </code>
+            <img src="diagrams/import-cp.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Import: copy and delete</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=cp_rm
+            </code>
+            <img src="diagrams/import-cp.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>Import: copy and delete</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=cp_rm
+            </code>
+            <img src="diagrams/import-cp_rm.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>In-place import: hard link</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln
+            </code>
+            <img src="diagrams/inplace-ln.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>In-place import: move</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln_rm
+            </code>
+            <img src="diagrams/inplace-ln.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-transition="none">
+            <h3>In-place import: move</h3>
+            <code>
+              $ bin/omero import path/to/image -- --transfer=ln_rm
+            </code>
+            <img src="diagrams/inplace-ln_rm.png" width="90%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h3>In-place import: soft link</h3>
+          <code>
+            $ bin/omero import path/to/image -- --transfer=ln_s
+          </code>
+          <img src="diagrams/inplace-ln_s.png" width="90%"/>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h3>Import: summary</h3>
+          <pre style="font-size:50%">
+
+  bin/omero import --advanced-help
+
+    --transfer=ARG            File transfer method
+
+        General options:
+          upload            # Default
+          upload_rm         # Caution! File upload followed by source deletion.
+          some.class.Name   # Use a class on the CLASSPATH.
+
+        Server-side options:
+          ln                # Use hard-link.
+          ln_s              # Use soft-link.
+          ln_rm             # Caution! Hard-link followed by source deletion.
+          cp                # Use local copy command.
+          cp_rm             # Caution! Copy followed by source deletion.
+
+
+  e.g. $ bin/omero import -- --transfer=ln_s foo.tiff
+       $ ./importer-cli --transfer=ln bar.tiff
+       $ CLASSPATH=mycode.jar ./importer-cli --transfer=com.example.MyTransfer baz.tiff
+          </pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section data-transition="none">
+            <h3>Import for</h3>
+            <img src="diagrams/importas.png" width="100%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>Import for</h3>
+            <img src="diagrams/importas-yes.png" width="100%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>Import for</h3>
+            <img src="diagrams/importas-no.png" width="100%"/>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>Import for</h3>
+            <pre style="font-size:50%">
+
+bin/omero login -u user-3 --sudo user-6
+Password for user-6:
+Created session f49d2e2c-b470-40b9-85e9-0e1c5b265250 (user-3@...). Current group: read-annotate-1
+bin/omero import ~/Work/Images/dv/IAGFP-Noc01_R3D.dv
+Using session f49d2e2c-b470-40b9-85e9-0e1c5b265250 (user-3@...). Current group: read-annotate-1
+...
+==> Summary
+2 files uploaded, 1 fileset created, 1 image imported, 0 errors in 0:00:21.602
+            </pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h2>More efficient imports</h2>
+          <ul>
+            <li>Background imports</li>
+            <li>Faster imports</li>
+            <li>Excluding duplicates</li>
+            <li>Import targets</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h3>Background imports</h3>
+          <pre style="font-size:50%">
+
+  --auto_close              Close completed imports immediately.
+
+  --minutes_wait=ARG        Choose how long the importer will wait on server-side processing.
+                            ARG > 0 implies the number of minutes to wait.
+                            ARG = 0 exits immediately. Use a *_completed option to clean up.
+                            ARG < 0 waits indefinitely. This is the default.
+
+  --close_completed         Close completed imports.
+
+  --wait_completed          Wait for all background imports to complete.
+
+
+  e.g. $ bin/omero import -- --minutes_wait=0 file1.tiff file2.tiff file3.tiff
+       $ ./importer-cli --minutes_wait=0 some_directory/
+       $ ./importer-cli --wait_completed # Waits on all 3 imports.
+          </pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>Faster imports</h2>
+            <pre style="font-size:50%">
+
+  --checksum-algorithm=ARG  Choose a possibly faster algorithm for detecting file corruption,
+                            e.g. Adler-32 (fast), CRC-32 (fast), File-Size-64 (fast),
+                                  MD5-128, Murmur3-32, Murmur3-128,
+                                  SHA1-160 (slow, default)
+  e.g. $ bin/omero import -- --checksum-algorithm=CRC-32 foo.tiff
+       $ ./importer-cli --checksum-algorithm=Murmur3-128 bar.tiff
+
+  --no-stats-info   Disable calculation of minima and maxima when
+                    as part of the Bio-Formats reader metadata
+  e.g. $ bin/omero import -- --no-stats-info foo.tiff
+
+  --no-thumbnails   Do not perform thumbnailing after import
+  e.g. $ bin/omero import -- --no-thumbnails foo.tiff
+
+  --no-upgrade-check    Disable upgrade check for each import
+  e.g. $ bin/omero import -- --no-upgrade-check foo.tiff
+            </pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Faster imports</h2>
+            <pre style="font-size:50%">
+
+  bin/omero import --help
+
+  --skip {all,checksum,minmax,thumbnails,upgrade}
+                                        Optional step to skip during import
+            </pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h2>Excluding duplicates</h2>
+            <pre style="font-size:50%">
+
+  --exclude=filename        Exclude files based on filename.
+
+  e.g. $ bin/omero import -- --exclude=filename foo.tiff # First-time imports
+       $ bin/omero import -- --exclude=filename foo.tiff # Second-time skips
+            </pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Import targets</h2>
+          <ul>
+            <li>TBC</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>A few more improvements</h2>
+            <h3>Move a fileset</h3>
+            <pre style="font-size:50%">
+
+bin/omero fs rename --help
+usage: omero fs rename [--no-move] fileset
+
+Moves an existing fileset to a new location (admin-only)
+
+After the import template (omero.fs.repo.path) has been changed,
+it may be useful to rename an existing fileset to match the new
+template. By default the original files and import log are also
+moved.
+
+Positional Arguments:
+  fileset             Fileset which should be renamed: ID or Fileset:ID
+
+Optional Arguments:
+  --no-move           do not move original files and import log
+            </pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>A few  more improvements</h2>
+            <h3>Remove empty directories</h3>
+            <pre style="font-size:50%">
+
+bin/omero admin cleanse --help
+usage: omero admin cleanse [--dry-run] data_dir
+
+Remove binary data files from OMERO
+
+Deleting an object from OMERO currently may not remove all the binary data.
+Use this command either manually or in a cron job periodically to remove
+Pixels, empty directories, and other data.
+
+This is done by checking that for all the files in the given directory, a
+matching entry exists on the server. THE /OMERO DIRECTORY MUST MATCH THE
+DATABASE YOU ARE RUNNING AGAINST.
+
+This command must be run on the machine where, for example, /OMERO/ is
+located.
+
+Examples:
+  bin/omero admin cleanse --dry-run /OMERO      # Lists files that will be deleted
+  bin/omero admin cleanse /OMERO                # Actually delete them.
+            </pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h2>Discussion</h2>
+          <ul>
+            <li>?</li>
+            <li>?</li>
+            <li>?</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+      </div> <!-- end class="slides" -->
+
+    </div> <!-- end class="reveal" -->
+
+    <script src="reveal-js/lib/js/head.min.js"></script>
+    <script src="reveal-js/js/reveal.min.js"></script>
+    <script>
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+            transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                // { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+            ]
+        });
+    </script>
+
+  </body>
+</html>
