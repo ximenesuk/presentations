@@ -39,14 +39,15 @@
             <!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
                 <section>
-                    <h1>OMERO Public Repository</h1>
+                    <h1 style="font-size:350%">Public Repository:</h1>
+                    <h2>permissions, deployment<br/> and customization</h2>
 
                     <h3>10th Annual OME Meeting</h3>
                     <h4>Paris 2015</h4>
 
-                    <h3>Ola Tarkowska, Will Moore<br>
+                    <h4>Ola Tarkowska, Will Moore<br>
                         <img src="images/ome-logo-200.png"/>
-                    </h3>
+                    </h4>
                 </section>
 
                 <section>
@@ -66,14 +67,22 @@
                     <br/>
                     
                     <div>
-                        <p><strong>Private repository</strong><br/>
-                        You always <strong>retain ownership</strong> of your data.</p>
+                        <p><strong>Private User Repository</strong></p>
+                        <ul>
+                            <li>You always <strong>retain ownership</strong> of your data.</li>
+                            <li>No limitations on the operations on your own data.</li>
+                            <li><strong>Restricted access</strong> to the data based on permissions.</li>
+                        </ul>
                     </div>
                     <br/>
                     
                     <div>
-                        <p><strong>Public or Controlled repository</strong><br/>
-                        Data is <strong>owner agnostic</strong>.</p>
+                        <p><strong>Public & Controlled Repository</strong>
+                        <ul>
+                            <li>Data can be owner agnostic.</li>
+                            <li><strong>Limited operations</strong> on the data.</li>
+                            <li><strong>Public access</strong> to the raw data.</li>
+                        </ul>
                     </div>
                 </section>
 
@@ -94,7 +103,7 @@
                             <li><a href="https://learning.openmicroscopy.org/dundee/">Virtual Microscope</a></li>
                         </ul>
                     </div>
-                    <img height="420px" src="images/iOS.png"/>
+                    <img height="420px" src="images/ipad.png"/>
                 </section>
 
                 <section>
@@ -127,11 +136,6 @@
                         <li>Public visitors are logged-in as a specified <strong>public user</strong></li>
                         <li>Visitors are able to access data available to <strong>public user</strong></li>
                         <li>Functionality exposed can be controlled by <strong>url filters</strong></li>
-                        <li>See
-                            <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/PublicData.html"  target="_blank">
-                                Public Data Documentation
-                            </a>
-                        </li>
                     </ul>
                     
                     <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.enabled True
@@ -144,6 +148,9 @@ $ bin/omero config set omero.web.public.password '*****'
 $ bin/omero config set omero.web.public.url_filter '^/webgateway/(?!archived_files|download_as)'
 $ bin/omero config set omero.web.public.url_filter '^/(?!webadmin|webclient/(action|logout|annotate_(file|tags|comment|rating|map)|script_ui|ome_tiff|figure_script)|webgateway/(archived_files|download_as))'
 </code></pre>
+                    <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/PublicData.html"  target="_blank">
+                        Public Data Documentation
+                    </a>
                 </section>
 
                 <section>
@@ -151,26 +158,41 @@ $ bin/omero config set omero.web.public.url_filter '^/(?!webadmin|webclient/(act
                 </section>
 
                 <section>
+                    <h2>Moving data to public space</h2>
+                    <img src="images/move_to_group.png" width="477px"/> <img src="images/metadata.png" width="369px"/>
+                </section>
+                
+                <section>
                     <h2>LINK https://...</h2>
                     <p><a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3933597/" target="_blank">https://omero/webgateway/image_detail/12345/</a></p>
+                        <p><a href="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3933597/200/200" target="_blank">https://omero/webgateway/render_thumbnail/12345/W/H/</a></p>
+
+                    
+                    <img height="500px" src="images/publish2.png"/>
                 </section>
 
                 <section>
-                    <h2>Embedding </></h2>
+                    <h2>Embedding &lt;/ &gt;</h2>
 
+                    <iframe width="100%" height="650" src="http://users.openmicroscopy.org.uk/~atarkowska/viewer.html" frameborder="0"></iframe>
+                    <a href="http://jsfiddle.net/aleksandratarkowska/qhqh2583/"> Example</a>
+                </section>
+
+                <section>
+                    <h2>HTML page</h2>
 <pre><code class="html">&lt;link href=&quot;https://omero/static/omeroweb.viewer.min.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;script src=&quot;https://omero/static/omeroweb.viewer.min.js&quot; type=&quot;text/javascript&quot;&gt;
 </code></pre>
-<pre><code class="html">&lt;style type=&quot;text/css&quot;&gt;
+
+<pre ><code class="html">&lt;style type=&quot;text/css&quot;&gt;
 .viewport {
     height: 500px;
-    width: 700px;
-    padding: 10px;
+    width: 500px;
 }
 &lt;/style&gt;
 </code></pre>
 
-<pre><code contenteditable style="font-size:90%; word-wrap: break-word;" class="javascript">$(document).ready(function () {
+<pre><code contenteditable class="html javascript">&lt;javascript type=&quot;text/javascript&quot;&gt;
     /* Prepare the viewport */
     viewport = $.WeblitzViewport($("#viewport"), "http://omero/webgateway/", {
         'mediaroot': "http://omero/static/"
@@ -178,35 +200,32 @@ $ bin/omero config set omero.web.public.url_filter '^/(?!webadmin|webclient/(act
     /* Load the selected image into the viewport */
     viewport.load(IMAGE_ID);
 });
+&lt;/javascript&gt;
 </code></pre>
 
-<pre><code class="html">&lt;div id=&quot;viewport&quot; class=&quot;viewport&quot;&gt;&lt;/div&gt;</code></pre>
+<pre><code class="html">&lt;body&gt;
+    &lt;div id=&quot;viewport&quot; class=&quot;viewport&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;</code></pre>
                 </section>
+
+
 
                 <section>
                     <iframe width="100%" height="650" src="http://users.openmicroscopy.org.uk/~atarkowska/big_image.html" frameborder="0"></iframe>
                     <a href="http://jsfiddle.net/aleksandratarkowska/MSDPX/"> Example</a>
                 </section>
-                
-                
-                <section>
-                    <iframe width="100%" height="650" src="http://users.openmicroscopy.org.uk/~atarkowska/big_image_2.html" frameborder="0"></iframe>
-
-                    <a href="http://jsfiddle.net/aleksandratarkowska/agmmy9mk/"> Example</a>
-                </section>
-                
-                <section>
-                    <iframe width="100%" height="650" src="http://users.openmicroscopy.org.uk/~atarkowska/viewer.html" frameborder="0"></iframe>
-
-                    <a href="http://jsfiddle.net/aleksandratarkowska/qhqh2583/"> Example</a>
-                </section>
 
                 <section>
                     <h2>OMERO.web</h2>
-                    <img height="500px" src="images/public_repo.png"/>
+                    <img height="500px" src="images/public_repository.png"/>
                     </ul>
                 </section>
 
+                <section>
+                    <h2>Custom application</h2>
+                    <img height="500px" src="images/public_gallery.png"/>
+                    </ul>
+                </section>
 
                 <section>
                     <h2>Customization</h2>
@@ -230,6 +249,15 @@ $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
                 </section>
 
                 <section>
+                    <h2>Post login page</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_redirect 
+        '{"redirect": ["webindex"], "viewname": "webindex_custom"}'
+</code></pre>
+
+                <img src="images/login_redirect.png" width='550px' class="no_shadow"/>
+                </section>
+
+                <section>
                     <h2>Override existing view</h2>
 
 <pre><code contenteditable style="font-size:90%" class="bash">@never_cache
@@ -248,14 +276,6 @@ def custom_index(request, conn=None, **kwargs):
 omeroweb.webstart.views.custom_index = custom_index
 </code></pre>
 
-                </section>
-
-                <section>
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_redirect 
-        '{"redirect": ["webindex"], "viewname": "webindex_custom"}'
-</code></pre>
-
-                <img src="images/login_redirect.png" width='550px' class="no_shadow"/>
                 </section>
 
                 <section>
@@ -426,6 +446,7 @@ $ bin/omero sessions list
                                 <li>OMERO <strong>Single Sign On</strong> authentication</li>
                             </ul>
                         </li>
+                        <li>Web URL filters improvement</li>
                         <li><strong>Embedding</strong>
                             <ul>
                                 <li>Complex JavaScript and JSON API</li>
