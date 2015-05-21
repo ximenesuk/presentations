@@ -1,0 +1,280 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Analysis Workshop - Paris 2015</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+        <!-- OME presentation overrides of the default theme -->
+        <style>
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+              text-transform: none;
+            }
+            .reveal h2 {
+                font-size: 60px;
+            }
+            .ome_theme {
+                background-image: url("images/ome-icon-opacity.png");
+                background-color: #f2f6f9;
+                background-repeat: no-repeat;
+                background-position: right -270px top -120px;
+            }
+            .reveal {
+                text-transform: none;   !important
+            }
+
+            .reveal section img {
+                border-width:0;
+                border-color: white;
+            }
+
+            .img_panel {
+                width: 150px;
+            }
+
+            .nobullet li {
+                list-style: none;
+            }
+
+            table.centre {
+                width: 100%;
+            }
+
+            .reveal .centre td {
+                text-align: center;
+            }
+
+            .rot90 {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+
+            .reveal .title {
+                position:absolute;
+                bottom:100%;
+                margin:5px;
+                color:red;
+            }
+
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body class="ome_theme">
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <!-- title page -->
+                <section>
+                    <h2>Integration of OMERO with 3rd Party Applications</h2>
+                    <h3>Paris 2015</h3>
+                    <p>Balaji Ramalingam</p>
+                    <aside class="notes">
+                    </aside>
+                </section>
+
+                <!-- talk outline -->
+                <section>
+                    <h2>Outline</h2>
+                    <ul>
+                        <li>OMERO and Acquisition</li>
+                        <ul><li>Micromanager and OMERO</li></ul>
+                        <li>OMERO and Analysis</li>
+                        <ul><li>ImageJ and OMERO</ul></li>
+                        <li>OMERO and Intelligent Acquisition</li>
+                        <ul><li>Matlab, Micromanager and OMERO</ul></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>OMERO and Acquisition</h2>
+                    <ul>
+                        <li>Requirements</li>
+                        <ul><li><a href="https://micro-manager.org/wiki/Download%20Micro-Manager_Latest%20Release">Micromanager (Open-Source Microscopy Software for Acquisition)</a></ul></li>
+                        <ul><li><a href="http://downloads.openmicroscopy.org/bio-formats/5.1.1/">Bioformats_Package.jar (Bio-Formats Java Library)</a></ul></li>
+                        <ul><li><a href="http://downloads.openmicroscopy.org/omero/5.1.1/">OMERO_IJ Plugin (Insight as ImageJ plugin)</a></ul></li>    
+                        <img src="images/OMEROAcquisition.png" width="80%"/>
+                    </ul>
+                    <aside class="notes">
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>OMERO and Analysis</h2>
+                    <ul>
+                        <li>Requirements</li>
+                        <ul>
+                            <li><a href="http://imagej.nih.gov/">ImageJ</a></li>
+                            <li><a href="http://downloads.openmicroscopy.org/bio-formats/5.1.1/">Bioformats_Package.jar (Bio-Formats Java Library)</a></li>
+                            <li><a href="http://downloads.openmicroscopy.org/omero/5.1.1/">OMERO_IJ Plugin (Insight as ImageJ plugin)</a></li>
+                        </ul>
+                        <img src="images/OMEROAnalysis.png" width="100%"/>
+                    </ul>
+                    <aside class="notes">
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>OMERO and Intelligent Acquisition</h2>
+                    <ul>
+                        <li>Requirements</li>
+                        <ul><li><a href="https://micro-manager.org/wiki/Download%20Micro-Manager_Latest%20Release">Micromanager</a></ul></li> 
+                        <ul><li><a href="http://uk.mathworks.com/products/matlab/">Matlab</a></ul></li>                        
+                        <ul><li><a href="http://downloads.openmicroscopy.org/omero/5.1.1/">OMERO Matlab Toolbox</a></ul></li>
+                        <ul><li><a href="http://downloads.openmicroscopy.org/bio-formats/5.1.1/">Bioformats_Package.jar (Bio-Formats Java Library)</a></ul></li>
+                        <ul><li><a href="https://github.com/openmicroscopy/openmicroscopy/tree/develop/lib/repository">ini4j.jar</a></ul></li>
+                        <ul><li><a href="https://gist.github.com/bramalingam/1d36f827add8f5342068">Matlab Scripts</a><ul><li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Setup Matlab ClassPath</h2>
+                    <ul>
+                        <li>Micromanager Configuration</li>
+                        <pre><code contenteditable style="font-size:60%" class="bash">
+                            function [cc] = MMsetup_javaclasspath(path2MM)
+                            path2MM = '/Applications/Micro-Manager1.4/';
+                            fileList = getAllFiles(path2MM);
+                            fileListJarBool = regexp(fileList,'.jar$','end');
+                            fileListJarBool = cellfun(@isempty,fileListJarBool);
+                            fileListJar = fileList(~fileListJarBool);                           
+                            for i=1:length(fileListJar)    
+                                javaaddpath(fileListJar{i});
+                            end
+                        </code></pre>
+                        <li>OMERO Matlab Toolbox Configuration</li>
+                        <pre><code contenteditable style="font-size:60%" class="bash">
+                        inputdir=['/Users/bramalingam/OME/matlab/OMERO.matlab-5.1.0-ice35-b40'];
+                        addpath(genpath(inputdir));
+                        jars1=dir([inputdir '/libs']);
+                        for i=[3:length(jars1)]    
+                            javaaddpath([inputdir '/libs/' jars1(i).name]);
+                        end
+                        </code></pre>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Snap and Upload Image</h2>
+                    <ul>
+                        <li>OMERO: Create a Client and Session</li>
+                        <pre style="text-align: left"><code style="font-size:90%">
+                            client = loadOmero(host);
+                            session = client.createSession(username, password);
+                            client.enableKeepAlive(60);</code></pre>
+                        <li>Micromanager : Load Microscope Configuration</li>
+                        <pre><code style="font-size:90%">
+                            import mmcorej.*;
+                            mmc = CMMCore;
+                            mmc.loadSystemConfiguration('/Applications/Micro-Manager1.4/MMConfig_demo.cfg');</code></pre>
+                        <li>Micromanager : Snap Image</li>
+                        <pre><code style="font-size:90%">
+                            mmc.snapImage();
+                            img = mmc.getImage();</code></pre>
+                        <li>Upload_image.m</li>
+                        <pre><code style="font-size:90%">upload_image(path,session,username,password,ProjectName,DatasetName,host,importopt)</code></pre>
+
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Summary</h2>
+                    <ul>
+                        <img src="images/Summary.png" width="100%"/>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Documentation</h2>
+                    <ul>
+                        <li>Micromanager and Matlab</li>
+                        <ul><li><a href="https://micro-manager.org/wiki/Matlab_Configuration">Using Micro-Manager from your Matlab environment</a></li></ul>
+                        <li>OMERO and Matlab</li>
+                        <ul><li><a href="http://www.openmicroscopy.org/site/support/omero5.1/developers/Matlab.html">OMERO MATLAB language bindings</a></li></ul>
+                        <li>OMERO and ImageJ</li>
+                        <ul><li><a href="http://help.openmicroscopy.org/imagej.html">Using ImageJ with OMERO 5.1</a></li></ul>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Thank you</h2>
+                    <ul>
+                        <li>Prof. Jason Swedlow</li>
+                        <li>OME team</li>
+                    </ul>
+                    <br/><br/>
+                    <div style="background-color: #fff;">
+                        <img src="images/wellcome.png" height="140px"> 
+                        <img src="images/bbsrc.png" height="140px">
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Questions ?</h1>
+                </section>
+
+
+
+
+                
+            </div>
+
+        </div>
+
+        <script src="reveal-js/lib/js/head.min.js"></script>
+        <script src="reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
