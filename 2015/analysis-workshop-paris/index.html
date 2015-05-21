@@ -189,9 +189,15 @@ mmc = CMMCore;
 mmc.loadSystemConfiguration('/Applications/Micro-Manager1.4/MMConfig_demo.cfg');</code></pre>
                         <li>Micromanager : Snap Image</li>
                         <pre><code contenteditable style="font-size:60%" class="bash">mmc.snapImage();
-img = mmc.getImage();</code></pre>
-                        <li>Upload_image.m</li>
-                        <pre><code contenteditable style="font-size:60%" class="bash">upload_image(path,session,username,password,ProjectName,DatasetName,host,importopt)</code></pre>
+img = mmc.getImage();
+</code></pre>
+                        <li>save image and Upload_image.m</li>
+                        <pre><code contenteditable style="font-size:60%" class="bash">proc0 = ImageUtils.makeProcessor(mmc, img);
+imgp0 = ImagePlus('',proc0);
+imgp0.show;
+IJ.runPlugIn('loci.plugins.LociExporter', buffer.toString);
+
+upload_image(path,session,username,password,ProjectName,DatasetName,host,importopt)</code></pre>
 
                     </ul>
                 </section>
