@@ -83,7 +83,8 @@
       }
 
       .reveal pre {
-        width: 105%;
+        background: #FFFFFF;
+        width: 100%;
         margin-left: 0;
       }
 
@@ -205,7 +206,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-transition="none">
             <h3>Import: upload</h3>
             <code>
               $ bin/omero import path/to/image -- --transfer=upload
@@ -237,7 +238,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-transition="none">
             <h3>Import: copy</h3>
             <code>
               $ bin/omero import path/to/image -- --transfer=cp
@@ -269,7 +270,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-transition="none">
             <h3>In-place import: hard link</h3>
             <code>
               $ bin/omero import path/to/image -- --transfer=ln
@@ -312,7 +313,7 @@
 
         <section>
           <h3>Import: summary</h3>
-          <pre style="font-size:50%">
+          <pre style="font-size:60%">
 
   bin/omero import --advanced-help
 
@@ -330,10 +331,8 @@
           cp                # Use local copy command.
           cp_rm             # Caution! Copy followed by source deletion.
 
-
   e.g. $ bin/omero import -- --transfer=ln_s foo.tiff
        $ ./importer-cli --transfer=ln bar.tiff
-       $ CLASSPATH=mycode.jar ./importer-cli --transfer=com.example.MyTransfer baz.tiff
           </pre>
           <aside class="notes">
           </aside>
@@ -341,35 +340,36 @@
 
         <section>
           <section data-transition="none">
-            <h3>Import for</h3>
+            <h3>Import for: using Insight</h3>
             <img src="diagrams/importas.png" width="100%"/>
             <aside class="notes">
             </aside>
           </section>
           <section data-transition="none">
-            <h3>Import for</h3>
+            <h3>Import for: using Insight</h3>
             <img src="diagrams/importas-yes.png" width="100%"/>
             <aside class="notes">
             </aside>
           </section>
           <section data-transition="none">
-            <h3>Import for</h3>
+            <h3>Import for: using Insight</h3>
             <img src="diagrams/importas-no.png" width="100%"/>
             <aside class="notes">
             </aside>
           </section>
           <section data-transition="none">
-            <h3>Import for</h3>
-            <pre style="font-size:50%">
+            <h3>Import for: using the CLI</h3>
+            <pre style="font-size:60%">
 
-bin/omero login -u user-3 --sudo user-6
-Password for user-6:
-Created session f49d2e2c-b470-40b9-85e9-0e1c5b265250 (user-3@...). Current group: read-annotate-1
-bin/omero import ~/Work/Images/dv/IAGFP-Noc01_R3D.dv
-Using session f49d2e2c-b470-40b9-85e9-0e1c5b265250 (user-3@...). Current group: read-annotate-1
-...
-==> Summary
-2 files uploaded, 1 fileset created, 1 image imported, 0 errors in 0:00:21.602
+  bin/omero login -u user-3 --sudo user-6
+  Password for user-6:
+  Created session f49d2...65250 (user-3@...). Current group: read-annotate-1
+  bin/omero import ~/Work/Images/dv/IAGFP-Noc01_R3D.dv
+  Using session f49d2...65250 (user-3@...). Current group: read-annotate-1
+  ...
+  ==> Summary
+  2 files uploaded, 1 fileset created, 1 image imported,
+  0 errors in 0:00:21.602
             </pre>
             <aside class="notes">
             </aside>
@@ -381,8 +381,6 @@ Using session f49d2e2c-b470-40b9-85e9-0e1c5b265250 (user-3@...). Current group: 
           <ul>
             <li>Background imports</li>
             <li>Faster imports</li>
-            <li>Excluding duplicates</li>
-            <li>Import targets</li>
           </ul>
           <aside class="notes">
           </aside>
@@ -390,23 +388,24 @@ Using session f49d2e2c-b470-40b9-85e9-0e1c5b265250 (user-3@...). Current group: 
 
         <section>
           <h3>Background imports</h3>
-          <pre style="font-size:50%">
+          <pre style="font-size:60%">
 
-  --auto_close              Close completed imports immediately.
+  --auto_close        Close completed imports immediately.
 
-  --minutes_wait=ARG        Choose how long the importer will wait on server-side processing.
-                            ARG > 0 implies the number of minutes to wait.
-                            ARG = 0 exits immediately. Use a *_completed option to clean up.
-                            ARG < 0 waits indefinitely. This is the default.
+  --minutes_wait=ARG  Choose how long the importer will wait on
+                      server-side processing.
+                      ARG > 0 implies the number of minutes to wait.
+                      ARG = 0 exits immediately.
+                              Use a *_completed option to clean up.
+                      ARG < 0 waits indefinitely. This is the default.
 
   --close_completed         Close completed imports.
 
   --wait_completed          Wait for all background imports to complete.
 
-
-  e.g. $ bin/omero import -- --minutes_wait=0 file1.tiff file2.tiff file3.tiff
-       $ ./importer-cli --minutes_wait=0 some_directory/
-       $ ./importer-cli --wait_completed # Waits on all 3 imports.
+  e.g. $ bin/omero import -- --auto_close file1.tiff
+       $ bin/omero import -- --minutes_wait=0 img1.tiff img2.tiff img3.tiff
+       $ bin/omero import -- --wait_completed # Waits on all 3 imports.
           </pre>
           <aside class="notes">
           </aside>
@@ -415,36 +414,36 @@ Using session f49d2e2c-b470-40b9-85e9-0e1c5b265250 (user-3@...). Current group: 
         <section>
           <section>
             <h2>Faster imports</h2>
-            <pre style="font-size:50%">
+            <pre style="font-size:60%">
 
-  --checksum-algorithm=ARG  Choose a possibly faster algorithm for detecting file corruption,
-                            e.g. Adler-32 (fast), CRC-32 (fast), File-Size-64 (fast),
-                                  MD5-128, Murmur3-32, Murmur3-128,
-                                  SHA1-160 (slow, default)
+  --checksum-algorithm=ARG  Choose a possibly faster algorithm
+                            for detecting file corruption,
+                            e.g. File-Size-64 (fastest),
+                                 Adler-32 (faster), CRC-32 (faster),
+                                 MD5-128, Murmur3-32, Murmur3-128,
+                                 SHA1-160 (slower, default)
+
   e.g. $ bin/omero import -- --checksum-algorithm=CRC-32 foo.tiff
        $ ./importer-cli --checksum-algorithm=Murmur3-128 bar.tiff
 
   --no-stats-info   Disable calculation of minima and maxima when
-                    as part of the Bio-Formats reader metadata
-  e.g. $ bin/omero import -- --no-stats-info foo.tiff
+                    not part of the Bio-Formats reader metadata
 
   --no-thumbnails   Do not perform thumbnailing after import
-  e.g. $ bin/omero import -- --no-thumbnails foo.tiff
 
   --no-upgrade-check    Disable upgrade check for each import
-  e.g. $ bin/omero import -- --no-upgrade-check foo.tiff
             </pre>
             <aside class="notes">
             </aside>
           </section>
           <section>
             <h2>Faster imports</h2>
-            <pre style="font-size:50%">
+            <pre style="font-size:60%">
 
   bin/omero import --help
 
   --skip {all,checksum,minmax,thumbnails,upgrade}
-                                        Optional step to skip during import
+         Optional step(s) to skip during import
             </pre>
             <aside class="notes">
             </aside>
@@ -452,48 +451,90 @@ Using session f49d2e2c-b470-40b9-85e9-0e1c5b265250 (user-3@...). Current group: 
         </section>
 
         <section>
-          <h2>Excluding duplicates</h2>
-            <pre style="font-size:50%">
-
-  --exclude=filename        Exclude files based on filename.
-
-  e.g. $ bin/omero import -- --exclude=filename foo.tiff # First-time imports
-       $ bin/omero import -- --exclude=filename foo.tiff # Second-time skips
-            </pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h2>Import targets</h2>
-          <ul>
-            <li>TBC</li>
-          </ul>
-          <aside class="notes">
-          </aside>
+          <h3>A few numbers</h2>
+          <center>
+            <table style="font-size: 100%; border=2px; background: #FFFFFF" cellspacing="15" cellpadding="15">
+              <tr>
+                <th></th>
+                <th></th>
+                <th>default</th>
+                <th colspan=3 class="centre">symlink &amp; skip all</th>
+              </tr>
+              <tr>
+                <th>format</th>
+                <th>size</th>
+                <th>total</th>
+                <th>symlink</th>
+                <th>import</th>
+                <th>total</th>
+              </tr>
+              <tr>
+                <td>Zeiss CZI</td>
+                <td>200GB</td>
+                <td>4.5h</td>
+                <td>3m</td>
+                <td>6s</td>
+                <td>3m</td>
+              </tr>
+              <tr>
+                <td>SPIM</td>
+                <td>~2TB</td>
+                <td>days?</td>
+                <td>14m</td>
+                <td>16m</td>
+                <td>30m</td>
+              </tr>
+              <tr>
+                <td>SVS</td>
+                <td>90GB</td>
+                <td>---</td>
+                <td>7m</td>
+                <td>23m</td>
+                <td>30m</td>
+              </tr>
+            </table>
+          </center>
         </section>
 
         <section>
           <section>
             <h2>A few more improvements</h2>
+            <h3>Excluding duplicates</h3>
+              <pre style="font-size:60%">
+
+    --exclude=filename        Exclude files based on filename.
+
+    e.g. $ bin/omero import -- --exclude=filename foo.tiff
+           # First call imports
+         $ bin/omero import -- --exclude=filename foo.tiff
+           # Second call skips
+         $ bin/omero import foo.tiff
+           # This call imports again
+              </pre>
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section>
+            <h2>A few more improvements</h2>
             <h3>Move a fileset</h3>
-            <pre style="font-size:50%">
+            <pre style="font-size:60%">
 
-bin/omero fs rename --help
-usage: omero fs rename [--no-move] fileset
+  bin/omero fs rename --help
+  usage: omero fs rename [--no-move] fileset
 
-Moves an existing fileset to a new location (admin-only)
+  Moves an existing fileset to a new location (admin-only)
 
-After the import template (omero.fs.repo.path) has been changed,
-it may be useful to rename an existing fileset to match the new
-template. By default the original files and import log are also
-moved.
+  After the import template (omero.fs.repo.path) has been changed,
+  it may be useful to rename an existing fileset to match the new
+  template. By default the original files and import log are also
+  moved.
 
-Positional Arguments:
-  fileset             Fileset which should be renamed: ID or Fileset:ID
+  Positional Arguments:
+    fileset             Fileset which should be renamed: ID or Fileset:ID
 
-Optional Arguments:
-  --no-move           do not move original files and import log
+  Optional Arguments:
+    --no-move           do not move original files and import log
             </pre>
             <aside class="notes">
             </aside>
@@ -501,27 +542,21 @@ Optional Arguments:
           <section>
             <h2>A few  more improvements</h2>
             <h3>Remove empty directories</h3>
-            <pre style="font-size:50%">
+            <pre style="font-size:60%">
 
-bin/omero admin cleanse --help
-usage: omero admin cleanse [--dry-run] data_dir
+  bin/omero admin cleanse --help
+  usage: omero admin cleanse [--dry-run] data_dir
 
-Remove binary data files from OMERO
+  Remove binary data files from OMERO
 
-Deleting an object from OMERO currently may not remove all the binary data.
-Use this command either manually or in a cron job periodically to remove
-Pixels, empty directories, and other data.
+  Deleting an object from OMERO currently may not remove all the binary data.
+  Use this command either manually or in a cron job periodically to remove
+  Pixels, empty directories, and other data.
 
-This is done by checking that for all the files in the given directory, a
-matching entry exists on the server. THE /OMERO DIRECTORY MUST MATCH THE
-DATABASE YOU ARE RUNNING AGAINST.
 
-This command must be run on the machine where, for example, /OMERO/ is
-located.
-
-Examples:
-  bin/omero admin cleanse --dry-run /OMERO      # Lists files that will be deleted
-  bin/omero admin cleanse /OMERO                # Actually delete them.
+  Examples:
+    bin/omero admin cleanse --dry-run /OMERO  # Lists files to be deleted.
+    bin/omero admin cleanse /OMERO            # Actually delete them.
             </pre>
             <aside class="notes">
             </aside>
@@ -529,12 +564,24 @@ Examples:
         </section>
 
         <section>
-          <h2>Discussion</h2>
+          <h2>The future...</h2>
           <ul>
-            <li>?</li>
-            <li>?</li>
-            <li>?</li>
+            <li>import location</li>
+            <li>importer role</li>
+            <ul><li>advanced-importer role</li></ul>
+            <li>extra performance</li>
+            <li>cron (later thumbnailing), queue</li>
+            <li>these features in insight</li>
+            <li>webimport</li>
           </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Discussion</h2>
+          <h3>What else do you want</h3>
+          <h1 style="font-size:500%">?</h1>
           <aside class="notes">
           </aside>
         </section>
