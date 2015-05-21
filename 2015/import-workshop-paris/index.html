@@ -193,6 +193,16 @@
           </section>
         </section>
 
+        <section>
+          <h3>More on ManagedRepository and Filesets</h3>
+          <ul>
+            <li>link to docs</li>
+            <li>2014 talk</li>
+            <li>2013 talk?</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
 
         <section>
           <h2>More ways to import</h2>
@@ -312,7 +322,7 @@
         </section>
 
         <section>
-          <h3>Import: summary</h3>
+          <h3>Import: CLI summary</h3>
           <pre style="font-size:60%">
 
   bin/omero import --advanced-help
@@ -321,7 +331,7 @@
 
         General options:
           upload            # Default
-          upload_rm         # Caution! File upload followed by source deletion.
+          upload_rm         # Caution! Upload followed by source deletion.
           some.class.Name   # Use a class on the CLASSPATH.
 
         Server-side options:
@@ -334,6 +344,18 @@
   e.g. $ bin/omero import -- --transfer=ln_s foo.tiff
        $ ./importer-cli --transfer=ln bar.tiff
           </pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Use cases</h2>
+          <ul>
+            <li>Upload - data on separate system</li>
+            <li>Copy - data on same system, avoids network overheads</li>
+            <li>Hard link - very large data on OMERO server</li>
+            <li>Soft link - DropBox on OMERO server</li>
+          </ul>
           <aside class="notes">
           </aside>
         </section>
@@ -472,8 +494,8 @@
                 <td>Zeiss CZI</td>
                 <td>200GB</td>
                 <td>4.5h</td>
-                <td>3m</td>
                 <td>6s</td>
+                <td>3m</td>
                 <td>3m</td>
               </tr>
               <tr>
@@ -570,9 +592,21 @@
             <li>importer role</li>
             <ul><li>advanced-importer role</li></ul>
             <li>extra performance</li>
-            <li>cron (later thumbnailing), queue</li>
-            <li>these features in insight</li>
-            <li>webimport</li>
+            <li>cron - later thumbnailing</li>
+            <li>these features in Insight</li>
+            <li>Web import</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Thanks!</h2>
+          <ul>
+            <li>the "import team"</li>
+            <li>the OME team</li>
+            <li>the user community</li>
+            <li>our funders??</li>
           </ul>
           <aside class="notes">
           </aside>
