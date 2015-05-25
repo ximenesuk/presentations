@@ -165,7 +165,7 @@ $ bin/omero config set omero.web.public.url_filter '^/(?!webadmin|webclient/(act
                 <section>
                     <h2>LINK https://...</h2>
                     <p><a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3933597/" target="_blank">https://omero/webgateway/image_detail/12345/</a></p>
-                        <p><a href="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3933597/200/200" target="_blank">https://omero/webgateway/render_thumbnail/12345/W/H/</a></p>
+                        <p><a href="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3933597/200/200/" target="_blank">https://omero/webgateway/render_thumbnail/12345/W/H/</a></p>
 
                     
                     <img height="500px" src="images/publish2.png"/>
@@ -232,12 +232,18 @@ $ bin/omero config set omero.web.public.url_filter '^/(?!webadmin|webclient/(act
                 </section>
 
                 <section>
+                    <h2>Index page</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
+$ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'
+</code></pre>
+                    <img src="images/index_page.png" width='550px' class="no_shadow"/>
+                </section>
+
+                <section>
                     <h2>Login screen</h2>
-                        <pre><code contenteditable style="font-size:90%" class="bash">
-$ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
-                        </code></pre>
+                        <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'</code></pre>
                     <img src="images/custom_login.png"
-                        width="450px"/><br>
+                        width="597px"/><br>
                 </section>
 
                 <section>
@@ -276,14 +282,6 @@ def custom_index(request, conn=None, **kwargs):
 omeroweb.webstart.views.custom_index = custom_index
 </code></pre>
 
-                </section>
-
-                <section>
-                    <h2>Index page</h2>
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
-$ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'
-</code></pre>
-                    <img src="images/index_page.png" width='550px' class="no_shadow"/>
                 </section>
 
                 <section>
@@ -326,7 +324,7 @@ $ bin/omero config set omero.client.ui.menu.dropdown.colleagues.enabled true
 
                 <section>
                     <h2>Download restriction</h2>
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config append omero.policy.binary_access "+read,+write,+image"
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.policy.binary_access "+read,+write,+image"
 </code></pre>
                     <img src="images/download1.png"/> <img src="images/download2.png"/>
                 </section>
