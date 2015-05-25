@@ -24,7 +24,7 @@
                 font-size: 60px;
             }
             .ome_theme {
-                background-image: url("images/ome-icon-opacity.png");
+                background-image: url("http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/ome-icon-opacity.png");
                 background-color: #f2f6f9;
                 background-repeat: no-repeat;
                 background-position: right -270px top -120px;
@@ -68,6 +68,10 @@
 
             .larger {
                 font-size: 80px !important;
+            }
+
+            .no_shadow {
+                box-shadow:0 0 0 #fff !important;
             }
 
         </style>
@@ -120,7 +124,9 @@
                         <a href="https://www.openmicroscopy.org/site/support/omero5/sysadmins/unix/install-web.html#customizing-your-omero-web-installation" target="_blank">Unix</a> |
                         <a href="https://www.openmicroscopy.org/site/support/omero5/sysadmins/windows/install-web.html#customizing-your-omero-web-installation" target="_blank">Windows</a>
                     </p>
-                    <p>or <code contenteditable style="font-size:90%" class="bash">bin/omero web -h</code></p>
+                    <p>or <br>
+                        <pre style="width:300px"><code contenteditable class="bash">$ bin/omero web -h</code></pre>
+                    </p>
                 </section>
 
 
@@ -129,8 +135,8 @@
                         <pre><code contenteditable style="font-size:90%" class="bash">
 $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
                         </code></pre>
-                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/custom_login.png"
-                        width="500px"/><br>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/custom_login.png"
+                        width="550px"/><br>
                     <small>New in OMERO 5.0.2</small>
                 </section>
                 
@@ -139,6 +145,7 @@ $ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
                     <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
 $ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'
 </code></pre>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/index_page.png" width='650px' class="no_shadow"/>
                 </section>
                 
                 <section>
@@ -149,22 +156,26 @@ $ bin/omero config set omero.web.login_redirect
                 '{"redirect": ["webindex"], "viewname": "load_template", 
                 "args":["userdata"], "query_string": "experimenter=-1"}'
 </code></pre>
+                <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/login_redirect.png" width='650px' class="no_shadow"/>
                 </section>
 
                 <section>
                     <h2>Top links menu</h2>
                     <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.ui.top_links 
-                '[["Webtest", "webtest_index"]]'
+                '[["Figure", "webfigure"]]'
 $ bin/omero config set omero.web.ui.top_links 
                 '[["GRE", "http://lifesci.dundee.ac.uk/gre"]]'
 </code></pre>
+                <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/top_link.png" width='650px'/>
                 </section>
 
                 <section>
                     <h2>Group and Users in dropdown menu</h2>
                     <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.ui.menu.dropdown 
-                '{"LEADERS": "Owners", "COLLEAGUES": "Members", "ALL": "All members"}'
+        '{"LEADERS": "Owners", "COLLEAGUES": "Members", "ALL": "All members"}'
 </code></pre>
+
+                <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/dropdown_menu2.png" width='450px'/> <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/dropdown_menu.png" width='450px'/>
                 </section>
 
                 <section>
@@ -219,7 +230,7 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                     </li>
                     
                     <li>
-                        <img style="float:left; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/" width='120' height='120'/>
+                        <img style="float:right; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/" width='120' height='120'/>
                         Full image viewer
                         <a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3925542/"  target="_blank">
                             webgateway/img_detail/&lt;imageId&gt;/
@@ -268,43 +279,43 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                 </section>
 
                 <section>
-                    <h2>Rendering image</h2>
-                    <div style="width: 1000px">
+                    <h2>Rendering images</h2>
+                    <ul style="width: 1000px">
                         
-                        <div>
-                            <img style="float:left; margin-right:60px" src="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3925542/" width='75' height='75'/>
-                            Thumbnails <a href="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3925542/35/0/"  target="_blank">
-                                webgateway/render_thumbnail/&lt;imageId&gt;/&lt;z&gt;/&lt;t&gt;/
+                        <li>
+                            <img style="float:right; margin-right:60px" src="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3925542/" width='75' height='75'/>
+                            Thumbnails <a href="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3925542/"  target="_blank">
+                                webgateway/render_thumbnail/&lt;imageId&gt;/
                             </a>
-                        </div>
+                        </li>
 
                         <div style="clear:both"></div>
-                        <div>
-                            <img style="float:left; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/" width='120' height='120'/>
+                        <li>
+                            <img style="float:right; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/" width='120' height='120'/>
                             Full rendering options in render_image
                             <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/"  target="_blank">
                                 webgateway/render_image/&lt;imageId&gt;/&lt;z&gt;/&lt;t&gt;/
                             </a>
-                        </div>
+                        </li>
 
                         <div style="clear:both"></div>
-                        <div>
-                            <img style="float:left; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=1,2" width='120' height='120'/>
+                        <li>
+                            <img style="float:right; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=1,2" width='120' height='120'/>
                             Use query string to specify channels
                             <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=1,2"  target="_blank">
                                 ?c=1,2
                             </a>
-                        </div>
+                        </li>
 
                         <div style="clear:both"></div>
-                        <div>
-                            <img style="float:left; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=3|605:1851$FF0000" width='120' height='120'/>
+                        <li>
+                            <img style="float:right; margin-right:15px" src="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=3|605:1851$FF0000" width='120' height='120'/>
                             Channel settings: index|start:stop$color
                             <a href="https://nightshade.openmicroscopy.org/webgateway/render_image/3925542/35/0/?c=3|605:1851$FF0000"  target="_blank">
                                 ?c=3|605:1851$FF0000
                             </a>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </section>
 
                 <section>
@@ -313,19 +324,6 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                     <iframe width="800" height="400" src="http://jsfiddle.net/aleksandratarkowska/f45wQ/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
                 
                     <p><a href="http://jsfiddle.net/aleksandratarkowska/S5C7G/" target="_blank">advanced example</a></p>
-                </section>
-
-
-                <section>
-                    <h2>OMERO.figure</h2>
-                    <ul>
-                        <li>
-                            <a target="new" href="http://will-moore.github.io/figure/demo/#file/1">
-                            OMERO.figure demo
-                            </a> is static, using JCB webservice
-                        </li>
-                        <iframe width="1000" height="600" src="http://will-moore.github.io/figure/demo/#file/1" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-                    </ul>
                 </section>
 
 
@@ -390,6 +388,20 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
 
 
                 <section>
+                    <h2>OMERO.figure</h2>
+                    <ul>
+                        <li>
+                            <a target="new" href="http://will-moore.github.io/figure/">OMERO.figure app</a>
+                            for creating figures
+                        </li>
+                        <li>Uses webgateway for json data & image rendering</li>
+                        <li>Uses webclient for login screen & export scripts</li>
+                    </ul>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/figure_demo.png" style="width: 700px"/>
+                </section>
+
+
+                <section>
                     <h2>Webclient plugins</h2>
                     <ul>
                         <li>Hooks to bring app content into webclient (center & right)</li>
@@ -399,7 +411,7 @@ $ bin/omero config set omero.web.public.url_filter '/webgateway'
                         </li>
                     </ul>
 
-                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/webclient_plugins.png" width="900px"/>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/webclient_plugins.png" width="900px"/>
                 </section>
 
 
@@ -413,27 +425,9 @@ $ bin/omero config append omero.web.ui.right_plugins
         '["ROIs", "webtest/webclient_plugins/right_plugin.rois.js.html", "image_roi_tab"]'
 
 </code></pre>
-                    <img src="http://downloads.openmicroscopy.org/presentations/2013/June-Users-Meeting/analysis-workshop/images/RightPanelROIs.png" width="400px"/>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/webtest_roi_plugin.png" style="width:800px" class="no_shadow"/>
                 </section>
 
-                <section>
-                    <h2>Virtual Microscope<br/>next step in learning</h2>
-                    <img  src="images/VM1.png" width="700"/>
-                </section>
-                
-                <section>
-                    <img src="images/VM2.png" width="700"/>
-                </section>
-                
-                <section>
-                    <h2>Benefits:</h2>
-                    <ul>
-                        <li>efficient and effective ways to teach subject specialties</li>
-                        <li>open access to explore and examine the sections at different levels of magnification</li>
-                        <li>helping develop classification and identification skills without the need for high-cost microscopes and thin section preparation facilities</li>
-                        <li>open source project</li>
-                    </ul>
-                </section>
 
                 <section>
                     <h2>OMERO.searcher</h2>
@@ -443,15 +437,15 @@ $ bin/omero config append omero.web.ui.right_plugins
                         <li>Uses 'right panel' plugin to search with selected images</li>
                         <li>See: <a href="http://www.openmicroscopy.org/site/products/partner/omero.searcher">More Info</a> | 
                             <a href="https://github.com/openmicroscopy/omero_searcher">Code on Github</a>
-                        <li>Simon Li (Dundee)</li>
+                        <li>Simon Li & Ivan Cao-Berg</li>
                     </ul>
                 </section>
 
 
                 <section>
                     <h2>OMERO.webtagging</h2>
-                            <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Web/images/webfigure.png"
-                                width="800px"/>
+                            <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/webfigure.png"
+                                width="800px" class="no_shadow"/>
                     <ul>
                         <li>Uses 'central panel' plugin to show current dataset</li>
                         <li>See: <a href="http://www.openmicroscopy.org/site/support/partner/omero.webtagging">User Guide</a> | 
@@ -463,6 +457,41 @@ $ bin/omero config append omero.web.ui.right_plugins
 
                 <section>
                     <h2>Any Questions?</h2>
+                </section>
+
+
+                <section>
+                    <h2>Demos</h2>
+                    <ul>
+                        <li>Virtual Microscope</li>
+                        <li>OMERO.figure</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Virtual Microscope<br/>next step in learning</h2>
+                    <img  src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/VM1.png" width="700" class="no_shadow"/>
+                </section>
+                
+                <section>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-Web-Workshop/images/VM2.png" width="700" class="no_shadow"/>
+                </section>
+                
+                <section>
+                    <h2>Benefits</h2>
+                    <ul>
+                        <li>Efficient and effective ways to teach subject specialties</li>
+                        <li>Open access to explore and examine the sections at different levels of magnification</li>
+                        <li>Helping develop classification and identification skills without the need for high-cost microscopes and thin section preparation facilities</li>
+                        <li>Open source project</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>OMERO.figure</h2>
+                    <img  src="http://downloads.openmicroscopy.org/presentations/2014/Figure-Tues-Team-Meeting/images/demo-screen-shot.png" width="700"/>
                 </section>
             </div>
 
