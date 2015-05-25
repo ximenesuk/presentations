@@ -147,7 +147,7 @@
                         <ul><li><a href="http://downloads.openmicroscopy.org/omero/5.1.1/">OMERO Matlab Toolbox</a></ul></li>
                         <ul><li><a href="http://downloads.openmicroscopy.org/bio-formats/5.1.1/">Bioformats_Package.jar (Bio-Formats Java Library)</a></ul></li>
                         <ul><li><a href="https://github.com/openmicroscopy/openmicroscopy/tree/develop/lib/repository">ini4j.jar</a></ul></li>
-                        <ul><li><a href="https://gist.github.com/bramalingam/1d36f827add8f5342068">Matlab Scripts</a><ul><li>
+                        <ul><li><a href="https://gist.github.com/bramalingam/1d36f827add8f5342068">Matlab Scripts</a></ul></li>
                     </ul>
                 </section>
 
@@ -155,7 +155,7 @@
                     <h2>Setup Matlab ClassPath</h2>
                     <ul>
                         <li>Micromanager Configuration</li>
-                        <pre><code contenteditable style="width:900px; font-size:60%" class="bash">java.lang.System.clearProperty('java.util.prefs.PreferencesFactory')
+<pre><code contenteditable style="width:1050px; font-size:90%" class="bash">java.lang.System.clearProperty('java.util.prefs.PreferencesFactory')
 javaaddpath('/Applications/Micro-Manager1.4/ij.jar')
 javaaddpath('/Applications/Micro-Manager1.4/plugins/Micro-Manager/MMCoreJ.jar')
 javaaddpath('/Applications/Micro-Manager1.4/plugins/Micro-Manager/MMJ_.jar')
@@ -168,7 +168,7 @@ javaaddpath('/Applications/Micro-Manager1.4/plugins/Micro-Manager/scifio.jar')
 javaaddpath('/Applications/Micro-Manager1.4/plugins/Micro-Manager/slf4j-api-1.7.1.jar')
 javaaddpath('/Applications/Micro-Manager1.4/plugins/bioformats_package.jar')</code></pre>
                         <li>OMERO Matlab Toolbox Configuration</li>
-                        <pre><code contenteditable style="width:900px; font-size:60%" class="bash">inputdir=['/Users/bramalingam/OME/matlab/OMERO.matlab-5.1.0-ice35-b40'];
+<pre><code contenteditable style="width:1050px; font-size:90%" class="bash">inputdir=['/Users/bramalingam/OME/matlab/OMERO.matlab-5.1.0-ice35-b40'];
 addpath(genpath(inputdir));
 javaaddpath('/Users/bramalingam/OME/matlab/OMERO.matlab-5.1.0-ice35-b40/libs/omero_client.jar')
 javaaddpath('/Users/bramalingam/OME/matlab/OMERO.matlab-5.1.0-ice35-b40/libs/ini4j.jar')
@@ -177,27 +177,35 @@ javaaddpath('/Users/bramalingam/OME/matlab/OMERO.matlab-5.1.0-ice35-b40/libs/bio
                 </section>
 
                 <section>
+                    <h2>Micro-Manager:load Config,Snap and Save Image</h2>
+                    <ul>
+                        <li>Micromanager : Load Microscope Configuration</li>
+                        <pre><code contenteditable style="width:900px; font-size:90%" class="bash">import mmcorej.*;
+mmc = CMMCore;
+mmc.loadSystemConfiguration('/Applications/Micro-Manager1.4/MMConfig_demo.cfg');
+</code></pre>
+                        <li>Micromanager : Snap Image</li>
+                        <pre><code contenteditable style="width:900px; font-size:90%" class="bash">mmc.snapImage();
+img = mmc.getImage();
+</code></pre>
+                        <li>Bio-Formats: save image</li>
+                        <pre><code contenteditable style="width:900px; font-size:90%" class="bash">proc0 = ImageUtils.makeProcessor(mmc, img);
+imgp0 = ImagePlus('',proc0);
+imgp0.show;
+IJ.runPlugIn('loci.plugins.LociExporter', buffer.toString);</code></pre>
+                    </ul>
+
+                </section>
+
+                <section>
                     <h2>Snap and Upload Image</h2>
                     <ul>
                         <li>OMERO: Create a Client and Session</li>
-                        <pre style="text-align: left"><code contenteditable style="font-size:60%" class="bash">client = loadOmero(host);
+                        <pre style="text-align: left"><code contenteditable style="width:900px; font-size:90%" class="bash">client = loadOmero(host);
 session = client.createSession(username, password);
 client.enableKeepAlive(60);</code></pre>
-                        <li>Micromanager : Load Microscope Configuration</li>
-                        <pre><code contenteditable style="font-size:60%" class="bash">import mmcorej.*;
-mmc = CMMCore;
-mmc.loadSystemConfiguration('/Applications/Micro-Manager1.4/MMConfig_demo.cfg');</code></pre>
-                        <li>Micromanager : Snap Image</li>
-                        <pre><code contenteditable style="font-size:60%" class="bash">mmc.snapImage();
-img = mmc.getImage();
-</code></pre>
-                        <li>save image and Upload_image.m</li>
-                        <pre><code contenteditable style="font-size:60%" class="bash">proc0 = ImageUtils.makeProcessor(mmc, img);
-imgp0 = ImagePlus('',proc0);
-imgp0.show;
-IJ.runPlugIn('loci.plugins.LociExporter', buffer.toString);
-
-upload_image(path,session,username,password,ProjectName,DatasetName,host,importopt)</code></pre>
+                        <li>OMERO: Upload_image.m</li>
+                        <pre><code contenteditable style="width:900px; font-size:90%" class="bash">upload_image(path,session,username,password,ProjectName,DatasetName,host,importopt)</code></pre>
 
                     </ul>
                 </section>
