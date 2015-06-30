@@ -119,8 +119,8 @@
                         <h2>The problem</h2>
                     
                         <ul>
-                            <li>OME project built as monolithic</li>
-                            <li>Project component<ul>
+                            <li>OME project built monolithically</li>
+                            <li>Project components<ul>
                                 <li>either embedded in the same source code</li>
                                 <li>or managed as submodules</li>
                             </ul></li>
@@ -132,32 +132,32 @@
 
                     <section>
                         <h2>The problem</h2>
-                        <h2>Example: Bio-Formats</h2>
+                        <h3>Example 1: Bio-Formats</h3>
                     
                         <ul>
-                            <li>Example 1<ul>
-                                <li>Bug reported for a file format</li>
-                                <li>PR opened, tested and merged in the development line</li>
-                                <li>Bio-Formats release on-hold until OMERO can be released</li>
-                            </ul></li>
+                            <li>Bug reported for a file format</li>
+                            <li>PR opened, tested and merged in the development line</li>
+                            <li>Bio-Formats release on-hold until OMERO can be released</li>
+                        </ul>
                     </section>
                 
                     <section>
                         <h2>The problem</h2>
-                        <h2>Example: Bio-Formats</h2>
+                        <h3>Example 2: OMERO</h3>
                     
                         <ul>
-                            <li>Example 2<ul>
-                                <li>Bug reported for a file format</li>
-                                <li>PR opened, tested and merged in the development line</li>
-                                <li>Bio-Formats release on-hold until OMERO can be released</li>
-                            </ul></li>
+                            <li>Security vulnerability</li>
+                            <li>PR opened, tested and merged in the development line</li>
+                            <li>OMERO released</li>
+                            <li>Bio-Formats version number </li>
+                        </ul>
                     </section>
                 </section>
 
                 <section>
                     <h2>General considerations</h2>
                     
+                    <p>To achieve full decoupling, the following components need to be decoupled</p>
                     <ul>
                         <li>Source code repository</li>
                         <li>Build system</li>
@@ -165,19 +165,6 @@
                         <li>Release</li>
                     </ul>
                 </section>
-                
-                <section>
-                    <h2>Decoupling generalities</h2>
-                    <h3>Checklist</h3>
-                    
-                    <ul>
-                        <li>Source code repository</li>
-                        <li>Build system</li>
-                        <li>Continuous integration</li>
-                        <li>Release</li>
-                    </ul>
-                </section>
-
 
                 <section>
                     <h2>Bio-Formats decoupling</h2>
