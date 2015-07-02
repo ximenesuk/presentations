@@ -119,14 +119,22 @@
                         <h2>The problem</h2>
                     
                         <ul>
-                            <li>OME project built monolithically</li>
-                            <li>Project components<ul>
+                            <li>OME built, tested and released as a monolithic project</li>
+                            <li>All project components are<ul>
                                 <li>either embedded in the same source code</li>
                                 <li>or managed as submodules</li>
                             </ul></li>
-                            <li>Version management</li>
-                            <li>Inability to releases</li>
-                            <li>Multiplication of epics/spaces</li>
+                            <li>All components are released simultaneously</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2>The problem</h2>
+                    
+                        <ul>
+                            <li>New applications (e.g. Consortium, OMERO.figure)</li>
+                            <li>Inability to release individual components</li>
+                            <li>Does not scale with new applications</li>
                         </ul>
                     </section>
 
@@ -136,8 +144,10 @@
                     
                         <ul>
                             <li>Bug reported for a file format</li>
-                            <li>PR opened, tested and merged in the development line</li>
-                            <li>Bio-Formats release on-hold until OMERO can be released</li>
+                            <li>PR opened to fix the bug</li>
+                            <li>PR tested</li
+                            <li>PR merged in the development line</li>
+                            <li>Bio-Formats release cannot happen until OMERO is ready to be released</li>
                         </ul>
                     </section>
                 
@@ -146,10 +156,25 @@
                         <h3>Example 2: OMERO</h3>
                     
                         <ul>
-                            <li>Security vulnerability</li>
-                            <li>PR opened, tested and merged in the development line</li>
-                            <li>OMERO released</li>
-                            <li>Bio-Formats version number </li>
+                            <li>Security vulnerability/Build problem is reported for OMERO</li>
+                            <li>PR opened, tested internally</li>
+                            <li>PR merged in the development line</li>
+                            <li>OMERO is released</li>
+                            <li>Bio-Formats version number is artificially bumped even if</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>The problem</h2>
+                        <h3>Example 3: OME Consortium</h3>
+                    
+                        <ul>
+                            <li>Multiple projects have been introduced as part of the OME ecosystem<ul>
+                                <li>FLIMfit</li>
+                                <li>OMERO.figure</li>
+                                <li>Virtual microscopy</li></ul>
+                            </li>
+                            <li>Have their own release cycle</li>
+                            <li>Need to be integrated</li>
                         </ul>
                     </section>
                 </section>
@@ -157,11 +182,15 @@
                 <section>
                     <h2>General considerations</h2>
                     
-                    <p>To achieve full decoupling, the following components need to be decoupled</p>
+                    <p>Full decoupling requires a number of elements need to be decoupled</p>
                     <ul>
-                        <li>Source code repository</li>
-                        <li>Build system</li>
-                        <li>Continuous integration</li>
+                        <li>Continuous Integration<ul>
+                            <li>Source code repository</li>
+                            <li>Build system</li>
+                            <li>CI jobs</li></ul>
+                        </li>
+                        <li>Deployment</li>
+                        <li>Documentation</li>
                         <li>Release</li>
                     </ul>
                 </section>
@@ -172,7 +201,7 @@
                     
                     <ul>
                         <li>Bio-Formats has its own <a href="https://github.com/openmicroscopy/bioformats">source code repository</a></li>
-                        <li>Bio-Formats build system/release process are completely autonomous</li>
+                        <li>Bio-Formats source code embedded into OMERO source code via a submodule introduced in <a href="https://github.com/openmicroscopy/openmicroscopy/commit/1d12ad1f44fc042edc22093741a57d38e1074724">1d12ad1f</a></li>
                     </ul>
                 </section>
 
@@ -180,14 +209,12 @@
                 <section>
                     <section>
                         <h2>Bio-Formats decoupling</h2>
-                        <h3>Build system</h3>
+                        <h3>Build system: up to 5.1.2</h3>
                     
                         <ul>
-                            <li>Submodule introduced in <a href="https://github.com/openmicroscopy/openmicroscopy/commit/1d12ad1f44fc042edc22093741a57d38e1074724">November 2011</a></li>
-                            <li>Bio-Formats source code embedded into OMERO source code</li>
                             <li>Reference to the revision via the SHA1</li>
                             <li>Bio-Formats is built every time</li>
-                            <li>Version management previously defined via  <a href="https://github.com/openmicroscopy/bioformats/blob/v5.1.2/ivy.xml">ivy.xml</a><pre>ivy.xml<code>&lt;publications defaultconf="build,runtime"&gt;
+                            <li>Version management previously defined in Bio-Formats via <a href="https://github.com/openmicroscopy/bioformats/blob/v5.1.2/ivy.xml">ivy.xml</a><pre>ivy.xml<code>&lt;publications defaultconf="build,runtime"&gt;
     &lt;artifact name="formats-gpl"/&gt;
 ...
 &lt;dependencies defaultconfmapping="build,runtime->default"&gt;
@@ -200,34 +227,51 @@
                         <h3>Build system</h3>
                     
                         <ul>
-                            <li>See <a  href="https://github.com/openmicroscopy/openmicroscopy/pull/xxx">Bio-Formats build decoupling PR</a> opened</li>
+                            <li>See Bio-Formats <a  href="https://github.com/openmicroscopy/openmicroscopy/pull/xxx">build decoupling PR</a></li>
                         
-                            <li>Submodule removed in <a href="https://github.com/openmicroscopy/openmicroscopy/commit/80925d60964bec25477f87edff62ad54e155c9b5">June 2015</a></li>
-                            <li>Bio-Formats artifacts released to the <a href="http://downloads.openmicroscopy.org">OME downloads</a> and the <a href="http://artifacts.openmicroscopy.org">OME artifactory</a> via Maven</li>
-                            <li>Bio-Formats version managed via Ivy/Maven</li>
+                            <li>Submodule removed in <a href="https://github.com/openmicroscopy/openmicroscopy/commit/80925d60964bec25477f87edff62ad54e155c9b5">80925d60</a></li>
+                            <li>Bio-Formats artifacts published to the <a href="http://artifacts.openmicroscopy.org">OME artifactory</a> via Maven</li>
+                            <li>Bio-Formats version declared in omero.properties <pre>omero.properties<code>versions.bioformats=5.1.2</code></pre></li>
+                            <li>Bio-Formats dependencies declared in individual components <pre>ivy.xml<code>    &lt;dependency org="ome" name="formats-bsd" rev="${versions.bioformats}" transitive="true"/&gt;</code></pre></li>
                         </ul>
                     </section>
-
-                    <section>
-                        <h2>Bio-Formats decoupling</h2>
-                        <h3>Build system</h3>
-                    
-                        <ul>
-                            <li>Bio-Formats artifacts released to the <a href="http://downloads.openmicroscopy.org">OME downloads</a> and the <a href="http://artifacts.openmicroscopy.org">OME artifactory</a> via Maven</li>
-                           <li>Version declared in <pre>omero.properties<code>versions.bioformats=5.1.2</code></pre></li>
-                           <li>Individual Ivy files declare dependencies <pre>ivy.xml<code>&lt;dependency org="bf-deps" name="xalan" rev="2.7.1"/&gt;</code></pre></li>
-                           
-                    </section>                               
-                             
                 </section>
                 <section>
                     <h2>Bio-Formats decoupling</h2>
-                    <h3>Continuous integration</h3>
+                    <h3>Developers</h3>
                     
                     <ul>
                         <li>New build makes use</li>
                         <li>Maven cache should be cleared</li>
                     </ul>
+                </section>
+
+                <section>
+                    <h2>Bio-Formats decoupling</h2>
+                    <h3>Continuous integration</h3>
+                    
+                <center>
+                    <table style="font-size: 110%; border=2px" cellspacing="10" cellpadding="10">
+                    <tr>
+                        <th></th>
+                        <th>Release</th>
+                        <th>Latest</th>
+                        <th>Merge</th>
+                    </tr>
+                    <tr>
+                        <td>OMERO</td>
+                        <td>Release version</td>
+                        <td> </td>
+                        <td>SNAPSHOT</td>
+                    </tr>
+                    <tr>
+                        <td>Bio-Formats</td>
+                        <td>Release version</td>
+                        <td> </td>
+                        <td>SNAPSHOT</td>
+                    </tr>
+                    </table>
+                </center>
                 </section>
                 
                 <section>
@@ -235,11 +279,10 @@
                     <h3>Release</h3>
                     
                     <ul>
-                        <li>Registry</li>
                         <li>Tagging</li>
+                        <li>Registry</li>
                     </ul>
                 </section>
-
 
                 <section>
                     <h2>Thank you</h2>
