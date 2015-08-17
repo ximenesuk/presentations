@@ -120,11 +120,10 @@
                         <li>Current state of ROI support</li>
                         <li>Use cases:
                             <ul>
-                                <li>Load ROIs from external resource (CRS4)</li>
-                                <li>Editing of ROIs in webclient</li>
-                                <li>Adding ROIs to OMERO.figure</li>
                                 <li>ROI Annotations</li>
                                 <li>Large ROI counts</li>
+                                <li>Editing of ROIs in webclient</li>
+                                <li>Adding ROIs to OMERO.figure</li>
                                 <li>Others? (3D ROIS ?!)</li>
                             </ul>
                         </li>
@@ -142,40 +141,14 @@
                         <li>Shapes are shown on image for currently selected plane</li>
                         <li>Click shape in table -> shown in viewer</li>
                         <li>NO creating or editing of ROIs or Shapes</li>
-                    </ul>
-                </section>
-
-
-                <section>
-                    <h2>Use Case: Create shapes in web</h2>
-                    <ul>
-                        <li>Need to support same use-cases as in Insight</li>
-                        <li>But, room for improvement of usability</li>
-                        <li>No restriction on 1 shape per plane per ROI</li>
-                        <li>Create new shapes with chosen Color, Line thickness etc</li>
-                        <li>While creating shapes, allow tweaking of last-added shape</li>
-                        <li>No support for 'smooth' shapes & Arrows</li>
-                        <li>ImageJ can serve as useful example of what users want</li>
-                    </ul>
-                </section>
-
-
-                <section>
-                    <h2>Use Case: Adding shapes to OMERO.figure</h2>
-                    <ul>
-                        <li>Much requested by users: E.g.
-                            <a href="https://github.com/ome/figure/issues/79">/issues/79</a>
+                        <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3432">
+                                Filter Shapes
+                            </a> &
+                            <a href="https://github.com/openmicroscopy/openmicroscopy/pull/3946">
+                                Load external ROIs
+                            </a>
+                            (CRS4)
                         </li>
-                        <li>Don't need "ROI" support - just need "shapes"</li>
-                        <li>Shapes on figures tend to have NO fill (outline only)</li>
-                        <li>Want to add shapes from OMERO onto figures, AND draw shapes in figure</li>
-                        <li>2 Use cases: 
-                            <ul><li>'Page' shapes - Drawn across whole page</li>
-                                <li>'Panel' shapes - Attached to image panel</li></ul>
-                        </li>
-                        <li>Copy and paste a 'crop' region -> Rectangle and vice versa</li>
-                        <li>Need to be able to export shapes to PDF & TIFF figures</li>
-                        <li>Image panel rotation will be tricky (not supported)?</li>
                     </ul>
                 </section>
 
@@ -207,12 +180,54 @@
 
 
                 <section>
-                    <h2>Current work: Shape Editor...</h2>
+                    <h2>Use Case: Create shapes in web</h2>
+                    <ul>
+                        <li>Need to support same use-cases as in Insight</li>
+                        <li>But, room for improvement of usability</li>
+                        <li>No restriction on 1 shape per plane per ROI</li>
+                        <li>Create new shapes with chosen Color, Line thickness etc</li>
+                        <li>While creating shapes, allow tweaking of last-added shape</li>
+                        <li>No support for 'smooth' shapes & Arrows</li>
+                        <li>ImageJ can serve as useful example of what users want</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Use Case: Adding shapes to OMERO.figure...</h2>
+                    <ul>
+                        <li>Much requested by users: E.g.
+                            <a href="https://github.com/ome/figure/issues/79">/issues/79</a>
+                        </li>
+                    </ul>
+                    <img src="images/roiExample1.png" style="width:350px">
+                    <img src="images/roiExample3.png" style="width:350px"><br>
+                    <img src="images/roiExample2.png" style="width:350px">
+                    <img src="images/roiExample4.png" style="width:250px">
+                </section>
+
+
+                <section>
+                    <h2>...Adding shapes to OMERO.figure</h2>
+                    <ul>
+                        <li>Don't need "ROI" support - just need "shapes"</li>
+                        <li>Shapes on figures tend to have NO fill (outline only)</li>
+                        <li>Want to add shapes from OMERO onto figures, AND draw shapes in figure</li>
+                        <li>2 Use cases: 
+                            <ul><li>'Page' shapes - Drawn across whole page</li>
+                                <li>'Panel' shapes - Attached to image panel</li></ul>
+                        </li>
+                        <li>Copy and paste a 'crop' region -> Rectangle and vice versa</li>
+                        <li>Need to be able to export shapes to PDF & TIFF figures</li>
+                        <li>Image panel rotation will be tricky (not supported)?</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Getting Started: Editing shapes</h2>
 
                     <ul>
-                        <li>In order to support shapes in OMERO.figure (and webclient?), started working on
-                            <a href="https://github.com/will-moore/shape-editor-js">shape-editor-js</a>
-                        </li>
                         <li>Couldn't find an existing shape editing library with desired functionality. E.g:
                             <ul>
                                 <li><a href="http://openlayers.org/en/v3.7.0/examples/vector-labels.html">Open Layers</a></li>
@@ -221,14 +236,17 @@
                                 <li><a href="https://code.google.com/p/jsvectoreditor/">js vector editor</a></li>
                             </ul>
                         </li>
-                        <li>Uses Raphael.js (as in webclient ROIs and OMERO.figure panel selection)</li>
+                        <li>Decided to try creating a toolkit using Raphael.js (as in webclient ROIs and OMERO.figure panel selection)...</li>
                     </ul>
                 </section>
 
 
                 <section>
-                    <h2>...Current work: Shape Editor</h2>
+                    <h2>Shape Editor</h2>
                     <ul>
+                        <li>In order to support shapes in OMERO.figure (and webclient?), started working on
+                            <a href="https://github.com/will-moore/shape-editor-js">shape-editor-js</a>
+                        </li>
                         <li>Handles shapes only (No ROIs)</li>
                         <li>Currently only supports Line, Arrow, Rectangle, Ellipse.
                             <ul><li>Poly-lines etc to come later</li></ul>
