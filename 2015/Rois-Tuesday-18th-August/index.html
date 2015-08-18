@@ -128,6 +128,7 @@
                             </ul>
                         </li>
                         <li>Current work: Shape Editor</li>
+                        <li>Next: Shape Editor | OMERO.figure | webclient</li>
                     </ul>
                 </section>
 
@@ -270,6 +271,18 @@
 
 
                 <section>
+                    <h2>Next Tasks: Shape Editor</h2>
+                    <ul>
+                        <li>Fix model - E.g. 'lineWidth' -> 'strokeWidth'
+                        <li>Polygon & Freehand shapes</li>
+                        <li>Any need for Polyline or other shapes?</li>
+                        <li>Dashed lines</li>
+                        <li>Support for rotated images?!?</li>
+                    </ul>
+                </section>
+
+
+                <section>
                     <h2>Next Tasks: ROI editing in webclient?</h2>
                     <ul>
                         <li>Quick test of 
@@ -280,6 +293,18 @@
                         <li>Only just started, but seems to work quite well...</li>
                     </ul>
                     <img src="images/webclientRois.png" style="width:600px">
+                </section>
+
+
+                <section>
+                    <h2>Saving ROIS/shapes to OMERO</h2>
+                    <ul>
+                        <li>Can save 'Arrow' to OMERO with line.markerStart = 'Arrow' but not
+                            supported in Insight
+                        </li>
+                        <li>Can save a 'Polygon' but can't distinguish it from 'Freehand' shape</li>
+                        <li>Use shape.strokeDashArray for dashed shapes. Insight support?
+                    </ul>
                 </section>
 
             </div>
