@@ -92,6 +92,9 @@
                 <section>
                     <b><h2>OME Bio-Formats</h2></b>
                     <h3>10 years of proprietary image data</h3>
+                    <br><br><br><br>
+                    <b><h6>Melissa Linkert</h6></b>
+                    <h6>Open Microscopy Environment & Glencoe Software</h6>
                 </section>
 
                 <section>
@@ -103,6 +106,11 @@
                           <li>Reads images, but also acquisition metadata</li>
                         </ul>
                       <li>One API, many applications</li>
+                        <ul>
+                          <li>ImageJ</li>
+                          <li>MATLAB</li>
+                          <li>...and others</li>
+                        </ul>
                       <li>A complete implementation of OME-XML and OME-TIFF</li>
                         <ul>
                           <li>also now in C++</li>
@@ -114,16 +122,17 @@
                     <h2>A brief historical overview</h2>
 
                     <ul>
-                      <li>2005 - work began on Java library</li>
-                      <li>2006 March 31 - first official release of Bio-Formats</li>
-                      <li>late 2006 - OMERO begins using Bio-Formats</li>
-                      <li>early 2008 - MATLAB first supported</li>
-                      <li>2008 - major effort standardize metadata handling across all formats</li>
-                      <li>2009 (v4.0.0) - unified version numbers with OMERO</li>
-                      <li>late 2012/early 2013 - work began on C++ library</li>
-                      <li>2014/2015 - major effort to improve performance</li>
-                      <li>2015 - increasing number of contributed code changes</li>
-                      <li>mid-2015 - faster release cycle</li>
+                      <li><b>2005</b> - work began on Java library</li>
+                      <li><b>2006 March 31</b> - first official release of Bio-Formats</li>
+                      <li><b>late 2006</b> - OMERO begins using Bio-Formats</li>
+                      <li><b>early 2008</b> - MATLAB first supported</li>
+                      <li><b>2008</b> - major effort standardize metadata handling</li>
+                      <li><b>2009 (v4.0.0)</b> - unified version numbers with OMERO</li>
+                      <li><b>2012</b> - major effort to improve automated testing</li>
+                      <li><b>late 2012/early 2013</b> - work began on C++ library</li>
+                      <li><b>2014/2015</b> - major effort to improve performance</li>
+                      <li><b>2015</b> - increasing number of contributed code changes</li>
+                      <li><b>mid-2015</b> - faster release cycle</li>
                     </ul>
                 </section>
 
@@ -150,8 +159,8 @@
                         <li>medical imaging (CT, PET, ...)</li>
                         <li>high content screening (HCS)</li>
                         <li>digital pathology/whole slide imaging (WSI)</li>
-                        <li>FLIM</li>
-                        <li>SPIM</li>
+                        <li>Fluorescence-lifetime imaging microscopy (FLIM)</li>
+                        <li>Light sheet fluorescence microscopy (LSFM)</li>
                       </ul>
                   </ul>
                 </section>
@@ -173,6 +182,7 @@ for (plane=0; plane < imageCount; plane++) {
   Ext.getPlaneTimingDeltaT(timestamps[plane], plane);
 }
                 </code></pre>
+                <img style="height:250px; border-width:0px" src="./images/ImageJ.png"/>
                 </section>
 
                  <section>
@@ -184,7 +194,10 @@ for plane = 1:imageCount
   image = bfGetPlane(r, plane, varargin{:});
   timestamp = omeMetadata.getPlaneDeltaT(0, plane - 1).value().doubleValue();
 end
-                </code></pre></section>
+                </code></pre>
+
+                <img style="height:250px; border-width:0px" src="./images/matlab.gif"/>
+                </section>
 
                   <section>
                   <pre>Java:<code>
@@ -197,7 +210,9 @@ for (int plane = 0; plane < reader.getImageCount(); plane++) {
   Number timestamp = omeMetadata.getPlaneDeltaT(0, plane).value();
 }
 
-                </code></pre></section>
+                </code></pre>
+                <img style="height:250px; border-width:0px" src="./images/java.png"/>
+                </section>
                 </section>
 
                 <section>
@@ -207,7 +222,7 @@ for (int plane = 0; plane < reader.getImageCount(); plane++) {
                       <li>full support for Windows</li>
                       <li>performance improvements, especially over network file systems</li>
                       <li>added units for most metadata values</li>
-                      <li>lots of bug fixes!</li>
+                      <li>approx. 130 bug fixes in 2015</li>
                     </ul>
                 </section>
 
@@ -216,9 +231,13 @@ for (int plane = 0; plane < reader.getImageCount(); plane++) {
 
                     <ul>
                       <li>Updates to the development process</li>
-                        <ul><li>More releases, and faster</li></ul>
+                        <ul>
+                          <li>More releases, and faster</li>
+                          <li>...but without compromising quality</li>
+                        </ul>
+                      <li>Updated ROI model</li>
                       <li>More usage examples and developer documentation</li>
-                      <li>Ideas welcome!</li>
+                      <li>Feedback welcome!</li>
                     </ul>
                 </section>
 
