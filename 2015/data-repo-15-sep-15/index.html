@@ -133,15 +133,15 @@
                           </tr>
                           <tr>
                               <th>ci</th>
-                              <th>Continuous Integration data (reference DBs)</th>
+                              <th>Continuous Integration repository (reference DBs)</th>
                           </tr>
                           <tr>
                               <th><i>data_repo</i></th>
-                              <th>File formats data repository</th>
+                              <th>Data repository</th>
                           </tr>
                           <tr>
                               <th>Documentation</th>
-                              <th>Model documentation placeholder</th>
+                              <th>Model documentation</th>
                           </tr>
                           <tr>
                               <th>team</th>
@@ -177,7 +177,7 @@
                               </tr>
                               <tr>
                                   <th>ci / config </th>
-                                  <th>Configuration files used for Continuous Integration</th>
+                                  <th>Continuous Integration</th>
                                   <th>no</th>
                               </tr>
                               <tr>
@@ -191,13 +191,13 @@
                                   <th>no</th>                              
                               </tr>
                               <tr>
-                                  <th>test_images*</th>
+                                  <th>test_images_*</th>
                                   <th>Testing subsets of from_skyking</th>
                                   <th>yes</th>
                               </tr>
                               <tr>
                                   <th>test_images_good</th>
-                                  <th>Samples of each format</th>
+                                  <th>Testing subset</th>
                                   <th>yes</th>
                               </tr>
                               <tr>
@@ -211,11 +211,16 @@
                     <section>
                         <h2>Curated datasets</h2>
                         <ul>
-                            <li><i>/ome/data_repo/from_skyking</i></li>
-                            <li>Filesets organized primarily by format</li>
+                            <li>Root directory <i>/ome/data_repo/from_skyking</i></li>
+                            <ul>
+                                <li>Datasets primarily organized by format</li>
+                                <li>Subfolders contains one of multiple filesets</li>
+                            </ul>
+                            <li>Group readable/not writeable</li>
+                            <li>QA datasets deep copied</li>
                             <li>Tested daily by the Bio-Formats automated tests</li>
                         </ul>
-                    </section>
+                    </section>                    
                 </section>
                           
                 <section>      
@@ -223,19 +228,43 @@
                         <h2>Bio-Formats automated tests</h2>
                         <ul>
                             <li>See the <a href="https://www.openmicroscopy.org/site/support/bio-formats5.1/developers/commit-testing.html">Bio-Formats developer documentation</a></li>
-                            <li>Ant <i>automated tests</i>target
+                            <li>Ant <i>automated-tests</i> target
                             <ul>
-                                <li>Scans files under <i>testng.repository</i></li>
-                                <li>Scans configuration files under <i>testng.configRepository</i></li>
-                                <li>Runs series of tests on each format file</i></li>
+                                <li>Scans files under root directory <i>testng.repository</i></li>
+                                <li>Scans matching configuration files under root configuration directory <i>testng.configRepository</i></li>
+                                <li>Runs series of tests on each configured fileset including metadata reading, bytes opening</i></li>
                             </ul></li>
                         </ul>
                     </section>
                 
                     <section>
                         <h2>Bio-Formats automated tests</h2>
-                        <h3>Continuous Integration jobs</h3>
+                        <p><a href="https://ci.openmicroscopy.org/pview/?match=BIOFORMATS.*repository.*&json={%22match%22%3A+%22BIOFORMATS.*repository.*%22}">Continuous Integration repository jobs</a></p>
                         <img src="images/bf-repository-jobs.png" width="100%" />
+                    </section>
+                    <section>
+                        <h2>Bio-Formats automated tests</h2>
+                        <ul>
+                            <li>Full repository jobs</li>
+                            <ul>
+                                <li>Testing the curated datasets repository</li>
+                                <li>Both Linux and Windows</li>
+                                <li>Running daily (or every 2 days for Windows)</li>
+                                <li>300K tests</li>
+                            </ul>
+                            <li>Test images good jobs</li>
+                            <ul>
+                                <li>Testing the test_images_good datasets repository</li>
+                                <li>300K tests</li>
+                            </ul>
+                            <li>Repository subset jobs</li>
+                            <ul>
+                                <li>Merges Bio-Formats PRs</li>
+                                <li>Logic to test one or multiple formats</li>
+                                <li>Primarily used for development</li>
+                            </ul>
+                            
+                        </ul>
                     </section>
                     
                     <section>
@@ -248,8 +277,8 @@
                 <section>
                     <h2>Configuration repository</h2>
                     <ul>
-                        <li><a href="https://github.com/openmicroscopy/data_repo_config">Private repository</a> hosting the configuration <i>.bioformats</i> files for the automated tests</li>
-                        <li>Configuration files can be modified via usual PR workflow</li>
+                        <li><a href="https://github.com/openmicroscopy/data_repo_config">Private repository</a> hosting the <i>.bioformats</i> configuration files for the automated tests</li>
+                        <li>Configuration files can be modified by PR workflow</li>
                         <li>Merged as part of the daily job suite - see <a href="https://ci.openmicroscopy.org/view/Mgmt/job/DATA_REPO_CONFIG-merge/">DATA_REPO_CONFIG-merge</a></li>
                         <li>Tagged as part of the release process</li>
                         <li>Improves process during significant reader modifications (Leica LIF)</li>
@@ -261,7 +290,7 @@
                     <ul>
                         <li>Data repository
                         <ul>
-                            <li>Towards parallelized tests using new IDR hardware</li>
+                            <li>Towards more parallelization using new IDR hardware</li>
                             <li>Background maintenance (curation, cleanup...)</li>
                         </ul></li>
                         <li>Configuration repository
