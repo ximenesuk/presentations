@@ -1,0 +1,354 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Data repository - 15th September 2015</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+        <!-- OME presentation overrides of the default theme -->
+        <style>
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+              text-transform: none;
+            }
+            .ome_theme {
+                background-image: url("images/ome-icon-opacity-05.png");
+                background-color: #f2f6f9;
+                background-repeat: no-repeat;
+                background-position: right -270px top -120px;
+            }
+            .reveal {
+                text-transform: none;   !important
+            }
+
+            .reveal section img {
+                border-width:0;
+                border-color: white;
+                box-shadow: 0 0 0px rgba(0,0,0,0);
+            }
+
+            .img_panel {
+                width: 150px;
+            }
+
+            .nobullet li {
+                list-style: none;
+            }
+
+            table.centre {
+                width: 100%;
+            }
+
+            .reveal .centre td {
+                text-align: center;
+            }
+
+            .rot90 {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+
+            .reveal .title {
+                position:absolute;
+                bottom:100%;
+                margin:5px;
+                color:red;
+            }
+
+            .larger li {
+                font-size: 120%
+                padding: 5px;
+            }
+
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body class="ome_theme">
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section>
+                    <h1>Data repository</h1>
+
+                    <h3>OME Tuesday meeting</h3>
+                    <h4>15th July 2015</h4>
+                    
+                    <h3>Sébastien Besson<br>
+                        
+                        <img src="images/ome-logo-200.png"/>
+                    </h3>
+                </section>
+
+                <section>
+                    <h2>Bio-Formats metrics</h2>
+                    <img src="images/bio-formats-stats.png"/>
+                </section>
+
+                <section>
+                    <h3>Presentation Outline</h3>
+                    <ul class="larger">
+                        <li>Data repository structure</li>
+                        <li>Bio-Formats automated tests</li>
+                        <li>Future work</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>OME repository</h2>
+                        <p>Squig mounted as /ome/</p>
+                    
+                        <table class="reveal" style="font-family: monospace; font-size: 90%; background: #FFFFFF" cellspacing="15" cellpadding="10">
+                          <tr style="font-weight: bold">
+                            <th style="text-align: left">Folder</th>
+                            <th>Description</th>
+                          </tr>
+                          <tr>
+                              <th><i>apache_repo</i></th>
+                              <th>QA file store</th>
+                          </tr>
+                          <tr>
+                              <th>ci</th>
+                              <th>Continuous Integration repository (reference DBs)</th>
+                          </tr>
+                          <tr>
+                              <th><i>data_repo</i></th>
+                              <th>Data repository</th>
+                          </tr>
+                          <tr>
+                              <th>Documentation</th>
+                              <th>Model documentation</th>
+                          </tr>
+                          <tr>
+                              <th>team</th>
+                              <th>Miscellaneous internal content</th>
+                          </tr>
+                          <tr>
+                              <th>www</th>
+                              <th>Static Web content (downloads, schemas)</th>
+                          </tr>
+                      </table>
+                    </section>
+
+                    <section>
+                        <h2>QA file store</h2>
+                    
+                        <ul>
+                            <li>File uploaded via <a href="https://www.openmicroscopy.org/qa2/">QA application</a></li>
+                            <li>Stored under <i>/ome/apache_repo/11378/Example_MJ.dm4</i></li>
+                            <img src="images/qa-screenshot.png" width="100%" />
+                         </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Data repository</h2>
+
+                            <table class="reveal" style="font-family: monospace; font-size: 90%; background: #FFFFFF" cellspacing="15" cellpadding="10">
+                              <tr style="font-weight: bold">
+                                <th style="text-align: left">Folder</th>
+                                <th>Description</th>
+                                <th>Symlinks</th>
+                              </tr>
+                              <tr>
+                                  <th>ci / config </th>
+                                  <th>Continuous Integration</th>
+                                  <th>no</th>
+                              </tr>
+                              <tr>
+                                  <th>from_*</th>
+                                  <th>File format datasets</th>
+                                  <th>no</th>
+                              </tr>
+                              <tr>
+                                  <th>from_skyking </th>
+                                  <th>Curated datasets</th>
+                                  <th>no</th>                              
+                              </tr>
+                              <tr>
+                                  <th>test_images_*</th>
+                                  <th>Testing subsets of from_skyking</th>
+                                  <th>yes</th>
+                              </tr>
+                              <tr>
+                                  <th>test_images_good</th>
+                                  <th>Testing subset</th>
+                                  <th>yes</th>
+                              </tr>
+                              <tr>
+                                  <th>public</th>
+                                  <th>Public datasets</th>
+                                  <th>yes</th>
+                              </tr>
+                            </table>
+                    </section>
+
+                    <section>
+                        <h2>Curated datasets</h2>
+                        <ul>
+                            <li>Root directory <i>/ome/data_repo/from_skyking</i></li>
+                            <ul>
+                                <li>Datasets primarily organized by format</li>
+                                <li>Subfolders contains one of multiple filesets</li>
+                            </ul>
+                            <li>Group readable/not writeable</li>
+                            <li>QA datasets deep copied</li>
+                            <li>Tested daily by the Bio-Formats automated tests</li>
+                        </ul>
+                    </section>                    
+                </section>
+                          
+                <section>      
+                    <section>
+                        <h2>Bio-Formats automated tests</h2>
+                        <ul>
+                            <li>See the <a href="https://www.openmicroscopy.org/site/support/bio-formats5.1/developers/commit-testing.html">Bio-Formats developer documentation</a></li>
+                            <li>Ant <i>automated-tests</i> target
+                            <ul>
+                                <li>Scans files under root directory <i>testng.repository</i></li>
+                                <li>Scans matching configuration files under root configuration directory <i>testng.configRepository</i></li>
+                                <li>Runs series of tests on each configured fileset including metadata reading, bytes opening</i></li>
+                            </ul></li>
+                        </ul>
+                    </section>
+                
+                    <section>
+                        <h2>Bio-Formats automated tests</h2>
+                        <p><a href="https://ci.openmicroscopy.org/pview/?match=BIOFORMATS.*repository.*&json={%22match%22%3A+%22BIOFORMATS.*repository.*%22}">Continuous Integration repository jobs</a></p>
+                        <img src="images/bf-repository-jobs.png" width="100%" />
+                    </section>
+                    <section>
+                        <h2>Bio-Formats automated tests</h2>
+                        <ul>
+                            <li>Full repository jobs</li>
+                            <ul>
+                                <li>Testing the curated datasets repository</li>
+                                <li>Both Linux and Windows</li>
+                                <li>Running daily (or every 2 days for Windows)</li>
+                                <li>300K tests</li>
+                            </ul>
+                            <li>Test images good jobs</li>
+                            <ul>
+                                <li>Testing the test_images_good datasets repository</li>
+                                <li>300K tests</li>
+                            </ul>
+                            <li>Repository subset jobs</li>
+                            <ul>
+                                <li>Merges Bio-Formats PRs</li>
+                                <li>Logic to test one or multiple formats</li>
+                                <li>Primarily used for development</li>
+                            </ul>
+                            
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2>Bio-Formats automated tests</h2>
+                        <p>Run automated tests against one (or multiple) file formats</p>
+                        <img src="images/bf-repository-subset.png" width="100%" />
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Configuration repository</h2>
+                    <ul>
+                        <li><a href="https://github.com/openmicroscopy/data_repo_config">Private repository</a> hosting the <i>.bioformats</i> configuration files for the automated tests</li>
+                        <li>Configuration files can be modified by PR workflow</li>
+                        <li>Merged as part of the daily job suite - see <a href="https://ci.openmicroscopy.org/view/Mgmt/job/DATA_REPO_CONFIG-merge/">DATA_REPO_CONFIG-merge</a></li>
+                        <li>Tagged as part of the release process</li>
+                        <li>Improves process during significant reader modifications (Leica LIF)</li>
+                    </ul>
+                </section>
+                    
+                <section>
+                    <h2>Future work</h2>
+                    <ul>
+                        <li>Data repository
+                        <ul>
+                            <li>Towards more parallelization using new IDR hardware</li>
+                            <li>Background maintenance (curation, cleanup...)</li>
+                        </ul></li>
+                        <li>Configuration repository
+                        <ul>
+                            <li>More metadata support</li>
+                            <li>Usage for stats</li>
+                            <li>A tool for searching data?</li>
+                        </ul></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Thank you</h2>
+
+                    <div>
+                        <img src="images/wellcome.png" height="150px">
+                        <img src="images/bbsrc.png" height="150px">
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="reveal-js/lib/js/head.min.js"></script>
+        <script src="reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // parallaxBackgroundImage: "images/ome-icon-opacity-big.png",
+                // parallaxBackgroundSize: "2048px 1073px",
+                // transition: 'linear',
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                transitionSpeed: 'slow',
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
