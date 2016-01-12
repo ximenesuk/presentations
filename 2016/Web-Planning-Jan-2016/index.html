@@ -1,0 +1,237 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Web Planning: Jan 2016</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+        <!-- OME presentation overrides of the default theme -->
+        <style>
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+              text-transform: none;
+            }
+            .reveal h1 {
+                font-size: 80px;
+            }
+            .reveal h2 {
+                font-size: 60px;
+            }
+            .reveal h3 {
+                font-size: 40px;
+            }
+            .ome_theme {
+                background-image: url("images/ome-icon-opacity.png");
+                background-color: #f2f6f9;
+                background-repeat: no-repeat;
+                background-position: right -270px top -120px;
+            }
+            .reveal {
+                text-transform: none;   !important
+            }
+
+            .reveal section img {
+                border-width:0;
+                border-color: white;
+            }
+
+            .img_panel {
+                width: 150px;
+            }
+
+            .nobullet li {
+                list-style: none;
+            }
+
+            table.centre {
+                width: 100%;
+            }
+
+            .reveal .centre td {
+                text-align: center;
+            }
+
+            .rot90 {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+
+            .reveal .title {
+                position:absolute;
+                bottom:100%;
+                margin:5px;
+                color:red;
+            }
+            .larger {
+                font-size: 80px !important;
+            }
+
+            .no_shadow {
+                box-shadow:0 0 0 #fff !important;
+            }
+
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body class="ome_theme">
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <!-- title page -->
+        <section>
+            <h1>OMERO.web planning</h1>
+            <h3>Tuesday Group Meeting<br>
+                26th January, 2016</h3>
+            <p>
+                <small>
+                    Will Moore | Aleksandra Tarkowska
+                </small>
+            </p>
+        </section>
+
+        <!-- talk outline -->
+        <section>
+            <h2>Talk outline</h2>
+            <ul>
+                <li>Requirements / What needs fixing?</li>
+                <li>Current state of OMERO.web</li>
+                <li>Proposed Javascript changes</li>
+                <li>Proposed backend changes</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Requirements / What needs fixing?</h2>
+            <ul>
+                <li>Aging codebase</li>
+                <li>Outgrown original design</li>
+                <li>"jQuery soup" - fragile to change</li>
+                <li>Improve ability of 3rd party developers to configure (especially for viewer)</li>
+                <li>Make use of new web tech & features (E.g. routing)</li>
+                <li>Deploy web code as Desktop app?</li>
+                <li>Expose reusable webclient api</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Current state of OMERO.web</h2>
+            <ul>
+                <li>Django app: html generated on server</li>
+                <li>jQuery & AJAX updates the page in browser</li>
+                <li>Approx 3k lines of js in static files, 6k lines embedded in html</li>
+                <li>Small number of 'top-level' pages:
+                    <pre>data, tags, public, search, history</pre>
+                </li>
+                <li>jstree used to load data, trigger other panels to load selected items</li>
+                <li>Active group is stored in Django session</li>
+                <li>See PR to improve
+                    <a href="https://github.com/openmicroscopy/ome-documentation/pull/1378">
+                        webclient docs
+                    </a>
+                </li> 
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Background: Javascript MVC frameworks</h2>
+
+            <ul>
+                <li>Backbone (OMERO.figure, trello): lightweight library</li>
+                <li>Angular, from Google: most popular, 2-way binding</li>
+                <li>Ember
+                    (<a href="https://github.com/discourse/discourse">Discourse</a>):
+                    strict rules, good for teams
+                </li>
+                <li>React (facebook,
+                    <a href="https://github.com/MicronOxford/webtagging/pull/37">
+                        OMERO.webtagging #37
+                    </a>): declarative, "view" part of MVC</li>
+                <li>Hundreds more!</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Proposed Javascript changes</h2>
+
+            <ul>
+                <li>Update webclient, don't start from scratch</li>
+                <li>Keep jstree</li>
+                <li>Move js code into static files (not in html)
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4389">
+                        #4389
+                    </a>
+                </li>
+                <li>Webclient requests moved to webgateway json API
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4357">
+                        #4357
+                    </a>
+                </li>
+                <li>Use React.js as needed</li>
+            </ul>
+        </section>
+
+        </div>
+
+        </div>
+
+        <script src="reveal-js/lib/js/head.min.js"></script>
+        <script src="reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
