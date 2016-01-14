@@ -133,19 +133,39 @@
                 <li>"jQuery soup" - fragile to change</li>
                 <li>Improve ability of 3rd party developers to configure (especially for viewer)</li>
                 <li>Make use of new web tech & features (E.g. routing)</li>
-                <li>Deploy web code as Desktop app?</li>
-                <li>Expose reusable webclient api</li>
+                <li>Expose reusable webclient API (JS & Webservices)</li>
+                <li>Performance and scalability</li>
+                <li>Deploy web code as Desktop app</li>
+                <li>Super easy installer / individual package</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Current state of OMERO.web (1...)</h2>
+            <ul>
+                <li>'top-level' pages in one application:
+                    <pre>data, tags, public, search, history</pre>
+                </li>
+                <li>Django templates: dynamicly generated HTML on the server</li>
+                <li>jQuery & AJAX updates the page in browser <br>
+                    Mostly loading data as html, some calls load json
+                </li>
+                <li>JSTree used to load data, trigger other panels to load selected items</li>
+                <li>Plugin framework for users to add right / centre panels (webtagging)</li>
+                <li>State is stored in Django session (active_group, user_id, activities)</li>
+                <li>See PR to improve
+                    <a href="https://github.com/openmicroscopy/ome-documentation/pull/1378">
+                        webclient docs
+                    </a>
+                </li>
             </ul>
         </section>
 
 
         <section>
-            <h2>Current state of OMERO.web (1...)</h2>
+            <h2>Current state of OMERO.web (2...)</h2>
             <ul>
-                <li>Django app: html generated on server</li>
-                <li>jQuery & AJAX updates the page in browser <br>
-                    Mostly loading data as html, some calls load json
-                </li>
+
                 <li>Approx 3k lines of js in static files</li>
                 <li>Approx 6k lines embedded in html
                     <ul>
@@ -153,27 +173,23 @@
                         <li>Adds to page size of each request</li>
                     </ul>
                 </li>
-                <li>Small number of 'top-level' pages:
-                    <pre>data, tags, public, search, history</pre>
-                </li>
+                <li>Approx 5k lines in webclient views</li>
+
             </ul>
         </section>
 
 
         <section>
-            <h2>Current state of OMERO.web (2)</h2>
+            <h2>Current state of OMERO.web (...3)</h2>
             <ul>
-                <li>jstree used to load data, trigger other panels to load selected items</li>
-                <li>Plugin framework for users to add right / centre panels (webtagging)</li>
-                <li>State is stored in Django session (active_group, user_id, activities)</li>
-                <li>See PR to improve
-                    <a href="https://github.com/openmicroscopy/ome-documentation/pull/1378">
-                        webclient docs
-                    </a>
-                </li> 
+                <li>Lack of efficient and easy to set up cache.</li>
+                <li>Not well maintained HTTP Session Store.</li>
+                <li>Not very many RESTfull webservices.</li>
+                <li>Limited usage of Public user.</li>
+                <li>Still supporting Django 1.6</li>
+                <li>Lack of PiPy installer </li>
             </ul>
         </section>
-
 
         <section>
             <h2>Background: Javascript MVC frameworks</h2>
@@ -229,6 +245,38 @@
                     </a>
                 </li>
                 <li>Use React.js as needed</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>RESTfull webservices</h2>
+            <ul>
+                <li>We already covered basic data management used by jstree</li>
+                <li>Focus on Metadata panel as it becomes a bottle neck</li>
+                <li>Integrate serialisers (e.g. <a href="https://github.com/openmicroscopy/omero-marshal">Serialisers</a>)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Decoupling</h2>
+            <ul>
+                <li>OMERO.web and OmeroPy should seaparated from the server package.</li>
+                <li>Each feature could become an app</li>
+                <li>Data manager, Search engine, History, Admin</li>
+                <li>Simple PiPy installer (<prep>pip install omeroweb omeropy</prep>)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Cache backend</h2>
+            <p>Redis is an in memory key-value store.</p>
+            <li>Review URLs</li>
+
+            <ul>
+                <li>Test Redis as:</li>
+                <li>Session store</li>
+                <li>Rendering data</li>
+                <li>Json data</li>
             </ul>
         </section>
 
