@@ -140,16 +140,32 @@
 
 
         <section>
-            <h2>Current state of OMERO.web</h2>
+            <h2>Current state of OMERO.web (1...)</h2>
             <ul>
                 <li>Django app: html generated on server</li>
-                <li>jQuery & AJAX updates the page in browser</li>
-                <li>Approx 3k lines of js in static files, 6k lines embedded in html</li>
+                <li>jQuery & AJAX updates the page in browser <br>
+                    Mostly loading data as html, some calls load json
+                </li>
+                <li>Approx 3k lines of js in static files</li>
+                <li>Approx 6k lines embedded in html
+                    <ul>
+                        <li>Not linted (jshint) </li>
+                        <li>Adds to page size of each request</li>
+                    </ul>
+                </li>
                 <li>Small number of 'top-level' pages:
                     <pre>data, tags, public, search, history</pre>
                 </li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Current state of OMERO.web (2)</h2>
+            <ul>
                 <li>jstree used to load data, trigger other panels to load selected items</li>
-                <li>Active group is stored in Django session</li>
+                <li>Plugin framework for users to add right / centre panels (webtagging)</li>
+                <li>State is stored in Django session (active_group, user_id, activities)</li>
                 <li>See PR to improve
                     <a href="https://github.com/openmicroscopy/ome-documentation/pull/1378">
                         webclient docs
@@ -174,6 +190,20 @@
                         OMERO.webtagging #37
                     </a>): declarative, "view" part of MVC</li>
                 <li>Hundreds more!</li>
+                <li><a href="http://love2dev.com/#!article/Yes-Fast-Food-Frameworks-Cost-Too-Much">
+                    Objections to frameworks:</a> Slow on Mobile, Cost of learning, longevity?
+                </li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Do we need a Javascript MVC?</h2>
+
+            <ul>
+                <li>We already have the jstree, to manage containers</li>
+                <li>Other places may be simple enough not to have a separate Data Model</li>
+                <li>Exception to this is the viewer, which already has a js Model</li>
             </ul>
         </section>
 
@@ -182,14 +212,18 @@
             <h2>Proposed Javascript changes</h2>
 
             <ul>
-                <li>Update webclient, don't start from scratch</li>
+                <li>Update webclient, don't start from scratch <br>
+                    See: <a href="https://www.reddit.com/r/javascript/comments/3v43qf/im_a_web_developer_who_uses_jquery_to_write_a/"/>Redit advice</a> |
+                    <a href="http://www.joelonsoftware.com/articles/fog0000000069.html">Never start from scratch</a>
+                </li>
                 <li>Keep jstree</li>
                 <li>Move js code into static files (not in html)
                     <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4389">
                         #4389
                     </a>
                 </li>
-                <li>Webclient requests moved to webgateway json API
+                <li>Fewer top-level pages: <pre>data, search, history (eventually just one?)</pre>
+                <li>All other requests moved to webgateway json API
                     <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4357">
                         #4357
                     </a>
