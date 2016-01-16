@@ -103,9 +103,9 @@
 
         <!-- title page -->
         <section>
-            <h1>OMERO.web planning</h1>
+            <h1>OMERO.web modernisation</h1>
             <h3>Tuesday Group Meeting<br>
-                26th January, 2016</h3>
+                19th January, 2016</h3>
             <p>
                 <small>
                     Will Moore | Aleksandra Tarkowska
@@ -143,21 +143,16 @@
         <section>
             <h2>Current state of OMERO.web (1...)</h2>
             <ul>
-                <li>'top-level' pages in one application:
-                    <pre>data, tags, public, search, history</pre>
-                </li>
                 <li>Django templates: dynamicly generated HTML on the server</li>
                 <li>jQuery & AJAX updates the page in browser <br>
                     Mostly loading data as html, some calls load json
                 </li>
+                <li>'top-level' pages in one application:
+                    <pre>data, tags, public, search, history</pre>
+                </li>
                 <li>JSTree used to load data, trigger other panels to load selected items</li>
                 <li>Plugin framework for users to add right / centre panels (webtagging)</li>
                 <li>State is stored in Django session (active_group, user_id, activities)</li>
-                <li>See PR to improve
-                    <a href="https://github.com/openmicroscopy/ome-documentation/pull/1378">
-                        webclient docs
-                    </a>
-                </li>
             </ul>
         </section>
 
@@ -165,16 +160,20 @@
         <section>
             <h2>Current state of OMERO.web (2...)</h2>
             <ul>
-
                 <li>Approx 3k lines of js in static files</li>
-                <li>Approx 6k lines embedded in html
+                <li>Approx 6k lines embedded in HTML
                     <ul>
                         <li>Not linted (jshint) </li>
                         <li>Adds to page size of each request</li>
                     </ul>
                 </li>
-                <li>Approx 5k lines in webclient views</li>
-
+                <li>Separate js files not concatenated, minimised etc</li>
+                <li>Approx 5k lines of Python in webclient views.py</li>
+                <li>See PR to improve
+                    <a href="https://github.com/openmicroscopy/ome-documentation/pull/1378">
+                        webclient docs
+                    </a>
+                </li>
             </ul>
         </section>
 
@@ -191,8 +190,19 @@
             </ul>
         </section>
 
+
         <section>
-            <h2>Background: Javascript MVC frameworks</h2>
+            <h2>Questions</h2>
+            <ul>
+                <li>Adopt an "MVC" framework?</li>
+                <li>Start from scratch or update webclient?</li>
+                <li>Use build tools?</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Javascript MVC frameworks</h2>
 
             <ul>
                 <li>Backbone (OMERO.figure, trello): lightweight library</li>
@@ -201,7 +211,8 @@
                     (<a href="https://github.com/discourse/discourse">Discourse</a>):
                     strict rules, good for teams
                 </li>
-                <li>React (facebook,
+                <li><a href="https://facebook.github.io/react/" target="react"/>React.js</a>
+                    (facebook,
                     <a href="https://github.com/MicronOxford/webtagging/pull/37">
                         OMERO.webtagging #37
                     </a>): declarative, "view" part of MVC</li>
@@ -210,6 +221,75 @@
                     Objections to frameworks:</a> Slow on Mobile, Cost of learning, longevity?
                 </li>
             </ul>
+        </section>
+
+
+        <section>
+            <h2>Evaluating React.js: Centre Panel</h2>
+
+            <ul>
+                <li>Centre panel populated from jsTree data:
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4242/" >#4242</a>
+                    <ul><li>Uses unscore.js template to create HTML</li></ul>
+                </li>
+                <li>
+                    Bug: right panel scrolls on selection change
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4297" />#4297</a>:
+<pre><code># If it's just a selection change,
+# simply highlight (don't re-render whole panel)
+if (parentId === newParentId
+    && event.type !== "load_node"
+    && event.type !== "delete_node") {
+ 
+    highlightSelectedThumbs(selected);
+    return;
+}</code></pre>
+                </li>
+                <li>
+                    Bug: Also re-render on copy & paste
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4336" />#4336</a>:
+<pre><code> if (parentId === newParentId
++    && event.type !== "copy_node"
++    && event.type !== "create_node"
+     && event.type !== "load_node"
+     && event.type !== "delete_node"
+     && event.type !== "refreshThumb" {</code></pre>
+                </li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Using React.js for centre panel
+                <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4413">#4413</a>
+            </h2>
+
+            <ul>
+                <li>Don't have to worry about what changes are expected from different events</li>
+                <li>Simply declare how jsTree data maps to centre panel HTML
+                    <ul>
+                        <li>E.g. image selected -> class 'ui-selected'</li>
+                        <li>E.g. iconSize -> img width</li>
+                    </ul>
+                </li>
+            </ul>
+<pre><code>&lt ImageIcon &gt
+
+render: function() {
+    var image = this.props.image,
+        cls = [];
+    if (image.selected) {cls.push('ui-selected')};
+    if (image.fsSelected) {cls.push('fs-selected')};
+    return (
+        &lt li className={"row " + cls.join(" ")} &gt
+            &lt img width={this.props.iconSize + "px"}
+        ...
+</code></pre>
+        </section>
+
+
+        <section data-background="images/ReactCentrePanel.png" data-background-transition="slide">
+
         </section>
 
 
@@ -232,14 +312,14 @@
                     See: <a href="https://www.reddit.com/r/javascript/comments/3v43qf/im_a_web_developer_who_uses_jquery_to_write_a/"/>Redit advice</a> |
                     <a href="http://www.joelonsoftware.com/articles/fog0000000069.html">Never start from scratch</a>
                 </li>
-                <li>Keep jstree</li>
+                <li>Keep jstree - Improve decoupling from other components</li>
                 <li>Move js code into static files (not in html)
                     <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4389">
                         #4389
                     </a>
                 </li>
                 <li>Fewer top-level pages: <pre>data, search, history (eventually just one?)</pre>
-                <li>All other requests moved to webgateway json API
+                <li>All AJAX requests use JSON (not HTML) & moved to webgateway/api/
                     <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4357">
                         #4357
                     </a>
