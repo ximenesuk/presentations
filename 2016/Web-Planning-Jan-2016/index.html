@@ -128,13 +128,13 @@
         <section>
             <h2>Requirements / What needs fixing?</h2>
             <ul>
-                <li>Aging codebase</li>
                 <li>Outgrown original design</li>
                 <li>"jQuery soup" - fragile to change</li>
-                <li>Improve ability of 3rd party developers to configure (especially for viewer)</li>
+                <li>Aging codebase</li>
                 <li>Make use of new web tech & features (E.g. routing)</li>
                 <li>Expose reusable webclient API (JS & Webservices)</li>
                 <li>Performance and scalability</li>
+                <li>Improve ability of 3rd party developers to configure (especially for viewer)</li>
                 <li>Deploy web code as Desktop app</li>
                 <li>Super easy installer / individual package</li>
             </ul>
@@ -196,7 +196,7 @@
             <ul>
                 <li>Adopt an "MVC" framework?</li>
                 <li>Start from scratch or update webclient?</li>
-                <li>Use build tools?</li>
+                <li>Use javascript build tools?</li>
             </ul>
         </section>
 
@@ -300,6 +300,22 @@ render: function() {
                 <li>We already have the jstree, to manage containers</li>
                 <li>Other places may be simple enough not to have a separate Data Model</li>
                 <li>Exception to this is the viewer, which already has a js Model</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Build tools</h2>
+
+            <ul>
+                <li>Concatenate, transpile (JSX, ES2015), minimise etc</li>
+                <li>Grunt (general purpose task runner, OMERO.figure)</li>
+                <li>webpack (more recent, <a href="https://github.com/MicronOxford/webtagging/pull/37">
+                        OMERO.webtagging #37
+                    </a>
+                </li>
+                <li>Others (gulp, brocolli etc)</li>
+                <li>Not urgent: Introduce as required</li>
             </ul>
         </section>
 
