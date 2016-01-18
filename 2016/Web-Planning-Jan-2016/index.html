@@ -341,7 +341,7 @@ render: function() {
             <h2>Decoupling</h2>
             <ul>
                 <li>OMERO.web and OmeroPy should seaparate from the server package.</li>
-                <li>Each feature could become separate app:
+                <li>Each feature could become a separate app:
                 <ul>
                     <li>Data manager</li>
                     <li>Search engine</li>
@@ -354,16 +354,21 @@ render: function() {
         </section>
 
         <section>
-            <h2>Cache backend</h2>
-            <p>Redis is an in memory key-value store.</p>
+            <h2>Cache backend <a href="https://trac.openmicroscopy.org/ome/ticket/11517">#11517</a></h2>
             <ul>
-                <li>Review URLs</li>
-                <li>Test Redis as:</li>
+                <li>Memcached - simple in memory cache.</li>
+                <li>Redis - flexible and complex an in memory key-value store: highly scalable, persistant data store.</li>
+                <li>Redis used as:
                 <ul>
                     <li>Session store</li>
                     <li>Rendering data</li>
-                    <li>Json data</li>
+                    <li>JSON response</li>
                 </ul>
+                </li>
+            </ul>
+            
+            <p><a href="https://docs.djangoproject.com/en/1.8/topics/cache/#the-low-level-cache-api">Django caching low level API</a></p>
+            <p>Q:Future of webgateway cache?</p>
             </ul>
         </section>
 
