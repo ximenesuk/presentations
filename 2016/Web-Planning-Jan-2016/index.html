@@ -313,13 +313,32 @@ render: function() {
 
             <ul>
                 <li>Concatenate, transpile (JSX, ES2015), minimise, dependency management etc</li>
+                <li>Currently we use Django pipeline (can use Babel for ES2015)</li>
                 <li>Grunt (general purpose task runner, OMERO.figure)</li>
                 <li>webpack (more recent, <a href="https://github.com/MicronOxford/webtagging/pull/37">
                         OMERO.webtagging #37
                     </a>
                 </li>
                 <li>Others (gulp, brocolli etc)</li>
+                <li>Need to investigate options further</li>
                 <li>Not urgent: Introduce as required</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Web -> Desktop application</h2>
+
+            <ul>
+                <li>Use Cases:
+                    <ul>
+                        <li>Read & write local files - is this useful?</li>
+                        <li>Launch other applications, E.g ImageJ, Insight</li>
+                    </ul>
+                </li>
+                <li>
+                    Evaluate <a href="http://electron.atom.io/">Electron.io</a> (from github)
+                </li>
             </ul>
         </section>
 
