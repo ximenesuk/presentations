@@ -182,8 +182,9 @@
             <h2>Current state of OMERO.web (...3)</h2>
             <ul>
                 <li>Lack of efficient and easy to set up cache.</li>
-                <li>Not well maintained HTTP Session Store.</li>
+                <li>Not well maintained HTTP Session backend.</li>
                 <li>Not very many RESTfull webservices.</li>
+                <li>No serializers.</li>
                 <li>Limited usage of Public user.</li>
                 <li>Still supporting Django 1.6</li>
                 <li>Lack of pip installer </li>
@@ -347,25 +348,23 @@ render: function() {
         <section>
             <h2>RESTfull webservices</h2>
             <ul>
-                <li>We already covered basic data management used by jstree</li>
-                <li>Focus on Metadata panel as it becomes a bottle neck</li>
+                <li>We already covere basic data management used by jstree</li>
+                <li>Focus on Metadata panel as it becomes a bottleneck</li>
                 <li>Integrate serialisers (e.g. <a href="https://github.com/openmicroscopy/omero-marshal">Serialisers</a>)</li>
             </ul>
         </section>
 
         <section>
             <h2>Decoupling</h2>
+            <li>Flexible and easy configurable modules to build a layout</li>
+            <img height="500px" src="images/ipad.png"/>
+        </section>
+
+        <section>
+            <h2>Search engine powered by OMERO</h2>
             <ul>
-                <li>OMERO.web and OmeroPy should seaparate from the server package.</li>
-                <li>Each feature could become a separate app:
-                <ul>
-                    <li>Data manager</li>
-                    <li>Search engine</li>
-                    <li>History</li>
-                    <li>Admin, etc</li>
-                </ul>
-                </li>
-                <li>Simple installer <pre><code contenteditable class="bash">pip install omeroweb omeropy</code></pre></li>
+                <li>Search as a separate web application</li>
+                <li>Useful for public repository</li>
             </ul>
         </section>
 
@@ -386,6 +385,14 @@ render: function() {
             <p><a href="https://docs.djangoproject.com/en/1.8/topics/cache/#the-low-level-cache-api">Django caching low level API</a></p>
             <p>Q:Future of webgateway cache?</p>
             </ul>
+        </section>
+
+        <section>
+            <h2>Installer</h2>
+            <ul>
+                <li>OMERO.web and OmeroPy are part of the server package.</li>
+                <li>Simple installer <pre><code contenteditable class="bash">pip install omeroweb omeropy</code></pre></li>
+             </ul>
         </section>
 
         </div>
