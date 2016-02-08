@@ -115,15 +115,15 @@ showtabs=false
   \begin{itemize}
   \item Compute features on 37\,TB of image data from the {\bfseries
     IDR project}:
-  \item \url{http://idr-demo.openmicroscopy.org}
+  \item {\color{blue} \url{http://idr-demo.openmicroscopy.org}}
     \begin{itemize}
     \item 11 genetic/siRNA screens from published papers
     \end{itemize}
-  \item \url{http://idr-demo.openmicroscopy.org/mito}
+  \item {\color{blue} \url{http://idr-demo.openmicroscopy.org/mito}}
     \begin{itemize}
     \item Mitocheck screen \urlref{http://mitosys.org}
     \end{itemize}
-  \item \url{http://idr-demo.openmicroscopy.org/tara}
+  \item {\color{blue} \url{http://idr-demo.openmicroscopy.org/tara}}
     \begin{itemize}
     \item Tara Oceans study \urlref{http://oceans.taraexpeditions.org/en}
     \end{itemize}
@@ -132,11 +132,11 @@ showtabs=false
 \end{frame}
 
 \begin{frame}{IDR on OMERO}
-  \begin{center}
-    \pgfimage[width=\textwidth]{img/idr}
- \end{center}
+\begin{columns}
+  \column{\dimexpr\paperwidth-10pt}
+  \pgfimage[width=\textwidth]{img/idr}
+\end{columns}
 \end{frame}
-
 
 \begin{frame}{How to \ldots}
 \begin{center}
@@ -230,6 +230,7 @@ showtabs=false
         \end{itemize}
       \item Pydoop-based MapReduce features computation
         \begin{itemize}
+        \item Map-only job
         \item uses WND-CHARM
         \end{itemize}
       \item Avro-based serialization of images and output features
@@ -290,9 +291,9 @@ showtabs=false
     \begin{itemize}
     \item Hadoop is designed for streaming access to data
     \item TIFF requires arbitrary seeks
-    \item This is \textbf{not} a problem when driving computationally
-      intensive applications like WND-CHARM
     \item Could be fixed by adding a caching layer to Bio-Formats
+    \item However, it does \textbf{not} have a significant impact on
+      computationally intensive applications like WND-CHARM
     \end{itemize}
   \end{itemize}
 \end{center}
