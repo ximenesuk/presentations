@@ -1,0 +1,319 @@
+\pdfminorversion=4
+\documentclass[compress]{beamer}
+
+% no header at all
+%% \setbeamertemplate{headline}{}
+
+\usefonttheme[onlymath]{serif}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}  % TODO: try Pittsburgh, Rochester, Madrid
+  \setbeamercovered{transparent}
+}
+
+% http://texblog.net/latex-archive/uncategorized/beamer-footline-frame-number
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+  \oldmacro\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+
+%% \usepackage[english,italian]{babel}
+%% \usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{color}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+%% \usepackage{textpos}
+%% \usepackage{bibentry}
+\usepackage[backend=bibtex,style=verbose,citestyle=verbose,autocite=footnote]{biblatex}
+
+
+%http://tex.stackexchange.com/questions/58901
+\usepackage{tikz}
+\newcommand{\frownie}{\tikz[baseline=-0.75ex,black]{
+    \draw circle (2mm);
+\node[fill,circle,inner sep=0.5pt] (left eye) at (135:0.8mm) {};
+\node[fill,circle,inner sep=0.5pt] (right eye) at (45:0.8mm) {};
+\draw (-145:0.9mm) arc (120:60:1.5mm);
+    }
+}
+
+
+\newcommand{\FIXME}[1]{{\color{red}{\textbf{FIXME: #1}}}}
+\newcommand{\urlref}[1]{{\small \texttt{(}{\color{blue}\url{#1}}\texttt{)}}}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\renewcommand{\footnotesize}{\normalfont\tiny}
+\addbibresource{main.bib}
+
+\pgfdeclareimage[width=1.2cm]{omelogo}{img/ome-logo-200}
+
+%% \setbeamersize{text margin left=0.5cm}
+%% \setbeamersize{text margin right=0.5cm}
+
+%% \setbeamertemplate{itemize/enumerate body begin}{\large}
+%% \setbeamertemplate{itemize/enumerate subbody begin}{\normalsize}
+\setbeamertemplate{itemize/enumerate subsubbody begin}{\small}
+\setbeamertemplate{itemize subitem}[square]
+\setbeamertemplate{itemize subsubitem}[default]
+
+\institute{
+OME Tuesday Meeting
+}
+\title{Distributed Feature Calculation with Pydoop}
+\author{Simone Leo}
+\logo{\pgfuseimage{omelogo}}
+\date{09/02/2016}
+\titlegraphic{\pgfuseimage{omelogo}}
+
+% listings config
+\lstset{ %
+language=python,
+basicstyle=\ttfamily\small,
+keywordstyle=\color{brown},
+commentstyle=\color{red},
+stringstyle=\ttfamily,
+tabsize=4,
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false
+}
+
+
+%% \AtBeginSection[]
+%% {
+%%   \begin{frame}<beamer>{Outline}
+%%     \tableofcontents[currentsection]
+%%   \end{frame}
+%% }
+
+%% \AtBeginSubsection[]
+%% {
+%%   \begin{frame}<beamer>{Outline}
+%%     \tableofcontents[currentsection,currentsubsection]
+%%   \end{frame}
+%% }
+
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage{}
+\end{frame}
+
+
+%% \section[Introduction]{Introduction}
+
+%% \subsection[Big Data]{Big Data in the Life Sciences}
+
+\begin{frame}{The Problem}
+\begin{center}
+  \begin{itemize}
+  \item Compute features on 37\,TB of image data from the {\bfseries
+    IDR project}:
+  \item {\color{blue} \url{http://idr-demo.openmicroscopy.org}}
+    \begin{itemize}
+    \item 11 genetic/siRNA screens from published papers
+    \end{itemize}
+  \item {\color{blue} \url{http://idr-demo.openmicroscopy.org/mito}}
+    \begin{itemize}
+    \item Mitocheck screen \urlref{http://mitosys.org}
+    \end{itemize}
+  \item {\color{blue} \url{http://idr-demo.openmicroscopy.org/tara}}
+    \begin{itemize}
+    \item Tara Oceans study \urlref{http://oceans.taraexpeditions.org/en}
+    \end{itemize}
+  \end{itemize}
+\end{center}
+\end{frame}
+
+\begin{frame}{IDR on OMERO}
+\begin{columns}
+  \column{\dimexpr\paperwidth-10pt}
+  \pgfimage[width=\textwidth]{img/idr}
+\end{columns}
+\end{frame}
+
+\begin{frame}{How to \ldots}
+\begin{center}
+  \begin{itemize}
+    \item Get data out of OMERO
+      \begin{itemize}
+      \item OMERO script dumps individual planes to disk
+        \begin{itemize}
+        \item As image (e.g., TIFF)
+        \item As .npy
+        \end{itemize}
+      \item OMERO script gets file paths, Bio-Formats reads images
+      \end{itemize}
+    \item Convert data to a format that Python can read
+      \begin{itemize}
+      \item Image \& .npy already OK
+      \item Bio-Formats wrappers (python-bioformats, PIMS)
+      \item Avro
+      \end{itemize}
+    \item Distribute the workload
+      \begin{itemize}
+      \item Manually \frownie{}
+      \item Multiprocessing
+      \item Hadoop
+      \end{itemize}
+  \end{itemize}
+\end{center}
+\end{frame}
+
+%% Hadoop = de facto standard (others compare to it)
+%% Alternatives: Apache Spark, HPCC, ...
+\begin{frame}[fragile]{MapReduce and Hadoop}
+  \begin{center}
+    \begin{itemize}
+    \item Designed for data-driven applications
+    \item Abstraction layer that hides parallelization details
+    \item The developer writes two functions: \texttt{map} and \texttt{reduce}
+    \end{itemize}
+    %% FIXME: use columns to make this look better
+    \begin{algorithm}[H]
+      %% \caption{MapReduce word count}
+      \label{alg:wc}
+      \begin{algorithmic}
+        % a typical example of data-driven application...
+        \Function{map}{$key,value$}
+        \For{$word\gets value$}
+        \State{} emit($word$, 1)
+        \EndFor{}
+        \EndFunction{}
+        \Function{reduce}{$key,values$}
+        \State{} $count\gets 0$
+        \For{$v\gets values$}
+        \State{} $count\gets count+v$
+        \EndFor{}
+        \State{} emit($key,count$)
+        \EndFunction{}
+      \end{algorithmic}
+    \end{algorithm}
+  \end{center}
+\end{frame}
+
+\begin{frame}{MapReduce --- Word Count}
+  \begin{center}
+    \pgfimage[height=7cm]{img/wc}
+ \end{center}
+\end{frame}
+
+\begin{frame}{MapReduce --- Execution Model}
+  \begin{center}
+    \pgfimage[height=6.4cm]{img/mr-exec}
+ \end{center}
+\end{frame}
+
+\begin{frame}{Pydoop-features}
+  \begin{center}
+    \begin{itemize}
+    \item Pydoop \urlref{http://crs4.github.io/pydoop}
+      \begin{itemize}
+      \item Python Hadoop API
+      \item Brings Python's wealth of scientific libraries to Hadoop
+      \item $\approx$ 100 downloads / day
+      \item Support for transparent Avro serialization
+        %% http://crs4.github.io/pydoop/examples/avro.html
+      \end{itemize}
+    \item Pydoop-features \urlref{https://github.com/simleo/pydoop-features}
+      \begin{itemize}
+      \item Bio-Formats-based Hadoop input format for bio images
+        \begin{itemize}
+        \item Uses a custom HDFS-aware Bio-Formats handler
+          %% https://github.com/simleo/bioformats/blob/hdfs/components/formats-common/src/loci/common/DFSHandle.java
+        \end{itemize}
+      \item Pydoop-based MapReduce features computation
+        \begin{itemize}
+        \item Map-only job
+        \item uses WND-CHARM
+        \end{itemize}
+      \item Avro-based serialization of images and output features
+%% Output features are stored as Avro records, again via the Pydoop bridge.  Since the official Avro Python API is dead slow, I've recently contributed several pull requests to pyavroc to make it usable with Pydoop.  Pyavroc uses a C extension module that relies on the official Avro C API, with speedups of 30-40x wrt the pure Python API.
+
+%% https://github.com/Byhiras/pyavroc
+      \end{itemize}
+    \end{itemize}
+  \end{center}
+\end{frame}
+
+%% OMERO currently lacks tight integration with DC.  This section
+%% describes preliminary work aimed at bridging the gap between the
+%% two technologies, allowing OMERO-based systems to use Hadoop as a
+%% server-side storage resource and computing engine.
+\begin{frame}{DFS File Handler for Bio-Formats}
+  \begin{center}
+    \pgfimage[width=\textwidth]{img/bf-io}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Hadoop Input Format for Bio Images}
+  \begin{center}
+    \pgfimage[width=\textwidth]{img/inputformat}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Preliminary Results}
+\begin{center}
+  \begin{itemize}
+  \item Feature extraction on \texttt{dvs/kschleicher/140119}
+    \begin{itemize}
+    \item 59 \texttt{.dv} files
+    \item Single-series, 180 image planes, 51\,MB each
+    \end{itemize}
+  \item 1. Input format assigns whole series to each map task
+    \begin{itemize}
+    \item Analyzed all files in parallel on 59 CPU cores
+    \item Running time $\approx$ 33 min, 6\% worse than ideal
+    \end{itemize}
+    \item 2. Input format assigns plane range to each map task
+      \begin{itemize}
+      \item 118 cores, each processing 90 out of 180 planes
+      \item Running time $\approx$ 19 min, 22\% worse than ideal
+      \item optimal distribution level somewhere in between the whole
+        series to single plane spectrum
+      \end{itemize}
+  \end{itemize}
+\end{center}
+\end{frame}
+
+\begin{frame}{Current Issues and Limitations}
+\begin{center}
+  \begin{itemize}
+  \item Code assumes that all series have the same core metadata
+  \item RGB support still WIP
+  \item DFSHandle actually performs bad!
+    \begin{itemize}
+    \item Hadoop is designed for streaming access to data
+    \item TIFF requires arbitrary seeks
+    \item Could be fixed by adding a caching layer to Bio-Formats
+    \item However, it does \textbf{not} have a significant impact on
+      computationally intensive applications like WND-CHARM
+    \end{itemize}
+  \end{itemize}
+\end{center}
+\end{frame}
+
+\begin{frame}{References}
+  \begin{itemize}
+  \item \cite{dean.2008.mr}
+  \end{itemize}
+  \begin{itemize}
+  \item \cite{leo.2010.pydoop}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\begin{center}
+  /over
+\end{center}  
+\end{frame}
+
+\end{document}
