@@ -152,45 +152,587 @@
         <!-- Slides and slide stacks start here -->
         <section>
           <h1>pytest</h1>
-          <h4>(&amp; flake8)</h4>
-          <h3>Colin Blackburn &amp; Sébastien Besson</h3>
+          <h3>Colin Blackburn</h3>
         </section>
 
         <section>
           <h2>Outline</h2>
           <ul>
-            <li>flake8</li>
             <li>pytest</li>
             <ul>
               <li>running tests</li>
               <li>writing tests</li>
             </ul>
+            <li>flake8</li>
           </ul>
         </section>
 
         <section>
           <section>
-            <h2>flake8</h2>
-            <p>
-              Style and (passive) code correctness enforcement used by Travis.
-              Code in the following areas is currently checked by default:
-            </p>
-            <table>
-              <tr><td><code>OmeroPy/test &amp; OmeroPy/src</code></td></tr>
-              <tr><td><code>OmeroFS/test &amp; OmeroFS/src</code></td></tr>
-              <tr><td><code>OmeroWeb/test</td></tr>
-            </table>
-            <p>  
-              The intention is to have most Python code checked eventually.
-            </p>
-            <p>See: <a href="http://flake8.readthedocs.org/">flake8 docs</a></p>
+            <h2>pytest</h2>
+            <ul>
+              <li>Simple test discovery</li>
+              <li>Set up at module, class and test level</li>
+              <li>No significant boilerplate</li>
+              <li>Powerful features if needed</li>
+              <li>Integrates with other frameworks</li>
+              <li>Extensible - plugins</li>
+            </ul>
+            <p>See: <a href="http://pytest.org/latest/">pytest docs</a></p>
             <aside class="notes">
-              Outline of tool
-              our automated use of it
-              type of stuff it checks
-              plugins and hooks for developers
+              Broad outline
+              history
+              why better than unittest
             </aside>
           </section>
+          <section>
+            <h2>Installing pytest</h2>
+            <ul>
+              <li><code>pip install pytest</code></li>
+              <li><code>pip install &lt;pytest plugin&gt;</code></li>
+            </ul>
+          </section>
+          <section>
+            <h2>Running pytest</h2>
+            <p>However it is run, <code>pytest</code> does three things:</p>
+            <ul>
+              <li>discovers tests</li>
+              <li>runs those tests</li>
+              <li>reports on those tests</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Running Python tests</h2>
+            <ul>
+              <li>Using <code>setup.py</code> at component level</li>
+              <pre><code>cd components/tools/OmeroPy
+./setup.py test -t test/unit</code></pre>
+              <li>Top-level <code>build.py</code></li>
+              <pre><code>./build.py -f components/OmeroPy/build.xml test</code></pre>
+              <li>Directly using <code>py.test</code> at component level</li>
+              <pre><code>cd components/tools/OmeroPy
+py.test test/unit</code></pre>
+            </ul>
+            <p>See: <a href="https://www.openmicroscopy.org/site/support/omero5/developers/testing.html">OMERO docs</a></p>
+            <aside class="notes">
+              This is all on developer pages
+              but quick overview of running tests
+              how each method adds more flexibility
+            </aside>
+          </section>
+          <section>
+            <h2>Component-level <code>setup.py</code></h2>
+<pre><code>./setup.py test -t test/unit
+./setup.py test -t test/integration -m "not (long_running or broken)"
+./setup.py test -t test/integration
+./setup.py test -t test/integration/test_admin.py
+./setup.py test -t test/integration -k permissions
+./setup.py test -t test/integration/test_admin.py -k Group
+./setup.py test -h
+</code></pre>
+            <ul>
+              <li><code>setup.py</code> provides some useful options</li>
+              <li>sets <code>PYTHONPATH</code> for all components</li>
+              <li>but needs <code>ICE_CONFIG</code> to be set.</li>
+            </ul>
+          </section>
+          <section>
+            <h2>A couple of useful options</h2>
+<pre><code>./setup.py test -vt test/integration/test_admin.py -k testGetGroup
+./setup.py test -st test/integration/test_admin.py -k Group
+./setup.py test -svt test/integration/test_admin.py -k Group
+</code></pre>
+          </section>
+          <section>
+            <h2>Top-level <code>build.py</code></h2>
+            <ul>
+             <li>unit &amp; integration tests</li>
+<pre><code>./build.py -f components/OmeroPy/build.xml test
+./build.py -f components/tools/OmeroPy/build.xml integration</code></pre>
+             <li>long running and broken tests excluded by default</li>
+<pre><code>./build.py -f components/tools/OmeroPy/build.xml integration -DMARK="not (long_running or broken)"</code></pre>
+            <li>for all tests use an empty marker</li>
+<pre><code>./build.py -f components/tools/OmeroPy/build.xml integration -DMARK=</code></pre>
+            <li>running a single test file</li>
+<pre><code> test -DTEST=test/integration/test_admin.py</code></pre>
+            <li><code>build.py</code> is used by the CI system primarily.</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Using <code>py.test</code></h2>
+<pre><code>py.test test/unit
+py.test test/integration -m "not (long_running or broken)"
+py.test test/integration
+py.test test/integration/test_admin.py
+py.test test/integration -k permissions
+py.test test/integration/test_admin.py -k Group
+py.test --repeat 20 test/unit/fstest
+py.test --collect-only test/integration/ -m long_running
+py.test -h
+</code></pre>
+<ul><li><code>py.test</code> provides more options but you are on your own in many ways.</li></ul>
+          </section>
+        </section>
+
+        <section>
+          <h2>Writing tests</h2>
+            <ul>
+              <li>Naming tests</li>
+              <li>The basics</li>
+              <li>Exceptions</li>
+              <li>Fixtures</li>
+              <li>Parameters</li>
+              <li>Markers</li>
+              <li>Extending</li>
+            </ul>
+        </section>
+
+        <!--
+          NAMING CONVENTIONS
+        -->
+        <section>
+          <section>
+            <h2>Naming conventions</h2>
+            <p><code>pytest</code> discovers what tests to run using naming conventions for
+            modules, functions, classes and methods. We use the default:</p>
+            <ul>
+              <li>modules called <code>test_*</code></li>
+              <ul>
+                <li>functions called <code>test*</code></li>
+                <li>classes called <code>Test*</code></li>
+                <ul>
+                  <li>methods called <code>test*</code></li>
+                </ul>
+              </ul>
+            </ul>
+          </section>
+          <section>
+            <h3>Naming example</h3>
+            <pre>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/integration/test_admin.py">components/tools/OmeroPy/test/integration/test_admin.py</a>
+<code>
+class TestAdmin(lib.ITest):
+
+    def testGetGroup(self):
+        a = self.client.getSession().getAdminService()
+        l = a.lookupGroups()
+        g = a.getGroup(l[0].getId().val)
+        assert 0 != g.sizeOfGroupExperimenterMap()
+
+</code>            </pre>
+          <ul><li>Here the method <code>testGetGroup</code> will be run.</li></ul>
+          </section>
+        </section>
+
+        <!--
+          BASIC TESTS
+        -->
+        <section>
+          <section>
+            <h2>A basic test</h2>
+            <pre>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/integration/test_admin.py">components/tools/OmeroPy/test/integration/test_admin.py</a>
+<code>
+import library as lib
+
+
+class TestAdmin(lib.ITest):
+
+    def testGetGroup(self):
+        a = self.client.getSession().getAdminService()
+        l = a.lookupGroups()
+        g = a.getGroup(l[0].getId().val)
+        assert 0 != g.sizeOfGroupExperimenterMap()
+
+</code>            </pre>
+            <ul><li>Python <code>assert</code> is used.</li>
+            <li>Note: <code>lib.ITest</code> contains general set-up and useful helpers</li></ul>
+
+
+
+          </section>
+
+                <section>
+                    <h2>library.py</h2>
+                    <ul>
+                        <li>Now a package under <code>components/tests/python</code></li>
+                        <li>Now simply <code>import library as lib</code></li>
+                        <li>Set-up and tear-down refactored as class methods</li>
+                    </ul>
+        </section>
+        </section>
+
+        <!--
+          USING FIXTURES
+        -->
+        <section>
+          <section>
+            <h2>Fixtures</h2>
+
+                    <h3>setup &amp; teardown</h3>
+                    <ul>
+                        <li>Class methods <code>setup_class(cls)</code> ...</li>
+                        <li>... and  <code>teardown_class(cls)</code></li>
+                        <li>Create and destroy root and user clients in <code>ITest</code></li>
+                        <li>Overridden by some classes but still at class-level</li>
+                        <li>More efficient, cleaner, simpler</li>
+                        <li>A few method level used <code>setup_method(self, method)</code></li>
+                    </ul>
+                </section>
+
+
+          <section>
+            <h2>No fixture</h2>
+            <pre>
+Adapted from: <a href=" https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
+<code>
+class TestTag(object):
+
+    def testHelp(self):
+        self.cli = CLI()
+        self.cli.register("tag", TagControl, "TEST")
+        self.args = ["tag"]
+        self.args += ["-h"]
+        self.cli.invoke(self.args, strict=True)
+
+</code>            </pre>
+          </section>
+
+          <section>
+            <h2>A simple setup fixture</h2>
+            <pre>
+Adapted from: <a href=" https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
+<code>
+class TestTag(object):
+
+    def setup_method(self, method):
+        self.cli = CLI()
+        self.cli.register("tag", TagControl, "TEST")
+        self.args = ["tag"]
+
+    def testHelp(self):
+        self.args += ["-h"]
+        self.cli.invoke(self.args, strict=True)
+
+</code>            </pre>
+          </section>
+
+          <section>
+            <h2>Method setup and teardown</h2>
+            <pre>
+Adapted from: <a href=" https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/integration/clitest/test_tag.py">components/tools/OmeroPy/test/integration/clitest/test_tag.py</a>
+<code>
+class TestTag(CLITest):
+
+    def setup_method(self, method):
+        super(TestTag, self).setup_method(method)
+        self.cli.register("tag", TagControl, "TEST")
+        self.args += ["tag"]
+        self.setup_mock()
+
+    def teardown_method(self, method):
+        self.teardown_mock()
+        super(TestTag, self).teardown_method(method)
+
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Class setup and teardown</h2>
+            <pre>
+Adapted from: <a href=" https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/integration/clitest/test_tag.py">components/tools/OmeroPy/test/integration/clitest/test_tag.py</a>
+<code>
+class TestTag(CLITest):
+
+    @classmethod
+    def setup_class(cls):
+        super(TestTag, self).setup_method(method)
+        self.cli.register("tag", TagControl, "TEST")
+        self.args += ["tag"]
+        self.setup_mock()
+
+    @classmethod
+    def teardown_class(cls):
+        self.teardown_mock()
+        super(TestTag, self).teardown_method(method)
+
+</code></pre>
+          </section>
+
+    <!--
+      BUILT-IN FIXTURES
+    -->
+          <section>
+            <h2>Built-in fixtures</h2>
+<p>See <a href="http://pytest.org/latest/builtin.html#builtin-fixtures-function-arguments">section</a> of the py.test documentation</p>
+
+            <ul>
+              <li>capsys/capfd: stdout/stderr capture</li>
+              <li>monkeypatch</li>
+              <li>tmpdir: temporary paths</li>
+            </ul>
+          </section>
+        </section>
+
+
+        <!--
+          TESTING FOR EXCEPTIONS
+        -->
+        <section>
+          <section>
+            <h2>Exceptions</h2>
+            <aside class="notes">
+              Asserting an exception
+              example of alternative style
+            </aside>
+          </section>
+
+          <section>
+            <h2>Exceptions using with</h2>
+            <pre>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
+<code>
+import pytest
+from omero.cli import CLI, NonZeroReturnCode
+
+class TestTag(object):
+
+    def testCreateTagsetFails(self):
+        self.args += ["createset", "--tag", "A"]
+        with pytest.raises(NonZeroReturnCode):
+            self.cli.invoke(self.args, strict=True)
+
+    def testListFails(self):
+        self.args += ["list", "--tagset", "tagset"]
+        with pytest.raises(NonZeroReturnCode):
+            self.cli.invoke(self.args, strict=True)
+
+</code>            </pre>
+          </section>
+        </section>
+
+        <!--
+          PARAMETRIZING TESTS
+        -->
+        <section>
+          <section>
+            <h2>Parameters</h2>
+          </section>
+          <section>
+            <h2>Single parameter</h2>
+            <pre>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
+<code>
+import pytest
+subcommands = [
+    "create", "createset", "list", "listsets", "link", "load"]
+
+
+class TestTag(object):
+
+    @pytest.mark.parametrize('subcommand', subcommands)
+    def testSubcommandHelp(self, subcommand):
+        self.args += [subcommand, "-h"]
+        self.cli.invoke(self.args, strict=True)
+
+</code>            </pre>
+          </section>
+          <section>
+            <h2>Multiple parameters</h2>
+            <pre>
+<a href=" https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/integration/clitest/test_tag.py">components/tools/OmeroPy/test/integration/clitest/test_tag.py</a>
+<code>
+import pytest
+
+class TestTag(object):
+
+    @pytest.mark.parametrize(
+        ('object_arg', 'tag_arg'),
+        [('Image:1', 'test'), ('Image', '1'), ('Image:image', '1'),
+         ('1', '1')])
+    def testLinkFails(self, object_arg, tag_arg):
+        self.args += ["link", object_arg, tag_arg]
+        with pytest.raises(NonZeroReturnCode):
+            self.cli.invoke(self.args, strict=True)
+
+</code>            </pre>
+          </section>
+          <section>
+            <h2>Nested multiple parameters</h2>
+            <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/integration/clitest/test_chgrp.py">components/tools/OmeroPy/test/integration/clitest/test_chgrp.py</a>
+<code>
+object_types = ["Image", "Dataset", "Project", "Plate", "Screen"]
+permissions = ["rw----", "rwr---", "rwra--", "rwrw--"]
+group_prefixes = ["", "Group:", "ExperimenterGroup:"]
+
+
+class TestChgrp(CLITest):
+
+    @pytest.mark.parametrize("object_type", object_types)
+    @pytest.mark.parametrize("target_group_perms", permissions)
+    @pytest.mark.parametrize("group_prefix", group_prefixes)
+    def testChgrpMyData(self, object_type, target_group_perms, group_prefix):
+        oid = self.create_object(object_type)
+
+        # create a new group and move the object to the new group
+        group = self.add_new_group(perms=target_group_perms)
+        self.args += ['%s%s' % (group_prefix, group.id.val),
+                      '/%s:%s' % (object_type, oid)]
+        self.cli.invoke(self.args, strict=True)
+
+        # change the session context and check the object has been moved
+        self.set_context(self.client, group.id.val)
+        new_object = self.query.get(object_type, oid)
+        assert new_object.id.val == oid
+
+</code>            </pre>
+          </section>
+        </section>
+
+        <!--
+          USING MARKERS
+        -->
+        <section>
+          <section>
+            <h2>Markers</h2>
+          </section>
+          <section>
+            <h2>xfail marker</h2>
+            <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/integration/clitest/test_chgrp.py">components/tools/OmeroPy/test/integration/clitest/test_chgrp.py</a>
+<code>
+class TestChgrp(CLITest):
+
+    @pytest.mark.xfail(reason="CLI  does not wrap all chgrps in 1 DoAll")
+    def testFilesetAllImages(self):
+        images = self.importMIF(2)  # 2 images sharing a fileset
+
+        # create a new group and try to move only one image to the new group
+        group = self.add_new_group()
+        self.args += ['%s' % group.id.val, '/Image:%s' % images[0].id.val,
+                      '/Image:%s' % images[1].id.val]
+        self.cli.invoke(self.args, strict=True)
+
+        # check the images have been moved
+        ctx = {'omero.group': '-1'}  # query across groups
+        for i in images:
+            img = self.query.get('Image', i.id.val, ctx)
+            assert img.details.group.id.val == group.id.val
+</code>            </pre>
+          </section>
+          <section>
+            <h2>xfail marker results</h2>
+            <pre>
+<code>
+$ py.test test/integration/test_permissions.py
+========================= test session starts ================================
+platform darwin -- Python 2.7.8 -- py-1.4.25 -- pytest-2.6.3
+plugins: pythonpath, rerunfailures, xdist
+collected 102 items
+
+test/integration/test_permissions.py ....x.....x.xx.........xxxXxxXxx.......
+
+=========== 61 passed, 17 xfailed, 24 xpassed in 85.58 seconds ===============
+
+
+$ py.test --runxfail test/integration/test_permissions.py
+========================= test session starts ================================
+platform darwin -- Python 2.7.8 -- py-1.4.25 -- pytest-2.6.3
+plugins: pythonpath, rerunfailures, xdist
+collected 102 items
+
+test/integration/test_permissions.py ....F.....F.FF..
+
+...
+
+$ py.test test/integration/test_permissions.py -m xfail --runxfail
+
+...
+</code>            </pre>
+          </section>
+          <section>
+            <h2>User-defined markers</h2>
+            <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/integration/test_rawpixelsstore.py">components/tools/OmeroPy/test/integration/test_rawpixelsstore.py</a>
+<code>
+class TestRPS(lib.ITest):
+
+    @pytest.mark.long_running
+    def testRomioToPyramid(self):
+        """
+        Here we create a pixels that is not big,
+        then modify its metadata so that it IS big,
+        in order to trick the service into throwing
+        us a MissingPyramidException
+        """
+        from omero.util import concurrency
+        pix = self.missing_pyramid(self.root)
+        rps = self.root.sf.createRawPixelsStore()
+        ...
+
+</code>            </pre>
+          </section>
+          <section>
+            <h2>Markers applied to a class</h2>
+            <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/test/integration/test_thumbs.py">components/tools/OmeroPy/test/integration/test_thumbs.py</a>
+<code>
+@pytest.mark.long_running
+class TestThumbs(lib.ITest):
+
+    def testCreateThumbnails(self):
+        tb = self.pyr_tb()
+        try:
+            tb.createThumbnails()
+        finally:
+            tb.close()
+
+ </code>           </pre>
+          </section>
+          <section>
+            <h2>Pre-defining markers</h2>
+            <pre>
+<a href="https://github.com/openmicroscopy/openmicroscopy/tree/develop/components/tools/OmeroPy/pytest.ini">components/tools/OmeroPy/pytest.ini</a>
+<code>
+[pytest]
+markers =
+    long_running: mark the test as long-running, i.e. typically requiring more than 10 minutes to complete
+
+
+
+$ py.test --markers
+@pytest.mark.long_running: mark the test as long-running, i.e. typically requiring more than 10 minutes to complete
+...
+@pytest.mark.skipif(condition): skip the given test function if eval(condition) results in a True value.  Evaluation happens within the module global context. Example: skipif('sys.platform == "win32"') skips the test if we are on the win32 platform. see http://pytest.org/latest/skipping.html
+...
+
+</code>            </pre>
+          </section>
+        </section>
+
+                <section>
+                    <h2>More information</h2>
+                    <ul>
+                        <li>Docs: <a href="http://www.openmicroscopy.org/site/support/omero5.2/developers/testing.html">Running and writing tests</a></li>
+                        <li>PRs:</li>
+                        <ul>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3241">User default marker for Python tests #3241</a></li>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3296">Integration library #3296</a></li>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3318">Itest improvements #3318</a></li>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3319">Modify setup.py usage in Python testing #3319</a></li>
+                            <li><a href="https://github.com/openmicroscopy/openmicroscopy/pull/3405">OMERO.web integration tests #3405</a></li>
+                        </ul>
+                    </ul>
+                </section>
+
+
+
+
+        <section>
           <section>
             <h2>flake8</h2>
             <p><code>flake8</code> is a wrapper around:</p>
@@ -254,658 +796,6 @@
             <p>Excluding anything from <code>flake8</code> by whatever means is
             a last resort, really frowned upon and is unlikely to get past code
             review without good reason!</p>
-          </section>
-        </section>
-
-        <section>
-          <section>
-            <h2>pytest</h2>
-            <ul>
-              <li>Simple test discovery</li>
-              <li>Set up at module, class and test level</li>
-              <li>No significant boilerplate</li>
-              <li>Powerful features if needed</li>
-              <li>Integrates with other frameworks</li>
-              <li>Extensible - plugins</li>
-            </ul>
-            <p>See: <a href="http://pytest.org/latest/">pytest docs</a></p>
-            <aside class="notes">
-              Broad outline
-              history
-              why better than unittest
-            </aside>
-          </section>
-          <section>
-            <h2>Installing pytest</h2>
-            <ul>
-              <li><code>pip install pytest</code></li>
-              <li><code>pip install &lt;pytest plugin&gt;</code></li>
-            </ul>
-          </section>
-          <section>
-            <h2>Running pytest</h2>
-            <p>However it is run, <code>pytest</code> does three things:</p>
-            <ul>
-              <li>discovers tests</li>
-              <li>runs those tests</li>
-              <li>reports on those tests</li>
-            </ul>
-          </section>
-        </section>
-
-        <section>
-          <section>
-            <h2>Running Python tests</h2>
-            <ul>
-              <li>Top-level build</li>
-              <code style="font-size:60%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
-              <li>Component level build</li>
-              <ul>
-                <li>Using <code>setup.py</code></li>
-                <code style="font-size:60%">cd components/tools/&lt;component&gt; && ./setup.py test -s test/unit</code><br/>
-                <li>Directly using <code>py.test</code></li>
-                <code style="font-size:60%">cd components/tools/&lt;component&gt; && py.test test/unit</code><br/>
-              </ul>
-            </ul>
-            <p>See: <a href="https://www.openmicroscopy.org/site/support/omero5/developers/testing.html">OMERO docs</a></p>
-            <aside class="notes">
-              This is all on developer pages
-              but quick overview of running tests
-              how each method adds more flexibility
-            </aside>
-          </section>
-          <section>
-            <h2>Top-level build.py</h2>
-            <p>
-              <code style="font-size:52%">./build.py -f components/&lt;component&gt;/build.xml test</code><br/>
-              <code style="font-size:52%">./build.py -f components/&lt;component&gt;/build.xml integration</code><br/>
-              <code style="font-size:52%">./build.py -f components/tools/OmeroPy/build.xml test -DTEST=test/integration/test_admin.py</code><br/>
-              <code style="font-size:52%">./build.py -f components/tools/OmeroPy/build.xml integration -DMARK="not long_running"</code><br/>
-            </p>
-          </section>
-          <section>
-            <h2>Component-level setup.py</h2>
-            <p>
-              <code style="font-size:70%">./setup.py test -s test/unit</code><br/>
-              <code style="font-size:70%">./setup.py test -s test/integration</code><br/>
-              <code style="font-size:70%">./setup.py test -s test/integration/test_admin.py</code><br/>
-              <code style="font-size:70%">./setup.py test -s test/integration -m "not long_running"</code><br/>
-            </p>
-          </section>
-          <section>
-            <h2>Component-level setup.py</h2>
-            <p>
-              <code style="font-size:70%">./setup.py test -s test/integration -k permissions</code><br/>
-              <code style="font-size:70%">./setup.py test -s test/integration/test_admin.py -k testGetGroup</code><br/>
-              <code style="font-size:70%">./setup.py test -h</code><br/>
-            </p>
-          </section>
-          <section>
-            <h2>Using py.test</h2>
-            <p>
-              <code style="font-size:70%">py.test test/unit</code><br/>
-              <code style="font-size:70%">py.test test/integration</code><br/>
-              <code style="font-size:70%">py.test test/integration/test_admin.py</code><br/>
-              <code style="font-size:70%">py.test test/integration -m "not long_running"</code><br/>
-            </p>
-          </section>
-          <section>
-            <h2>Using py.test</h2>
-            <p>
-              <code style="font-size:70%">py.test test/integration -k permissions</code><br/>
-              <code style="font-size:70%">py.test test/integration/test_admin.py -k testGetGroup</code><br/>
-              <code style="font-size:70%">py.test test/integration -s</code><br/>
-              <code style="font-size:70%">py.test --repeat 20 test/unit/fstest</code><br/>
-              <code style="font-size:70%">py.test --collect-only test/integration/ -m long_running</code><br/>
-              <code style="font-size:70%">py.test -h</code><br/>
-            </p>
-          </section>
-        </section>
-
-        <section>
-          <h2>Writing tests</h2>
-            <ul>
-              <li>Naming tests</li>
-              <li>The basics</li>
-              <li>Exceptions</li>
-              <li>Fixtures</li>
-              <li>Parameters</li>
-              <li>Markers</li>
-              <li>Extending</li>
-            </ul>
-        </section>
-
-        <!--
-          NAMING CONVENTIONS
-        -->
-        <section>
-          <section>
-            <h2>Naming conventions</h2>
-            <p><code>pytest</code> discovers what tests to run using naming conventions for
-            modules, functions, classes and methods. We use the default:</p>
-            <ul>
-              <li>modules called <code>test_*</code></li>
-              <ul>
-                <li>functions called <code>test*</code></li>
-                <li>classes called <code>Test*</code></li>
-                <ul>
-                  <li>methods called <code>test*</code></li>
-                </ul>
-              </ul>
-            </ul>
-            <aside class="notes">
-              Quick overview of naming for discovery
-              Example
-            </aside>
-          </section>
-          <section>
-            <h3>Naming example</h3>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_admin.py">components/tools/OmeroPy/test/integration/test_admin.py</a>
-
-class TestAdmin(lib.ITest):
-
-    def testGetGroup(self):
-        a = self.client.getSession().getAdminService()
-        l = a.lookupGroups()
-        g = a.getGroup(l[0].getId().val)
-        assert 0 != g.sizeOfGroupExperimenterMap()
-            </pre>
-          <p>Here the method <code>testGetGroup</code> will be run.
-          </section>
-        </section>
-
-        <!--
-          BASIC TESTS
-        -->
-        <section>
-          <section>
-            <h2>A basic test</h2>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_admin.py">components/tools/OmeroPy/test/integration/test_admin.py</a>
-
-import test.integration.library as lib
-
-
-class TestAdmin(lib.ITest):
-
-    def testGetGroup(self):
-        a = self.client.getSession().getAdminService()
-        l = a.lookupGroups()
-        g = a.getGroup(l[0].getId().val)
-        assert 0 != g.sizeOfGroupExperimenterMap()
-            </pre>
-            <aside class="notes">
-              Basic example of test using an assert
-              Comparison of assert - assertEquals etc?
-            </aside>
-            <p>Python <code>assert</code> is used, but comparisons are context-sensitive and can be user-defined.<p>
-            <p>Note: <code>lib.ITest</code> contains general set-up and useful helpers.</p>
-          </section>
-        </section>
-
-        <!--
-          USING FIXTURES
-        -->
-        <section>
-          <section>
-            <h2>Fixtures</h2>
-            <aside class="notes">
-              Fixtures and teardowns
-              setup_ style (example)
-              @pytest.fixture style
-                not many good simple examples of
-                this method as autouse=True should
-                probably be avoided.
-            </aside>
-          </section>
-
-          <section>
-            <h2>No fixture</h2>
-            <pre>
-Adapted from: <a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
-
-class TestTag(object):
-
-    def testHelp(self):
-        self.cli = CLI()
-        self.cli.register("tag", TagControl, "TEST")
-        self.args = ["tag"]
-        self.args += ["-h"]
-        self.cli.invoke(self.args, strict=True)
-            </pre>
-          </section>
-
-          <section>
-            <h2>A simple setup fixture</h2>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
-
-class TestTag(object):
-
-    def setup_method(self, method):
-        self.cli = CLI()
-        self.cli.register("tag", TagControl, "TEST")
-        self.args = ["tag"]
-
-    def testHelp(self):
-        self.args += ["-h"]
-        self.cli.invoke(self.args, strict=True)
-            </pre>
-          </section>
-
-          <section>
-            <h2>Setup and teardown</h2>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_tag.py">components/tools/OmeroPy/test/integration/clitest/test_tag.py</a>
-
-class TestTag(CLITest):
-
-    def setup_method(self, method):
-        super(TestTag, self).setup_method(method)
-        self.cli.register("tag", TagControl, "TEST")
-        self.args += ["tag"]
-        self.setup_mock()
-
-    def teardown_method(self, method):
-        self.teardown_mock()
-        super(TestTag, self).teardown_method(method)
-            </pre>
-          </section>
-
-          <section>
-            <h2>Decorator fixtures</h2>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroWeb/test/integration/test_show.py">components/tools/OmeroWeb/test/integration/test_show.py</a>
-
-@pytest.fixture(scope='module')
-def path():
-    """Returns the root OMERO.web webclient path."""
-    return '/webclient'
-
-@pytest.fixture(scope='module')
-def request_factory():
-    """Returns a fresh Django request factory."""
-    return RequestFactory()
-
-@pytest.fixture(scope='function')
-def empty_request(request, request_factory, path):
-    """
-    Returns a simple GET request object with no 'path' query string.
-    """
-    return {
-        'request': request_factory.get(path),
-        'initially_select': list(),
-        'initially_open': None
-    }
-
-class TestShow(object):
-
-    def test_empty_path(self, empty_request):
-        show = Show(conn, empty_request['request'], None)
-        self.assert_instantiation(show, empty_request, conn)
-        first_selected = show.first_selected
-        assert first_selected is None
-            </pre>
-          </section>
-
-          <section>
-            <h2>More decorator fixtures</h2>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroWeb/test/integration/test_show.py">components/tools/OmeroWeb/test/integration/test_show.py</a>
-
-@pytest.fixture(scope='function')
-def itest(request):
-    """
-    Returns a new L{test.integration.library.ITest} instance.  With
-    attached finalizer so that pytest will clean it up.
-    """
-    o = lib.ITest()
-    o.setup_method(None)
-
-    def finalizer():
-        o.teardown_method(None)
-    request.addfinalizer(finalizer)
-    return o
-
-@pytest.fixture(scope='function', params=[1, 2])
-def tag(request, itest, update_service):
-    """Returns a new OMERO TagAnnotation with required fields set."""
-    name = rstring(itest.uuid())
-    for index in range(request.param):
-        tag = TagAnnotationI()
-        tag.textValue = name
-        tag = update_service.saveAndReturnObject(tag)
-    return tag
-            </pre>
-          </section>
-    <!--
-      BUILT-IN FIXTURES
-    -->
-          <section>
-            <h2>Built-in fixtures</h2>
-<p>See <a href="http://pytest.org/latest/builtin.html#builtin-fixtures-function-arguments">section</a> of the py.test documentation</p>
-
-            <ul>
-              <li>capsys/capfd: stdout/stderr capture</li>
-              <li>monkeypatch</li>
-              <li>tmpdir: temporary paths</li>
-            </ul>
-          </section>
-        </section>
-
-
-        <!--
-          TESTING FOR EXCEPTIONS
-        -->
-        <section>
-          <section>
-            <h2>Exceptions</h2>
-            <aside class="notes">
-              Asserting an exception
-              example of alternative style
-            </aside>
-          </section>
-
-          <section>
-            <h2>Exceptions using with</h2>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
-
-import pytest
-from omero.cli import CLI, NonZeroReturnCode
-
-class TestTag(object):
-
-    def testCreateTagsetFails(self):
-        self.args += ["createset", "--tag", "A"]
-        with pytest.raises(NonZeroReturnCode):
-            self.cli.invoke(self.args, strict=True)
-
-    def testListFails(self):
-        self.args += ["list", "--tagset", "tagset"]
-        with pytest.raises(NonZeroReturnCode):
-            self.cli.invoke(self.args, strict=True)
-            </pre>
-          </section>
-          <section>
-            <h2>Exceptions</h2>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_repository.py">components/tools/OmeroPy/test/integration/test_repository.py</a>
-
-import pytest
-
-class TestRecursiveDelete(AbstractRepoTest):
-
-    def setup_method(self, method):
-        super(TestRecursiveDelete, self).setup_method(method)
-        self.filename = self.unique_dir + "/file.txt"
-        self.mrepo = self.getManagedRepo()
-        # ...
-
-    def testDoubleDot(self):
-        naughty = self.unique_dir + "/" + ".." + "/" + ".." + "/" + ".."
-        pytest.raises(omero.ValidationException,
-                      self.mrepo.deletePaths, [naughty], True, True)
-            </pre>
-          <p>This approach is compatible with Python 2.4 and so should probably be deprecated.</p>
-          </section>
-        </section>
-
-        <!--
-          PARAMETRIZING TESTS
-        -->
-        <section>
-          <section>
-            <h2>Parameters</h2>
-          </section>
-          <section>
-            <h2>Single parameter</h2>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/unit/clitest/test_tag.py">components/tools/OmeroPy/test/unit/clitest/test_tag.py</a>
-
-import pytest
-subcommands = [
-    "create", "createset", "list", "listsets", "link", "load"]
-
-
-class TestTag(object):
-
-    @pytest.mark.parametrize('subcommand', subcommands)
-    def testSubcommandHelp(self, subcommand):
-        self.args += [subcommand, "-h"]
-        self.cli.invoke(self.args, strict=True)
-            </pre>
-            <aside class="notes">
-              Couple of exmples of parameters:
-                simple (using defined list)
-                tuple (all in line)
-            </aside>
-          </section>
-          <section>
-            <h2>Multiple parameters</h2>
-            <pre>
-<a href=" https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_tag.py">components/tools/OmeroPy/test/integration/clitest/test_tag.py</a>
-
-import pytest
-
-class TestTag(object):
-
-    @pytest.mark.parametrize(
-        ('object_arg', 'tag_arg'),
-        [('Image:1', 'test'), ('Image', '1'), ('Image:image', '1'),
-         ('1', '1')])
-    def testLinkFails(self, object_arg, tag_arg):
-        self.args += ["link", object_arg, tag_arg]
-        with pytest.raises(NonZeroReturnCode):
-            self.cli.invoke(self.args, strict=True)
-            </pre>
-          </section>
-          <section>
-            <h2>Nested multiple parameters</h2>
-            <pre>
-<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_chgrp.py">components/tools/OmeroPy/test/integration/clitest/test_chgrp.py</a>
-
-object_types = ["Image", "Dataset", "Project", "Plate", "Screen"]
-permissions = ["rw----", "rwr---", "rwra--", "rwrw--"]
-group_prefixes = ["", "Group:", "ExperimenterGroup:"]
-
-
-class TestChgrp(CLITest):
-
-    @pytest.mark.parametrize("object_type", object_types)
-    @pytest.mark.parametrize("target_group_perms", permissions)
-    @pytest.mark.parametrize("group_prefix", group_prefixes)
-    def testChgrpMyData(self, object_type, target_group_perms, group_prefix):
-        oid = self.create_object(object_type)
-
-        # create a new group and move the object to the new group
-        group = self.add_new_group(perms=target_group_perms)
-        self.args += ['%s%s' % (group_prefix, group.id.val),
-                      '/%s:%s' % (object_type, oid)]
-        self.cli.invoke(self.args, strict=True)
-
-        # change the session context and check the object has been moved
-        self.set_context(self.client, group.id.val)
-        new_object = self.query.get(object_type, oid)
-        assert new_object.id.val == oid
-            </pre>
-          </section>
-        </section>
-
-        <!--
-          USING MARKERS
-        -->
-        <section>
-          <section>
-            <h2>Markers</h2>
-            <aside class="notes">
-              Markers
-                provided markers cf parametrize
-                  examples
-                    xfail (predefined)
-                    longrunning (user defined)
-            </aside>
-          </section>
-          <section>
-            <h2>xfail marker</h2>
-            <pre>
-<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/clitest/test_chgrp.py">components/tools/OmeroPy/test/integration/clitest/test_chgrp.py</a>
-
-class TestChgrp(CLITest):
-
-    @pytest.mark.xfail(reason="CLI  does not wrap all chgrps in 1 DoAll")
-    def testFilesetAllImages(self):
-        images = self.importMIF(2)  # 2 images sharing a fileset
-
-        # create a new group and try to move only one image to the new group
-        group = self.add_new_group()
-        self.args += ['%s' % group.id.val, '/Image:%s' % images[0].id.val,
-                      '/Image:%s' % images[1].id.val]
-        self.cli.invoke(self.args, strict=True)
-
-        # check the images have been moved
-        ctx = {'omero.group': '-1'}  # query across groups
-        for i in images:
-            img = self.query.get('Image', i.id.val, ctx)
-            assert img.details.group.id.val == group.id.val
-            </pre>
-          </section>
-          <section>
-            <h2>xfail marker results</h2>
-            <pre>
-$ py.test test/integration/test_permissions.py
-========================= test session starts ================================
-platform darwin -- Python 2.7.8 -- py-1.4.25 -- pytest-2.6.3
-plugins: pythonpath, rerunfailures, xdist
-collected 102 items
-
-test/integration/test_permissions.py ....x.....x.xx.........xxxXxxXxx.......
-
-=========== 61 passed, 17 xfailed, 24 xpassed in 85.58 seconds ===============
-
-
-$ py.test --runxfail test/integration/test_permissions.py
-========================= test session starts ================================
-platform darwin -- Python 2.7.8 -- py-1.4.25 -- pytest-2.6.3
-plugins: pythonpath, rerunfailures, xdist
-collected 102 items
-
-test/integration/test_permissions.py ....F.....F.FF..
-
-...
-
-$ py.test test/integration/test_permissions.py -m xfail --runxfail
-
-...
-            </pre>
-          </section>
-          <section>
-            <h2>User-defined markers</h2>
-            <pre>
-<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_rawpixelsstore.py">components/tools/OmeroPy/test/integration/test_rawpixelsstore.py</a>
-
-class TestRPS(lib.ITest):
-
-    @pytest.mark.long_running
-    def testRomioToPyramid(self):
-        """
-        Here we create a pixels that is not big,
-        then modify its metadata so that it IS big,
-        in order to trick the service into throwing
-        us a MissingPyramidException
-        """
-        from omero.util import concurrency
-        pix = self.missing_pyramid(self.root)
-        rps = self.root.sf.createRawPixelsStore()
-        ...
-            </pre>
-          </section>
-          <section>
-            <h2>Markers applied to a class</h2>
-            <pre>
-<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/integration/test_thumbs.py">components/tools/OmeroPy/test/integration/test_thumbs.py</a>
-
-@pytest.mark.long_running
-class TestThumbs(lib.ITest):
-
-    def testCreateThumbnails(self):
-        tb = self.pyr_tb()
-        try:
-            tb.createThumbnails()
-        finally:
-            tb.close()
-            </pre>
-          </section>
-          <section>
-            <h2>Pre-defining markers</h2>
-            <pre>
-<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/pytest.ini">components/tools/OmeroPy/pytest.ini</a>
-
-[pytest]
-markers =
-    long_running: mark the test as long-running, i.e. typically requiring more than 10 minutes to complete
-
-
-
-$ py.test --markers
-@pytest.mark.long_running: mark the test as long-running, i.e. typically requiring more than 10 minutes to complete
-...
-@pytest.mark.skipif(condition): skip the given test function if eval(condition) results in a True value.  Evaluation happens within the module global context. Example: skipif('sys.platform == "win32"') skips the test if we are on the win32 platform. see http://pytest.org/latest/skipping.html
-...
-            </pre>
-          </section>
-        </section>
-
-        <!--
-          EXTENDING PYTEST
-        -->
-        <section>
-          <section>
-            <h2>Extending pytest</h2>
-            <aside class="notes">
-              Various extension points?
-            </aside>
-          </section>
-          <section>
-            <h2>Adding an option</h2>
-            <pre>
-<a href="https://github.com/openmicroscopy/openmicroscopy/blob/v.5.0.5/components/tools/OmeroPy/test/conftest.py">components/tools/OmeroPy/test/conftest.py</a>
-
-def pytest_addoption(parser):
-    parser.addoption(
-        '--repeat', action='store',
-        help='Number of times to repeat each test')
-
-
-def pytest_generate_tests(metafunc):
-    if metafunc.config.option.repeat is not None:
-        count = int(metafunc.config.option.repeat)
-
-        # We're going to duplicate these tests by parametrizing them,
-        # which requires that each test has a fixture to accept the parameter.
-        # We can add a new fixture like so:
-        metafunc.fixturenames.append('tmp_ct')
-
-        # Now we parametrize. This is what happens when we do e.g.,
-        # @pytest.mark.parametrize('tmp_ct', range(count))
-        # def test_foo(): pass
-        metafunc.parametrize('tmp_ct', range(count))
-            </pre>
-          </section>
-          <section>
-            <h2>Plugins</h2>
-            <pre>
-
-$ py.test --version
-This is pytest version 2.6.3, imported from /usr/local/lib/python2.7/site-packages/pytest.pyc
-setuptools registered plugins:
-  pytest-pythonpath-0.3 at /usr/local/lib/python2.7/site-packages/pytest_pythonpath.pyc
-  pytest-rerunfailures-0.05 at /usr/local/lib/python2.7/site-packages/rerunfailures/plugin.pyc
-  pytest-xdist-1.10 at /usr/local/lib/python2.7/site-packages/xdist/plugin.pyc
-            </pre>
-            <p>Lots more available at <a href="http://pytest.org/latest/plugins_index/index.html">List of Third-Party Plugins</a></p>
-            <p>Useful guide at <a href="http://pytest-plugs.herokuapp.com/">pytest Plugins Compatibility</a></p>
           </section>
         </section>
 
