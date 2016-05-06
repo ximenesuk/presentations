@@ -422,7 +422,7 @@ Using session 425b795b-1c7b-49c0-bd47-587252001744 (root@localhost:4064). Idle t
                     
                     <a href="#">https://omero/webgateway/img_detail/IMAGE_ID/ ?server=SERVER_ID&bsession=OMERO_SESSION_KEY</a>
 
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ $ bin/omero login
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero login
 Previously logged in to localhost:4064 as root
 Server: [localhost:4064]
 Username: [test-user]
@@ -442,10 +442,130 @@ $ bin/omero sessions list
                 </section>
 
                 <section>
+                    <h2>EXPERIMENTAL: Redis session backend</h2>
+
+                    <p>Redis 2.4+ requires django-redis-cache 1.6.5+</p>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ pip install django-redis-cache>=1.6.5
+$ bin/omero config set omero.web.caches '{"default": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "127.0.0.1:6379"}}'
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Experimental: Nginx CACHE</h2>
+
+                    <p>Define caches<p>
+                    <pre><code contenteditable style="font-size:90%" class="bash">proxy_cache_path /data/omero levels=1:2 keys_zone=omero:10m inactive=30d use_temp_path=off;
+proxy_cache_path /data/omero-thumbnail-cache levels=1:2 keys_zone=omerothumbnail:200m inactive=30d use_temp_path=off;
+proxy_cache_path /data/omero-render-cache levels=1:2 keys_zone=omerorender:4000m inactive=30d use_temp_path=off;
+proxy_cache_path /data/omero-metadata-cache levels=1:2 keys_zone=omerometadata:300m inactive=30d use_temp_path=off;
+proxy_cache_path /data/omero-show-cache levels=1:2 keys_zone=omeroshow:600m inactive=30d use_temp_path=off;
+
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Experimental: Nginx CACHE</h2>
+
+                    <p>Define filters<p>
+                    <pre><code contenteditable style="font-size:90%" class="bash">map $request_uri $uri_skip_cache
+{
+    default 1;
+    "~webclient/api/paths_to_object*"             0;
+    "~web(client|gateway)/(metadata|render)_*"    0;
+}
+
+map $args $skip_cache
+{
+    default     $uri_skip_cache;
+    "~show=*"    0;
+}
+
+map $request_uri $cache_zone_name
+{
+    default omero;
+    "~webclient/.*/?show=*"                     omeroshow;
+    "~webclient/api/paths_to_object/*"          omeroshow;
+    "~webclient/metadata_*"                     omerometadata;
+    "~web(client|gateway)/render_thumbnail/*"   omerothumbnail;
+    "~web(client|gateway)/render_image/*"       omerorender;
+}
+
+upstream omeroweb_omero {
+
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Experimental: Nginx CACHE</h2>
+
+                    <p>Define filters<p>
+                    <pre><code contenteditable style="font-size:90%" class="bash">server {
+    ...
+
+location @proxy_to_app_omero {
+    
+    proxy_cache                 $cache_zone_name;
+    # DO NOT use $scheme$request_method becuse it creates key
+    # per schema and request_method. Default for curl is HEAD.
+    # proxy_cache_key "$scheme$request_method$host$request_uri";
+    set $omero_cache_key        "$host$request_uri";
+    proxy_cache_key             $omero_cache_key;
+
+    proxy_cache_valid           200 301 302     30d;
+    proxy_cache_methods         GET HEAD; # Only GET and HEAD methods apply
+    proxy_cache_use_stale       error timeout invalid_header updating http_500 http_502 http_503 http_504;
+
+    proxy_cache_bypass          $skip_cache;
+    proxy_no_cache              $skip_cache;
+
+    proxy_ignore_headers        "Set-Cookie" "Vary" "Expires";
+
+    proxy_set_header            X-Forwarded-Proto   $scheme;
+    proxy_set_header            X-Real-IP           $remote_addr;
+    proxy_set_header            X-Forwarded-For     $proxy_add_x_forwarded_for;
+    proxy_set_header            Host                $http_host;
+    proxy_redirect off;
+    # must be turned on for caching
+    # proxy_buffering off;
+
+    proxy_pass http://omeroweb_omero;
+
+    # DEBUGGING: TURN OFF ON PROD
+    add_header                  X-Proxy-Cache      $upstream_cache_status;
+    add_header                  X-Proxy-Cache-Skip $skip_cache;
+    add_header                  X-Proxy-Cache-Skip $cache_zone_name;
+    add_header                  X-Proxy-Cache-Skip $omero_cache_key;
+
+}
+</code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Experimental: Nginx CACHE</h2>
+
+                    <p>test<p>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ curl -I https://idr-demo.openmicroscopy.org/mito/webgateway/render_thumbnail/1/96/
+HTTP/1.1 200 OK
+Server: nginx/1.8.0
+Date: Thu, 05 May 2016 13:54:37 GMT
+Content-Type: image/jpeg
+Connection: keep-alive
+Vary: Cookie
+X-Proxy-Cache: HIT
+X-Proxy-Cache-Skip: 0
+X-Proxy-Cache-zone: omerothumbnail
+X-Proxy-Cache-key: idr-demo.openmicroscopy.org/mito/webgateway/render_thumbnail/1/96/
+</code></pre>
+                </section>
+
+
+                <section>
                     <h2>Future work</h2>
                     <ul>
                         <li>WEB API</li>
                             <li>Complex JavaScript and JSON API</li>
+                        <li>Cache</li>
                         <li>Integration with 3rd party systems
                             <ul>
                                 <li>OMERO <strong>Single Sign On</strong> authentication</li>
