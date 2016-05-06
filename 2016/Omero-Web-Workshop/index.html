@@ -244,27 +244,38 @@ $ ./build.py -f components/tests/ui/build.xml web-chrome -DTEST=rdef_test.txt
                 <section>
                     <h2>Webclient plugins</h2>
                     <ul>
-                        <li>Hooks to bring app content into webclient (center & right)</li>
+                        <li>Hooks to bring app content into webclient</li>
                         <li>See
                             <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/WebclientPlugin.html">
                                 webclient plugin docs</a>
                         </li>
                     </ul>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_redirect 
+        '{"redirect": ["webindex"], "viewname": "webindex_custom"}'
+</code></pre>
 
+                <img src="images/login_redirect.png" width='550px' class="no_shadow"/>
+                </section>
+
+                <section>
+                    <h2>Left hand pane plugins</h2>
                     <img src="images/webplugin.png" height="500px"> 
                 </section>
 
                 <section>
-                    <h2>Webclient plugins</h2>
+                    <h2>Center pane plugins</h2>
 
+                    <pre><code style="width:900px; font-size:80%" class="bash">
+$ bin/omero config append omero.web.ui.center_plugins
+    '["Auto Tag", "webtagging/auto_tag_init.js.html", "auto_tag_panel"]'
+
+</code></pre>
                     <img src="images/webclient_plugins.png" height="500px"> 
                 </section>
 
                 <section>
-                    <h2>Webclient plugins</h2>
-                    <ul>
-                        <li>webtest examples included in OMERO.web:</li>
-                    </ul>
+                    <h2>Right hand pane plugins</h2>
+
                     <pre><code style="width:900px; font-size:80%" class="bash">
 $ bin/omero config append omero.web.ui.right_plugins
         '["ROIs", "webtest/webclient_plugins/right_plugin.rois.js.html", "image_roi_tab"]'
