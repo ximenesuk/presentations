@@ -444,7 +444,7 @@ $ bin/omero sessions list
                 <section>
                     <h2>EXPERIMENTAL: Redis session backend</h2>
 
-                    <p>Redis 2.4+ requires django-redis-cache 1.6.5+</p>
+                    <p>Requires: Python Redis 2.4+, django-redis-cache 1.6.5+</p>
                     <pre><code contenteditable style="font-size:90%" class="bash">$ pip install django-redis-cache>=1.6.5
 $ bin/omero config set omero.web.caches '{"default": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "127.0.0.1:6379"}}'
 </code></pre>
