@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Import Workshop - Dundee 2016</title>
+    <title>The OMERO CLI - Dundee 2016</title>
 
-    <meta name="description" content="Extending Import in OMERO 5">
+    <meta name="description" content="The OMERO CLI">
     <meta name="author" content="the Open Microscopy Environment core team">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,11 +128,11 @@
 
         <!-- Title and overall introduction -->
         <section>
-          <h2>Extending Imports in OMERO 5</h2>
+          <h2>The OMERO CLI</h2>
           <h3>Dundee</h3>
           <h4><em>The Paris of the North</em></h4>
           <h3>June 2016</h3>
-          <p>Colin Blackburn, Mark Carroll &amp; Josh Moore</p>
+          <p>Colin Blackburn</p>
           <aside class="notes">
           </aside>
         </section>
@@ -140,10 +140,10 @@
         <section>
           <h2>Outline</h2>
           <ul>
-            <li>Review of import in OMERO 5</li>
-            <li>Transfers</li>
-            <li>Excludes</li>
-            <li>Targets</li>
+            <li>Overview of the CLI</li>
+            <li>Users</li>
+            <li>Sysadmins</li>
+            <li>Developers</li>
           </ul>
           <aside class="notes">
           </aside>
@@ -151,491 +151,24 @@
 
         <!--
           Introduction
-            import review
-              repos
-              filesets
-              data in/out
         -->
         <section>
-          <h2>Review of import in OMERO 5</h2>
-          <h3>A very quick reminder...</h3>
-          <ul>
-            <li>ManagedRepository</li>
-            <li>Filesets</li>
-            <li>Basic OMERO 5 Import</li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>ManagedRepository</h3>
-          <img src="diagrams/managedrepo-intro.png" width="100%"/>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Filesets</h3>
-          <img src="diagrams/filesets.png" width="100%"/>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <section>
-            <h3>OMERO 5 Import</h3>
-            <img src="diagrams/upload.png" width="90%"/>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section>
-            <h3>OMERO 5 Data out</h3>
-            <img src="diagrams/download.png" width="90%"/>
-            <aside class="notes">
-          </section>
-        </section>
-
-        <!--
-          Transfers
-            diagrammatic example of ln_rm
-            what's available
-              list fo modes
-              possible use cases
-              cli options
-            extending transfers
-        -->
-        <section>
-          <h2>Transfers</h2>
-          <ul>
-            <li>An example</li>
-            <li>What's available?</li>
-            <li>Extension point</li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <section data-transition="none">
-            <h3>Example: hard link &amp; import ...</h3>
-            <code>
-                omero import path/to/image -- --transfer=ln_rm
-            </code>
-            <img src="diagrams/inplace-ln.png" width="90%"/>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section data-transition="none">
-            <h3>Example: ... <em>then</em> delete</h3>
-            <code>
-                omero import path/to/image -- --transfer=ln_rm
-            </code>
-            <img src="diagrams/inplace-ln_rm.png" width="90%"/>
-            <aside class="notes">
-            </aside>
-          </section>
-        </section>
-
-        <section>
-          <section>
-            <h3>Transfers: What's available?</h3>
-            <ul>
-              <li>upload &amp; import (the default)</li>
-              <li>upload, import <em>then</em> delete original files</li>
-              <li>copy &amp; import</li>
-              <li>copy, import <em>then</em> delete original files</li>
-              <li>hard link &amp; import</li>
-              <li>hard link, import <em>then</em> delete original files</li>
-              <li>soft link (symlink) &amp; import </li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section>
-            <h2>Use cases</h2>
-            <ul>
-              <li>Upload</li>
-              <ul>
-                <li>data on separate system</li>
-                <li>remote import</li>
-              </ul>
-              <li>Copy</li>
-              <ul>
-                <li>data on same system, lower network overhead</li>
-              </ul>
-              <li>Hard link</li>
-              <ul>
-                <li>very large data on OMERO server</li>
-              </ul>
-              <li>Soft link</li>
-              <ul>
-                <li>DropBox on OMERO server</li>
-              </ul>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-
-          <section>
-            <h3>Transfers: CLI summary</h3>
-            <pre style="font-size:60%">
-
-  omero import --advanced-help
-
-    --transfer=ARG            File transfer method
-
-        General options:
-          upload            # Default
-          upload_rm         # Caution! Upload followed by source deletion.
-          some.class.Name   # Use a class on the CLASSPATH.
-
-        Server-side options:
-          cp                # Use local copy command.
-          cp_rm             # Caution! Copy followed by source deletion.
-          ln                # Use hard-link.
-          ln_rm             # Caution! Hard-link followed by source deletion.
-          ln_s              # Use soft-link.
-
-  e.g.   omero import -- --transfer=ln_s foo.tiff
-         ./importer-cli --transfer=ln bar.tiff
-            </pre>
-            <aside class="notes">
-            </aside>
-          </section>
-        </section>
-
-        <section>
-          <h3>Extending transfers</h3>
-          Create a subclass of <a href="https://github.com/openmicroscopy/openmicroscopy/blob/v5.2.3/components/blitz/src/ome/formats/importer/transfers/AbstractFileTransfer.java">AbstractFileTransfer</a> then
-          <pre style="font-size:60%">
-
-  omero import -- --transfer=my.new.Transfer foo.tiff
-          </pre>
+          <h3>The CLI ecosystem</h3>
+          <img src="diagrams/venn.png" width="90%"/>
           <aside class="notes">
           </aside>
         </section>
 
         <!--
-          Excludes
-            what's available
-              cli options
-            extending excludes
+          The workshop!
         -->
+
         <section>
-          <h2>Excluding imports</h2>
+          <h3>More on the CLI...</h3>
           <ul>
-            <li>What's available?</li>
-            <li>Extension points</li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Excluding duplicates</h3>
-          <pre style="font-size:60%">
-
-  omero import --advanced-help
-
-  File exclusion:
-  ---------------
-
-    --exclude=filename        Exclude files based on filename.
-
-    --exclude=clientpath      Exclude files based on the original path.
-
-
-  e.g.   omero import -- --exclude=filename foo.tiff # First-time imports
-         omero import -- --exclude=filename foo.tiff # Second-time skips
-          </pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Extending excludes</h3>
-          Create a subclass of <a href="https://github.com/openmicroscopy/openmicroscopy/blob/v5.2.3/components/blitz/src/ome/formats/importer/exclusions/AbstractFileExclusion.java">AbstractFileExclusion</a> then
-          <pre style="font-size:60%">
-
-  omero import -- --exclude=my.new.Exclusion foo.tiff
-          </pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <!--
-          Targets
-            legacy targets
-            what's available
-              list of options
-              syntax
-              Dataset/Screen
-                id
-                name
-                multiple targets
-              regex
-                examples
-                implicit
-            extending targets
-        -->
-        <section>
-          <h2>Import targets</h2>
-          <ul>
-            <li>Legacy targets</li>
-            <li>What's available?</li>
-            <li>Extension points</li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h2>Legacy targets</h2>
-          <pre style="font-size:60%">
-
-  omero import --help
-
-    -d DATASET_ID                  OMERO dataset ID to import image into
-    -r SCREEN_ID                   OMERO screen ID to import plate into
-          </pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-        <section>
-          <h3>New import targets</h3>
-          <pre style="font-size:60%">
-
-  omero import --help
-
-    -d DATASET_ID                  OMERO dataset ID to import image into
-    -r SCREEN_ID                   OMERO screen ID to import plate into
-    -T TARGET, --target TARGET     OMERO target specification
-          </pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Format</h3>
-          <pre style="font-size:60%">
-
-  omero FILE -T &lt;action or Class>[:&lt;discriminator>]:&lt;pattern>
-          </pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>What's available</h3>
-          <ul>
-            <li>
-              Classes &amp; actions:
-              <ul>
-                <li>Dataset</li>
-                <li>Screen</li>
-                <li>regex</li>
-                <li>user defined class</li>
-              </ul>
-            </li>
-            <li>
-              Discriminators:
-              <ul>
-                <li>id</li>
-                <li>name</li>
-                <li>can be implicit</li>
-              </ul>
-            </li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Dataset &amp; id</h3>
-          <h4><em>Not so interesting</em></h4>
-          <pre style="font-size:60%">
-
-  # use the Dataset with id=2
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:id:2
-
-  # use the Dataset with id=2, here the discriminator is implicit
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:2
-
-  # both of these are equivalent to the legacy target '-d'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -d 2
-          </pre>
-          <p>The same syntax applies to Screen &amp; id</p>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Dataset &amp; name</h3>
-          <h4><em>A bit more interesting</em></h4>
-          <pre style="font-size:60%">
-
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:name:Sample01
-          </pre>
-          <p style="font-size:90%; text-align: left;">This will import the image into the Dataset named 'Sample01'.<br/>
-          If no Dataset exists with that name a new one will be created.<br/><br/>
-          The same syntax applies to Screen &amp; name</p>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Multiple targets</h3>
-          <ul>
-            <li>
-              Qualifying discriminators
-              <ul>
-                <li>+ most recent</li>
-                <li>- oldest</li>
-                <li>% unique</li>
-                <li>@ create new regardless</li>
-              </ul>
-            </li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Dataset &amp; name</h3>
-          <h4><em>A bit more interesting</em></h4>
-          <pre style="font-size:60%">
-
-  # use the most recent Dataset named 'Samples'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:+name:Samples
-
-  # use the oldest Dataset named 'Samples'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:-name:Samples
-
-  # use the Dataset named 'Samples' only if it is unique
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:%name:Samples
-
-  # create a new Dataset named 'Samples' even if one already exists
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:@name:Samples
-          </pre>
-          <p>The same syntax applies to Screen &amp; name</p>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Regular expressions</h3>
-          <h4><em>A lot more interesting</em></h4>
-          <pre style="font-size:60%; margin-left: -10%; width:120%">
-
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:name:^.*images/(?&lt;Container1>.*?)"
-          </pre>
-          <p style="font-size:90%; margin-left: -10%; width:120%; text-align:left;">
-          This will import the image into the Dataset called 'dv', resolved by &lt;Container1>.<br/>
-          If no Dataset exists with that name a new one will be created.<br/><br/>
-          The same syntax applies to Screen &amp; name</p>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Regular expressions</h3>
-          <h4><em>A lot more interesting</em></h4>
-          <pre style="font-size:60%; margin-left: -10%; width:120%">
-
-  # use the most recent Dataset named 'dv'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:+name:^.*images/(?&lt;Container1>.*?)"
-
-  # use the oldest Dataset named 'dv'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:-name:^.*images/(?&lt;Container1>.*?)"
-
-  # use the Dataset named 'dv' only if it is unique
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:%name:^.*images/(?&lt;Container1>.*?)"
-
-  # create a new Dataset named 'dv' even if one already exists
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:@name:^.*images/(?&lt;Container1>.*?)"
-          </pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Regular expressions</h3>
-          <h4>Implicit parts</h4>
-          <pre style="font-size:60%; margin-left: -10%; width:120%">
-
-  # use the most recent Dataset named 'dv' explicitly
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:+name:^.*images/(?&lt;Container1>.*?)"
-
-  # use the Dataset named 'dv', most recent is implicit
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:name:^.*images/(?&lt;Container1>.*?)"
-
-  # use the Dataset named 'dv', most recent name is implicit
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:^.*images/(?&lt;Container1>.*?)"
-
-  # use the Dataset named 'dv', use of regex and the most recent name is implicit
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T ":^.*images/(?&lt;Container1>.*?)"
-          </pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>Regular expressions</h3>
-          <h4>A further example</h4>
-          <p style="font-size:90%; margin-left: -10%; width:120%; text-align:left;">
-          Given a series of plates in the following directories
-          </p>
-          <pre style="font-size:60%; margin-left: -10%; width:120%">
-  ~/images/bd-pathway/week-1/2015-12-01_000/
-  ~/images/bd-pathway/week-2/2015-12-09_000/
-  ~/images/bd-pathway/week-2/2015-12-11_000/</pre>
-          <p style="font-size:90%; margin-left: -10%; width:120%; text-align:left;">
-          then
-          </p>
-          <pre style="font-size:60%; margin-left: -10%; width:120%">
-  omero import ~/images/bd-pathway/ -T "regex:+name:^.*bd-pathway/(?&lt;Container1>[^/]*)/.*"</pre>
-          <p style="font-size:90%; margin-left: -10%; width:120%; text-align:left;">
-          will resolve to using two Screens 'week-1' and 'week-2' for the import targets.
-          </p>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        </section>
-
-        <section>
-          <h3>Extending targets</h3>
-          Create a class which implements <a href="https://github.com/openmicroscopy/openmicroscopy/blob/v5.2.3/components/blitz/src/ome/formats/importer/targets/ImportTarget.java">AbstractFileTransfer</a> then
-          <pre style="font-size:60%">
-
-  omero import foo.tiff --target=my.new.Target
-          </pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <h3>More on Imports</h3>
-          <ul>
-            <li>Documentation:</li>
-            <ul>
-              <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/sysadmins/fs-upload-configuration.html">Managed repository</a></li>
-              <li><a href="https://www.openmicroscopy.org/site/support/omero5.2/developers/ImportFS.html">Import and Filesets</a></li>
-              <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/sysadmins/in-place-import.html">In-place import</a></li>
-              <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/sysadmins/import-scenarios.html">Import scenarios</a></li>
-              <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/users/cli/import-target.html">Import targets</a></li>
-            </ul>
-            <li>Previous workshops:</li>
-            <ul>
-              <li><a href="http://downloads.openmicroscopy.org/presentations/2015/Paris-Workshops/Import-Workshop/#/">Improving Imports with OMERO 5.x, Paris 2015</a></li>
-              <li><a href="http://downloads.openmicroscopy.org/presentations/2014/Paris-Workshops/OMERO-FS-Workshop/#/">Managing Imports with OMERO 5, Paris 2014</a></li>
-            </ul>
+            <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/users/cli/index.html">... for users</a></li>
+            <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/sysadmins/cli/index.html">... for admins</a></li>
+            <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/developers/cli/index.html">... for developers</a></li>
           </ul>
           <aside class="notes">
           </aside>
@@ -644,7 +177,7 @@
         <section>
           <h2>Thanks!</h2>
           <ul>
-            <li>the "import team"</li>
+            <li>the "CLI team"</li>
             <li>the OME team</li>
             <li>the user community</li>
           </ul>
