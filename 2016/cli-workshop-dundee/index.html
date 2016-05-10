@@ -141,9 +141,10 @@
           <h2>Outline</h2>
           <ul>
             <li>Overview of the CLI</li>
-            <li>Users</li>
-            <li>Sysadmins</li>
-            <li>Developers</li>
+            <li>Working with data</li>
+            <li>Managing users &amp; groups</li>
+            <li>Managing the server</li>
+            <li>A few other commands</li>
           </ul>
           <aside class="notes">
           </aside>
@@ -151,7 +152,41 @@
 
         <!--
           Introduction
+            The CLI
+            ecosystem
         -->
+        <section>
+          <h3>The CLI</h3>
+          <p style="text-align:left;">
+          The CLI is an OMERO client driven by the command line. It is a set of Python-based system-administration, deployment and advanced user tools. Most of commands work remotely so that the CLI can be used as a client against a remote OMERO server. It offers tools for users, facility managers, system administrators and developers.
+          </p>
+          <aside class="notes">
+          </aside>
+        </section>
+        <section>
+          <h3>CLI help</h3>
+          <pre>
+
+  $ omero help
+  usage: omero &lt;command> [options] args
+  See 'help &lt;command>' or '&lt;command> -h' for more information on syntax
+  Type 'quit' to exit
+
+  Available commands:
+    admin, cecog, chgrp, chown, config, db, delete, download, export,
+    fs, group, help, hql, import, ldap, load, node, obj, perf, quit,
+    script, search, server, sessions, shell, tag, testengine, upload,
+    user, version, web
+
+  Other help topics:
+    debug, env
+
+  For additional information, see:
+  http://www.openmicroscopy.org/site/support/omero5.2/users/cli/index.html
+          </pre>
+          <aside class="notes">
+          </aside>
+        </section>
         <section>
           <h3>The CLI ecosystem</h3>
           <img src="diagrams/venn.png" width="90%"/>
@@ -162,6 +197,95 @@
         <!--
           The workshop!
         -->
+
+
+        <!--
+          Doing things with data
+        -->
+        <section>
+          <section>
+            <h2>Working with data</h2>
+            <ul>
+              <li>...</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>obj</h2>
+            <ul>
+              <li>...</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!--
+          Users and groups
+        -->
+        <section>
+          <section>
+            <h2>Managing users &amp; groups</h2>
+            <ul>
+              <li>...</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>users</h2>
+            <ul>
+              <li>...</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!--
+          Server and DB commands
+        -->
+        <section>
+          <section>
+            <h2>Managing the server</h2>
+            <ul>
+              <li>...</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>admin</h2>
+            <ul>
+              <li>...</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!--
+          Various other commands - META
+        -->
+        <section>
+          <section>
+            <h2>A few other commands</h2>
+            <ul>
+              <li>...</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>omero</h2>
+            <ul>
+              <li>...</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
 
         <section>
           <h3>More on the CLI...</h3>
