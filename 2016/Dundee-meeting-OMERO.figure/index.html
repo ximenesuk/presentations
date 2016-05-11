@@ -109,6 +109,7 @@
                     <ul class="larger">
                         <li>Figures</li>
                         <li>Design goals</li>
+                        <li>OMERO.figure app</li>
                         <li>Technical</li>
                         <li>Demo</li>
                     </ul>
@@ -148,6 +149,7 @@
                     <div>
                         <ul>
                             <li>SLOW!!!</li>
+                            <li>Need to know exactly what to export at start</li>
                             <li>Loss of Metadata:
                                 <ul>
                                     <li>pixel sizes</li>
@@ -162,14 +164,48 @@
 
 
                 <section>
-                    <h2>OMERO.figure</h2>
+                    <h2>Figure export scripts</h2>
+
+                    <img style="height:300px; vertical-align: top" src="images/figure_scripts_menu.png">
+                    <img style="height:500px" src="http://downloads.openmicroscopy.org/presentations/2014/Figure-Tues-Team-Meeting/images/split-view-web.png">
+                </section>
+
+
+                <section>
+                    <h2>OMERO.figure Design Goals</h2>
+                    <div>
+                        <ul>
+                            <li>Combine images into figure in OMERO (no export)</li>
+                            <li>Flexible layout with shortcuts for grids</li>
+                            <li>Each panel is a fully editable image viewer</li>
+                            <li>Edits applied to multiple selected images</li>
+                            <li>Export to PDF</li>
+                        </ul>
+                    </div>
+                </section>
+
+
+                <section>
+                    <h2>OMERO.figure: History</h2>
                     <ul>
-                        <li>OMERO.web plugin</li>
-                        <pre style="width: 900px; font-size: 28px"><code>$ bin/omero config append omero.web.apps '"figure"'</code></pre>
+                        <li><a href="https://github.com/will-moore/weblabs/commit/165fe9813041f4599c98a3832b8241d44a16d5c3">
+                            Initial Commit 'weblabs'</a> May 2013</li>
+                        <li><a href="https://github.com/will-moore/webfigure/commit/e33be27d212ea38ee8de7f37d2fb4fafdc27bcd9">
+                            New 'webfigure' Repo</a> Sept 2013</li>
                         <li>Beta release in March 2014</li>
                         <li>1.0.0 - October 2014</li>
                         <li>1.1.0 - April 2015: Tiffs, Cropping, Pages</li>
                         <li>1.2.0 - November 2015: ROI overlays</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>OMERO.figure</h2>
+                    <ul>
+                        <li>OMERO.web app, same as OMERO.webclient</li>
+                        <li>Download, put on <code>$PYTHONPATH</code> and add to web 'apps'</li>
+                        <pre style="width: 900px; font-size: 28px"><code>$ bin/omero config append omero.web.apps '"figure"'</code></pre>
                     </ul>
                 </section>
 
@@ -201,8 +237,8 @@
                 </section>
 
 
-                <section>
-                    <h2>Demo...</h2>
+                <section style="width:120%; left:-60%">
+                    <iframe style="width:100%; max-width:100%; height:650px" src="http://figure.openmicroscopy.org/demo/#file/1" frameborder="0"></iframe>
                 </section>
 
 
