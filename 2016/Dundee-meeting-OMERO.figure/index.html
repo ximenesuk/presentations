@@ -125,22 +125,40 @@
 
                 <section>
                     <h2>Manual Figure Creation</h2>
-                    <div>
-                        <ul>
-                            <li>Export of images from viewing application
-                                <ul>
-                                    <li>Decide on which Z sections or projections</li>
-                                    <li>Choose timepoints for movies</li>
-                                    <li>Correct channels and rendering settings</li>
-                                    <li>Make notes in case you need to repeat!</li>
-                                </ul>
-                            </li>
-                            <li>Cropping (same region in multiple images)</li>
-                            <li>Import into Illustrator / Photoshop / etc </li>
-                            <li>Align into rows / grids</li>
-                            <li>Add scalebars, labels</li>
-                        </ul>
-                    </div>
+                    <ul>
+                        <li>Export of images from viewing application
+                            <ul>
+                                <li>Decide on which Z sections or projections</li>
+                                <li>Choose timepoints for movies</li>
+                                <li>Correct channels and rendering settings</li>
+                                <li>Make notes in case you need to repeat!</li>
+                            </ul>
+                        </li>
+                        <li>Import into Illustrator / Photoshop / etc </li>
+                        <li>Cropping (same region in multiple images)</li>
+                        <li>Align into rows / grids</li>
+                        <li>Add scalebars, labels</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Figure Creation Guides</h2>
+                    <ul>
+                        <li>Instruction for authors:
+                            <ul>
+                                <li>
+                                    <a href="http://jcb.rupress.org/site/misc/ifora.xhtml">JCB</a> |
+                                    <a href="http://www.cell.com/figureguidelines">Cell</a> |
+                                    <a href="http://jcs.biologists.org/content/manuscript-prep#4">J. Cell Sci</a> 
+                                    etc...
+                                </li>
+                            </ul>
+                        <li><a href="http://jcb-biowrites.rupress.org/2015/10/everything-you-need-to-know-about-image-screening-at-rockefeller-university-press-in-10-posts.html"/>
+                            10 posts on image screening (JCB)</a>
+                        </li>
+                        <li><a href="http://b.nanes.org/figures/">How to Create Publication-Quality Figures</a></li>
+                    </ul>
                 </section>
 
 
@@ -165,9 +183,10 @@
 
                 <section>
                     <h2>Figure export scripts</h2>
-
+                    OMERO 4.2 (July 2010) <a href="http://cvs.openmicroscopy.org.uk/snapshots/movies/omero-4-2/mov/FigureExport.mov">Demo Movie</a><br>
                     <img style="height:300px; vertical-align: top" src="images/figure_scripts_menu.png">
                     <img style="height:500px" src="http://downloads.openmicroscopy.org/presentations/2014/Figure-Tues-Team-Meeting/images/split-view-web.png">
+
                 </section>
 
 
@@ -175,6 +194,7 @@
                     <h2>OMERO.figure Design Goals</h2>
                     <div>
                         <ul>
+                            <li>Keep it fast!</a>
                             <li>Combine images into figure in OMERO (no export)</li>
                             <li>Flexible layout with shortcuts for grids</li>
                             <li>Each panel is a fully editable image viewer</li>
@@ -186,7 +206,7 @@
 
 
                 <section>
-                    <h2>OMERO.figure: History</h2>
+                    <h2>History of a "side project"</h2>
                     <ul>
                         <li><a href="https://github.com/will-moore/weblabs/commit/165fe9813041f4599c98a3832b8241d44a16d5c3">
                             Initial Commit 'weblabs'</a> May 2013</li>
@@ -195,13 +215,13 @@
                         <li>Beta release in March 2014</li>
                         <li>1.0.0 - October 2014</li>
                         <li>1.1.0 - April 2015: Tiffs, Cropping, Pages</li>
-                        <li>1.2.0 - November 2015: ROI overlays</li>
+                        <li>1.2.0 - November 2015: Draw shapes</li>
                     </ul>
                 </section>
 
 
                 <section>
-                    <h2>OMERO.figure</h2>
+                    <h2>What is OMERO.figure?</h2>
                     <ul>
                         <li>OMERO.web app, same as OMERO.webclient</li>
                         <li>Download, put on <code>$PYTHONPATH</code> and add to web 'apps'</li>
@@ -220,7 +240,8 @@
                 <section>
                     <h2>OMERO.figure tech</h2>
                     <ul>
-                        <li><a href="http://backbonejs.org/" class="roll"><span data-title="backbone.js">Backbone.js</span></a>
+                        <li>
+                            <a href="http://backbonejs.org/">Backbone.js</a> (light-weight MVC library)
                             <ul>
                                 <li>model</li>
                                 <li>events</li>
@@ -295,16 +316,29 @@
 
 
                 <section>
+                    <h2>What's next?</h2>
+                    <ul>
+                        <li>Improve ROI support:
+                            <ul>
+                                <li>Load ROIs from OMERO</li>
+                                <li>Save ROIs back to OMERO</li>
+                                <li>More shapes (freehand, polygon)</li>
+                            </ul>
+                        </li>
+                        <li>Improved integration with OMERO.webclient</li>
+                        <li>Embeddable Preview</li>
+                        <li>Labels from Tags</li>
+                    </ul>
+                </section>
+
+
+                <section>
                     <h2>More information</h2>
                     <ul>
                         <li>
-                            OME: <a href="http://www.openmicroscopy.org">
-                            www.openmicroscopy.org
-                            </a>
+                            <a href="http://figure.openmicroscopy.org">figure.openmicroscopy.org</a>
                         </li>
-                        <li>
-                            OMERO figure: <a href="http://figure.openmicroscopy.org">figure.openmicroscopy.org</a>
-                        </li>
+                        <li>Public <a href="https://trello.com/b/dheuY2Zz/omero-figure">Trello Board</a></li>
                         <li>Twitter:
                             <ul><a href="https://twitter.com/openmicroscopy">@openmicroscopy</a></ul>
                             <ul><a href="https://twitter.com/will_j_moore">@will_j_moore</a></ul>
