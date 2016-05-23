@@ -441,18 +441,44 @@
 
         <section>
           <section>
-            <h2>Finding stuff: hql</h2>
+            <h2>Finding stuff: search</h2>
             <ul>
-              <li>hql</li>
+              <li>Search for object ids by string</li>
             </ul>
+            <pre>
+  usage: bin/omero search
+         [-h] [--index] [--no-parse] [--field [FIELD [FIELD ...]]]
+         [--from YYYY-MM-DD] [--to YYYY-MM-DD]
+         [--date-type {acquisitionDate,import}] [--admin] [--all] [--ids-only]
+         [--limit LIMIT] [--offset OFFSET] [--style {plain,csv,sql}]
+         type [query]
+
+  Positional Arguments:
+    type                          Object type to search for, e.g. 'Image' or 'Well'
+    query                         Single query to run
+
+  Optional Arguments:
+    --from YYYY-MM-DD             Start date for limiting searches (YYYY-MM-DD)
+    --to YYYY-MM-DD               End date for limiting searches (YYYY-MM-DD
+    --ids-only                    Show only the ids of returned objects
+    --style {plain,csv,sql}       use alternative output style (default=sql)</pre>
             <aside class="notes">
             </aside>
           </section>
           <section>
-            <h2>Finding stuff: hql</h2>
-            <ul>
-              <li>hql</li>
-            </ul>
+            <h2>Finding stuff: search</h2>
+            <pre>
+  $ omero search Image "dv"
+   # | Class  | Id  | name               | acquisitionDate          | ...
+  ---+--------+-----+--------------------+--------------------------+----
+   0 | ImageI | 101 | IAGFP-Noc01_R3D.dv | Tue Aug 23 11:54:53 2005 | ...
+   1 | ImageI | 52  | CFPNEAT01_R3D.dv   | Fri Feb 27 10:25:32 2009 | ...
+  (2 rows)
+
+  $ omero search Image "dv" --ids-only --style csv
+  #,Col1
+  0,ImageI:101
+  1,ImageI:52</pre>
             <aside class="notes">
             </aside>
           </section>
@@ -460,18 +486,55 @@
 
         <section>
           <section>
-            <h2>Finding stuff: search</h2>
+            <h2>Finding stuff: hql</h2>
             <ul>
-              <li>search</li>
+              <li>Executes an HQL query</li>
+              <li>If no query is given, then a shell is opened</li>
             </ul>
+            <pre>
+usage: bin/omero hql
+       [-h] [--admin] [--all] [--ids-only] [--limit LIMIT] [--offset OFFSET]
+       [--style {plain,csv,sql}] [-C] [-s SERVER] [-p PORT] [-g GROUP]
+       [-u USER] [-w PASSWORD] [-k KEY] [--sudo ADMINUSER] [-q]
+       [query]
+
+Positional Arguments:
+  query                         Single query to run
+
+Optional Arguments
+  --all                         Perform query on all groups
+  --ids-only                    Show only the ids of returned objects
+  --limit LIMIT                 maximum number of return values (default=25)
+  --offset OFFSET               number of entries to skip (default=0)
+  --style {plain,csv,sql}       use alternative output style (default=sql)</pre>
             <aside class="notes">
             </aside>
           </section>
           <section>
-            <h2>Finding stuff: search</h2>
-            <ul>
-              <li>search</li>
-            </ul>
+            <h2>Finding stuff: hql</h2>
+            <pre>
+$ omero hql "select id, name, fileset.id from Image where id > 50"
+ # | Col1 | Col2               | Col3
+---+------+--------------------+------
+ 0 | 52   | CFPNEAT01_R3D.dv   | 52
+ 1 | 101  | IAGFP-Noc01_R3D.dv | 101
+ 2 | 102  | new.tiff           | 102
+(3 rows)
+
+$ omero hql
+Enter query:select id, name, fileset.id from Image order by id desc
+ # | Col1 | Col2               | Col3
+---+------+--------------------+------
+ 0 | 102  | new.tiff           | 102
+ 1 | 101  | IAGFP-Noc01_R3D.dv | 101
+ 2 | 52   | CFPNEAT01_R3D.dv   | 52
+(3 rows)
+
+To see details for object, enter line number.
+To move ahead one page, enter 'p'
+To re-display list, enter 'r'.
+To quit, enter 'q' or just enter.
+To run another query, press enter</pre>
             <aside class="notes">
             </aside>
           </section>
