@@ -66,3 +66,10 @@ body {
 .reveal cite, .reveal sup {
     font-size: 16px;
 }
+.reveal ul.nobullets {
+    list-style-type: none;
+}
+.reveal ul.nobullets li {
+    font-size: 24px;
+    line-height: 1.15;
+}
