@@ -317,16 +317,103 @@
           <section>
             <h2>Creating stuff: obj</h2>
             <ul>
-              <li>obj</li>
+              <li>Create, update and query various objects</li>
             </ul>
+            <pre>
+  $ omero obj -h
+  usage: bin/omero obj
+  ...
+         [{new,update,null,map-get,map-set,get,list-get}] [Class]
+         [fields [fields ...]]
+  ...
+  Positional Arguments:
+    {new,update,null,map-get,map-set,get,list-get}
+                                          operation to be performed
+    Class                                 OMERO model object name, e.g. Project
+    fields                                fields to be set, e.g. name=foo</pre>
             <aside class="notes">
             </aside>
           </section>
           <section>
             <h2>Creating stuff: obj</h2>
             <ul>
-              <li>obj</li>
+              <li>Create, update and query objects</li>
             </ul>
+            <pre>
+  $ omero obj new Dataset name="Dataset One"
+  Dataset:1
+  $ omero obj update Dataset:1 description="The primary dataset"
+  Dataset:1
+  $ omero obj get Dataset:1 name
+  Dataset One
+  $ omero obj get Dataset:1
+  description=The primary dataset
+  id=1
+  name=Dataset One
+  version=</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Creating stuff: obj</h2>
+            <ul>
+              <li>Create and link containers</li>
+            </ul>
+            <pre>
+  $ omero obj new Project name="P-1" description="New project"
+  Project:1
+  $ omero obj new ProjectDatasetLink parent=Project:1 child=Dataset:1
+  ProjectDatasetLink:1
+  $ omero obj new DatasetImageLink parent=Dataset:1 child=Image:51
+  DatasetImageLink:1
+  $ omero obj get DatasetImageLink:1 child
+  Image:51
+  $ omero obj get DatasetImageLink:1 parent
+  Dataset:1</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Creating stuff: obj</h2>
+            <ul>
+              <li>Managing annotations</li>
+            </ul>
+            <pre>
+  $ omero obj new FileAnnotation file=OriginalFile:275
+  FileAnnotation:5
+  $ omero obj new ImageAnnotationLink parent=Image:51 child=FileAnnotation:5
+  ImageAnnotationLink:2
+
+  $ omero obj new MapAnnotation name=domain ns=example.com
+  MapAnnotation:6
+  $ omero obj map-set MapAnnotation:6 mapValue 1 "http://openmicroscopy.org"
+  MapAnnotation:6
+  $ omero obj map-get MapAnnotation:6 mapValue 1
+  http://openmicroscopy.org
+  $ omero obj new ImageAnnotationLink parent=Image:51 child=MapAnnotation:6
+  ImageAnnotationLink:3</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Creating stuff: obj</h2>
+            <ul>
+              <li>Using bash to automate workflows</li>
+            </ul>
+            <pre>
+  $ project=$(omero obj new Project name='my Project')
+  $ dataset=$(omero obj new Dataset name='my Dataset')
+  $ omero obj new ProjectDatasetLink parent=$project child=$dataset
+  ProjectDatasetLink:2
+  $ omero import -T $dataset ~/Work/images/dv/CFPNEAT01_R3D.dv
+  Imported pixels:
+  52
+  Other imported objects:
+  Fileset:52
+  Image:52
+  ...
+  ==> Summary
+  2 files uploaded, 1 fileset created, 1 image imported, 0 errors in 0:00:03.866</pre>
             <aside class="notes">
             </aside>
           </section>
