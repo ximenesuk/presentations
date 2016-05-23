@@ -676,48 +676,23 @@
           Getting stuff out
         -->
         <section>
-          <h2>Working with data: Getting stuff out</h2>
-          <ul>
-            <li>export</li>
-            <li>download</li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
           <section>
             <h2>Getting stuff out: export</h2>
-            <ul>
-              <li>export</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-          <section>
-            <h2>Getting stuff out: export</h2>
-            <ul>
-              <li>export</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-        </section>
-
-        <section>
-          <section>
-            <h2>Getting stuff out: download</h2>
-            <ul>
-              <li>download</li>
-            </ul>
+            <pre>
+  $ omero export --file new.tiff Image:52
+  $ omero export --file new.xml --type XML Image:52
+  $ ls
+  new.tiff  new.xml</pre>
             <aside class="notes">
             </aside>
           </section>
           <section>
             <h2>Getting stuff out: download</h2>
-            <ul>
-              <li>download</li>
-            </ul>
+            <pre>
+  $ omero download FileAnnotation:5 new.tmp
+  $ omero download Image:102 original.tiff
+  $ ls
+  new.tiff  new.tmp   new.xml   original.tiff</pre>
             <aside class="notes">
             </aside>
           </section>
