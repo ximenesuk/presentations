@@ -482,45 +482,66 @@
             delete
         -->
         <section>
-          <h2>Working with data: Deleting stuff</h2>
-          <ul>
-            <li>Delete data</li>
-            <li>Remove entire graphs of data based on the ID of the top-node</li>
-          </ul>
-          <pre>
-$ omero delete Image:52 --report --dry-run
-Deleted objects
-  ImageAnnotationLink:51-54
-  MapAnnotation:52
-  Image:52
-  ...
-$ omero delete Image:52 --include TagAnnotation,FileAnnotation --report --dry-run
-Deleted objects
-  AnnotationAnnotationLink:1,2
-  FileAnnotation:5
-  ImageAnnotationLink:51-54
-  MapAnnotation:52
-  TagAnnotation:1,2
-  Image:52
-  ...</pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
           <section>
-            <h2>Deleting stuff: delete</h2>
+            <h2>Working with data: Deleting stuff</h2>
             <ul>
-              <li>delete</li>
+              <li>Delete data</li>
+              <li>Remove entire graphs of data based on the ID of the top-node</li>
             </ul>
+            <pre>
+  usage: bin/omero delete
+         [-h] [--wait WAIT] [--include INCLUDE] [--exclude EXCLUDE] [--ordered]
+         [--list] [--report] [--dry-run]
+         [obj [obj ...]]
+
+  Positional Arguments:
+    obj                 Objects to be processed in the form &lt;Class>:&lt;Id>
+
+  Optional Arguments:
+    --include INCLUDE   Modifies the given option by including a list of objects
+    --exclude EXCLUDE   Modifies the given option by excluding a list of objects
+    --report            Print more detailed report of each action
+    --dry-run           Do a dry run of the command,
+                        providing a report of what would have been done</pre>
             <aside class="notes">
             </aside>
           </section>
           <section>
-            <h2>Deleting stuff: delete</h2>
+            <h2>Working with data: Deleting stuff</h2>
+            <pre>
+  $ omero delete Image:52 --report --dry-run
+  Deleted objects
+    ImageAnnotationLink:51-54
+    MapAnnotation:52
+    Image:52
+    ...
+  $ omero delete Image:52 --include TagAnnotation,FileAnnotation --report --dry-run
+  Deleted objects
+    AnnotationAnnotationLink:1,2
+    FileAnnotation:5
+    ImageAnnotationLink:51-54
+    MapAnnotation:52
+    TagAnnotation:1,2
+    Image:52
+    ...</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Working with data: Deleting stuff</h2>
             <ul>
-              <li>delete</li>
+              <li>Delete using skipheads</li>
             </ul>
+            <pre>
+  $ omero delete Project/Image:2 --report --dry-run
+  ...
+  Deleted objects
+    DatasetImageLink:2,51
+    Image:52,101
+    OriginalFile:277-279,370-372
+    Pixels:52,101
+    Fileset:52,101
+    ...</pre>
             <aside class="notes">
             </aside>
           </section>
@@ -547,28 +568,26 @@ Deleted objects
               <li>Entire graphs of data, based on the ID of the top-node</li>
             </ul>
             <pre>
-  usage: /Users/colin/Work/repos/openmicroscopy/dist/bin/omero chgrp
+  usage: bin/omero chgrp
          [-h] [--wait WAIT] [--include INCLUDE] [--exclude EXCLUDE] [--ordered]
          [--list] [--report] [--dry-run]
          [grp] [obj [obj ...]]
   ...
   Positional Arguments:
     grp                 Group to move objects to
-    obj                 Objects to be processed in the form <Class>:<Id>
+    obj                 Objects to be processed in the form &lt;Class>:&lt;Id>
 
   Optional Arguments:
     --include INCLUDE   Modifies the given option by including a list of objects
     --exclude EXCLUDE   Modifies the given option by excluding a list of objects
     --report            Print more detailed report of each action
-    --dry-run           Do a dry run of the command, ...</pre>
+    --dry-run           Do a dry run of the command,
+                        providing a report of what would have been done</pre>
             <aside class="notes">
             </aside>
           </section>
           <section>
             <h2>Moving stuff: chgrp</h2>
-            <ul>
-              <li>Move data between groups</li>
-            </ul>
             <pre>
   $ omero chgrp 5 OriginalFile:275 --report --dry-run
   omero.cmd.Chgrp2 OriginalFile:275 failed: 'graph-fail'
@@ -577,7 +596,7 @@ Deleted objects
   Elapsed time: 0.129 secs.
   Flags: [FAILURE, CANCELLED]
 
-  $ omero chgrp 5 FileAnnotation:5 --report
+  $ omero chgrp Group:5 FileAnnotation:5 --report
   omero.cmd.Chgrp2 FileAnnotation:5 ok
   Steps: 6
   Elapsed time: 0.121 secs.
@@ -596,19 +615,14 @@ Deleted objects
               <li>Move data using skipheads</li>
             </ul>
             <pre>
-  $ omero chgrp 5 Project/Image:1 --report --dry-run
+  $ omero chgrp 5 Dataset/Image:1 --report --dry-run
   ...
   Included objects
-    Detector:51
-    ...
     ImageAnnotationLink:3
     MapAnnotation:6
-    Channel:51
     Image:51
-    LogicalChannel:51
     OriginalFile:272-274
     ...
-    StatsInfo:21
   Deleted objects
     ImageAnnotationLink:1
     DatasetImageLink:1</pre>
@@ -618,12 +632,34 @@ Deleted objects
         </section>
 
         <section>
-          <h2>Moving stuff: chown</h2>
-          <ul>
-            <li>Transfer ownership of data between users.</li>
-            <li>Entire graphs of data, based on the ID of the top-node</li>
-          </ul>
-          <pre>
+          <section>
+            <h2>Moving stuff: chown</h2>
+            <ul>
+              <li>Transfer ownership of data between users.</li>
+              <li>Entire graphs of data, based on the ID of the top-node</li>
+            </ul>
+            <pre>
+  usage: bin/omero chown
+         [-h] [--wait WAIT] [--include INCLUDE] [--exclude EXCLUDE] [--ordered]
+         [--list] [--report] [--dry-run]
+         [usr] [obj [obj ...]]
+
+  Positional Arguments:
+    usr                 user to transfer ownership of objects to
+    obj                 Objects to be processed in the form &lt;Class>:&lt;Id>
+
+  Optional Arguments:
+    --include INCLUDE   Modifies the given option by including a list of objects
+    --exclude EXCLUDE   Modifies the given option by excluding a list of objects
+    --report            Print more detailed report of each action
+    --dry-run           Do a dry run of the command,
+                        providing a report of what would have been done</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Moving stuff: chown</h2>
+            <pre>
   $ omero chown user-1  Project/Image:1
   omero.cmd.Chown2 Project/Image:1 ok
 
@@ -631,8 +667,9 @@ Deleted objects
   $ omero chown User:101 Image:2
   $ omero chown Experimenter:101 Image:3
   $ omero chown jane Image:51,52,53</pre>
-          <aside class="notes">
-          </aside>
+            <aside class="notes">
+            </aside>
+          </section>
         </section>
 
         <!--
