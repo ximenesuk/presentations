@@ -218,7 +218,15 @@
           <section>
             <h2>Creating stuff: import</h2>
             <ul>
-              <li>import</li>
+              <li>
+                The CLI import command allows you to import images to an OMERO server from the command line.
+              </li>
+              <li>
+                It is ideally suited for anyone wanting to use a shell-scripted or web-based front-end interface for importing.
+              </li>
+              <li>
+                The command line version supports the same file formats and functions in much the same way.
+              </li>
             </ul>
             <aside class="notes">
             </aside>
@@ -226,7 +234,22 @@
           <section>
             <h2>Creating stuff: import</h2>
             <ul>
-              <li>import</li>
+              <li>
+                The CLI import command returns details of Pixels, Filesets and Images or Screens.
+              </li>
+            </ul>
+            <pre>
+  $ omero import ~/Work/images/dv/IAGFP-Noc01_R3D.dv
+  ...
+  Imported pixels:
+  51
+  Other imported objects:
+  Fileset:51
+  Image:51</pre>
+            <ul>
+              <li>
+                Currently mixed between stdout and stderr, but we looking at other ways of providing this data.
+              </li>
             </ul>
             <aside class="notes">
             </aside>
