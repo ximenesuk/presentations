@@ -172,7 +172,7 @@
           <h3>CLI help</h3>
           <pre>
 
-  $ omero help
+  $ bin/omero help
   usage: omero &lt;command> [options] args
   See 'help &lt;command>' or '&lt;command> -h' for more information on syntax
   Type 'quit' to exit
@@ -239,7 +239,7 @@
               </li>
             </ul>
             <pre>
-  $ omero import ~/Work/images/dv/IAGFP-Noc01_R3D.dv
+  $ bin/omero import ~/Work/images/dv/IAGFP-Noc01_R3D.dv
   ...
   Imported pixels:
   51
@@ -263,9 +263,9 @@
             <li>Can handle pytables files</li>
           </ul>
           <pre>
-  $ omero upload tox.ini
+  $ bin/omero upload tox.ini
   Uploaded tox.ini as 275
-  $ omero obj get OriginalFile:275 name
+  $ bin/omero obj get OriginalFile:275 name
   tox.ini</pre>
           <aside class="notes">
           </aside>
@@ -278,7 +278,7 @@
               <li>Create, manage and view tags</li>
             </ul>
           <pre>
-  $ omero tag -h
+  $ bin/omero tag -h
   ...
     list                            List all the tags, grouped by tagset
     listsets                        List tag sets
@@ -295,18 +295,18 @@
               <li>Create, manage and view tags</li>
             </ul>
           <pre>
-  $ omero tag create --name Tag1
+  $ bin/omero tag create --name Tag1
   TagAnnotation:1
-  $ omero tag create --name Tag2
+  $ bin/omero tag create --name Tag2
   TagAnnotation:2
-  $ omero tag createset --name Set1 --tag 1 2
+  $ bin/omero tag createset --name Set1 --tag 1 2
   TagAnnotation:3
-  $ omero tag list
+  $ bin/omero tag list
   +- 3:'Set1'
   |\
   | +- 2:'Tag2'
   | +- 1:'Tag1'
-  $ omero tag link Image:51 1
+  $ bin/omero tag link Image:51 1
   ImageAnnotationLink:51</pre>
             <aside class="notes">
             </aside>
@@ -320,7 +320,7 @@
               <li>Create, update and query various objects</li>
             </ul>
             <pre>
-  $ omero obj -h
+  $ bin/omero obj -h
   usage: bin/omero obj
   ...
          [{new,update,null,map-get,map-set,get,list-get}] [Class]
@@ -340,13 +340,13 @@
               <li>Create, update and query objects</li>
             </ul>
             <pre>
-  $ omero obj new Dataset name="Dataset One"
+  $ bin/omero obj new Dataset name="Dataset One"
   Dataset:1
-  $ omero obj update Dataset:1 description="The primary dataset"
+  $ bin/omero obj update Dataset:1 description="The primary dataset"
   Dataset:1
-  $ omero obj get Dataset:1 name
+  $ bin/omero obj get Dataset:1 name
   Dataset One
-  $ omero obj get Dataset:1
+  $ bin/omero obj get Dataset:1
   description=The primary dataset
   id=1
   name=Dataset One
@@ -360,15 +360,15 @@
               <li>Create and link containers</li>
             </ul>
             <pre>
-  $ omero obj new Project name="P-1" description="New project"
+  $ bin/omero obj new Project name="P-1" description="New project"
   Project:1
-  $ omero obj new ProjectDatasetLink parent=Project:1 child=Dataset:1
+  $ bin/omero obj new ProjectDatasetLink parent=Project:1 child=Dataset:1
   ProjectDatasetLink:1
-  $ omero obj new DatasetImageLink parent=Dataset:1 child=Image:51
+  $ bin/omero obj new DatasetImageLink parent=Dataset:1 child=Image:51
   DatasetImageLink:1
-  $ omero obj get DatasetImageLink:1 child
+  $ bin/omero obj get DatasetImageLink:1 child
   Image:51
-  $ omero obj get DatasetImageLink:1 parent
+  $ bin/omero obj get DatasetImageLink:1 parent
   Dataset:1</pre>
             <aside class="notes">
             </aside>
@@ -379,18 +379,18 @@
               <li>Managing annotations</li>
             </ul>
             <pre>
-  $ omero obj new FileAnnotation file=OriginalFile:275
+  $ bin/omero obj new FileAnnotation file=OriginalFile:275
   FileAnnotation:5
-  $ omero obj new ImageAnnotationLink parent=Image:51 child=FileAnnotation:5
+  $ bin/omero obj new ImageAnnotationLink parent=Image:51 child=FileAnnotation:5
   ImageAnnotationLink:2
 
-  $ omero obj new MapAnnotation name=domain ns=example.com
+  $ bin/omero obj new MapAnnotation name=domain ns=example.com
   MapAnnotation:6
-  $ omero obj map-set MapAnnotation:6 mapValue 1 "http://openmicroscopy.org"
+  $ bin/omero obj map-set MapAnnotation:6 mapValue 1 "http://openmicroscopy.org"
   MapAnnotation:6
-  $ omero obj map-get MapAnnotation:6 mapValue 1
+  $ bin/omero obj map-get MapAnnotation:6 mapValue 1
   http://openmicroscopy.org
-  $ omero obj new ImageAnnotationLink parent=Image:51 child=MapAnnotation:6
+  $ bin/omero obj new ImageAnnotationLink parent=Image:51 child=MapAnnotation:6
   ImageAnnotationLink:3</pre>
             <aside class="notes">
             </aside>
@@ -403,9 +403,9 @@
             <pre>
   $ project=$(omero obj new Project name='my Project')
   $ dataset=$(omero obj new Dataset name='my Dataset')
-  $ omero obj new ProjectDatasetLink parent=$project child=$dataset
+  $ bin/omero obj new ProjectDatasetLink parent=$project child=$dataset
   ProjectDatasetLink:2
-  $ omero import -T $dataset ~/Work/images/dv/CFPNEAT01_R3D.dv
+  $ bin/omero import -T $dataset ~/Work/images/dv/CFPNEAT01_R3D.dv
   Imported pixels:
   52
   Other imported objects:
@@ -468,14 +468,14 @@
           <section>
             <h2>Finding stuff: search</h2>
             <pre>
-  $ omero search Image "dv"
+  $ bin/omero search Image "dv"
    # | Class  | Id  | name               | acquisitionDate          | ...
   ---+--------+-----+--------------------+--------------------------+----
    0 | ImageI | 101 | IAGFP-Noc01_R3D.dv | Tue Aug 23 11:54:53 2005 | ...
    1 | ImageI | 52  | CFPNEAT01_R3D.dv   | Fri Feb 27 10:25:32 2009 | ...
   (2 rows)
 
-  $ omero search Image "dv" --ids-only --style csv
+  $ bin/omero search Image "dv" --ids-only --style csv
   #,Col1
   0,ImageI:101
   1,ImageI:52</pre>
@@ -513,7 +513,7 @@ Optional Arguments
           <section>
             <h2>Finding stuff: hql</h2>
             <pre>
-$ omero hql "select id, name, fileset.id from Image where id > 50"
+$ bin/omero hql "select id, name, fileset.id from Image where id > 50"
  # | Col1 | Col2               | Col3
 ---+------+--------------------+------
  0 | 52   | CFPNEAT01_R3D.dv   | 52
@@ -521,7 +521,7 @@ $ omero hql "select id, name, fileset.id from Image where id > 50"
  2 | 102  | new.tiff           | 102
 (3 rows)
 
-$ omero hql
+$ bin/omero hql
 Enter query:select id, name, fileset.id from Image order by id desc
  # | Col1 | Col2               | Col3
 ---+------+--------------------+------
@@ -572,13 +572,13 @@ To run another query, press enter</pre>
           <section>
             <h2>Working with data: Deleting stuff</h2>
             <pre>
-  $ omero delete Image:52 --report --dry-run
+  $ bin/omero delete Image:52 --report --dry-run
   Deleted objects
     ImageAnnotationLink:51-54
     MapAnnotation:52
     Image:52
     ...
-  $ omero delete Image:52 --include TagAnnotation,FileAnnotation --report --dry-run
+  $ bin/omero delete Image:52 --include TagAnnotation,FileAnnotation --report --dry-run
   Deleted objects
     AnnotationAnnotationLink:1,2
     FileAnnotation:5
@@ -596,7 +596,7 @@ To run another query, press enter</pre>
               <li>Delete using skipheads</li>
             </ul>
             <pre>
-  $ omero delete Project/Image:2 --report --dry-run
+  $ bin/omero delete Project/Image:2 --report --dry-run
   ...
   Deleted objects
     DatasetImageLink:2,51
@@ -652,14 +652,14 @@ To run another query, press enter</pre>
           <section>
             <h2>Moving stuff: chgrp</h2>
             <pre>
-  $ omero chgrp 5 OriginalFile:275 --report --dry-run
+  $ bin/omero chgrp 5 OriginalFile:275 --report --dry-run
   omero.cmd.Chgrp2 OriginalFile:275 failed: 'graph-fail'
   failed: may not move OriginalFile[275] while used by FileAnnotation[5]
   Steps: 4
   Elapsed time: 0.129 secs.
   Flags: [FAILURE, CANCELLED]
 
-  $ omero chgrp Group:5 FileAnnotation:5 --report
+  $ bin/omero chgrp Group:5 FileAnnotation:5 --report
   omero.cmd.Chgrp2 FileAnnotation:5 ok
   Steps: 6
   Elapsed time: 0.121 secs.
@@ -678,7 +678,7 @@ To run another query, press enter</pre>
               <li>Move data using skipheads</li>
             </ul>
             <pre>
-  $ omero chgrp 5 Dataset/Image:1 --report --dry-run
+  $ bin/omero chgrp 5 Dataset/Image:1 --report --dry-run
   ...
   Included objects
     ImageAnnotationLink:3
@@ -723,13 +723,13 @@ To run another query, press enter</pre>
           <section>
             <h2>Moving stuff: chown</h2>
             <pre>
-  $ omero chown user-1  Project/Image:1
+  $ bin/omero chown user-1  Project/Image:1
   omero.cmd.Chown2 Project/Image:1 ok
 
-  $ omero chown 101 Image:1
-  $ omero chown User:101 Image:2
-  $ omero chown Experimenter:101 Image:3
-  $ omero chown jane Image:51,52,53</pre>
+  $ bin/omero chown 101 Image:1
+  $ bin/omero chown User:101 Image:2
+  $ bin/omero chown Experimenter:101 Image:3
+  $ bin/omero chown jane Image:51,52,53</pre>
             <aside class="notes">
             </aside>
           </section>
@@ -742,8 +742,8 @@ To run another query, press enter</pre>
           <section>
             <h2>Getting stuff out: export</h2>
             <pre>
-  $ omero export --file new.tiff Image:52
-  $ omero export --file new.xml --type XML Image:52
+  $ bin/omero export --file new.tiff Image:52
+  $ bin/omero export --file new.xml --type XML Image:52
   $ ls
   new.tiff  new.xml</pre>
             <aside class="notes">
@@ -752,8 +752,8 @@ To run another query, press enter</pre>
           <section>
             <h2>Getting stuff out: download</h2>
             <pre>
-  $ omero download FileAnnotation:5 new.tmp
-  $ omero download Image:102 original.tiff
+  $ bin/omero download FileAnnotation:5 new.tmp
+  $ bin/omero download Image:102 original.tiff
   $ ls
   new.tiff  new.tmp   new.xml   original.tiff</pre>
             <aside class="notes">
