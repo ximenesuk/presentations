@@ -257,6 +257,21 @@
         </section>
 
         <section>
+          <h2>Creating stuff: upload</h2>
+          <ul>
+            <li>Upload local files to the OMERO server</li>
+            <li>Can handle pytables files</li>
+          </ul>
+          <pre>
+  $ omero upload tox.ini
+  Uploaded tox.ini as 275
+  $ omero obj get OriginalFile:275 name
+  tox.ini</pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
           <section>
             <h2>Creating stuff: tag</h2>
             <ul>
