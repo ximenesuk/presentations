@@ -275,16 +275,39 @@
           <section>
             <h2>Creating stuff: tag</h2>
             <ul>
-              <li>tag</li>
+              <li>Create, manage and view tags</li>
             </ul>
+          <pre>
+  $ omero tag -h
+  ...
+    list                            List all the tags, grouped by tagset
+    listsets                        List tag sets
+    create                          Create a new tag
+    createset                       Create a new tag set
+    load                            Import new tag(s) and tagset(s) from JSON file
+    link                            Link annotation to an object</pre>
             <aside class="notes">
             </aside>
           </section>
           <section>
             <h2>Creating stuff: tag</h2>
             <ul>
-              <li>tag</li>
+              <li>Create, manage and view tags</li>
             </ul>
+          <pre>
+  $ omero tag create --name Tag1
+  TagAnnotation:1
+  $ omero tag create --name Tag2
+  TagAnnotation:2
+  $ omero tag createset --name Set1 --tag 1 2
+  TagAnnotation:3
+  $ omero tag list
+  +- 3:'Set1'
+  |\
+  | +- 2:'Tag2'
+  | +- 1:'Tag1'
+  $ omero tag link Image:51 1
+  ImageAnnotationLink:51</pre>
             <aside class="notes">
             </aside>
           </section>
