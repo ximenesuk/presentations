@@ -593,8 +593,25 @@
         <section>
           <h2>Working with data: Deleting stuff</h2>
           <ul>
-            <li>delete</li>
+            <li>Delete data</li>
+            <li>Remove entire graphs of data based on the ID of the top-node</li>
           </ul>
+          <pre>
+$ omero delete Image:52 --report --dry-run
+Deleted objects
+  ImageAnnotationLink:51-54
+  MapAnnotation:52
+  Image:52
+  ...
+$ omero delete Image:52 --include TagAnnotation,FileAnnotation --report --dry-run
+Deleted objects
+  AnnotationAnnotationLink:1,2
+  FileAnnotation:5
+  ImageAnnotationLink:51-54
+  MapAnnotation:52
+  TagAnnotation:1,2
+  Image:52
+  ...</pre>
           <aside class="notes">
           </aside>
         </section>
