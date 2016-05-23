@@ -517,6 +517,24 @@
           </section>
         </section>
 
+        <section>
+          <h2>Moving stuff: chown</h2>
+          <ul>
+            <li>Transfer ownership of data between users.</li>
+            <li>Entire graphs of data, based on the ID of the top-node</li>
+          </ul>
+          <pre>
+  $ omero chown user-1  Project/Image:1
+  omero.cmd.Chown2 Project/Image:1 ok
+
+  $ omero chown 101 Image:1
+  $ omero chown User:101 Image:2
+  $ omero chown Experimenter:101 Image:3
+  $ omero chown jane Image:51,52,53</pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
         <!--
           Finding stuff
         -->
