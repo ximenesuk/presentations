@@ -224,6 +224,15 @@ for plane in range(0, imageCount):
 
                   <section>
                     <h2>Memoizer</h2>
+                    <pre><code>
+IFormatReader reader = new Memoizer(new ImageReader());
+reader.setId("/PATH/TO/FILE");
+                    </code></pre>
+
+                    <ul>
+                      <li>uses <a href="https://github.com/esotericsoftware/kryo">Kryo</a> to serialize the reader's initialized state to a file</li>
+                      <li>initializing the same data file again uses the serialized state (i.e. faster)</li>
+                    </ul>
                   </section>
 
                   <section>
