@@ -145,9 +145,9 @@
             <li>Working with data from the CLI</li>
             <ul>
               <li>Creating stuff</li>
-              <li>Moving stuff</li>
               <li>Finding stuff</li>
               <li>Deleting stuff</li>
+              <li>Moving stuff</li>
               <li>Getting stuff out</li>
             </ul>
           </ul>
@@ -427,6 +427,106 @@
         </section>
 
         <!--
+          Finding stuff
+        -->
+        <section>
+          <h2>Working with data: Finding stuff</h2>
+          <ul>
+            <li>hql</li>
+            <li>search</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>Finding stuff: hql</h2>
+            <ul>
+              <li>hql</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Finding stuff: hql</h2>
+            <ul>
+              <li>hql</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Finding stuff: search</h2>
+            <ul>
+              <li>search</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Finding stuff: search</h2>
+            <ul>
+              <li>search</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!--
+          Deleting stuff
+            delete
+        -->
+        <section>
+          <h2>Working with data: Deleting stuff</h2>
+          <ul>
+            <li>Delete data</li>
+            <li>Remove entire graphs of data based on the ID of the top-node</li>
+          </ul>
+          <pre>
+$ omero delete Image:52 --report --dry-run
+Deleted objects
+  ImageAnnotationLink:51-54
+  MapAnnotation:52
+  Image:52
+  ...
+$ omero delete Image:52 --include TagAnnotation,FileAnnotation --report --dry-run
+Deleted objects
+  AnnotationAnnotationLink:1,2
+  FileAnnotation:5
+  ImageAnnotationLink:51-54
+  MapAnnotation:52
+  TagAnnotation:1,2
+  Image:52
+  ...</pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>Deleting stuff: delete</h2>
+            <ul>
+              <li>delete</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Deleting stuff: delete</h2>
+            <ul>
+              <li>delete</li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!--
           Moving stuff
         -->
         <section>
@@ -533,106 +633,6 @@
   $ omero chown jane Image:51,52,53</pre>
           <aside class="notes">
           </aside>
-        </section>
-
-        <!--
-          Finding stuff
-        -->
-        <section>
-          <h2>Working with data: Finding stuff</h2>
-          <ul>
-            <li>hql</li>
-            <li>search</li>
-          </ul>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <section>
-            <h2>Finding stuff: hql</h2>
-            <ul>
-              <li>hql</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-          <section>
-            <h2>Finding stuff: hql</h2>
-            <ul>
-              <li>hql</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-        </section>
-
-        <section>
-          <section>
-            <h2>Finding stuff: search</h2>
-            <ul>
-              <li>search</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-          <section>
-            <h2>Finding stuff: search</h2>
-            <ul>
-              <li>search</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-        </section>
-
-        <!--
-          Deleting stuff
-            delete
-        -->
-        <section>
-          <h2>Working with data: Deleting stuff</h2>
-          <ul>
-            <li>Delete data</li>
-            <li>Remove entire graphs of data based on the ID of the top-node</li>
-          </ul>
-          <pre>
-$ omero delete Image:52 --report --dry-run
-Deleted objects
-  ImageAnnotationLink:51-54
-  MapAnnotation:52
-  Image:52
-  ...
-$ omero delete Image:52 --include TagAnnotation,FileAnnotation --report --dry-run
-Deleted objects
-  AnnotationAnnotationLink:1,2
-  FileAnnotation:5
-  ImageAnnotationLink:51-54
-  MapAnnotation:52
-  TagAnnotation:1,2
-  Image:52
-  ...</pre>
-          <aside class="notes">
-          </aside>
-        </section>
-
-        <section>
-          <section>
-            <h2>Deleting stuff: delete</h2>
-            <ul>
-              <li>delete</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
-          <section>
-            <h2>Deleting stuff: delete</h2>
-            <ul>
-              <li>delete</li>
-            </ul>
-            <aside class="notes">
-            </aside>
-          </section>
         </section>
 
         <!--
