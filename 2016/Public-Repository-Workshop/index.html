@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Public Repository: Ola Tarkowska, Will Moore, Dundee 2016</title>
+        <title>Public Repository: Ola Tarkowska, Will Moore, Douglas Russell, Dundee 2016</title>
 
         <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
         <meta name="author" content="Ola Tarkowska, Will Moore">
@@ -39,13 +39,14 @@
             <!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
                 <section>
-                    <h1 style="font-size:350%">Public Repository:</h1>
-                    <h2>permissions, deployment<br/> and customization</h2>
+                    <h2>Public Repository:</h2>
+                    <h3>permissions, deployment<br/> and customization.<br/>
+                    OMERO.web plugins and extensions.</h3>
 
-                    <h3>11th Annual OME Meeting</h3>
+                    <h4>11th Annual OME Meeting</h4>
                     <h4>Dundee 2016</h4>
 
-                    <h4>Ola Tarkowska, Will Moore<br>
+                    <h4>Ola Tarkowska, Will Moore, Douglas Russell<br>
                         <img src="images/ome-logo-200.png"/>
                     </h4>
                 </section>
@@ -213,7 +214,6 @@ $ bin/omero config set omero.web.public.url_filter '^/(webadmin/myphoto/|webclie
                     <li><a href="https://www.openmicroscopy.org/site/support/partner/omero.webtagging" target="_blank">OMERO.webtagging</a></li>
                     <li><a href="https://github.com/ome/gallery/" target="_blank">OMERO.gallery</a></li>
                     <li><a href="https://github.com/openmicroscopy/webtest/" target="_blank">webtest</a></li>
-                    
                 </ul>
                 </section>
 
@@ -249,7 +249,6 @@ $ bin/omero config set omero.web.public.url_filter '^/(webadmin/myphoto/|webclie
 </code></pre>
                     <img src="images/webtest_roi_plugin.png" height="500px"> 
                 </section>
-
 
                 <section>
                     <h2>Left hand pane plugins</h2>
@@ -315,12 +314,12 @@ $ bin/omero config set omero.web.ui.top_links
 
                 <section>
                     <h2>Group and Users<br/>in dropdown menu</h2>
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.client.ui.menu.dropdown.leaders.enabled true
-$ bin/omero config set omero.client.ui.menu.dropdown.leaders.label "Owners"
-$ bin/omero config set omero.client.ui.menu.dropdown.colleagues.enabled true
-$ bin/omero config set omero.client.ui.menu.dropdown.colleagues.label "Members"
-$ bin/omero config set omero.client.ui.menu.dropdown.everyone.enabled true
-$ bin/omero config set omero.client.ui.menu.dropdown.everyone.label "All Members"
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.client.ui.menu.dropdown.everyone.enabled true
+$ bin/omero config set omero.client.ui.menu.dropdown.everyone.label "All courses"
+$ bin/omero config set omero.client.ui.menu.dropdown.leaders.enabled true
+$ bin/omero config set omero.client.ui.menu.dropdown.leaders.label "Course:"
+$ bin/omero config set omero.client.ui.menu.dropdown.colleagues.enabled false
+
 </code></pre>
 
                 <img src="images/dropdown_menu2.png"/> <img src="images/dropdown_menu.png"/>
@@ -346,7 +345,7 @@ $ bin/omero config set omero.client.ui.tree.orphans.description "This folder con
 
                 <section>
                     <h2>Download restriction</h2>
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.policy.binary_access "+read,+write,+image,-plate"
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.policy.binary_access "+read,+write,-image,-plate"
 </code></pre>
                     <img src="images/download1.png"/> <img src="images/download2.png"/>
                 </section>
@@ -460,107 +459,19 @@ $ bin/omero sessions list
                 </section>
 
                 <section>
-                    <h2>EXPERIMENTAL: Redis session backend</h2>
-
-                    <p>Requires: Python Redis 2.4+, django-redis-cache 1.6.5+</p>
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ pip install django-redis-cache>=1.6.5
-$ bin/omero config set omero.web.caches '{"default": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "127.0.0.1:6379"}}'
-</code></pre>
+                    <h2>EXPERIMENTAL</h2>
                 </section>
 
                 <section>
-                    <h2>Experimental: Nginx CACHE</h2>
+                    <h2>Nginx CACHE</h2>
 
-                    <p>Define caches<p>
-                    <pre><code contenteditable style="font-size:90%" class="bash">proxy_cache_path /data/omero levels=1:2 keys_zone=omero:10m inactive=30d use_temp_path=off;
-proxy_cache_path /data/omero-thumbnail-cache levels=1:2 keys_zone=omerothumbnail:200m inactive=30d use_temp_path=off;
-proxy_cache_path /data/omero-render-cache levels=1:2 keys_zone=omerorender:4000m inactive=30d use_temp_path=off;
-proxy_cache_path /data/omero-metadata-cache levels=1:2 keys_zone=omerometadata:300m inactive=30d use_temp_path=off;
-proxy_cache_path /data/omero-show-cache levels=1:2 keys_zone=omeroshow:600m inactive=30d use_temp_path=off;
+                    <script src="https://gist.github.com/aleksandra-tarkowska/7e9a5fd24f0d3bc1fd524468bae1991e.js"></script>
 
-</code></pre>
-                </section>
-
-                <section>
-                    <h2>Experimental: Nginx CACHE</h2>
-
-                    <p>Define filters<p>
-                    <pre><code contenteditable style="font-size:90%" class="bash">map $request_uri $uri_skip_cache
-{
-    default 1;
-    "~webclient/api/paths_to_object*"             0;
-    "~web(client|gateway)/(metadata|render)_*"    0;
-}
-
-map $args $skip_cache
-{
-    default     $uri_skip_cache;
-    "~show=*"    0;
-}
-
-map $request_uri $cache_zone_name
-{
-    default omero;
-    "~webclient/.*/?show=*"                     omeroshow;
-    "~webclient/api/paths_to_object/*"          omeroshow;
-    "~webclient/metadata_*"                     omerometadata;
-    "~web(client|gateway)/render_thumbnail/*"   omerothumbnail;
-    "~web(client|gateway)/render_image/*"       omerorender;
-}
-
-upstream omeroweb_omero {
-
-</code></pre>
-                </section>
-
-                <section>
-                    <h2>Experimental: Nginx CACHE</h2>
-
-                    <p>Define filters<p>
-                    <pre><code contenteditable style="font-size:90%" class="bash">server {
-    ...
-
-location @proxy_to_app_omero {
-    
-    proxy_cache                 $cache_zone_name;
-    # DO NOT use $scheme$request_method becuse it creates key
-    # per schema and request_method. Default for curl is HEAD.
-    # proxy_cache_key "$scheme$request_method$host$request_uri";
-    set $omero_cache_key        "$host$request_uri";
-    proxy_cache_key             $omero_cache_key;
-
-    proxy_cache_valid           200 301 302     30d;
-    proxy_cache_methods         GET HEAD; # Only GET and HEAD methods apply
-    proxy_cache_use_stale       error timeout invalid_header updating http_500 http_502 http_503 http_504;
-
-    proxy_cache_bypass          $skip_cache;
-    proxy_no_cache              $skip_cache;
-
-    proxy_ignore_headers        "Set-Cookie" "Vary" "Expires";
-
-    proxy_set_header            X-Forwarded-Proto   $scheme;
-    proxy_set_header            X-Real-IP           $remote_addr;
-    proxy_set_header            X-Forwarded-For     $proxy_add_x_forwarded_for;
-    proxy_set_header            Host                $http_host;
-    proxy_redirect off;
-    # must be turned on for caching
-    # proxy_buffering off;
-
-    proxy_pass http://omeroweb_omero;
-
-    # DEBUGGING: TURN OFF ON PROD
-    add_header                  X-Proxy-Cache      $upstream_cache_status;
-    add_header                  X-Proxy-Cache-Skip $skip_cache;
-    add_header                  X-Proxy-Cache-Skip $cache_zone_name;
-    add_header                  X-Proxy-Cache-Skip $omero_cache_key;
-
-}
-</code></pre>
                 </section>
 
 
                 <section>
-                    <h2>Experimental: Nginx CACHE</h2>
+                    <h2>Nginx CACHE</h2>
 
                     <p>test<p>
                     <pre><code contenteditable style="font-size:90%" class="bash">$ curl -I https://idr-demo.openmicroscopy.org/mito/webgateway/render_thumbnail/1/96/
@@ -577,6 +488,14 @@ X-Proxy-Cache-key: idr-demo.openmicroscopy.org/mito/webgateway/render_thumbnail/
 </code></pre>
                 </section>
 
+                <section>
+                    <h2>Redis session backend</h2>
+
+                    <p>Requires: Python Redis 2.4+, django-redis-cache 1.6.5+</p>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ pip install django-redis-cache>=1.6.5
+$ bin/omero config set omero.web.caches '{"default": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "127.0.0.1:6379"}}'
+</code></pre>
+                </section>
 
                 <section>
                     <h2>Future work</h2>

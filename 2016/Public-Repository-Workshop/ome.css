@@ -59,3 +59,7 @@ body {
 .reveal div .float-left{
   float: left;
 }
+
+.reveal div.gist-file, div.gist-data {
+    height: 450px;
+}
