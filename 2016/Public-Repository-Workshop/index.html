@@ -84,6 +84,7 @@
                         <p>Controlled repositories:</p>
                         <ul>
                             <li><a href="https://learning.openmicroscopy.org/dundee/">Virtual Microscope</a></li>
+                            <li><a href="https://csr4">CSR4</a></li>
                         </ul>
                     </div>
                     <img height="420px" src="images/ipad.png"/>
@@ -203,8 +204,17 @@ $ bin/omero config set omero.web.public.url_filter '^/(webadmin/myphoto/|webclie
 
                 <section>
                     <h2>Custom application</h2>
-                    <img height="500px" src="images/public_gallery.png"/>
-                    </ul>
+                <ul>
+                    <li><a href="http://jcb-dataviewer.rupress.org/" target="_blank">JCB DataViewer</a></li>
+                    <li><a href="http://smc.sysgro.org/babel/omero/HTscape/" target="_blank">Sysgro (pombe)</a></li>
+                    <li><a href="http://cci02.liv.ac.uk/gallery/" target="_blank">
+                        Liverpool CCI OMERO gallery</a> From <a href="https://raphazlab.wordpress.com/" target="_blank">Raphaël Lévy's lab</a>.</li>
+                    <li><a href="http://ome.github.io/figure/" target="_blank">OMERO.figure</a></li>
+                    <li><a href="https://www.openmicroscopy.org/site/support/partner/omero.webtagging" target="_blank">OMERO.webtagging</a></li>
+                    <li><a href="https://github.com/ome/gallery/" target="_blank">OMERO.gallery</a></li>
+                    <li><a href="https://github.com/openmicroscopy/webtest/" target="_blank">webtest</a></li>
+                    
+                </ul>
                 </section>
 
                 <section>
@@ -212,16 +222,45 @@ $ bin/omero config set omero.web.public.url_filter '^/(webadmin/myphoto/|webclie
                 </section>
 
                 <section>
-                    <h2>Index page</h2>
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
-$ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'
+                    <h2>Webclient plugins</h2>
+                    <ul>
+                        <li>Hooks to bring app content into webclient</li>
+                        <li>See
+                            <a href="https://www.openmicroscopy.org/site/support/omero5.2/developers/Web/WebclientPlugin.html">
+                                webclient plugin docs</a>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Center pane plugins</h2>
+
+                    <pre><code style="width:900px; font-size:80%" class="bash">$ bin/omero config append omero.web.ui.center_plugins
+    '["Auto Tag", "webtagging/auto_tag_init.js.html", "auto_tag_panel"]'
 </code></pre>
-                    <img src="images/index_page.png" width='550px' class="no_shadow"/>
+                    <img src="images/webclient_plugins.png" height="500px"> 
+                </section>
+
+                <section>
+                    <h2>Right hand pane plugins</h2>
+
+                    <pre><code style="width:900px; font-size:80%" class="bash">$ bin/omero config append omero.web.ui.right_plugins
+        '["ROIs", "webtest/webclient_plugins/right_plugin.rois.js.html", "image_roi_tab"]'
+</code></pre>
+                    <img src="images/webtest_roi_plugin.png" height="500px"> 
+                </section>
+
+
+                <section>
+                    <h2>Left hand pane plugins</h2>
+                    <img src="images/webplugin.png" height="500px"> 
                 </section>
 
                 <section>
                     <h2>Login screen</h2>
-                        <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'</code></pre>
+                        <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
+$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
+$ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'</code></pre>
                     <img src="images/custom_login.png"
                         width="597px"/><br>
                 </section>
