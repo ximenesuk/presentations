@@ -103,9 +103,6 @@
                         </ul>
                       <li>One API, many applications</li>
                       <li>A complete implementation of OME-XML and OME-TIFF</li>
-                        <ul>
-                          <li>also now in C++</li>
-                        </ul>
                     </ul>
                 </section>
 
@@ -122,6 +119,7 @@
                       <li>late 2012/early 2013 - work began on C++ library</li>
                       <li>2014/2015 - major effort to improve performance</li>
                       <li>2015 - increasing number of contributed code changes</li>
+                      <li>2016 - data model refinements and work on targetted projects (e.g. IDR)</li>
                     </ul>
                 </section>
 
@@ -129,11 +127,16 @@
                   <h2>The history in numbers</h2>
 
 
-                  <img style="height:600px; border-width:5px" src="./images/usage-history.png"/>
+                  <img style="height:600px; border-width:5px" src="./images/usage-history-2016.png"/>
 
                   <!-- graph of users over time -->
 
                   <!-- graph of formats over time -->
+                </section>
+
+                <section>
+                  [team photos go here]
+                  <!--<img style="height;600px; border-width:5px" src="./images/team-2016.png"/>-->
                 </section>
 
                 <section>
@@ -209,17 +212,81 @@ for plane in range(0, imageCount):
                 </section>
 
                 <section>
-                    <h2>What we've done recently</h2>
+                  <section>
+                  <h2>Extensions to image reading</h2>
+                  <i>("reader wrappers")</i>
+
+                  <ul>
+                    <li>cache reader state (Memoizer)</li>
+                    <li>group independent files into a single dataset (FileStitcher)</li>
+                    <li>return images in a specific layout (ChannelSeparator, ChannelMerger)</li>
+                  </ul>
+                  </section>
+
+                  <section>
+                    <h2>Memoizer</h2>
+                    <pre><code>
+IFormatReader reader = new Memoizer(new ImageReader());
+reader.setId("/PATH/TO/FILE");
+                    </code></pre>
 
                     <ul>
-                      <li>full support for Windows</li>
-                      <li>performance improvements, especially over network file systems</li>
-                      <li>added units for most metadata values</li>
-                      <li>lots of bug fixes!</li>
+                      <li>uses <a href="https://github.com/esotericsoftware/kryo">Kryo</a> to serialize the reader's initialized state to a file</li>
+                      <li>initializing the same data file again uses the serialized state (i.e. faster)</li>
                     </ul>
+                  </section>
+
+                  <section>
+                    <h2>FileStitcher</h2>
+                    <pre><code>
+IFormatReader reader = new FileStitcher();
+// reads 001.tiff, 002.tiff, ..., 010.tiff together
+reader.setId("0< 01-10>.tiff");
+                    </code></pre>
+
+                    <ul>
+                      <li>groups together files not otherwise detected as part of the same dataset</li>
+                      <li>useful for files with missing or unreadable metadata</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                    <h2>ChannelSeparator/ChannelMerger</h2>
+                    <pre><code>
+IFormatReader grayscaleImageReader = new ChannelSeparator();
+
+IFormatReader rgbImageReader = new ChannelMerger();
+                    </code></pre>
+
+                    <ul>
+                      <li>ChannelSeparator guarantees only grayscale images are returned</li>
+                      <li>ChannelMerger guarantees multi-channel datasets are returned as RGB images</li>
+                    </ul>
+                  </section>
+
+                  <section>
+                  <h2>Putting everything together...</h2>
+                  <pre><code>
+IFormatReader reader = new Memoizer(new FileStitcher(new ChannelSeparator()));
+                  </code></pre>
+
+                  <ul>
+                    <li>any combination of wrappers can be chained together</li>
+                  </ul>
+                  </section>
                 </section>
 
                 <section>
+                  <section>
+                    <h2>What we've done recently</h2>
+
+                    <ul>
+                      <li>maintenance of 5.1.x</li>
+                      <li>5.2.0</li>
+                      <li>performance and metadata updates for IDR</li>
+                    </ul>
+                  </section>
+
                     <section>
                         <h2>Bio-Formats 5.1.x series</h2>
 
@@ -245,9 +312,8 @@ for plane in range(0, imageCount):
                           <li>OME-XML validation</li>
                         </ul>
                     </section>
-                </section>
 
-                <section>
+                  <section>
                     <h2>Bio-Formats 5.2.0</h2>
 
                     <p>Breaking changes</p>
@@ -258,16 +324,33 @@ for plane in range(0, imageCount):
                       <li>Drop of support for Java 6</li>
                       <li>API (logging)</li>
                     </ul>
+                  </section>
+
+                  <section>
+                    <h2>Bio-Formats IDR</h2>
+                    <ul>
+                      <li>Lots of performance improvements for HCS formats</li>
+                      <li>Improved support for different types of Opera Flex plates</li>
+                      <li>More options for grouping together files without acquisition metadata</li>
+                    </ul>
+                  </section>
                 </section>
 
                 <section>
                     <h2>What's next?</h2>
 
                     <ul>
-                      <li>Updates to the development process</li>
-                        <ul><li>More releases, and faster</li></ul>
-                      <li>OME-HDF?</li>
-                      <li>More usage examples and developer documentation</li>
+                      <li>OME data model refinements</li>
+                        <ul>
+                          <li>Making existing features easier to use (e.g. units, MapAnnotation)</li>
+                          <li>Modernizing the data model development process</li>
+                        </ul>
+                      <li>Supporting our own formats</li>
+                        <ul>
+                          <li>Expanding examples and best practices documentation</li>
+                          <li>Working with other projects to support usage of OME-TIFF</li>
+                          <li>OME-HDF?</li>
+                        </ul>
                     </ul>
                 </section>
 
@@ -275,13 +358,19 @@ for plane in range(0, imageCount):
                   <h2>What's next...today?</h2>
 
                   <ul>
-                    <li>Introduction to working with the new C++ library</li>
+                    <li>Recent data model additions</li>
+                    <li>Supporting and maintaining OME file formats</li>
+                    <!--<li>Working with Bio-Formats in MATLAB/Octave</li>-->
                     <li>Breakouts/technical discussion - look for the Bio-Formats sign!</li>
                   </ul>
                 </section>
 
                 <section>
                   <h2>Questions?</h2>
+                </section>
+
+                <section>
+                  <h2>Contributing to Bio-Formats</h2>
                 </section>
 
             </div>
