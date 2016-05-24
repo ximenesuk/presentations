@@ -201,7 +201,7 @@ end
                 </code></pre></section>
 
                 <section>
-                <pre>Python:<code>
+                <pre><a href="https://github.com/CellProfiler/python-bioformats">Python:</a><code>
 reader = bioformats.get_image_reader(None, path="/PATH/TO/FILE")
 imageCount = reader.rdr.getImageCount()
 omeMetadata = javabridge.JWrapper(reader.rdr.getMetadataStore())
@@ -209,6 +209,17 @@ for plane in range(0, imageCount):
     image = reader.read(series=0, index=plane, rescale=False)
     timestamp = omeMetadata.getPlaneDeltaT(0, plane)
                 </code></pre></section>
+
+
+                <section>
+                <pre><a href="https://github.com/aoles/RBioFormats">R:</a><code>
+reader = .jnew("loci.formats.ImageReader")
+.jcall(reader, , "setId", file)
+omeMetadata = .jcall(reader, "", "getMetadataStore")
+image = .jcall(reader, "[B", "openBytes", 0)
+timestamp = .jcall(omeMetadata, "", "getPlaneDeltaT", 0, 0)
+                </code></pre>
+                </section>
                 </section>
 
                 <section>
