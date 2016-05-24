@@ -135,7 +135,8 @@
                 </section>
 
                 <section>
-                  <img style="height;600px; border-width:5px" src="./images/team-2016.png"/>
+                  [team photos go here]
+                  <!--<img style="height;600px; border-width:5px" src="./images/team-2016.png"/>-->
                 </section>
 
                 <section>
@@ -237,12 +238,42 @@ reader.setId("/PATH/TO/FILE");
 
                   <section>
                     <h2>FileStitcher</h2>
+                    <pre><code>
+IFormatReader reader = new FileStitcher();
+// reads 001.tiff, 002.tiff, ..., 010.tiff together
+reader.setId("0< 01-10>.tiff");
+                    </code></pre>
+
+                    <ul>
+                      <li>groups together files not otherwise detected as part of the same dataset</li>
+                      <li>useful for files with missing or unreadable metadata</li>
+                    </ul>
                   </section>
 
                   <section>
                     <h2>ChannelSeparator/ChannelMerger</h2>
+                    <pre><code>
+IFormatReader grayscaleImageReader = new ChannelSeparator();
+
+IFormatReader rgbImageReader = new ChannelMerger();
+                    </code></pre>
+
+                    <ul>
+                      <li>ChannelSeparator guarantees only grayscale images are returned</li>
+                      <li>ChannelMerger guarantees multi-channel datasets are returned as RGB images</li>
+                    </ul>
                   </section>
 
+                  <section>
+                  <h2>Putting everything together...</h2>
+                  <pre><code>
+IFormatReader reader = new Memoizer(new FileStitcher(new ChannelSeparator()));
+                  </code></pre>
+
+                  <ul>
+                    <li>any combination of wrappers can be chained together</li>
+                  </ul>
+                  </section>
                 </section>
 
                 <section>
@@ -297,6 +328,11 @@ reader.setId("/PATH/TO/FILE");
 
                   <section>
                     <h2>Bio-Formats IDR</h2>
+                    <ul>
+                      <li>Lots of performance improvements for HCS formats</li>
+                      <li>Improved support for different types of Opera Flex plates</li>
+                      <li>More options for grouping together files without acquisition metadata</li>
+                    </ul>
                   </section>
                 </section>
 
@@ -324,7 +360,7 @@ reader.setId("/PATH/TO/FILE");
                   <ul>
                     <li>Recent data model additions</li>
                     <li>Supporting and maintaining OME file formats</li>
-                    <li>Working with Bio-Formats in MATLAB/Octave</li>
+                    <!--<li>Working with Bio-Formats in MATLAB/Octave</li>-->
                     <li>Breakouts/technical discussion - look for the Bio-Formats sign!</li>
                   </ul>
                 </section>
