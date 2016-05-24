@@ -97,11 +97,15 @@
                 <section>
                     <h2>OME Model and File Formats</h2>
                     <ul>
-                      <li>Wider adoption within the community<ul>
-                          <li><a href="https://imspector.mpibpc.mpg.de/contact.html">Imspector OBF files</a></li>
+                      <li>OME File Formats<ul>
+                          <li>OME-XML</li>
+                          <li>OME-TIFF</li></ul>
+                      <li>Wider adoption within the community</li>
+                      <li>2015-2016: Feedback from open-source projects<ul>
+                          <li><a href="https://imspector.mpibpc.mpg.de/contact.html">Imspector OBF format</a></li>
                           <li><a href="https://micro-manager.org/wiki/Micro-Manager_File_Formats">Micro-Manager</a></li></ul>
-                      <li>Review of our <a href="http://downloads.openmicroscopy.org/images/">OME file samples</a></li>
-                      <li>Extension of our Model and Formats <a href="http://www.openmicroscopy.org/site/support/ome-model/">documentation</a></li>
+                      <li>Review of the OME Formats <a href="http://downloads.openmicroscopy.org/images/">samples</a> and <a href="http://www.openmicroscopy.org/site/support/ome-model/">documentation</a></li>
+                      </ul>
                     <ul/>
                     <!-- <img src="diagrams/OME-XML.png" width="50%"> -->
                 </section>
@@ -118,7 +122,7 @@
                     </section>
                     <section>
                         <h2>OME-TIFF file format</h2>
-                        <li>Supports multi-dimensional, multi-series images - see <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/bioformats-artificial/">samples</a></li>
+                        <li>Supports multi-dimensional, multi-series images - see <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/bioformats-artificial/">generated samples</a></li>
                         <img src="diagrams/OME-TIFF_singlefile_multidimensional.png" width="60%">
                     </section>
                 </section>
@@ -128,8 +132,7 @@
 
                     <ul>
                       <li>TIFF specification limited to 4GB (32-bit pointers)</li>
-                      <li>Limitations</li><ul>
-                           <li>Large data volume</li>
+                      <li>Limitations for large data volumes</li><ul>
                            <li>Complex multi-dimensional datasets</li>
                            <li>High-Content-Screening data</li>
                       </ul>
@@ -138,7 +141,7 @@
                 <section>
                     <h2>Solution 1: BigTiff</h2>
                     <ul>
-                      <li>OME-TIFF supports <a href="http://bigtiff.org/">BigTIFF</a> format</a>
+                      <li>OME-TIFF supports <a href="http://bigtiff.org/">BigTIFF</a> format</a></li>
                       <li>Use of 64-bit based offsets overcomes 4GB limit</li>
                     </ul>
                 </section>
@@ -148,7 +151,6 @@
 
                         See the <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/tubhiswt-4D/"  target="_blank">multi-file OME-TIFF sample</a>
                         <img src="diagrams/OME-TIFF_multifile.png" width="80%">
-
                     </section>
                     <section>
                         <h2>Solution 2: distribution across multiple files</h2>
@@ -169,7 +171,7 @@
                         <h2>Extended metadata</h2>
 
                         <ul>
-                          <li>Include flexible metadata not defined in the OME Data Model</li>
+                          <li>Store flexible metadata not defined in the OME Data Model</li>
                           <li>Use structured annotations to store key/value pairs</li>
                         </ul>
 
@@ -200,7 +202,7 @@
                           <li>reading (showinf)</li>
                           <li>edition (tiffcomment)</li>
                       </ul>
-                      <li>Ongoing development of our <a href="http://downloads.openmicroscopy.org/latest/ome-files-cpp/">reference C++ implementation</a> for working with OME Files</li>
+                      <li><a href="http://downloads.openmicroscopy.org/latest/ome-files-cpp/">Reference C++ implementation</a> for working with OME Files</li>
                     </ul>
 
                 </section>
