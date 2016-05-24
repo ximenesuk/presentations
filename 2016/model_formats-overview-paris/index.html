@@ -90,54 +90,78 @@
 
                 <!-- title page -->
                 <section>
-                    <h1>OME Model and Formats</h1>
+                    <h1>OME Model and File Formats</h1>
                 </section>
                 
 
                 <section>
-                    <h2>OME Data Model</h2>
-
-                    <img src="diagrams/OME-XML.png" width="50%">
-
+                    <h2>OME Model and File Formats</h2>
+                    <ul>
+                      <li>Wider adoption within the community<ul>
+                          <li><a href="https://imspector.mpibpc.mpg.de/contact.html">Imspector OBF files</a></li>
+                          <li><a href="https://micro-manager.org/wiki/Micro-Manager_File_Formats">Micro-Manager</a></li></ul>
+                      <li>Review of our <a href="http://downloads.openmicroscopy.org/images/">OME file samples</a></li>
+                      <li>Extension of our Model and Formats <a href="http://www.openmicroscopy.org/site/support/ome-model/">documentation</a></li>
+                    <ul/>
+                    <!-- <img src="diagrams/OME-XML.png" width="50%"> -->
                 </section>
 
                 <section>
                     <section>
-                        <h2>OME-TIFF specification</h2>
+                        <h2>OME-TIFF file format</h2>
 
                         <ul>
-                          <li>Based on the TIFF specification</li>
-                          <li>OME Metadata stored as OME-XML used the ImageDescription tag of the first IFD</li>
+                          <li>Based on the <a href="http://partners.adobe.com/public/developer/tiff/index.html">TIFF</a> specification</li>
+                          <li>OME metadata stored as OME-XML within the ImageDescription tag of the first IFD</li>
                         </ul>
                         <img src="diagrams/OME-TIFF_singlefile.png" width="60%">
                     </section>
                     <section>
-                        <h2>OME-TIFF specification</h2>
-
+                        <h2>OME-TIFF file format</h2>
+                        <li>Supports multi-dimensional, multi-series images - see <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/bioformats-artificial/">samples</a></li>
                         <img src="diagrams/OME-TIFF_singlefile_multidimensional.png" width="60%">
                     </section>
                 </section>
 
                 <section>
-                    <h2>Large datasets</h2>
+                    <h2>OME-TIFF large datasets</h2>
 
                     <ul>
-                      <li>Large volumes of data</li>
-                      <li>Multi-dimensional, HCS structures</li>
                       <li>TIFF specification limited to 4GB (32-bit pointers)</li>
+                      <li>Limitations</li><ul>
+                           <li>Large data volume</li>
+                           <li>Complex multi-dimensional datasets</li>
+                           <li>High-Content-Screening data</li>
+                      </ul>
                     </ul>
                 </section>
                 <section>
                     <h2>Solution 1: BigTiff</h2>
                     <ul>
-                      <li>64-bit based offsets</li>
-                      <li>Specific extensions </li>
+                      <li>OME-TIFF supports <a href="http://bigtiff.org/">BigTIFF</a> format</a>
+                      <li>Use of 64-bit based offsets overcomes 4GB limit</li>
                     </ul>
                 </section>
                 <section>
-                    <h2>Solution 2: distribution across files</h2>
+                    <section>
+                        <h2>Solution 2: distribution across multiple files</h2>
 
-                    <img src="diagrams/OME-TIFF_multifile.png" width="80%">
+                        See the <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/tubhiswt-4D/"  target="_blank">multi-file OME-TIFF sample</a>
+                        <img src="diagrams/OME-TIFF_multifile.png" width="80%">
+
+                    </section>
+                    <section>
+                        <h2>Solution 2: distribution across multiple files</h2>
+
+                        See the <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/binary-onyly"  target="_blank">master OME-TIFF sample</a>
+                        <img src="diagrams/OME-TIFF_master.png" width="80%">
+                    </section>
+                    <section>
+                        <h2>Solution 2: distribution across multiple files</h2>
+
+                        See the <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/companion"  target="_blank">companion OME-XML sample</a>
+                        <img src="diagrams/OME-TIFF_companion.png" width="80%">
+                    </section>
                 </section>
 
                 <section>
@@ -145,37 +169,24 @@
                         <h2>Extended metadata</h2>
 
                         <ul>
-                          <li>Add metadata not defined in the OME Data Model</li>
-                          <li>Use structured annotations</li>
+                          <li>Include flexible metadata not defined in the OME Data Model</li>
+                          <li>Use structured annotations to store key/value pairs</li>
                         </ul>
 
-                        <pre><code class="xml">
-                        <OME xmlns="http://www.openmicroscopy.org/Schemas/OME/2015-01"
-                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                            xsi:schemaLocation="http://www.openmicroscopy.org/Schemas/OME/2015-01  http://www.openmicroscopy.org/Schemas/OME/2015-01/ome.xsd">
-                        ...
-                            <SA:AnnotationRef ID="Annotation:1"/>
-                            <SA:AnnotationRef ID="Annotation:2"/>
-                          </Image>
-                          <StructuredAnnotations>
-                            <!-- First Tag -->
-                            <MapAnnotation ID="Annotation:1">
-                              <Description>This is the description of the sample map A</Description>
-                              <Value>
-                                <M K="SampleKeyA">SampleValueA</M>
-                              </Value>
-                            </MapAnnotation>
-                            <!-- Second Tag -->
-                            <MapAnnotation ID="Annotation:2">
-                              <Description>This is the description of the sample map B</Description>
-                              <Value>
-                                <M K="SampleKeyB-1">SampleValueB-1</M>
-                                <M K="SampleKeyB-2">SampleValueB-2</M>
-                              </Value>
-                            </MapAnnotation>
-                          </StructuredAnnotations>
-                        </OME>
-                        </code></pre>
+                        <pre style="width: 100%;">
+&lt;OME xmlns="http://www.openmicroscopy.org/Schemas/OME/2015-01"
+...
+    &lt;AnnotationRef ID="Annotation:1"/&gt;
+  &lt;/Image&gt;
+    &lt;MapAnnotation ID="Annotation:1"&gt;
+      &lt;Description>Additional metadata description&lt;/Description&gt;
+      &lt;Value&gt;
+        &lt;M K="Key-1"&gt;Value-1&lt;/M&gt;
+        &lt;M K="Key-2"&gt;Value-2&lt;/M&gt;
+      &lt;/Value&gt;
+    &lt;/MapAnnotation&gt;
+  &lt;/StructuredAnnotations&gt;
+&lt;/OME&gt;</pre>
 
                         See the <a href="https://downloads.openmicroscopy.org/images/OME-XML/2015-01/mapannotation.ome.xml"  target="_blank">OME-XML sample</a>
                     </section>
@@ -184,9 +195,12 @@
                 <section>
                     <h2>Tools and software</h2>
                     <ul>
-                      <li>Validation (xmlvalid...)</li>
-                      <li>Reading</li>
-                      <li>Writing: C++ reference implementation</li>
+                      <li>Bio-Formats includes tools for<ul>
+                          <li>validation (xmlvalid)</li>
+                          <li>reading (showinf)</li>
+                          <li>edition (tiffcomment)</li>
+                      </ul>
+                      <li>Ongoing development of our <a href="http://downloads.openmicroscopy.org/latest/ome-files-cpp/">reference C++ implementation</a> for working with OME Files</li>
                     </ul>
 
                 </section>
