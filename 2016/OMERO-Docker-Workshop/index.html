@@ -5,10 +5,10 @@
     <head>
         <meta charset="utf-8">
 
-        <title>OME DEVSPACE, Ola Tarkowska, Josh Moore, Sebastien Besson, Simon Li, Dundee 2016</title>
+        <title>Dockerizing OMERO, Ola Tarkowska, Josh Moore, Sebastien Besson, Simon Li, Dundee 2016</title>
 
         <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-        <meta name="author" content="Ola Tarkowska, Will Moore">
+        <meta name="author" content="Ola Tarkowska, Josh Moore, Sebastien Besson, Simon Li">
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -39,7 +39,7 @@
             <!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
                 <section>
-                    <h1 style="font-size:350%">OME DEVSPACE</h1>
+                    <h1 style="font-size:350%">Dockerizing OMERO</h1>
                     
                     <h3>11th Annual OME Meeting</h3>
                     <h4>Dundee 2016</h4>
@@ -49,32 +49,53 @@
                     </h4>
                 </section>
 
-                <section>
-                    <h2>Presentation Outline</h2>
-                    <ul>
-                        <li>Next generation Continuous Delivery (CD)</li>
-                        <li>What is OME devspace?</li>
-                        <li>Production solution</li>
+                <section data-autoslide="2000">
+                    <h3>The story about new file format:</h3>
+                    <ul class="nobullets" >
+                        <li class="fragment" data-autoslide="2000"><strong>Image:</strong> OMERO 5.2.3 is out! Release note says I can now be imported to OMERO! Server, could you upgrade?</li>
+                        <li class="fragment" data-autoslide="2000"><strong>Server:</strong> OMERO requires CentOS 7. Image you have to find new server as I cannot help you. I am not aware about available hardware to install OMERO for you. Sorry ¯\_(ツ)_/¯</li>
+                        <li class="fragment" data-autoslide="2000"><strong>Docker:</strong> Hey Server! You don't need stand alone server. Did you hear about Docker? Try me.</li>
+                        <li class="fragment" data-autoslide="2000"><strong>Server: </strong> Thanks Docker. Fantastic idea! This is so easy to set up the environment. Image, the latest OMERO is now running. I am importing you...</li>
+                        <li class="fragment" data-autoslide="1000000"><strong>Image:</strong> Hurray! I am in. I love OMERO.</li>
                     </ul>
                 </section>
 
-                <section><h2>Continuous delivery</h2>
-                    <p>is a software engineering approach in which teams produce software in short cycles, ensuring that the software can be reliably released at any time.<sup>[1]</sup> It aims at building, testing, and releasing software faster and more frequently.</p>
-                    <cite>[1] Chen, Lianping (2015). <a href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?reload=true&amp;arnumber=7006384" class="external text" rel="nofollow">"Continuous Delivery: Huge Benefits, but Challenges Too"</a>. <i>IEEE Software</i> <b>32</b> (2): 50. <a title="Digital object identifier" href="/wiki/Digital_object_identifier">doi</a>:<a href="//dx.doi.org/10.1109%2FMS.2015.27" class="external text" rel="nofollow">10.1109/MS.2015.27</a>.</cite>
-                    <br/>
+                <section>
+                    <h2>Presentation Outline</h2>
+                    <ul>
+                        <li>Docker containers and OMERO.</li>
+                        <li>Continuous Delivery.</li>
+                        <li>Production solution.</li>
+                    </ul>
                 </section>
 
                 <section>
-                    <h3>Next generation Continuous Delivery</h3>
+                    <h3>What is Docker containers?</h3>
+                    <img src="images/docker.png"/>
+                    <p>Docker containers wrap up a piece of software in a complete filesystem that contains everything it needs to run: code, runtime, system tools, system libraries – anything you can install on a server. This guarantees that it will always run the same, regardless of the environment it is running in.<sup>[1]</sup> </p>
+                    <cite>[1] <a href="https://www.docker.com/what-docker">www.docker.com</a></cite>
+                </section>
+
+                <section>
+                    <h3>Why OMERO uses docker?</h3>
                     <h4>Software as a Service (SaaS)</h4>
-                    <img src="images/logos.png"/>
+                    <ul>
+                        <li>Allows delivering new features without breaking development process.</li>
+                        <li>Simplify deployment on wide range of platforms and testing new packages.</li>
+                        <li>Helps with scalibility and performance.</li>
+                    </ul>
+                    <img src="images/docker.png"/><br/><img src="images/nginx.png"/><img src="images/postgresql.png"/><img src="images/omero.png"/>
                 </section>
 
-                <section>
-                    <h2>What is OME devspace?</h2>
-                    <p  style="width: 850px; background-image: url('images/clickme_logo.png'); background-repeat: no-repeat; padding-left: 130px; padding-top: 100px;">Cloud based, cross platform, Continues Delivery environment to automate the end-to-end deployment process.</p>
-                    <p><strong>Push-button deployments of any version of the software to any environment on demand.</strong><sup>[3]</sup></p>
-                    <cite>[3] <a href="https://www.thoughtworks.com/insights/blog/tackling-your-fear-cd">Definition developed by the Continuous Delivery group at ThoughtWorks</a></cite>
+                <section><h2>Current status</h2>
+                    <p>We are dockertizing and developing!</p>
+                    <p>We started with dockerizing Continues Delivery pipeline.</p>
+                </section>
+
+                <section><h2>Continuous Delivery</h2>
+                    <p>is a software engineering approach in which teams produce software in short cycles, ensuring that the software can be reliably released at any time.<sup>[2]</sup> It aims at building, testing, and releasing software faster and more frequently.</p>
+                    <cite>[2] Chen, Lianping (2015). <a href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?reload=true&amp;arnumber=7006384" class="external text" rel="nofollow">"Continuous Delivery: Huge Benefits, but Challenges Too"</a>. <i>IEEE Software</i> <b>32</b> (2): 50. <a title="Digital object identifier" href="/wiki/Digital_object_identifier">doi</a>:<a href="//dx.doi.org/10.1109%2FMS.2015.27" class="external text" rel="nofollow">10.1109/MS.2015.27</a>.</cite>
+                    <br/>
                 </section>
 
                 <section>
@@ -82,36 +103,10 @@
                 </section>
 
                 <section>
-                    <h2>Continuous Delivery</h2>
-                    <img src="images/jenkins+docker.png"/>
-                    <img src="images/workflow_all.png" class="border"/>
-                </section>
-
-                <section>
                     <h2>Future work</h2>
                     <ul>
-                        <li>Production deployment</li>
-                        <li>Available in Docker Hub</li>
-                    </ul>
-                </section>
-
-                <section data-autoslide="2000">
-                    <h3>The story of new Feature X:</h3>
-                    <ul class="nobullets" >
-                        <li class="fragment" data-autoslide="2000"><strong>Boss:</strong> I wish I could use Feature X !</li>
-                        <li class="fragment" data-autoslide="2000"><strong>Trello:</strong> Morning Team! We have to develop feature X.</li>
-                        <li class="fragment" data-autoslide="2000"><strong>UX:</strong> Fantastic idea! Give me a second and I'll scope a draft.</li>
-                        <li class="fragment" data-autoslide="2000"><strong>Docker:</strong> Okey Doke. I'll set up the environment.</li>
-                        <li class="fragment" data-autoslide="2000">In the meantime Python is codding...</li>
-                        <li class="fragment" data-autoslide="2000"><strong>GIT:</strong> Alright. Here is the new code.</li>
-                        <li class="fragment" data-autoslide="2000"><strong>Docker:</strong> Thanks GIT. Lets build, test and run.</li>
-                        <li class="fragment" data-autoslide="2000"><strong>Test:</strong> Error. Python could you fix this bug?</li>
-                        <li class="fragment" data-autoslide="2000"><strong>Python:</strong> Okey, done!</li>
-                        <li class="fragment" data-autoslide="2000"><strong>GIT:</strong> Test, please try now.</li>
-                        <li class="fragment" data-autoslide="2000"><strong>Docker:</strong> Thanks GIT. Lets build, test and run again.</li>
-                        <li class="fragment" data-autoslide="2000"><strong>Test:</strong> Alright, is green. All tests passed!</li>
-                        <li class="fragment" data-autoslide="2000"><strong>Trello:</strong> Perfect, Good work team!</li>
-                        <li class="fragment" data-autoslide="1000000"><strong>Boss:</strong> $$$</li>
+                        <li>Production docker containers available on Docker hub</li>
+                        <li>Questions ???</li>
                     </ul>
                 </section>
 
@@ -128,9 +123,6 @@
                     </div>
                 </section>
 
-                <section>
-                    <h1>Questions ?</h1>
-                </section>
             </div>
 
         </div>
