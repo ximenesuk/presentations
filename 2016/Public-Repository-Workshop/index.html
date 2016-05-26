@@ -199,7 +199,7 @@ $ bin/omero config set omero.web.public.url_filter '^/(webadmin/myphoto/|webclie
 
                 <section>
                     <h2>OMERO.web</h2>
-                    <img height="500px" src="images/public_repository.png"/>
+                    <img height="600px" src="images/public_repository.png"/>
                     </ul>
                 </section>
 
@@ -209,10 +209,9 @@ $ bin/omero config set omero.web.public.url_filter '^/(webadmin/myphoto/|webclie
                     <li><a href="http://jcb-dataviewer.rupress.org/" target="_blank">JCB DataViewer</a></li>
                     <li><a href="http://smc.sysgro.org/babel/omero/HTscape/" target="_blank">Sysgro (pombe)</a></li>
                     <li><a href="http://cci02.liv.ac.uk/gallery/" target="_blank">
-                        Liverpool CCI OMERO gallery</a> From <a href="https://raphazlab.wordpress.com/" target="_blank">Raphaël Lévy's lab</a>.</li>
+                        Liverpool CCI OMERO gallery</a> From <a href="https://raphazlab.wordpress.com/" target="_blank">Raphaël Lévy's lab</a> <a href="https://github.com/ome/gallery/" target="_blank">(source)</a>.</li>
                     <li><a href="http://ome.github.io/figure/" target="_blank">OMERO.figure</a></li>
                     <li><a href="https://www.openmicroscopy.org/site/support/partner/omero.webtagging" target="_blank">OMERO.webtagging</a></li>
-                    <li><a href="https://github.com/ome/gallery/" target="_blank">OMERO.gallery</a></li>
                     <li><a href="https://github.com/openmicroscopy/webtest/" target="_blank">webtest</a></li>
                 </ul>
                 </section>
@@ -319,7 +318,6 @@ $ bin/omero config set omero.client.ui.menu.dropdown.everyone.label "All courses
 $ bin/omero config set omero.client.ui.menu.dropdown.leaders.enabled true
 $ bin/omero config set omero.client.ui.menu.dropdown.leaders.label "Course:"
 $ bin/omero config set omero.client.ui.menu.dropdown.colleagues.enabled false
-
 </code></pre>
 
                 <img src="images/dropdown_menu2.png"/> <img src="images/dropdown_menu.png"/>
@@ -330,7 +328,6 @@ $ bin/omero config set omero.client.ui.menu.dropdown.colleagues.enabled false
                     <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.client.ui.tree.orphans.enabled true
 $ bin/omero config set omero.client.ui.tree.orphans.name "New imports"
 $ bin/omero config set omero.client.ui.tree.orphans.description "This folder containes newly imported images."
-
 </code></pre>
 
                 <img src="images/orphans.png" width='290px'/>
@@ -465,7 +462,7 @@ $ bin/omero sessions list
                 <section>
                     <h2>Nginx CACHE</h2>
 
-                    <script src="https://gist.github.com/aleksandra-tarkowska/7e9a5fd24f0d3bc1fd524468bae1991e.js"></script>
+                    <script src="https://gist.github.com/aleksandra-tarkowska/45ae197d69947af7f6d6b02a583708bb.js"></script>
 
                 </section>
 
@@ -474,7 +471,7 @@ $ bin/omero sessions list
                     <h2>Nginx CACHE</h2>
 
                     <p>test<p>
-                    <pre><code contenteditable style="font-size:90%" class="bash">$ curl -I https://idr-demo.openmicroscopy.org/mito/webgateway/render_thumbnail/1/96/
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ curl -I https://idr-demo.openmicroscopy.org/webgateway/render_thumbnail/1/96/
 HTTP/1.1 200 OK
 Server: nginx/1.8.0
 Date: Thu, 05 May 2016 13:54:37 GMT
@@ -483,8 +480,6 @@ Connection: keep-alive
 Vary: Cookie
 X-Proxy-Cache: HIT
 X-Proxy-Cache-Skip: 0
-X-Proxy-Cache-zone: omerothumbnail
-X-Proxy-Cache-key: idr-demo.openmicroscopy.org/mito/webgateway/render_thumbnail/1/96/
 </code></pre>
                 </section>
 
@@ -509,6 +504,7 @@ $ bin/omero config set omero.web.caches '{"default": {"BACKEND": "redis_cache.Re
                             </ul>
                         </li>
                         <li>Complex usage of ROIs and annotations.</li>
+                        <li>Read-only server for publication or horizontal scaling</li>
                     </ul>
 
                 </section>
