@@ -146,9 +146,9 @@
             <ul>
               <li>Creating stuff</li>
               <li>Finding stuff</li>
+              <li>Getting stuff out</li>
               <li>Deleting stuff</li>
               <li>Moving stuff</li>
-              <li>Getting stuff out</li>
             </ul>
           </ul>
           <aside class="notes">
@@ -432,8 +432,8 @@
         <section>
           <h2>Working with data: Finding stuff</h2>
           <ul>
-            <li>hql</li>
             <li>search</li>
+            <li>hql</li>
           </ul>
           <aside class="notes">
           </aside>
@@ -459,7 +459,7 @@
 
   Optional Arguments:
     --from YYYY-MM-DD             Start date for limiting searches (YYYY-MM-DD)
-    --to YYYY-MM-DD               End date for limiting searches (YYYY-MM-DD
+    --to YYYY-MM-DD               End date for limiting searches (YYYY-MM-DD)
     --ids-only                    Show only the ids of returned objects
     --style {plain,csv,sql}       use alternative output style (default=sql)</pre>
             <aside class="notes">
@@ -541,6 +541,32 @@
         </section>
 
         <!--
+          Getting stuff out
+        -->
+        <section>
+          <section>
+            <h2>Getting stuff out: export</h2>
+            <pre>
+  $ bin/omero export --file new.tiff Image:52
+  $ bin/omero export --file new.xml --type XML Image:52
+  $ ls
+  new.tiff  new.xml</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Getting stuff out: download</h2>
+            <pre>
+  $ bin/omero download FileAnnotation:5 new.tmp
+  $ bin/omero download Image:102 original.tiff
+  $ ls
+  new.tiff  new.tmp   new.xml   original.tiff</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!--
           Deleting stuff
             delete
         -->
@@ -593,7 +619,7 @@
           <section>
             <h2>Working with data: Deleting stuff</h2>
             <ul>
-              <li>Delete using skipheads</li>
+              <li>Delete using SkipHead</li>
             </ul>
             <pre>
   $ bin/omero delete Project/Image:2 --report --dry-run
@@ -675,7 +701,7 @@
           <section>
             <h2>Moving stuff: chgrp</h2>
             <ul>
-              <li>Move data using skipheads</li>
+              <li>Move data using SkipHead</li>
             </ul>
             <pre>
   $ bin/omero chgrp 5 Dataset/Image:1 --report --dry-run
@@ -730,32 +756,6 @@
   $ bin/omero chown User:101 Image:2
   $ bin/omero chown Experimenter:101 Image:3
   $ bin/omero chown jane Image:51,52,53</pre>
-            <aside class="notes">
-            </aside>
-          </section>
-        </section>
-
-        <!--
-          Getting stuff out
-        -->
-        <section>
-          <section>
-            <h2>Getting stuff out: export</h2>
-            <pre>
-  $ bin/omero export --file new.tiff Image:52
-  $ bin/omero export --file new.xml --type XML Image:52
-  $ ls
-  new.tiff  new.xml</pre>
-            <aside class="notes">
-            </aside>
-          </section>
-          <section>
-            <h2>Getting stuff out: download</h2>
-            <pre>
-  $ bin/omero download FileAnnotation:5 new.tmp
-  $ bin/omero download Image:102 original.tiff
-  $ ls
-  new.tiff  new.tmp   new.xml   original.tiff</pre>
             <aside class="notes">
             </aside>
           </section>
