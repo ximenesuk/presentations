@@ -1,0 +1,832 @@
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Interacting with your data in OMERO - Dundee 2016</title>
+
+    <meta name="description" content="Interacting with your data in OMERO">
+    <meta name="author" content="the Open Microscopy Environment core team">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+    <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+    <!-- OME presentation overrides of the default theme -->
+    <style>
+      .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+        text-transform: none;
+      }
+      .reveal h2 {
+          font-size: 60px;
+      }
+      .reveal h3 {
+          font-size: 50px;
+      }
+      .ome_theme {
+          background-image: url("diagrams/ome-icon-opacity.png");
+          background-color: #f2f6f9;
+          background-repeat: no-repeat;
+          background-position: right -270px top -120px;
+      }
+      .reveal {
+          text-transform: none;   !important
+      }
+
+      .img_panel {
+          width: 150px;
+      }
+
+      .nobullet li {
+          list-style: none;
+      }
+
+      .rot90 {
+          -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+      }
+
+      .reveal .title {
+          position:absolute;
+          bottom:100%;
+          margin:5px;
+          color:red;
+      }
+
+      .larger {
+          font-size: 80px !important;
+      }
+
+      .reveal h1 {
+        font-size: 96px;
+      }
+
+      .reveal p,
+      .reveal pre {
+        margin-top: 2em;
+        margin-bottom: 2em;
+        line-height: 1.5;
+      }
+
+      .reveal pre {
+        background: #FFFFFF;
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .reveal code {
+        font-size: 28px;
+      }
+
+      .reveal li {
+        margin-top: 0.25em;
+        margin-bottom: 0.25em;
+      }
+
+      .reveal section img {
+        background: rgba(0, 0, 0, 0);
+        box-shadow: none;
+        border: none;
+      }
+
+      .reveal q {
+        quotes: inherit;
+        font-style: normal;
+      }
+
+      .reveal table tr th,
+      .reveal table tr td {
+        text-align: right;
+      }
+    </style>
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body class="ome_theme">
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <!-- Title and overall introduction -->
+        <section>
+          <h2>Interacting with your data in OMERO</h2>
+          <h3>Dundee</h3>
+          <h4><em>The Paris of the North</em></h4>
+          <h3>June 2016</h3>
+          <p>Colin Blackburn, Mark Carroll &amp; Josh Moore</p>
+          <h4>@openmicroscopy&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#OME2016</h4>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Outline</h2>
+          <ul>
+            <li>Overview of the CLI</li>
+            <li>Working with data from the CLI</li>
+            <ul>
+              <li>Creating stuff</li>
+              <li>Finding stuff</li>
+              <li>Getting stuff out</li>
+              <li>Deleting stuff</li>
+              <li>Moving stuff</li>
+            </ul>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <!--
+          Introduction
+            The CLI
+            ecosystem
+        -->
+        <section>
+          <h3>The CLI</h3>
+          <p style="text-align:left;">
+          The CLI is an OMERO client driven by the command line. It is a set of Python-based system-administration, deployment and advanced user tools. Most of commands work remotely so that the CLI can be used as a client against a remote OMERO server. It offers tools for users, facility managers, system administrators and developers.
+          </p>
+          <aside class="notes">
+          </aside>
+        </section>
+        <section>
+          <h3>CLI help</h3>
+          <pre>
+
+  $ bin/omero help
+  usage: omero &lt;command> [options] args
+  See 'help &lt;command>' or '&lt;command> -h' for more information on syntax
+  Type 'quit' to exit
+
+  Available commands:
+    admin, cecog, chgrp, chown, config, db, delete, download, export,
+    fs, group, help, hql, import, ldap, load, node, obj, perf, quit,
+    script, search, server, sessions, shell, tag, testengine, upload,
+    user, version, web
+
+  Other help topics:
+    debug, env
+
+  For additional information, see:
+  http://www.openmicroscopy.org/site/support/omero5.2/users/cli/index.html
+          </pre>
+          <aside class="notes">
+          </aside>
+        </section>
+        <section>
+          <h3>The CLI ecosystem</h3>
+          <img src="diagrams/venn.png" width="90%"/>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <!--
+          Creating stuff
+        -->
+        <section>
+          <h2>Working with data: Creating stuff</h2>
+          <ul>
+            <li>import</li>
+            <li>upload</li>
+            <li>tag</li>
+            <li>obj</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>Creating stuff: import</h2>
+            <ul>
+              <li>
+                The CLI import command allows you to import images to an OMERO server from the command line.
+              </li>
+              <li>
+                It is ideally suited for anyone wanting to use a shell-scripted or web-based front-end interface for importing.
+              </li>
+              <li>
+                The command line version supports the same file formats and functions in much the same way.
+              </li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Creating stuff: import</h2>
+            <ul>
+              <li>
+                The CLI import command returns details of Pixels, Filesets and Images or Screens.
+              </li>
+            </ul>
+            <pre>
+  $ bin/omero import ~/Work/images/dv/IAGFP-Noc01_R3D.dv
+  ...
+  Imported pixels:
+  51
+  Other imported objects:
+  Fileset:51
+  Image:51</pre>
+            <ul>
+              <li>
+                Currently mixed between stdout and stderr, but we looking at other ways of providing this data.
+              </li>
+            </ul>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h2>Creating stuff: upload</h2>
+          <ul>
+            <li>Upload local files to the OMERO server</li>
+            <li>Can handle pytables files</li>
+          </ul>
+          <pre>
+  $ bin/omero upload tox.ini
+  Uploaded tox.ini as 275
+  $ bin/omero obj get OriginalFile:275 name
+  tox.ini</pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>Creating stuff: tag</h2>
+            <ul>
+              <li>Create, manage and view tags</li>
+            </ul>
+          <pre>
+  $ bin/omero tag -h
+  ...
+    list                            List all the tags, grouped by tagset
+    listsets                        List tag sets
+    create                          Create a new tag
+    createset                       Create a new tag set
+    load                            Import new tag(s) and tagset(s) from JSON file
+    link                            Link annotation to an object</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Creating stuff: tag</h2>
+            <ul>
+              <li>Create, manage and view tags</li>
+            </ul>
+          <pre>
+  $ bin/omero tag create --name Tag1
+  TagAnnotation:1
+  $ bin/omero tag create --name Tag2
+  TagAnnotation:2
+  $ bin/omero tag createset --name Set1 --tag 1 2
+  TagAnnotation:3
+  $ bin/omero tag list
+  +- 3:'Set1'
+  |\
+  | +- 2:'Tag2'
+  | +- 1:'Tag1'
+  $ bin/omero tag link Image:51 1
+  ImageAnnotationLink:51</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Creating stuff: obj</h2>
+            <ul>
+              <li>Create, update and query various objects</li>
+            </ul>
+            <pre>
+  $ bin/omero obj -h
+  usage: bin/omero obj
+  ...
+         [{new,update,null,map-get,map-set,get,list-get}] [Class]
+         [fields [fields ...]]
+  ...
+  Positional Arguments:
+    {new,update,null,map-get,map-set,get,list-get}
+                                          operation to be performed
+    Class                                 OMERO model object name, e.g. Project
+    fields                                fields to be set, e.g. name=foo</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Creating stuff: obj</h2>
+            <ul>
+              <li>Create, update and query objects</li>
+            </ul>
+            <pre>
+  $ bin/omero obj new Dataset name="Dataset One"
+  Dataset:1
+  $ bin/omero obj update Dataset:1 description="The primary dataset"
+  Dataset:1
+  $ bin/omero obj get Dataset:1 name
+  Dataset One
+  $ bin/omero obj get Dataset:1
+  description=The primary dataset
+  id=1
+  name=Dataset One
+  version=</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Creating stuff: obj</h2>
+            <ul>
+              <li>Create and link containers</li>
+            </ul>
+            <pre>
+  $ bin/omero obj new Project name="P-1" description="New project"
+  Project:1
+  $ bin/omero obj new ProjectDatasetLink parent=Project:1 child=Dataset:1
+  ProjectDatasetLink:1
+  $ bin/omero obj new DatasetImageLink parent=Dataset:1 child=Image:51
+  DatasetImageLink:1
+  $ bin/omero obj get DatasetImageLink:1 child
+  Image:51
+  $ bin/omero obj get DatasetImageLink:1 parent
+  Dataset:1</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Creating stuff: obj</h2>
+            <ul>
+              <li>Managing annotations</li>
+            </ul>
+            <pre>
+  $ bin/omero obj new FileAnnotation file=OriginalFile:275
+  FileAnnotation:5
+  $ bin/omero obj new ImageAnnotationLink parent=Image:51 child=FileAnnotation:5
+  ImageAnnotationLink:2
+
+  $ bin/omero obj new MapAnnotation name=domain ns=example.com
+  MapAnnotation:6
+  $ bin/omero obj map-set MapAnnotation:6 mapValue 1 "http://openmicroscopy.org"
+  MapAnnotation:6
+  $ bin/omero obj map-get MapAnnotation:6 mapValue 1
+  http://openmicroscopy.org
+  $ bin/omero obj new ImageAnnotationLink parent=Image:51 child=MapAnnotation:6
+  ImageAnnotationLink:3</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Creating stuff: obj</h2>
+            <ul>
+              <li>Using bash to automate workflows</li>
+            </ul>
+            <pre>
+  $ <strong>project</strong>=$(omero obj new Project name='my Project')
+  $ <strong>dataset</strong>=$(omero obj new Dataset name='my Dataset')
+  $ bin/omero obj new ProjectDatasetLink parent=<strong>$project</strong> child=<strong>$dataset</strong>
+  ProjectDatasetLink:2
+  $ bin/omero import -T <strong>$dataset</strong> ~/Work/images/dv/CFPNEAT01_R3D.dv
+  Imported pixels:
+  52
+  Other imported objects:
+  Fileset:52
+  Image:52
+  ...
+  ==> Summary
+  2 files uploaded, 1 fileset created, 1 image imported, 0 errors in 0:00:03.866</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h3>The created objects</h3>
+          <img src="diagrams/afterobj.png" width="90%"/>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <!--
+          Finding stuff
+        -->
+        <section>
+          <h2>Working with data: Finding stuff</h2>
+          <ul>
+            <li>search</li>
+            <li>hql</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>Finding stuff: search</h2>
+            <ul>
+              <li>Search for object ids by string</li>
+            </ul>
+            <pre>
+  usage: bin/omero search
+         [-h] [--index] [--no-parse] [--field [FIELD [FIELD ...]]]
+         [--from YYYY-MM-DD] [--to YYYY-MM-DD]
+         [--date-type {acquisitionDate,import}] [--admin] [--all] [--ids-only]
+         [--limit LIMIT] [--offset OFFSET] [--style {plain,csv,sql}]
+         type [query]
+
+  Positional Arguments:
+    type                          Object type to search for, e.g. 'Image' or 'Well'
+    query                         Single query to run
+
+  Optional Arguments:
+    --from YYYY-MM-DD             Start date for limiting searches (YYYY-MM-DD)
+    --to YYYY-MM-DD               End date for limiting searches (YYYY-MM-DD)
+    --ids-only                    Show only the ids of returned objects
+    --style {plain,csv,sql}       use alternative output style (default=sql)</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Finding stuff: search</h2>
+            <pre>
+  $ bin/omero search Image "dv"
+   # | Class  | Id  | name               | acquisitionDate          | ...
+  ---+--------+-----+--------------------+--------------------------+----
+   0 | ImageI | 101 | IAGFP-Noc01_R3D.dv | Tue Aug 23 11:54:53 2005 | ...
+   1 | ImageI | 52  | CFPNEAT01_R3D.dv   | Fri Feb 27 10:25:32 2009 | ...
+  (2 rows)
+
+  $ bin/omero search Image "dv" --ids-only --style csv
+  #,Col1
+  0,ImageI:101
+  1,ImageI:52</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Finding stuff: hql</h2>
+            <ul>
+              <li>Executes an HQL query</li>
+              <li>If no query is given, then a shell is opened</li>
+            </ul>
+            <pre>
+  usage: bin/omero hql
+         [-h] [--admin] [--all] [--ids-only] [--limit LIMIT] [--offset OFFSET]
+         [--style {plain,csv,sql}] [-C] [-s SERVER] [-p PORT] [-g GROUP]
+         [-u USER] [-w PASSWORD] [-k KEY] [--sudo ADMINUSER] [-q]
+         [query]
+
+  Positional Arguments:
+    query                         Single query to run
+
+  Optional Arguments
+    --all                         Perform query on all groups
+    --ids-only                    Show only the ids of returned objects
+    --limit LIMIT                 maximum number of return values (default=25)
+    --offset OFFSET               number of entries to skip (default=0)
+    --style {plain,csv,sql}       use alternative output style (default=sql)</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Finding stuff: hql</h2>
+            <pre>
+  $ bin/omero hql "select id, name, fileset.id from Image where id > 50"
+   # | Col1 | Col2               | Col3
+  ---+------+--------------------+------
+   0 | 52   | CFPNEAT01_R3D.dv   | 52
+   1 | 101  | IAGFP-Noc01_R3D.dv | 101
+   2 | 102  | new.tiff           | 102
+  (3 rows)
+
+  $ bin/omero hql
+  Enter query:select id, name, fileset.id from Image order by id desc
+   # | Col1 | Col2               | Col3
+  ---+------+--------------------+------
+   0 | 102  | new.tiff           | 102
+   1 | 101  | IAGFP-Noc01_R3D.dv | 101
+   2 | 52   | CFPNEAT01_R3D.dv   | 52
+  (3 rows)
+
+  To see details for object, enter line number.
+  To move ahead one page, enter 'p'
+  To re-display list, enter 'r'.
+  To quit, enter 'q' or just enter.
+  To run another query, press enter</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!--
+          Getting stuff out
+        -->
+        <section>
+          <section>
+            <h2>Getting stuff out: export</h2>
+            <pre>
+  $ bin/omero export --file new.tiff Image:52
+  $ bin/omero export --file new.xml --type XML Image:52
+  $ ls
+  new.tiff  new.xml</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Getting stuff out: download</h2>
+            <pre>
+  $ bin/omero download FileAnnotation:5 new.tmp
+  $ bin/omero download Image:102 original.tiff
+  $ ls
+  new.tiff  new.tmp   new.xml   original.tiff</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!--
+          Deleting stuff
+            delete
+        -->
+        <section>
+          <section>
+            <h2>Working with data: Deleting stuff</h2>
+            <ul>
+              <li>Delete data</li>
+              <li>Remove entire graphs of data based on the ID of the top-node</li>
+            </ul>
+            <pre>
+  usage: bin/omero delete
+         [-h] [--wait WAIT] [--include INCLUDE] [--exclude EXCLUDE] [--ordered]
+         [--list] [--report] [--dry-run]
+         [obj [obj ...]]
+
+  Positional Arguments:
+    obj                 Objects to be processed in the form &lt;Class>:&lt;Id>
+
+  Optional Arguments:
+    --include INCLUDE   Modifies the given option by including a list of objects
+    --exclude EXCLUDE   Modifies the given option by excluding a list of objects
+    --report            Print more detailed report of each action
+    --dry-run           Do a dry run of the command,
+                        providing a report of what would have been done</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Working with data: Deleting stuff</h2>
+            <pre>
+  $ bin/omero delete Image:52 --report --dry-run
+  Deleted objects
+    ImageAnnotationLink:51-54
+    MapAnnotation:52
+    Image:52
+    ...
+  $ bin/omero delete Image:52 --include TagAnnotation,FileAnnotation --report --dry-run
+  Deleted objects
+    AnnotationAnnotationLink:1,2
+    FileAnnotation:5
+    ImageAnnotationLink:51-54
+    MapAnnotation:52
+    TagAnnotation:1,2
+    Image:52
+    ...</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Working with data: Deleting stuff</h2>
+            <ul>
+              <li>Delete using SkipHead</li>
+            </ul>
+            <pre>
+  $ bin/omero delete Project/Image:2 --report --dry-run
+  ...
+  Deleted objects
+    DatasetImageLink:2,51
+    Image:52,101
+    OriginalFile:277-279,370-372
+    Pixels:52,101
+    Fileset:52,101
+    ...</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <!--
+          Moving stuff
+        -->
+        <section>
+          <h2>Working with data: Moving stuff</h2>
+          <ul>
+            <li>chgrp</li>
+            <li>chown</li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>Moving stuff: chgrp</h2>
+            <ul>
+              <li>Move data between groups</li>
+              <li>Entire graphs of data, based on the ID of the top-node</li>
+            </ul>
+            <pre>
+  usage: bin/omero chgrp
+         [-h] [--wait WAIT] [--include INCLUDE] [--exclude EXCLUDE] [--ordered]
+         [--list] [--report] [--dry-run]
+         [grp] [obj [obj ...]]
+  ...
+  Positional Arguments:
+    grp                 Group to move objects to
+    obj                 Objects to be processed in the form &lt;Class>:&lt;Id>
+
+  Optional Arguments:
+    --include INCLUDE   Modifies the given option by including a list of objects
+    --exclude EXCLUDE   Modifies the given option by excluding a list of objects
+    --report            Print more detailed report of each action
+    --dry-run           Do a dry run of the command,
+                        providing a report of what would have been done</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Moving stuff: chgrp</h2>
+            <pre>
+  $ bin/omero chgrp 5 OriginalFile:275 --report --dry-run
+  omero.cmd.Chgrp2 OriginalFile:275 failed: 'graph-fail'
+  failed: may not move OriginalFile[275] while used by FileAnnotation[5]
+  Steps: 4
+  Elapsed time: 0.129 secs.
+  Flags: [FAILURE, CANCELLED]
+
+  $ bin/omero chgrp Group:5 FileAnnotation:5 --report
+  omero.cmd.Chgrp2 FileAnnotation:5 ok
+  Steps: 6
+  Elapsed time: 0.121 secs.
+  Flags: []
+  Included objects
+    FileAnnotation:5
+    OriginalFile:275
+  Deleted objects
+    ImageAnnotationLink:2</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Moving stuff: chgrp</h2>
+            <ul>
+              <li>Move data using SkipHead</li>
+            </ul>
+            <pre>
+  $ bin/omero chgrp 5 Dataset/Image:1 --report --dry-run
+  ...
+  Included objects
+    ImageAnnotationLink:3
+    MapAnnotation:6
+    Image:51
+    OriginalFile:272-274
+    ...
+  Deleted objects
+    ImageAnnotationLink:1
+    DatasetImageLink:1</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Moving stuff: chown</h2>
+            <ul>
+              <li>Transfer ownership of data between users.</li>
+              <li>Entire graphs of data, based on the ID of the top-node</li>
+            </ul>
+            <pre>
+  usage: bin/omero chown
+         [-h] [--wait WAIT] [--include INCLUDE] [--exclude EXCLUDE] [--ordered]
+         [--list] [--report] [--dry-run]
+         [usr] [obj [obj ...]]
+
+  Positional Arguments:
+    usr                 user to transfer ownership of objects to
+    obj                 Objects to be processed in the form &lt;Class>:&lt;Id>
+
+  Optional Arguments:
+    --include INCLUDE   Modifies the given option by including a list of objects
+    --exclude EXCLUDE   Modifies the given option by excluding a list of objects
+    --report            Print more detailed report of each action
+    --dry-run           Do a dry run of the command,
+                        providing a report of what would have been done</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <h2>Moving stuff: chown</h2>
+            <pre>
+  $ bin/omero chown user-1  Project/Image:1
+  omero.cmd.Chown2 Project/Image:1 ok
+
+  $ bin/omero chown 101 Image:1
+  $ bin/omero chown User:101 Image:2
+  $ bin/omero chown Experimenter:101 Image:3
+  $ bin/omero chown jane Image:51,52,53</pre>
+            <aside class="notes">
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h3>More on the CLI...</h3>
+          <ul>
+            <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/users/cli/index.html">... for users</a></li>
+            <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/sysadmins/cli/index.html">... for admins</a></li>
+            <li><a href="http://www.openmicroscopy.org/site/support/omero5.2/developers/cli/index.html">... for developers</a></li>
+          </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Thanks!</h2>
+          <ul>
+            <li>the "CLI team"</li>
+            <li>the OME team</li>
+            <li>the user community</li>
+          </ul>
+          <br/><br/>
+          <div style="background-color: #fff;">
+            <img src="diagrams/wellcome.png" height="140px">
+            <img src="diagrams/bbsrc.png" height="140px">
+          </div>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h2>Discussion</h2>
+          <h3>What more do you need</h3>
+          <h1 style="font-size:500%">?</h1>
+          <aside class="notes">
+          </aside>
+        </section>
+
+      </div> <!-- end class="slides" -->
+
+    </div> <!-- end class="reveal" -->
+
+    <script src="reveal-js/lib/js/head.min.js"></script>
+    <script src="reveal-js/js/reveal.min.js"></script>
+    <script>
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+            transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                // { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+            ]
+        });
+    </script>
+
+  </body>
+</html>
