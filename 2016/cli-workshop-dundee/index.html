@@ -401,11 +401,11 @@
               <li>Using bash to automate workflows</li>
             </ul>
             <pre>
-  $ project=$(omero obj new Project name='my Project')
-  $ dataset=$(omero obj new Dataset name='my Dataset')
-  $ bin/omero obj new ProjectDatasetLink parent=$project child=$dataset
+  $ <strong>project</strong>=$(omero obj new Project name='my Project')
+  $ <strong>dataset</strong>=$(omero obj new Dataset name='my Dataset')
+  $ bin/omero obj new ProjectDatasetLink parent=<strong>$project</strong> child=<strong>$dataset</strong>
   ProjectDatasetLink:2
-  $ bin/omero import -T $dataset ~/Work/images/dv/CFPNEAT01_R3D.dv
+  $ bin/omero import -T <strong>$dataset</strong> ~/Work/images/dv/CFPNEAT01_R3D.dv
   Imported pixels:
   52
   Other imported objects:
