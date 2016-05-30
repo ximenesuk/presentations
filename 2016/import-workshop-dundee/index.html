@@ -625,8 +625,40 @@
         <section>
           <h3>The import ecosystem</h3>
           <ul>
+            <li>cron, bash, etc.</li>
+            <li>import for</li>
             <li>OMERO.dropbox</li>
           </ul>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h3>Import for: using the CLI</h3>
+          <pre style="font-size:60%">
+  bin/omero login -u john --sudo jane
+  Password for jane:
+  Created session f49d2...65250 (john@...). Current group: skyelab
+  bin/omero import ~/Images/dv/IAGFP-Noc01_R3D.dv
+  Using session f49d2...65250 (john@...). Current group: skyelab
+  ...
+  ==> Summary
+  2 files uploaded, 1 fileset created, 1 image imported,
+  0 errors in 0:00:21.602</pre>
+          <aside class="notes">
+          </aside>
+        </section>
+
+        <section>
+          <h3>OMERO.dropbox</h3>
+          DropBox is a file system monitor to find newly uploaded files and run a fully automatic import on those files if possible.
+          <pre style="font-size:60%">
+  /OMERO/DropBox/amy
+                /emily
+                /edgar
+                /root
+                /petr
+                /zak</pre>
           <aside class="notes">
           </aside>
         </section>
