@@ -1,0 +1,349 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title></title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+        <!-- OME presentation overrides of the default theme -->
+        <style>
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+              text-transform: none;
+            }
+            .reveal h2 {
+                font-size: 60px;
+            }
+            .ome_theme {
+                background-image: url("images/ome-icon-opacity.png");
+                background-color: #f2f6f9;
+                background-repeat: no-repeat;
+                background-position: right -270px top -120px;
+            }
+            .reveal {
+                text-transform: none;   !important
+            }
+
+            .reveal section img {
+                border-width:0;
+                border-color: white;
+            }
+
+            .img_panel {
+                width: 150px;
+            }
+
+            .nobullet li {
+                list-style: none;
+            }
+
+            table.centre {
+                width: 100%;
+            }
+
+            .reveal .centre td {
+                text-align: center;
+            }
+
+            .rot90 {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+
+            .reveal .title {
+                position:absolute;
+                bottom:100%;
+                margin:5px;
+                color:red;
+            }
+
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body class="ome_theme">
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <!-- title page -->
+                <section>
+                    <h1>OME Model and File Formats</h1>
+                </section>
+                
+
+                <section>
+                    <h2>OME File Formats</h2>
+                    <ul>
+                      <li>OME File Formats<ul>
+                          <li>OME-XML</li>
+                          <li>OME-TIFF</li></ul>
+                      <li>Wider adoption within the community</li>
+                      <li>2015-2016: Feedback from open-source projects<ul>
+                          <li><a href="https://imspector.mpibpc.mpg.de/contact.html">Imspector OBF format</a></li>
+                          <li><a href="https://micro-manager.org/wiki/Micro-Manager_File_Formats">Micro-Manager</a></li></ul>
+                      <li>Review of the OME Formats <a href="http://downloads.openmicroscopy.org/images/">samples</a> and <a href="http://www.openmicroscopy.org/site/support/ome-model/">documentation</a></li>
+                      </ul>
+                    <ul/>
+                    <!-- <img src="diagrams/OME-XML.png" width="50%"> -->
+                </section>
+
+                <section>
+                    <section>
+                        <h2>OME-TIFF file format</h2>
+
+                        <ul>
+                          <li>Based on the <a href="http://partners.adobe.com/public/developer/tiff/index.html">TIFF</a> specification</li>
+                          <li>OME metadata stored as OME-XML within the ImageDescription tag of the first IFD</li>
+                        </ul>
+                        <img src="diagrams/OME-TIFF_singlefile.svg" width="60%">
+                    </section>
+                    <section>
+                        <h2>OME-TIFF file format</h2>
+                        <li>Supports multi-dimensional, multi-images files - see <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/bioformats-artificial/">generated samples</a></li>
+                        <img src="diagrams/OME-TIFF_singlefile2.svg" width="60%">
+                    </section>
+                </section>
+
+                <section>
+                    <h2>OME-TIFF large datasets</h2>
+
+                    <ul>
+                      <li>TIFF specification limited to 4GB (32-bit pointers)</li>
+                      <li>Limitations for large data volumes</li><ul>
+                           <li>Complex multi-dimensional datasets</li>
+                           <li>High-Content-Screening data</li>
+                      </ul>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Solution 1: BigTiff</h2>
+                    <ul>
+                      <li>OME-TIFF supports <a href="http://bigtiff.org/">BigTIFF</a> format</a></li>
+                      <li>Use of 64-bit based offsets overcomes 4GB limit</li>
+                    </ul>
+                </section>
+                <section>
+                    <section>
+                        <h2>Solution 2: distribution across multiple files</h2>
+
+                        See the <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/tubhiswt-4D/"  target="_blank">multi-file OME-TIFF sample</a>
+                        <img src="diagrams/OME-TIFF_multifile.svg" width="80%">
+                    </section>
+                    <section>
+                        <h2>Solution 2: distribution across multiple files</h2>
+
+                        See the <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/binary-onyly"  target="_blank">master OME-TIFF sample</a>
+                        <img src="diagrams/OME-TIFF_master.svg" width="80%">
+                    </section>
+                    <section>
+                        <h2>Solution 2: distribution across multiple files</h2>
+
+                        See the <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/companion"  target="_blank">companion OME-XML sample</a>
+                        <img src="diagrams/OME-TIFF_companion.svg" width="80%">
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Extended metadata</h2>
+
+                        <ul>
+                          <li>Store flexible metadata not defined in the OME Data Model</li>
+                          <li>Use structured annotations to store key/value pairs</li>
+                        </ul>
+
+                        <pre style="width: 100%;">
+&lt;OME xmlns="http://www.openmicroscopy.org/Schemas/OME/2015-01"
+...
+    &lt;AnnotationRef ID="Annotation:1"/&gt;
+  &lt;/Image&gt;
+    &lt;MapAnnotation ID="Annotation:1"&gt;
+      &lt;Description>Additional metadata description&lt;/Description&gt;
+      &lt;Value&gt;
+        &lt;M K="Key-1"&gt;Value-1&lt;/M&gt;
+        &lt;M K="Key-2"&gt;Value-2&lt;/M&gt;
+      &lt;/Value&gt;
+    &lt;/MapAnnotation&gt;
+  &lt;/StructuredAnnotations&gt;
+&lt;/OME&gt;</pre>
+
+                        See the <a href="https://downloads.openmicroscopy.org/images/OME-XML/2015-01/mapannotation.ome.xml"  target="_blank">OME-XML sample</a>
+                    </section>
+                </section>                
+
+                <section>
+                    <h2>Tools and software</h2>
+                    <ul>
+                      <li>Bio-Formats tools<ul>
+                          <li>validation (xmlvalid)</li>
+                          <li>reading (showinf)</li>
+                          <li>modification (tiffcomment)</li>
+                      </ul>
+                      <li><a href="http://downloads.openmicroscopy.org/latest/ome-files-cpp/">Reference C++ implementation</a> for working with OME Files</li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2>Future directions</h2>
+                    <ul>
+                      <li>More OME-TIFF extensions points</li>
+                      <li>New OME-HDF file format</li>
+                    </ul>
+                </section>
+
+                <section>
+                  <h2>Questions?</h2>
+                </section>
+
+                <section>
+                <section>
+                  <h2>Model Changes</h2>
+		  <h3>Class Hierarchies</h3>
+		  <!-- David's work -->
+                    <ul>
+		      <li>LightSource</br>
+		      <span style="font-size: smaller;">Arc, Filament, GenericExcitationSource, Laser, LightEmittingDiode</span></li>
+		      <li>Shape</br>
+		      <span style="font-size: smaller;">Ellipse, Label, Line, Mask, Point, Polygon, Polyline, Rectangle</span></li>
+                    </ul>
+                </section>
+
+                <section>
+                  <h2>Model Changes</h2>
+		  <h3>Single namespace</h3>
+		  <!-- Roger's work -->
+                    <ul>
+		      <li>No more <span style="font-family: monospace;">Schemas/SA/2015-01</span>,<br/>
+			<span style="font-family: monospace;">Schemas/SPW/2015-01</span>, etc.</li>
+		      <li>For 2016 all now in one OME namespace
+                    </ul>
+                </section>
+
+                <section>
+                  <h2>Model Changes</h2>
+		  <h3>Drop ROI Properties</h3>
+		  <p>Drop from model,</p>
+                  <ul>
+		    <li>ROI.Namespace</li>
+		    <li>Shape.LineCap</li>
+		    <li>Shape.Visible</li>
+                    </ul>
+                </section>
+
+                <section>
+                  <h2>Model Changes</h2>
+		  <h3>Drop (Poly)Line Markers</h3>
+                  <ul>
+		    <li>Drop <span style="font-family: monospace;">Circle</span>
+		      and <span style="font-family: monospace;">Square</span></li>
+		    <li><span style="font-family: monospace;">Arrow</span> markers remain</li>
+                    <li>Also added to OMERO model</li>
+                  </ul>
+                </section>
+                </section>
+
+                <section>
+                <section>
+                  <h2>Model Changes</h2>
+		  <h3>New: Folders</h3>
+                  <ul>
+		    <li>Folders may contain:<br/>
+		      Folders, ROIs, Images</li>
+		    <li>Folder hierarchy is a strict tree:<br/>
+		      a Folder may have only one parent</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2>Model Changes</h2>
+		  <h3>Folders and Images</h3>
+                  <ul>
+		    <li>Images are associated with Folders,
+		      <ul>
+			<li>directly via <span style="font-family:
+			  monospace;">ImageRef</span> or</li>
+			<li>indirectly via <span style="font-family:
+	                  monospace;">ROIRef</span></li>
+		      </ul>
+		    </li>
+		    <li>OMERO.insight, .web initially support only the
+		    latter</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2>Model Changes</h2>
+		  <h3>Folder Example</h3>
+		  <pre style="width: 60%;">&lt;Folder ID="Folder:1" Name="CMPO"&gt;
+  &lt;FolderRef ID="Folder:2"/&gt;
+  &lt;FolderRef ID="Folder:7"/&gt;
+&lt;/Folder&gt;
+&lt;Folder ID="Folder:7" Name="Cell Component"&gt;
+  &lt;FolderRef ID="Folder:8"/&gt;
+  &lt;ROIRef ID="Roi:14"/&gt;
+&lt;/Folder&gt;</pre>
+                </section>
+                </section>
+
+
+            </div>
+
+        </div>
+
+        <script src="reveal-js/lib/js/head.min.js"></script>
+        <script src="reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
