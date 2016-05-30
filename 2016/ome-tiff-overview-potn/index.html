@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title></title>
+        <title>OME-TIFF overview - Dundee 2016</title>
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -16,57 +16,7 @@
         <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
 
         <!-- OME presentation overrides of the default theme -->
-        <style>
-            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
-              text-transform: none;
-            }
-            .reveal h2 {
-                font-size: 60px;
-            }
-            .ome_theme {
-                background-image: url("images/ome-icon-opacity.png");
-                background-color: #f2f6f9;
-                background-repeat: no-repeat;
-                background-position: right -270px top -120px;
-            }
-            .reveal {
-                text-transform: none;   !important
-            }
-
-            .reveal section img {
-                border-width:0;
-                border-color: white;
-            }
-
-            .img_panel {
-                width: 150px;
-            }
-
-            .nobullet li {
-                list-style: none;
-            }
-
-            table.centre {
-                width: 100%;
-            }
-
-            .reveal .centre td {
-                text-align: center;
-            }
-
-            .rot90 {
-                -webkit-transform: rotate(90deg);
-                transform: rotate(90deg);
-            }
-
-            .reveal .title {
-                position:absolute;
-                bottom:100%;
-                margin:5px;
-                color:red;
-            }
-
-        </style>
+        <link rel="stylesheet" href="css/ome-reveal.css">
 
         <!-- For syntax highlighting -->
         <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
@@ -90,7 +40,10 @@
 
                 <!-- title page -->
                 <section>
-                    <h1>OME File Formats</h1>
+                    <h1>OME file formats</h1>
+                    <h3>Users meeting</h3>
+                    <h4>June 1, 2016</h4>
+                    <h3>Sébastien Besson<br>
                 </section>
                 
 
@@ -122,8 +75,9 @@
                     </section>
                     <section>
                         <h2>OME-TIFF file format</h2>
-                        <li>Supports multi-dimensional, multi-images files - see <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/bioformats-artificial/">generated samples</a></li>
-                        <img src="diagrams/OME-TIFF_singlefile2.svg" width="60%">
+                        <li>Supports multi-dimensional, multi-image files </li>
+                        <p><img src="diagrams/OME-TIFF_singlefile2.svg" width="60%"></p>
+                        See <a href="http://downloads.openmicroscopy.org/images/OME-TIFF/2015-01/bioformats-artificial/">artifical OME-TIFF samples</a>
                     </section>
                 </section>
 
@@ -210,8 +164,8 @@
                 <section>
                     <h2>Future directions</h2>
                     <ul>
-                      <li>More OME-TIFF extensions points</li>
-                      <li>New OME-HDF file format</li>
+                      <li>More extension points</li>
+                      <li>New HDF5-based file format</li>
                     </ul>
                 </section>
 
