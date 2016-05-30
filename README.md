@@ -19,3 +19,4 @@ Slide shows for OME and OMERO based on https://github.com/hakimel/reveal.js
  * [2015/hdf-workshop-paris](http://ome.github.io/presentations/2015/hdf-workshop-paris)
  * [2015/import-workshop-paris](http://ome.github.io/presentations/2015/import-workshop-paris)
  * [2015/public-repository-workshop-paris](http://ome.github.io/presentations/2015/public-repository-workshop-paris)
+ * [2016/Web-Planning-Jan-2016](http://ome.github.io/presentations/2016/Web-Planning-Jan-2016)

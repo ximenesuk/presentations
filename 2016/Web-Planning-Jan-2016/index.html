@@ -1,0 +1,478 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Web Planning: Jan 2016</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+
+        <!-- OME presentation overrides of the default theme -->
+        <style>
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+              text-transform: none;
+            }
+            .reveal h1 {
+                font-size: 80px;
+            }
+            .reveal h2 {
+                font-size: 60px;
+            }
+            .reveal h3 {
+                font-size: 40px;
+            }
+            .ome_theme {
+                background-image: url("images/ome-icon-opacity.png");
+                background-color: #f2f6f9;
+                background-repeat: no-repeat;
+                background-position: right -270px top -120px;
+            }
+            .reveal {
+                text-transform: none;
+            }
+
+            .reveal section img {
+                border-width:0;
+                border-color: white;
+            }
+
+            .img_panel {
+                width: 150px;
+            }
+
+            .nobullet li {
+                list-style: none;
+            }
+
+            table.centre {
+                width: 100%;
+            }
+
+            .reveal .centre td {
+                text-align: center;
+            }
+
+            .rot90 {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+
+            .reveal .title {
+                position:absolute;
+                bottom:100%;
+                margin:5px;
+                color:red;
+            }
+            .larger {
+                font-size: 80px !important;
+            }
+
+            .no_shadow {
+                box-shadow:0 0 0 #fff !important;
+            }
+
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body class="ome_theme">
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <!-- title page -->
+        <section>
+            <h1>OMERO.web modernisation</h1>
+            <h3>Tuesday Group Meeting<br>
+                19th January, 2016</h3>
+            <p>
+                <small>
+                    Will Moore | Aleksandra Tarkowska
+                </small>
+            </p>
+        </section>
+
+        <!-- talk outline -->
+        <section>
+            <h2>Talk outline</h2>
+            <ul>
+                <li>Requirements / What needs fixing?</li>
+                <li>Current state of OMERO.web</li>
+                <li>Evaluating libraries & tools</li>
+                <li>Proposed Javascript changes</li>
+                <li>Proposed backend changes</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Requirements / What needs fixing?</h2>
+            <ul>
+                <li>Frontend
+                    <ul>
+                        <li>Outgrown original design</li>
+                        <li>"jQuery soup" - fragile to change</li>
+                        <li>Aging codebase</li>
+                        <li>Make use of new web tech & features (E.g. routing)</li>
+                        <li>Expose reusable webclient API (JS & Webservices)</li>
+                        <li>Improve ability of 3rd party developers to configure (especially for viewer)</li>
+                        <li>Deploy web code as Desktop app</li>
+                    </ul>
+                </li>
+                <li>Backend
+                    <ul>
+                        <li>Performance and scalability</li>
+                        <li>Super easy installer / individual packages</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Current state of OMERO.web (1...)</h2>
+            <ul>
+                <li>Django templates: dynamically generated HTML on the server</li>
+                <li>jQuery & AJAX updates the page in browser <br>
+                    Mostly loading data as html, some calls load json
+                </li>
+                <li>'top-level' pages in one application:
+                    <pre>data, tags, public, search, history</pre>
+                </li>
+                <li>JSTree used to load data, trigger other panels to load selected items</li>
+                <li>Plugin framework for users to add right / centre panels (webtagging)</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Current state of OMERO.web (2...)</h2>
+            <ul>
+                <li>Approx 3k lines of js in static files</li>
+                <li>Approx 6k lines embedded in HTML
+                    <ul>
+                        <li>Not linted (jshint) </li>
+                        <li>Adds to page size of each request</li>
+                    </ul>
+                </li>
+                <li>Separate js files not concatenated, minimised etc</li>
+                <li>See PR to improve
+                    <a href="https://github.com/openmicroscopy/ome-documentation/pull/1378">
+                        webclient docs
+                    </a>
+                </li>
+
+            </ul>
+        </section>
+
+        <section>
+            <h2>Current state of OMERO.web (...3)</h2>
+            <ul>
+                <li>Approx 5k lines of Python in webclient views.py</li>
+                <li>Not very many RESTful webservices</li>
+                <li>No serializers.</li>
+                <li>Not well maintained HTTP Session backend</li>
+                <li>Lack of efficient cache backend</li>
+                <li>Limited usage of Public user</li>
+                <li>Still supporting Django 1.6</li>
+                <li>Lack of pip installer </li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Questions</h2>
+            <ul>
+                <li>Adopt an "MVC" framework?</li>
+                <li>Start from scratch or update webclient?</li>
+                <li>Use javascript build tools?</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Javascript MVC frameworks</h2>
+
+            <ul>
+                <li>Backbone (OMERO.figure, trello): lightweight library</li>
+                <li>Angular, from Google: most popular, 2-way binding</li>
+                <li>Ember
+                    (<a href="https://github.com/discourse/discourse">Discourse</a>):
+                    strict rules, good for teams
+                </li>
+                <li><a href="https://facebook.github.io/react/" target="react"/>React.js</a>
+                    (facebook,
+                    <a href="https://github.com/MicronOxford/webtagging/pull/37">
+                        OMERO.webtagging #37
+                    </a>): declarative, "view" part of MVC</li>
+                <li>Hundreds more!</li>
+                <li><a href="http://love2dev.com/#!article/Yes-Fast-Food-Frameworks-Cost-Too-Much">
+                    Objections to frameworks:</a> Slow on Mobile, Cost of learning, longevity?
+                </li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Evaluating React.js: Centre Panel</h2>
+
+            <ul>
+                <li>Centre panel populated from jsTree data:
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4242/" >#4242</a>
+                    <ul><li>Uses unscore.js template to create HTML</li></ul>
+                </li>
+                <li>
+                    Bug: right panel scrolls on selection change
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4297" />#4297</a>:
+<pre><code># If it's just a selection change,
+# simply highlight (don't re-render whole panel)
+if (parentId === newParentId
+    && event.type !== "load_node"
+    && event.type !== "delete_node") {
+ 
+    highlightSelectedThumbs(selected);
+    return;
+}</code></pre>
+                </li>
+                <li>
+                    Bug: Also re-render on copy & paste
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4336" />#4336</a>:
+<pre><code> if (parentId === newParentId
++    && event.type !== "copy_node"
++    && event.type !== "create_node"
+     && event.type !== "load_node"
+     && event.type !== "delete_node"
+     && event.type !== "refreshThumb" {</code></pre>
+                </li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Using React.js for centre panel
+                <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4413">#4413</a>
+            </h2>
+
+            <ul>
+                <li>Don't have to worry about what changes are expected from different events</li>
+                <li>Simply declare how jsTree data maps to centre panel HTML
+                    <ul>
+                        <li>E.g. image selected -> class 'ui-selected'</li>
+                        <li>E.g. iconSize -> img width</li>
+                    </ul>
+                </li>
+            </ul>
+<pre><code>&lt ImageIcon &gt
+
+render: function() {
+    var image = this.props.image,
+        cls = [];
+    if (image.selected) {cls.push('ui-selected')};
+    if (image.fsSelected) {cls.push('fs-selected')};
+    return (
+        &lt li className={"row " + cls.join(" ")} &gt
+            &lt img width={this.props.iconSize + "px"}
+        ...
+</code></pre>
+        </section>
+
+
+        <section data-background="images/ReactCentrePanel.png" data-background-transition="slide">
+        </section>
+
+        
+        <section data-background="images/ReactPlate.png" data-background-transition="slide">
+        </section>
+
+
+        <section>
+            <h2>Do we need a Javascript MVC?</h2>
+
+            <ul>
+                <li>We already have the jstree, to manage containers</li>
+                <li>Other places may be simple enough not to have a separate Data Model</li>
+                <li>Exception to this is the viewer, which already has a js Model</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Build tools</h2>
+
+            <ul>
+                <li>Concatenate, transpile (JSX, ES2015), minimise, dependency management etc</li>
+                <li>Currently we use Django pipeline (can use Babel for ES2015)</li>
+                <li>Grunt (general purpose task runner, OMERO.figure)</li>
+                <li>webpack (more recent, <a href="https://github.com/MicronOxford/webtagging/pull/37">
+                        OMERO.webtagging #37
+                    </a>)
+                </li>
+                <li>Others (gulp, Broccoli etc)</li>
+                <li>Need to investigate options further</li>
+                <li>Not urgent: Introduce as required</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Web -> Desktop application</h2>
+
+            <ul>
+                <li>Use Cases:
+                    <ul>
+                        <li>Read & write local files - is this useful?</li>
+                        <li>Launch other applications, E.g ImageJ, Insight</li>
+                    </ul>
+                </li>
+                <li>
+                    Evaluate <a href="http://electron.atom.io/">Electron.io</a> (from github)
+                </li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Proposed Javascript changes</h2>
+
+            <ul>
+                <li>Update webclient, don't start from scratch <br>
+                    See: <a href="https://www.reddit.com/r/javascript/comments/3v43qf/im_a_web_developer_who_uses_jquery_to_write_a/"/>Redit advice</a> |
+                    <a href="http://www.joelonsoftware.com/articles/fog0000000069.html">Never start from scratch</a>
+                </li>
+                <li>Keep jstree - Improve decoupling from other components</li>
+                <li>Move js code into static files (not in html)
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4389">
+                        #4389
+                    </a>
+                </li>
+                <li>Fewer top-level pages: <pre>data, search, history (eventually just one?)</pre>
+                <li>All AJAX requests use JSON (not HTML) & moved to webgateway/api/
+                    <a href="https://github.com/openmicroscopy/openmicroscopy/pull/4357">
+                        #4357
+                    </a>
+                </li>
+                <li>Use React.js as needed</li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h2>Backend Design</h2>
+            <img height="500px" src="images/webservices.png"/>
+            <li>Backend available only in Python</li>
+        </section>
+
+
+        <section>
+            <h2>RESTful webservices</h2>
+            <p>We already cover basic data management in JSTree</p>
+            <p><a href=#>https://omero.host/webclient/api/...</a></p>
+            <p>Next step:</p>
+            <ul>
+                <li>Focus on Metadata panel as it became a bottleneck</li>
+                <li>Integrate serialisers (e.g. <a href="https://github.com/openmicroscopy/omero-marshal">omero-marshal</a>)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Decoupling</h2>
+            <li>Flexible and easy configurable modules to build a layout</li>
+            <img height="500px" src="images/ipad.png"/>
+        </section>
+
+        <section>
+            <h2>Search engine powered by OMERO</h2>
+            <ul>
+                <li>Search as a separate web application</li>
+                <li>Useful for public repository</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Cache backend <a href="https://trac.openmicroscopy.org/ome/ticket/11517">#11517</a></h2>
+            <ul>
+                <li>Memcached - simple in-memory cache</li>
+                <li>Redis - flexible and complex an in-memory key-value store: highly scalable, persistent data store</li>
+                <li>Redis used as:
+                <ul>
+                    <li>Session store</li>
+                    <li>Rendering data</li>
+                    <li>JSON response</li>
+                </ul>
+                </li>
+            </ul>
+            
+            <p><a href="https://docs.djangoproject.com/en/1.8/topics/cache/#the-low-level-cache-api">Django caching low level API</a></p>
+            <p>Q:Future of webgateway cache?</p>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Installer</h2>
+            <ul>
+                <li>OMERO.web and OmeroPy are part of the server package</li>
+                <li>Simple installer <pre><code contenteditable class="bash">pip install omeroweb omeropy</code></pre></li>
+             </ul>
+        </section>
+
+        <section>
+            <h2>Questions?</h2>
+        </section>
+        
+        </div>
+
+        </div>
+
+        <script src="reveal-js/lib/js/head.min.js"></script>
+        <script src="reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>

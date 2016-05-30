@@ -1,0 +1,401 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>OMERO.figure - 1st June 2016</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/reveal-js/css/theme/default.css" id="theme">
+
+        <!-- OME presentation overrides of the default theme -->
+        <style>
+            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+              text-transform: none;
+            }
+            .ome_theme {
+                background-image: url("http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/ome-icon-opacity-05.png");
+                background-color: #f2f6f9;
+                background-repeat: no-repeat;
+                background-position: right -270px top -120px;
+            }
+            .reveal {
+                text-transform: none;   !important
+            }
+
+            .reveal section img {
+                border-width:0;
+                border-color: white;
+                box-shadow: 0 0 0px rgba(0,0,0,0);
+            }
+
+            .img_panel {
+                width: 150px;
+            }
+
+            .nobullet li {
+                list-style: none;
+            }
+
+            table.centre {
+                width: 100%;
+            }
+
+            .reveal .centre td {
+                text-align: center;
+            }
+
+            .rot90 {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+
+            .reveal .title {
+                position:absolute;
+                bottom:100%;
+                margin:5px;
+                color:red;
+            }
+
+            .larger li {
+                font-size: 120%
+                padding: 5px;
+            }
+
+        </style>
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body class="ome_theme">
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section>
+                    <h1>OMERO.figure</h1>
+
+                    <h3>OME Users' meeting, Dundee</h3>
+                    <h4>1st June 2016</h4>
+                    
+                    <h3>Will Moore<br>
+                        
+                        <img src="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/ome-logo-200.png"/>
+                    </h3>
+                </section>
+
+                <section>
+                    <h3>Presentation Outline</h3>
+                    <ul class="larger">
+                        <li>Figures</li>
+                        <li>Design goals</li>
+                        <li>OMERO.figure app</li>
+                        <li>Technical</li>
+                        <li>Demo</li>
+                    </ul>
+                </section>
+
+
+                <section data-background="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/large-figures.png">
+                    <h2>What's in a Figure?</h2>
+                    <small><a target="new" href="http://jcb.rupress.org/content/179/2/187">Porter 2007</a></small>
+                    <div style="height: 500px; width:50px"></div>
+                </section>
+
+
+                <section>
+                    <h2>Manual Figure Creation</h2>
+                    <ul>
+                        <li>Export of images as TIFFs
+                            <ul>
+                                <li>Decide on which Z sections or projections</li>
+                                <li>Choose timepoints for movies</li>
+                                <li>Correct channels and rendering settings</li>
+                                <li>Make notes in case you need to repeat!</li>
+                            </ul>
+                        </li>
+                        <li>Import into Illustrator / Photoshop / etc. </li>
+                        <li>Cropping (same region in multiple images)</li>
+                        <li>Align into rows / grids</li>
+                        <li>Add scalebars, labels, ROIs</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Important to preserve image quality & integrity</h2>
+                    <ul>
+                        <li>Instruction for authors:
+                            <ul>
+                                <li>
+                                    <a href="http://jcb.rupress.org/site/misc/ifora.xhtml">JCB</a> |
+                                    <a href="http://www.cell.com/figureguidelines">Cell</a> |
+                                    <a href="http://jcs.biologists.org/content/manuscript-prep#4">J. Cell Sci</a> 
+                                    etc.
+                                </li>
+                            </ul>
+                        <li><a href="http://jcb-biowrites.rupress.org/2015/10/everything-you-need-to-know-about-image-screening-at-rockefeller-university-press-in-10-posts.html"/>
+                            10 posts on image screening (JCB)</a>
+                        </li>
+                        <li><a href="http://b.nanes.org/figures/">How to Create Publication-Quality Figures</a></li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Problems</h2>
+                    <div>
+                        <ul>
+                            <li>SLOW!!!</li>
+                            <li>Need to know exactly what to export at start</li>
+                            <li>Loss of Metadata:
+                                <ul>
+                                    <li>pixel sizes</li>
+                                    <li>channel names</li>
+                                    <li>rendering settings</li>
+                                </ul>
+                            </li>
+                            <li>Loss of Pixel data:
+                                <ul>
+                                    <li>Export as 8-bit TIFF</li>
+                                    <li>Resizing images may resample them</li>
+                                </ul>
+                            <li>No links between Figure and original images</li>
+                        </ul>
+                    </div>
+                </section>
+
+
+                <section>
+                    <h2>Figure export scripts</h2>
+                    OMERO 4.2 (July 2010) <a href="http://cvs.openmicroscopy.org.uk/snapshots/movies/omero-4-2/mov/FigureExport.mov">Demo Movie</a><br>
+                    <img style="height:300px; vertical-align: top" src="images/figure_scripts_menu.png">
+                    <img style="height:500px" src="http://downloads.openmicroscopy.org/presentations/2014/Figure-Tues-Team-Meeting/images/split-view-web.png">
+
+                </section>
+
+
+                <section>
+                    <h2>OMERO.figure Design Goals</h2>
+                    <div>
+                        <ul>
+                            <li>Keep it fast!</a>
+                            <li>Combine images into figure in OMERO (no export)</li>
+                            <li>Flexible layout with shortcuts for grids</li>
+                            <li>Each panel is a fully editable image viewer</li>
+                            <li>Edits applied to multiple selected images</li>
+                            <li>Exportable as PDF / TIFF</li>
+                        </ul>
+                    </div>
+                </section>
+
+
+                <section>
+                    <h2>History of a "side project"</h2>
+                    <ul>
+                        <li><a href="https://github.com/will-moore/weblabs/commit/165fe9813041f4599c98a3832b8241d44a16d5c3">
+                            Initial Commit 'weblabs'</a> May 2013</li>
+                        <li><a href="https://github.com/will-moore/webfigure/commit/e33be27d212ea38ee8de7f37d2fb4fafdc27bcd9">
+                            New 'webfigure' Repo</a> Sept 2013</li>
+                        <li>Beta release in March 2014</li>
+                        <li>1.0.0 - October 2014</li>
+                        <li>1.1.0 - April 2015: Tiffs, Cropping, Pages</li>
+                        <li>1.2.0 - November 2015: Draw shapes</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>What is OMERO.figure?</h2>
+                    <ul>
+                        <li>OMERO.web app, same as OMERO.webclient</li>
+                        <li>Download, put on <code>$PYTHONPATH</code> and add to web 'apps'</li>
+                        <pre style="width: 900px; font-size: 28px"><code>$ bin/omero config append omero.web.apps '"figure"'</code></pre>
+                    </ul>
+                    See <a href="http://figure.openmicroscopy.org">figure.openmicroscopy.org</a>
+                </section>
+
+
+                <section>
+                    <h2 style="white-space: nowrap">Services used by OMERO.figure</h2>
+
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/CompBio-WMoore/images/omero-figure.png"/>
+                </section>
+
+
+                <section>
+                    <h2>OMERO.figure tech</h2>
+                    <ul>
+                        <li>
+                            <a href="http://backbonejs.org/">Backbone.js</a> (light-weight MVC library)
+                            <ul>
+                                <li>model</li>
+                                <li>events</li>
+                                <li>view</li>
+                                <li>templating</li>
+                                <li>router</li>
+                            </ul>
+                        </li>
+                        <li><a href="http://getbootstrap.com/" class="roll"><span data-title="Bootstrap">Bootstrap</span></a> - css, icons, js</li>
+                        <li><a href="http://craig.is/killing/mice" class="roll"><span data-title="Mousetrap">Mousetrap</span></a> - Keyboard bindings</li>
+                        <li><a href="http://raphaeljs.com/" class="roll"><span data-title="Raphael">Raphael</span></a> - Drag handles etc.</li>
+                        <li><a href="http://www.reportlab.com/opensource/" class="roll"><span data-title="Reportlab">Reportlab</span></a> - PDF generation</li>
+                    </ul>
+                </section>
+
+
+                <section style="width:120%; left:-60%">
+                    <iframe style="width:100%; max-width:100%; height:650px" src="http://figure.openmicroscopy.org/demo/#file/1" frameborder="0"></iframe>
+                </section>
+
+
+                <section data-background="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/addImages.png">
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/addImagesDialog.png"/> <br>
+                </section>
+
+
+                <section data-background="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/PorterBackground.png">
+                    <h2>Layout</h2>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/PorterImportedImages.png"/> <br>
+                </section>
+
+
+                <section data-background="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/PorterBackground.png">
+                    <h2>Rendering</h2>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/Porter8.png"/> <br>
+                </section>
+
+
+                <section data-background="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/PatroninBackground3.png">
+                    <h2>Z-index, Time</h2>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/Patronin3.png"/> <br>
+                </section>
+
+
+                <section data-background="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/PatroninLabelsBg.png">
+                    <h2>Labels & Scalebars</h2>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/Patronin2.png"/> <br>
+                </section>
+
+
+                <section data-background="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/PorterBackground.png">
+                    <h2>Finally...</h2>
+                    <ul>
+                        <li>Save to OMERO</li>
+                        <li>Export to PDF / TIFF</li>
+                        <li>Share url</li>
+                        <li>Links to images in OMERO</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Export as PDF / TIFF</h2>
+                    <img src="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/images/pdf-screenshot.png"/> <br>
+                </section>
+
+
+                <section>
+                    <h2>What's next?</h2>
+                    <ul>
+                        <li>Improve ROI support:
+                            <ul>
+                                <li>Load ROIs from OMERO</li>
+                                <li>Save ROIs back to OMERO</li>
+                                <li>More shapes (freehand, polygon, label)</li>
+                            </ul>
+                        </li>
+                        <li>Improved integration with OMERO.webclient</li>
+                        <li>Embeddable Preview</li>
+                        <li>Labels from Tags</li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>More information</h2>
+                    <ul>
+                        <li>
+                            <a href="http://figure.openmicroscopy.org">figure.openmicroscopy.org</a>
+                        </li>
+                        <li>OMERO.figure <a href="https://trello.com/b/dheuY2Zz/omero-figure">Trello Board</a></li>
+                        <li>Twitter:
+                            <ul><a href="https://twitter.com/openmicroscopy">@openmicroscopy</a></ul>
+                            <ul><a href="https://twitter.com/will_j_moore">@will_j_moore</a></ul>
+                        </li>
+                    </ul>
+                </section>
+
+
+                <section>
+                    <h2>Thank you</h2>
+                    <ul>
+                        <li>Jason Swedlow</li>
+                        <li>OME team</li>
+                    </ul>
+                    <div>
+                        <img src="http://aleksandra-tarkowska.github.io/presentations/2016/Public-Repository-Workshop/images/wellcome.png" height="150px">
+                        <img src="http://aleksandra-tarkowska.github.io/presentations/2016/Public-Repository-Workshop/images/bbsrc.png" height="150px">
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/reveal-js/lib/js/head.min.js"></script>
+        <script src="http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // parallaxBackgroundImage: "images/ome-icon-opacity-big.png",
+                // parallaxBackgroundSize: "2048px 1073px",
+                // transition: 'linear',
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                transitionSpeed: 'slow',
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'http://downloads.openmicroscopy.org/presentations/2014/Technique-Tapas-OMERO-Figure/reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
