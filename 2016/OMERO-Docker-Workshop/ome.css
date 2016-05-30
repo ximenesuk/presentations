@@ -1,0 +1,74 @@
+/**
+ * Sky theme for reveal.js.
+ *
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body {
+  background: #add9e4;
+  background-image: url("images/ome-icon-opacity-05.png");
+  background-color: #f2f6f9;
+  background-repeat: no-repeat;
+  background-position: right -270px top -120px;
+
+}
+
+.reveal {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 36px;
+  font-weight: normal;
+  color: #333;
+  text-transform: none;   !important
+}
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: normal;
+  line-height: 1.2;
+  letter-spacing: -0.08em;
+  text-transform: none;
+  text-shadow: none;
+  word-wrap: break-word; }
+
+/*********************************************
+ * OTHER
+ *********************************************/
+.reveal p {
+  margin: 20px 0;
+  line-height: 1.3; }
+
+/*********************************************
+ * IMAGES
+ *********************************************/
+.reveal section img {
+  margin: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 0px solid #fff;
+  box-shadow: 0 0 0px rgba(0,0,0,0);
+}
+
+.reveal section img .border { 
+   border:1px solid #021a40;
+}
+
+.reveal div .float-left{
+  float: left;
+}
+
+.reveal cite, .reveal sup {
+    font-size: 16px;
+}
+.reveal ul.nobullets {
+    list-style-type: none;
+}
+.reveal ul.nobullets li {
+    font-size: 24px;
+}

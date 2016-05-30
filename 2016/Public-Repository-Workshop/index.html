@@ -1,0 +1,568 @@
+<!doctype html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Public Repository: Ola Tarkowska, Will Moore, Douglas Russell, Dundee 2016</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Ola Tarkowska, Will Moore">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="reveal-js/css/reveal.min.css">
+        <link rel="stylesheet" href="reveal-js/css/theme/default.css" id="theme">
+        <link rel="stylesheet" href="ome.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="reveal-js/lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+                <section>
+                    <h2>Public Repository:</h2>
+                    <h3>permissions, deployment<br/> and customization.<br/>
+                    OMERO.web plugins and extensions.</h3>
+
+                    <h4>11th Annual OME Meeting</h4>
+                    <h4>Dundee 2016</h4>
+
+                    <h4>Ola Tarkowska, Will Moore, Douglas Russell<br>
+                        <img src="images/ome-logo-200.png"/>
+                    </h4>
+                </section>
+
+                <section>
+                    <h2>OMERO & repositories</h2>
+                    
+                    <h3>Presentation Outline</h3>
+                    
+                    <ul>
+                        <li>Groups & Permissions</li>
+                        <li>User authentication</li>
+                        <li>Publishing data</li>
+                        <li>Customizing repository</li>
+                        <li>Performance and scaling up</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Public data in OMERO</h2>
+                    <img style="height:500px" src="images/omero-platform-simple.png"/>
+                </section>
+
+                <section>
+                    <h2>Examples</h2>
+                    
+                    <div class="float-left">
+                        <p>Public repositories:</p>
+                        <ul>
+                            <li><a href="http://idr-demo.openmicroscopy.org">IDR</a></li>
+                            <li><a href="http://jcb-dataviewer.rupress.org/">JCB DataViewer</a></li>
+                            <li><a href="http://ssbd1.qbic.riken.jp/">SSBD Database</a></li>
+                            <li><a href="http://cci02.liv.ac.uk/gallery/">CCI OMERO Gallery</a></li>
+                        </ul>
+                    
+                        <p>Controlled repositories:</p>
+                        <ul>
+                            <li><a href="https://learning.openmicroscopy.org/dundee/">Virtual Microscope</a></li>
+                            <li><a href="https://github.com/crs4/ome_seadragon">CRS4</a></li>
+                        </ul>
+                    </div>
+                    <img height="420px" src="images/ipad.png"/>
+                </section>
+
+                
+
+                <section>
+                    <h2>Deployment</h2>
+                </section>
+
+                <section>
+                    <h2>Groups & Permissions</h2>
+                    
+                    <div class="float-left">
+                        <br/>
+                        <ul>
+                            <li>Private<br/>(rw----)</li>
+                            <li><strong>Read-Only<br/>(rwr---)</strong></li>
+                            <li>Read-Write<br/>(rwrw--)</li>
+                        </ul>
+                    </div>
+                    <img src="images/public_group.png"/>
+                    
+                </section>
+
+                <section>
+                    <h2>Public User</h2>
+                    <ul>
+                        <li>Public visitors are logged-in as a specified <strong>public user</strong></li>
+                        <li>Visitors are able to access data available to <strong>public user</strong></li>
+                        <li>Functionality exposed can be controlled by <strong>url filters</strong></li>
+                    </ul>
+                    
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.enabled True
+$ bin/omero config set omero.web.public.server_id 1
+$ bin/omero config set omero.web.public.user '&#60;username&#62;'
+$ bin/omero config set omero.web.public.password '*****'
+</code></pre>
+<pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.public.url_filter '^/webgateway'
+
+$ bin/omero config set omero.web.public.url_filter '^/webgateway/(?!archived_files|download_as)'
+$ bin/omero config set omero.web.public.url_filter '^/(webadmin/myphoto/|webclient/(?!(action|logout|annotate_(file|tags|comment|rating|map)|script_ui|ome_tiff|figure_script))|webgateway/(?!(archived_files|download_as)))'
+</code></pre>
+                    <a href="https://www.openmicroscopy.org/site/support/omero5/developers/Web/PublicData.html"  target="_blank">
+                        Public Data Documentation
+                    </a>
+                </section>
+
+                <section>
+                    <h2>Accessing Public data</h2>
+                </section>
+
+                <section>
+                    <h2>Moving data to public space</h2>
+                    <img src="images/move_to_group.png" width="477px"/> <img src="images/metadata.png" width="369px"/>
+                </section>
+                
+                <section>
+                    <h2>LINK https://...</h2>
+                    <p><a href="https://nightshade.openmicroscopy.org/webgateway/img_detail/3933597/" target="_blank">https://omero/webgateway/image_detail/12345/</a></p>
+                        <p><a href="https://nightshade.openmicroscopy.org/webgateway/render_thumbnail/3933597/200/200/" target="_blank">https://omero/webgateway/render_thumbnail/12345/W/H/</a></p>
+
+                    
+                    <img height="500px" src="images/publish2.png"/>
+                </section>
+
+                <section>
+                    <h2>Embedding &lt;/ &gt;</h2>
+
+                    <iframe width="100%" height="650" src="http://users.openmicroscopy.org.uk/~atarkowska/viewer.html" frameborder="0"></iframe>
+                    <a href="http://jsfiddle.net/aleksandratarkowska/qhqh2583/"> Example</a>
+                </section>
+
+                <section>
+                    <h2>HTML page</h2>
+<pre><code class="html">&lt;link href=&quot;https://omero/static/omeroweb.viewer.min.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;script src=&quot;https://omero/static/omeroweb.viewer.min.js&quot; type=&quot;text/javascript&quot;&gt;
+</code></pre>
+
+<pre ><code class="html">&lt;style type=&quot;text/css&quot;&gt;
+.viewport {
+    height: 500px;
+    width: 500px;
+}
+&lt;/style&gt;
+</code></pre>
+
+<pre><code contenteditable class="html javascript">&lt;javascript type=&quot;text/javascript&quot;&gt;
+    /* Prepare the viewport */
+    viewport = $.WeblitzViewport($("#viewport"), "http://omero/webgateway/", {
+        'mediaroot': "http://omero/static/"
+    });
+    /* Load the selected image into the viewport */
+    viewport.load(IMAGE_ID);
+});
+&lt;/javascript&gt;
+</code></pre>
+
+<pre><code class="html">&lt;body&gt;
+    &lt;div id=&quot;viewport&quot; class=&quot;viewport&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+                </section>
+
+
+
+                <section>
+                    <iframe width="100%" height="650" src="http://users.openmicroscopy.org.uk/~atarkowska/big_image.html" frameborder="0"></iframe>
+                    <a href="http://jsfiddle.net/aleksandratarkowska/MSDPX/"> Example</a>
+                </section>
+
+                <section>
+                    <h2>OMERO.web</h2>
+                    <img height="600px" src="images/public_repository.png"/>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Custom application</h2>
+                <ul>
+                    <li><a href="http://jcb-dataviewer.rupress.org/" target="_blank">JCB DataViewer</a></li>
+                    <li><a href="http://smc.sysgro.org/babel/omero/HTscape/" target="_blank">Sysgro (pombe)</a></li>
+                    <li><a href="http://cci02.liv.ac.uk/gallery/" target="_blank">
+                        Liverpool CCI OMERO gallery</a> From <a href="https://raphazlab.wordpress.com/" target="_blank">Raphaël Lévy's lab</a> <a href="https://github.com/ome/gallery/" target="_blank">(source)</a>.</li>
+                    <li><a href="http://ome.github.io/figure/" target="_blank">OMERO.figure</a></li>
+                    <li><a href="https://www.openmicroscopy.org/site/support/partner/omero.webtagging" target="_blank">OMERO.webtagging</a></li>
+                    <li><a href="https://github.com/openmicroscopy/webtest/" target="_blank">webtest</a></li>
+                </ul>
+                </section>
+
+                <section>
+                    <h2>Customization</h2>
+                </section>
+
+                <section>
+                    <h2>Webclient plugins</h2>
+                    <ul>
+                        <li>Hooks to bring app content into webclient</li>
+                        <li>See
+                            <a href="https://www.openmicroscopy.org/site/support/omero5.2/developers/Web/WebclientPlugin.html">
+                                webclient plugin docs</a>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Center pane plugins</h2>
+
+                    <pre><code style="width:900px; font-size:80%" class="bash">$ bin/omero config append omero.web.ui.center_plugins
+    '["Auto Tag", "webtagging/auto_tag_init.js.html", "auto_tag_panel"]'
+</code></pre>
+                    <img src="images/webclient_plugins.png" height="500px"> 
+                </section>
+
+                <section>
+                    <h2>Right hand pane plugins</h2>
+
+                    <pre><code style="width:900px; font-size:80%" class="bash">$ bin/omero config append omero.web.ui.right_plugins
+        '["ROIs", "webtest/webclient_plugins/right_plugin.rois.js.html", "image_roi_tab"]'
+</code></pre>
+                    <img src="images/webtest_roi_plugin.png" height="500px"> 
+                </section>
+
+                <section>
+                    <h2>Left hand pane plugins</h2>
+                    <img src="images/webplugin.png" height="500px"> 
+                </section>
+
+                <section>
+                    <h2>Login screen</h2>
+                        <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_logo 'http://www.url/to/image.png'
+$ bin/omero config set omero.web.index_template 'mytemplate/test.html'
+$ bin/omero config set omero.web.template_dirs '/your/path/to/templates/'</code></pre>
+                    <img src="images/custom_login.png"
+                        width="597px"/><br>
+                </section>
+
+                <section>
+                    <h2>Login redirection</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_redirect 
+                '{"redirect": ["webindex"], "viewname": "load_template", 
+                "args":["userdata"], "query_string": "experimenter=-1"}'
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Post login page</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.web.login_redirect 
+        '{"redirect": ["webindex"], "viewname": "webindex_custom"}'
+</code></pre>
+
+                <img src="images/login_redirect.png" width='550px' class="no_shadow"/>
+                </section>
+
+                <section>
+                    <h2>Override existing view</h2>
+
+<pre><code contenteditable style="font-size:90%" class="bash">@never_cache
+@login_required()
+@render_response()
+def custom_index(request, conn=None, **kwargs):
+    context = {"version": omero_version}
+    active_group = request.session.get('active_group') or conn.getEventContext().groupId
+    group = conn.getObject("ExperimenterGroup", active_group)
+    leaders, members = group.groupSummary()
+    leaders.sort(key=lambda x: x.getOmeName() and x.getOmeName().lower())
+    context["courses"]  = leaders
+    context['template'] = 'virtualmicroscope/start.html'
+    return context
+
+omeroweb.webstart.views.custom_index = custom_index
+</code></pre>
+
+                </section>
+
+                <section>
+                    <h2>Top links menu</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config append omero.web.ui.top_links 
+                '["Figure", "webfigure"]'
+$ bin/omero config set omero.web.ui.top_links 
+                '["GRE", "http://lifesci.dundee.ac.uk/gre"]'
+</code></pre>
+                <img src="images/top_link.png"/>
+                </section>
+
+                <section>
+                    <h2>Group and Users<br/>in dropdown menu</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.client.ui.menu.dropdown.everyone.enabled true
+$ bin/omero config set omero.client.ui.menu.dropdown.everyone.label "All courses"
+$ bin/omero config set omero.client.ui.menu.dropdown.leaders.enabled true
+$ bin/omero config set omero.client.ui.menu.dropdown.leaders.label "Course:"
+$ bin/omero config set omero.client.ui.menu.dropdown.colleagues.enabled false
+</code></pre>
+
+                <img src="images/dropdown_menu2.png"/> <img src="images/dropdown_menu.png"/>
+                </section>
+
+                <section>
+                    <h2>Orphaned container</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.client.ui.tree.orphans.enabled true
+$ bin/omero config set omero.client.ui.tree.orphans.name "New imports"
+$ bin/omero config set omero.client.ui.tree.orphans.description "This folder containes newly imported images."
+</code></pre>
+
+                <img src="images/orphans.png" width='290px'/>
+                </section>
+
+                <section>
+                    <h2>Disabling scripts</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config append omero.client.scripts_to_ignore "/my_scripts/script.py"
+</code></pre>
+                <img src="images/scripts.png" />
+                </section>
+
+                <section>
+                    <h2>Download restriction</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.policy.binary_access "+read,+write,-image,-plate"
+</code></pre>
+                    <img src="images/download1.png"/> <img src="images/download2.png"/>
+                </section>
+
+                <section>
+                    <h2>Email notification</h2>
+                    <img src="images/email.png" width='600px'/>
+                </section>
+
+                <section>
+                    <h2>Configuration</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.mail.config true
+$ bin/omero config set omero.mail.from "sysadmin@localhost.domain"
+$ bin/omero config set omero.mail.host "localhost"
+$ bin/omero config set omero.mail.port 465
+$ bin/omero config set omero.mail.username
+$ bin/omero config set omero.mail.password
+$ bin/omero config set omero.mail.smtp.starttls.enable true
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>LDAP authentication</h2>
+                </section>
+
+                <section>
+                    <h2>Configuration</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.ldap.config True
+$ bin/omero config set omero.ldap.urls "ldaps://ldap:636"
+$ bin/omero config set omero.ldap.username "cn=ldapuser,ou=Lab,o=College"
+$ bin/omero config set omero.ldap.password "***"
+$ bin/omero config set omero.ldap.base "o=College"
+
+$ bin/omero config set omero.security.ignore_case True
+
+bin/omero config set omero.security.keyStore "/etc/certificates/pki/omero.store"
+bin/omero config set omero.security.trustStore "/etc/certificates/pki/omero.store"
+</code></pre>
+
+<a href="https://www.openmicroscopy.org/site/support/omero5.2/sysadmins/server-security.html#java-key-and-truststores"> LDAP and self-signed SSL certificate.</a>
+                </section>
+
+                <section>
+                    <h2>Mapping groups and users</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero config set omero.ldap.group_mapping "name=cn"
+$ bin/omero config set omero.ldap.user_mapping "omeName=cn,firstName=givenName
+                                                          ,lastName=sn,email=mail"
+
+$ bin/omero config set omero.ldap.group_filter "(&(objectClass=groupOfUniqueNames)
+                                                  (cn=repository))"
+
+$ bin/omero config set omero.ldap.user_filter "(memberOf=cn=repository,ou=Lab
+                                                                      ,o=College)"
+
+$ bin/omero config set omero.ldap.new_user_group ":query:(uniqueMember=@{dn})"
+
+$ bin/omero config set omero.ldap.new_user_group "Virtual Microscope"
+</code></pre>
+
+    <a href="https://www.openmicroscopy.org/site/support/omero5.1/sysadmins/server-ldap.html"> LDAP documentation</a>
+                </section>
+
+
+                <section>
+                    <h2>LDAP & Command line</h2>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero ldap active
+$ bin/omero ldap discover
+
+$ bin/omero ldap getdn --user-name atarkowska
+Using session 425b795b-1c7b-49c0-bd47-587252001744 (root@localhost:4064). Idle timeout: 60.0 min. Current group: system
+atarkowska: cn=ATarkowska,ou=Lab,o=College
+
+$ bin/omero ldap create wmoore
+Using session 425b795b-1c7b-49c0-bd47-587252001744 (root@localhost:4064). Idle timeout: 60.0 min. Current group: system
+Added user wmoore (id=1352) with DN=cn=wmoore,ou=Lab,o=College
+
+$ bin/omero ldap list
+Using session 425b795b-1c7b-49c0-bd47-587252001744 (root@localhost:4064). Idle timeout: 60.0 min. Current group: system
+   | Id   | OmeName    | DN                              
+---+------+------------+---------------------------------
+ 0 | 52   | atarkowska | cn=atarkowska,ou=Lab,o=College 
+ 1 | 1352 | wmoore     | cn=wmoore,ou=Lab,o=College 
+</code></pre>
+
+    <a href="https://www.openmicroscopy.org/site/support/omero5.1/sysadmins/cli/usergroup.html"> Command Line Interface documentation</a>
+
+                </section>
+
+                <section>
+                    <h2>OMERO session key-based authentication</h2>
+                    
+                    <a href="#">https://omero/webgateway/img_detail/IMAGE_ID/ ?server=SERVER_ID&bsession=OMERO_SESSION_KEY</a>
+
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ bin/omero login
+Previously logged in to localhost:4064 as root
+Server: [localhost:4064]
+Username: [test-user]
+Password:
+Created session 531389ec-300e-4a01-9bdf-90e9f3869473 (test-user@localhost:4064). Idle timeout: 60.0 min. Current group: read-only
+
+$ bin/omero sessions list
+ Server    | User | Group           | Session                              | Active    | Started
+-----------+------+-----------------+--------------------------------------+-----------+--------------------------
+ localhost | test | read-only       | 531389ec-300e-4a01-9bdf-90e9f3869473 | Logged in | Fri May 01 14:55:25 2015
+ localhost | root | system          | 1f800a16-1dc2-407a-8a85-fb44005306be | True      | Fri May 01 14:55:18 2015
+(2 rows)
+</code></pre>
+
+    <a href="https://www.openmicroscopy.org/site/support/omero5.1/users/cli/sessions.html">Server-side Session documentation</a>
+
+                </section>
+
+                <section>
+                    <h2>EXPERIMENTAL</h2>
+                </section>
+
+                <section>
+                    <h2>Nginx CACHE</h2>
+
+                    <script src="https://gist.github.com/aleksandra-tarkowska/45ae197d69947af7f6d6b02a583708bb.js"></script>
+
+                </section>
+
+
+                <section>
+                    <h2>Nginx CACHE</h2>
+
+                    <p>test<p>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ curl -I https://idr-demo.openmicroscopy.org/webgateway/render_thumbnail/1/96/
+HTTP/1.1 200 OK
+Server: nginx/1.8.0
+Date: Thu, 05 May 2016 13:54:37 GMT
+Content-Type: image/jpeg
+Connection: keep-alive
+Vary: Cookie
+X-Proxy-Cache: HIT
+X-Proxy-Cache-Skip: 0
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Redis session backend</h2>
+
+                    <p>Requires: Python Redis 2.4+, django-redis-cache 1.6.5+</p>
+                    <pre><code contenteditable style="font-size:90%" class="bash">$ pip install django-redis-cache>=1.6.5
+$ bin/omero config set omero.web.caches '{"default": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "127.0.0.1:6379"}}'
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Future work</h2>
+                    <ul>
+                        <li>WEB API</li>
+                            <li>Complex JavaScript and JSON API</li>
+                        <li>Cache</li>
+                        <li>Integration with 3rd party systems
+                            <ul>
+                                <li>OMERO <strong>Single Sign On</strong> authentication</li>
+                            </ul>
+                        </li>
+                        <li>Complex usage of ROIs and annotations.</li>
+                        <li>Read-only server for publication or horizontal scaling</li>
+                    </ul>
+
+                </section>
+
+                <section>
+                    <h2>Thank you</h2>
+                    <ul>
+                        <li>Prof. Jason Swedlow</li>
+                        <li>OME team</li>
+                    </ul>
+                    <br/><br/>
+                    <div style="background-color: #fff;">
+                        <img src="images/wellcome.png" height="140px"> 
+                        <img src="images/bbsrc.png" height="140px">
+                    </div>
+                </section>
+
+                <section>
+                    <h1>Questions ?</h1>
+                </section>
+            </div>
+
+        </div>
+
+        <script src="reveal-js/lib/js/head.min.js"></script>
+        <script src="reveal-js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                // parallaxBackgroundImage: "images/ome-icon-opacity-big.png",
+                // parallaxBackgroundSize: "2048px 1073px",
+                // transition: 'linear',
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                transitionSpeed: 'slow',
+
+                theme: 'sky', //Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    // { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    // { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
