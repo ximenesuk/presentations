@@ -464,13 +464,13 @@
           <pre style="font-size:60%">
 
   # use the Dataset with id=2
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:id:2
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T <strong>Dataset:id:2</strong>
 
   # use the Dataset with id=2, here the discriminator is implicit
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:2
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T <strong>Dataset:2</strong>
 
   # both of these are equivalent to the legacy target '-d'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -d 2
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv <strong>-d 2</strong>
           </pre>
           <p>The same syntax applies to Screen &amp; id</p>
           <aside class="notes">
@@ -514,16 +514,16 @@
           <pre style="font-size:60%">
 
   # use the most recent Dataset named 'Samples'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:+name:Samples
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>+name</strong>:Samples
 
   # use the oldest Dataset named 'Samples'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:-name:Samples
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>-name</strong>:Samples
 
   # use the Dataset named 'Samples' only if it is unique
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:%name:Samples
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>%name</strong>:Samples
 
   # create a new Dataset named 'Samples' even if one already exists
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:@name:Samples
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>@name</strong>:Samples
           </pre>
           <p>The same syntax applies to Screen &amp; name</p>
           <aside class="notes">
@@ -535,7 +535,7 @@
           <h4><em>A lot more interesting</em></h4>
           <pre style="font-size:60%; margin-left: -10%; width:120%">
 
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:name:^.*images/(?&lt;Container1>.*?)"
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:name:<strong>^.*images/(?&lt;Container1>.*?)</strong>"
           </pre>
           <p style="font-size:90%; margin-left: -10%; width:120%; text-align:left;">
           This will import the image into the Dataset called 'dv', resolved by &lt;Container1>.<br/>
@@ -551,16 +551,16 @@
           <pre style="font-size:60%; margin-left: -10%; width:120%">
 
   # use the most recent Dataset named 'dv'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:+name:^.*images/(?&lt;Container1>.*?)"
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:<strong>+name</strong>:^.*images/(?&lt;Container1>.*?)"
 
   # use the oldest Dataset named 'dv'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:-name:^.*images/(?&lt;Container1>.*?)"
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:<strong>-name</strong>:^.*images/(?&lt;Container1>.*?)"
 
   # use the Dataset named 'dv' only if it is unique
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:%name:^.*images/(?&lt;Container1>.*?)"
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:<strong>%name</strong>:^.*images/(?&lt;Container1>.*?)"
 
   # create a new Dataset named 'dv' even if one already exists
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:@name:^.*images/(?&lt;Container1>.*?)"
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:<strong>@name</strong>:^.*images/(?&lt;Container1>.*?)"
           </pre>
           <aside class="notes">
           </aside>
@@ -572,10 +572,10 @@
           <pre style="font-size:60%; margin-left: -10%; width:120%">
 
   # use the most recent Dataset named 'dv' explicitly
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:+name:^.*images/(?&lt;Container1>.*?)"
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:<strong>+name</strong>:^.*images/(?&lt;Container1>.*?)"
 
   # use the Dataset named 'dv', most recent is implicit
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:name:^.*images/(?&lt;Container1>.*?)"
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:<strong>name</strong>:^.*images/(?&lt;Container1>.*?)"
 
   # use the Dataset named 'dv', most recent name is implicit
   omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:^.*images/(?&lt;Container1>.*?)"
@@ -601,7 +601,7 @@
           then
           </p>
           <pre style="font-size:60%; margin-left: -10%; width:120%">
-  omero import ~/images/bd-pathway/ -T "regex:+name:^.*bd-pathway/(?&lt;Container1>[^/]*)/.*"</pre>
+  omero import ~/images/bd-pathway/ -T "regex:+name:<strong>^.*bd-pathway/(?&lt;Container1>[^/]*)/.*"</strong></pre>
           <p style="font-size:90%; margin-left: -10%; width:120%; text-align:left;">
           will resolve to using two Screens 'week-1' and 'week-2' for the import targets.
           </p>
