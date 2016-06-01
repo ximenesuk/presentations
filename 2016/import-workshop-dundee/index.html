@@ -485,7 +485,7 @@
   # use the Dataset named 'Sample01' as the target
   omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>name</strong>:Sample01
 
-  # implied use the name as a target
+  # implied use of the name as a target
   omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:Sample01
           </pre>
           <p style="font-size:90%; text-align: left;">This will import the image into the Dataset named 'Sample01'.<br/>
@@ -518,16 +518,16 @@
           <pre style="font-size:60%">
 
   # use the most recent Dataset named 'Samples'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>+</strong>name:Samples
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>+name</strong>:Samples
 
   # use the oldest Dataset named 'Samples'
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>-</strong>name:Samples
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>-name</strong>:Samples
 
   # use the Dataset named 'Samples' only if it is unique
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>%</strong>name:Samples
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>%name</strong>:Samples
 
   # create a new Dataset named 'Samples' even if one already exists
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>@</strong>name:Samples
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T Dataset:<strong>@name</strong>:Samples
           </pre>
           <p>The same syntax applies to Screen &amp; name</p>
           <aside class="notes">
@@ -542,7 +542,7 @@
   omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:name:<strong>^.*images/(?&lt;Container1>.*?)</strong>"
 
   # use the Dataset named 'dv', the most name is implicit
-  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:^.*images/(?&lt;Container1>.*?)"
+  omero import ~/images/dv/SMN10ul03_R3D_D3D.dv -T "regex:<strong>^.*images/(?&lt;Container1>.*?)</strong>"
           </pre>
           <p style="font-size:90%; margin-left: -10%; width:120%; text-align:left;">
           This will import the image into the Dataset called 'dv', resolved by &lt;Container1>.<br/>
